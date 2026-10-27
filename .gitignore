@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Build output
+dist/
+build/
+.next/
+out/
+
+# IaC
+cdk.out/
+.aws-sam/
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+
+# Secrets / credentials — KHÔNG commit
+.env
+.env.*
+!.env.example
+*.pem
+credentials
+amplify_outputs.json
+aws-exports.js
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Logs
+*.log
