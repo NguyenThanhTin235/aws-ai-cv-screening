@@ -45,32 +45,36 @@ Trong quy trình tuyển dụng tại các doanh nghiệp, phòng ban công ngh�
 graph TD
     subgraph Scope["Phạm vi Hệ thống"]
         subgraph MVP["Giai đoạn MVP (Bắt buộc hoàn thành trong 2 tháng)"]
-            A1["Xác thực & Phân quyền Cognito (Recruiter / Candidate)"]
-            A2["Quản lý tin tuyển dụng JD (Tạo, sửa, đóng)"]
-            A3["Nộp hồ sơ CV qua S3 Presigned URL"]
-            A4["Pipeline AI: Textract trích xuất + Bedrock chấm điểm"]
-            A5["Dashboard Recruiter: Bảng xếp hạng ứng viên & Tóm tắt AI"]
-            A6["Thông báo Email Amazon SES (Xác nhận & Mời phỏng vấn)"]
-            A7["Giám sát CloudWatch (Logs, Metrics, Alarms) & Clean-up"]
+            A1["Cognito RBAC (Admin / Recruiter / Candidate) & HR Team"]
+            A2["Quản lý Company Profile & Tin tuyển dụng JD"]
+            A3["Nộp CV (PDF & DOCX) qua S3 Presigned URL & Rút đơn"]
+            A4["Pipeline AI: Trích xuất Textract/OpenXML + Lọc PII + Bedrock Rubric 100đ"]
+            A5["Recruiter: Bảng xếp hạng, Side-by-side Review & Audit Trail"]
+            A6["Kho dữ liệu tài năng (Talent Pool) & Báo cáo Skill Gap"]
+            A7["Email SES tự động, Tuân thủ DSR & Giám sát CloudWatch"]
         end
         subgraph Extended["Tính năng Mở rộng (Thực hiện nếu còn thời gian)"]
-            B1["Che thông tin cá nhân PII trước khi gửi tới LLM"]
-            B2["Tùy chỉnh trọng số chấm điểm theo từng JD"]
-            B3["Upload CV hàng loạt (Batch CV upload)"]
-            B4["Tích hợp AWS WAF bảo vệ Web/API"]
+            B1["Lưu việc làm yêu thích (Saved Jobs / Bookmarks)"]
+            B2["Đăng ký nhận thông báo việc làm qua Email (Job Alerts)"]
+            B3["Bộ lọc tìm kiếm việc làm đa tiêu chí nâng cao"]
+            B4["Tích hợp AWS WAF bảo vệ CloudFront & API Gateway"]
         end
     end
 ```
 
-* **Phạm vi MVP (Cốt lõi):**
-  * Hệ thống xác thực và quản lý tài khoản qua **Amazon Cognito** (2 nhóm: `recruiter`, `candidate`).
-  * Nhà tuyển dụng: Đăng tin tuyển dụng (JD), xem danh sách hồ sơ đã được AI xếp hạng theo điểm số, xem chi tiết đánh giá từng tiêu chí, gửi email mời phỏng vấn.
-  * Ứng viên: Xem danh sách công việc đang tuyển, nộp CV (PDF tối đa 5MB) trực tiếp lên **Amazon S3** qua Presigned URL, theo dõi trạng thái hồ sơ.
-  * Pipeline xử lý nền: S3 Event -> SQS (+DLQ) -> Lambda Worker -> Textract -> Bedrock -> lưu trữ kết quả vào **Amazon DynamoDB**.
-  * Cảnh báo & Giám sát qua **Amazon CloudWatch**; kịch bản dọn dẹp tài nguyên triệt để (**Clean-up**).
-* **Phạm vi Mở rộng:**
-  * Che thông tin nhận dạng cá nhân (PII Anonymization - tên, số điện thoại, ảnh đại diện) để đảm bảo chấm điểm hoàn toàn khách quan.
-  * Cho phép nhà tuyển dụng tùy chỉnh trọng số (Kỹ năng, Kinh nghiệm, Học vấn) cho từng JD riêng biệt.
+* **Phạm vi MVP (Cốt lõi — Hoàn thành trước 20/12/2026):**
+  * **Xác thực & Tổ chức:** Quản lý tài khoản qua **Amazon Cognito** với 3 nhóm vai trò (`Candidate`, `Recruiter`, `Admin`); hỗ trợ tài khoản công ty (**Company Profile**) cho phép nhiều thành viên HR Team cùng làm việc chung.
+  * **Quản lý tuyển dụng & Ứng tuyển:** Nhà tuyển dụng đăng, sửa, đóng tin JD; Ứng viên tìm kiếm việc làm, quản lý hồ sơ cá nhân và CV mặc định.
+  * **Tiếp nhận hồ sơ linh hoạt:** Hỗ trợ định dạng kép (**PDF** và **Word .docx**) tối đa 5MB tải trực tiếp lên **Amazon S3** qua Presigned URL an toàn; cơ chế chống nộp trùng và quyền rút đơn ứng tuyển (**WITHDRAWN**); theo dõi song song 2 vòng đời trạng thái (`status` tuyển dụng và `ai_status` xử lý ngầm).
+  * **Pipeline AI khách quan & Không định kiến:** Xử lý bất đồng bộ qua **Amazon SQS** (+DLQ) và **AWS Lambda Worker**; trích xuất văn bản linh hoạt (Amazon Textract cho PDF, OpenXML parser cho DOCX); tự động loại bỏ/che mờ dữ liệu định danh cá nhân (**PII Redaction Filter**) trước khi gọi **Amazon Bedrock** (Claude 3 Haiku) chấm điểm theo **Rubric 100 điểm chuẩn hóa** (Kỹ năng, Kinh nghiệm, Học vấn, Kỹ năng mềm) xuất JSON Schema có cấu trúc.
+  * **Đánh giá đa chiều (Human-in-the-Loop):** Giao diện đối chiếu song song 3 cột (**Side-by-side Review**); Recruiter ghi chú nội bộ, cho điểm sao và cập nhật trạng thái kèm nhật ký kiểm toán bất biến (**Audit Trail**); hỗ trợ chấm lại (Re-score) có kiểm soát tần suất.
+  * **Báo cáo & Tái sử dụng nguồn lực:** Báo cáo phân tích khoảng trống kỹ năng (**Skill Gap Analytics**); xây dựng Kho dữ liệu tài năng (**Talent Pool**) và tự động gợi ý ứng viên cũ phù hợp cho tin tuyển dụng mới (**Talent Rediscovery**).
+  * **Bảo vệ quyền riêng tư & Vận hành:** Quản lý sự đồng ý theo mục đích (**Granular Consent**) và thực thi quyền chủ thể dữ liệu (**DSR Anonymization** — hủy định danh dữ liệu và xóa file CV trên S3); cam kết **Zero Model Training** trên Bedrock; gửi email tự động qua **Amazon SES**; thu thập logs tập trung, dashboard chỉ số và cảnh báo tự động qua **Amazon CloudWatch**; kịch bản dọn dẹp tài nguyên triệt để (**Clean-up**).
+* **Phạm vi Mở rộng (Hậu MVP — Chỉ thực hiện nếu còn thời gian):**
+  * Ứng viên lưu việc làm yêu thích (Saved Jobs / Bookmarks).
+  * Đăng ký nhận thông báo việc làm phù hợp định kỳ qua email (Job Alerts).
+  * Bộ lọc tìm kiếm nâng cao đa chiều (mức lương chi tiết, loại hình làm việc Remote/Hybrid, thời gian đăng).
+  * Tích hợp **AWS WAF** bảo vệ CloudFront & API Gateway chống tấn công web phổ biến.
 
 ---
 
@@ -152,16 +156,17 @@ Hệ thống được thiết kế theo mô hình kiến trúc phân tầng Serv
 
 ## 5. Kế hoạch & Timeline xây dựng ứng dụng (Application Implementation Roadmap)
 
-Kế hoạch kỹ thuật tập trung vào toàn bộ vòng đời phát triển, tích hợp và triển khai hệ thống phần mềm, kéo dài từ **27/10/2026** đến **31/12/2026**:
+Lộ trình phát triển hệ thống kéo dài trong 9 tuần (từ **27/10/2026** đến **31/12/2026**), được thiết kế tổng quát theo 7 giai đoạn (Phase) bám sát các mốc kiểm soát chất lượng chính (**Milestones M0 – M6**):
 
-| Giai đoạn | Thời gian | Trọng tâm kỹ thuật xây dựng ứng dụng | Kết quả đầu ra phần mềm (Deliverables) |
+| Giai đoạn (Phase) | Thời gian | Trọng tâm công việc chính | Mốc kiểm soát & Sản phẩm chính |
 | :---: | :---: | :--- | :--- |
-| **Giai đoạn 1** | 27/10 – 31/10 | **Phân tích kỹ thuật & Thiết kế hệ thống:**<br>- Đặc tả yêu cầu phần mềm (SRS) & Use cases.<br>- Thiết kế kiến trúc AWS, Data Flow và cấu trúc bảng DynamoDB.<br>- Thiết kế chuẩn RESTful API, hợp đồng dữ liệu và cấu trúc prompt cho LLM. | - Tài liệu đặc tả kỹ thuật phần mềm (SRS).<br>- Sơ đồ kiến trúc hạ tầng & CSDL DynamoDB.<br>- Bộ thông số API Spec & mẫu prompt AI. |
-| **Giai đoạn 2** | 01/11 – 08/11 | **Khởi tạo hạ tầng & Định danh người dùng:**<br>- Xây dựng mã nguồn IaC khởi tạo các tài nguyên AWS nền tảng.<br>- Thiết lập Amazon Cognito User Pool (phân quyền `recruiter` / `candidate`).<br>- Khởi tạo khung Frontend Web App và cấu hình CI/CD trên AWS Amplify.<br>- Cấu hình API Gateway nền tảng kết hợp Cognito Authorizer. | - Hạ tầng nền tảng triển khai tự động qua IaC.<br>- Module xác thực và phân quyền hoạt động.<br>- Web App kết nối CI/CD tự động triển khai từ GitHub. |
-| **Giai đoạn 3** | 09/11 – 22/11 | **Phát triển nghiệp vụ tuyển dụng & Tiếp nhận hồ sơ:**<br>- Xây dựng các API & giao diện quản lý tin tuyển dụng (CRUD JD).<br>- Xây dựng cơ chế tải file CV PDF trực tiếp lên Amazon S3 qua Presigned URL.<br>- Xử lý luồng nộp hồ sơ, kiểm tra trùng lặp và lưu trữ trạng thái vào DynamoDB. | - Tính năng đăng tin tuyển dụng hoàn chỉnh.<br>- Module tải lên và lưu trữ CV an toàn trên S3.<br>- Giao diện nộp hồ sơ cho ứng viên và quản lý danh sách ứng viên cho nhà tuyển dụng. |
-| **Giai đoạn 4** | 23/11 – 06/12 | **Phát triển AI Screening Pipeline:**<br>- Thiết lập S3 Event Notification kích hoạt hàng đợi Amazon SQS (+DLQ).<br>- Xây dựng Lambda Worker tích hợp Amazon Textract trích xuất nội dung văn bản từ CV PDF.<br>- Tích hợp Amazon Bedrock LLM: phân tích đối soát JD - CV, chấm điểm theo thang tiêu chuẩn và trích xuất JSON.<br>- Xây dựng Dashboard xếp hạng ứng viên và giao diện hiển thị chi tiết đánh giá AI. | - Pipeline xử lý bất đồng bộ hoạt động ổn định.<br>- Module trích xuất văn bản Textract tự động.<br>- Module AI chấm điểm & tóm tắt qua Bedrock.<br>- Bảng xếp hạng ứng viên theo điểm số trên Web. |
-| **Giai đoạn 5** | 07/12 – 13/12 | **Tích hợp thông báo, Bảo mật & Giám sát vận hành:**<br>- Tích hợp Amazon SES gửi email tự động xác nhận ứng tuyển và gửi thư mời phỏng vấn.<br>- Tối ưu hóa bảo mật: cấu hình IAM Role theo nguyên tắc Least Privilege, mã hóa dữ liệu tại chỗ (KMS/S3).<br>- Thiết lập hệ thống giám sát tập trung qua CloudWatch (Logs, Custom Metrics, Alarms khi DLQ có message). | - Hệ thống gửi email tự động qua Amazon SES.<br>- Cấu hình bảo mật IAM chuẩn mực, không hard-code credentials.<br>- Dashboard giám sát vận hành và cảnh báo tự động trên CloudWatch. |
-| **Giai đoạn 6** | 14/12 – 31/12 | **Kiểm thử toàn diện, Tối ưu hóa & Hoàn thiện sản phẩm:**<br>- Kiểm thử tải (stress test hàng đợi SQS, Lambda concurrency).<br>- Kiểm thử các kịch bản lỗi: file CV hỏng/sai định dạng, phòng vệ tấn công Prompt Injection.<br>- Tối ưu hóa chi phí token Bedrock, thời gian phản hồi API và hoàn thiện sản phẩm hoàn chỉnh. | - Hệ thống phần mềm hoàn chỉnh, đạt độ ổn định cao.<br>- Toàn bộ kịch bản kiểm thử chức năng và ngoại lệ vượt qua (Pass).<br>- Phiên bản phần mềm chính thức (v1.0.0) sẵn sàng vận hành. |
+| **Phase 0**<br>Phân tích & Thiết kế | 27/10 – 31/10 | • Đặc tả yêu cầu (SRS theo 4 vai trò `CDD/RCT/AD/SYS`, quy tắc nghiệp vụ `BR`, phi chức năng `NFR`).<br>• Thiết kế kiến trúc Serverless trích xuất kép (PDF/DOCX), CSDL DynamoDB, API Spec và Rubric 100đ.<br>• Lập dự toán chi phí AWS Pricing Calculator (< $2.00/tháng). | **M0 (31/10):** Hoàn thành tài liệu SRS, sơ đồ kiến trúc, thiết kế API/DB và bản Proposal. |
+| **Phase 1**<br>Nền tảng & Hạ tầng | 01/11 – 08/11 | • Khởi tạo hạ tầng tự động qua IaC (AWS SAM/CDK).<br>• Cấu hình Cognito phân quyền (3 nhóm + HR Team), S3 Bucket (hỗ trợ PDF & DOCX), DynamoDB TTL và hàng đợi SQS + DLQ.<br>• Khởi tạo Frontend Web kết nối CI/CD trên AWS Amplify. | **M1 (08/11):** Hạ tầng đám mây sẵn sàng; đăng nhập và phân quyền hoạt động ổn định trên Web. |
+| **Phase 2**<br>Nghiệp vụ tuyển dụng | 09/11 – 22/11 | • Xây dựng module Company Profile & tin tuyển dụng JD.<br>• Phát triển tính năng nộp CV (PDF/DOCX) trực tiếp lên S3 qua Presigned URL an toàn.<br>• Xử lý hồ sơ cá nhân ứng viên, tính năng rút đơn (`WITHDRAWN`) và theo dõi 2 trạng thái song song. | **M2 (22/11):** Hoàn chỉnh luồng quản lý JD, nộp hồ sơ trực tuyến và theo dõi tiến trình tuyển dụng. |
+| **Phase 3**<br>Pipeline AI & Đánh giá | 23/11 – 06/12 | • Xây dựng pipeline ngầm: trích xuất Textract (PDF) / OpenXML (DOCX) và bộ lọc làm mờ PII khử định kiến.<br>• Tích hợp Bedrock Claude 3 Haiku chấm điểm Rubric 100đ xuất JSON.<br>• Giao diện Side-by-side Review 3 cột, ghi chú & cho điểm sao (Audit Trail), phân tích Skill Gap và Talent Pool Rediscovery. | **M3 (06/12):** Pipeline AI chấm điểm tự động; hệ thống đánh giá đa chiều và gợi ý nhân tài hoạt động trơn tru. |
+| **Phase 4**<br>Thông báo & Tuân thủ | 07/12 – 13/12 | • Tích hợp Amazon SES gửi email tự động (xác nhận đơn, thư mời phỏng vấn, thư từ chối, talent pool).<br>• Triển khai quản lý Consent, DSR Anonymization (`ANONYMIZED_USER`) và Access Audit Log.<br>• Thiết lập hệ thống giám sát CloudWatch (Dashboard, Alarms cho DLQ và lỗi 5xx). | **M4 (13/12):** Hệ thống email tự động, dashboard giám sát vận hành và tính năng bảo mật dữ liệu hoàn tất. |
+| **Phase 5**<br>Kiểm thử & Đóng băng | 14/12 – 20/12 | • Kiểm thử toàn diện chức năng, bảo mật Prompt Injection, kịch bản ngoại lệ và tải đồng thời 50 CV.<br>• Đối chiếu chi phí thực tế với dự toán; tạo seed data chuẩn.<br>• Đóng băng tính năng (**Feature Freeze 20/12**) và gắn tag release `v1.0.0`. | **M5 (20/12):** 100% test case đạt chuẩn; mã nguồn ổn định tuyệt đối, sẵn sàng cho demo. |
+| **Phase 6**<br>Tài liệu & Nộp bài | 21/12 – 31/12 | • Soạn thảo bộ Lab Guide song ngữ (vi/en) chi tiết đảm bảo tính tái lập 100%.<br>• Quay video demo 4 phân cảnh thực tế và hoàn thiện script clean-up $0.00.<br>• Rà soát checklist cuộc thi và nộp bài chính thức. | **M6 (31/12):** Bộ tài liệu hướng dẫn thực hành, video demo và hồ sơ bài nộp workshop hoàn thiện 100%. |
 
 ---
 
