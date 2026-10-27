@@ -4,6 +4,7 @@
 | :--- | :--- |
 | [references/](references/) | Tài liệu gốc: [rule-workshop.md](references/rule-workshop.md), [proposal_template.md](references/proposal_template.md) (kèm ảnh minh họa) |
 | [proposal/](proposal/) | Bản đề xuất của đề tài |
+| [plan/](plan/) | Kế hoạch end-to-end theo phase (27/10 – 31/12), milestone, checklist |
 | [software/](software/) | Tài liệu phân tích – thiết kế phần mềm: yêu cầu, use case, CSDL, API, kiểm thử |
 | [architecture/](architecture/) | Kiến trúc hạ tầng AWS & data flow; sơ đồ trong `diagrams/` |
 | [workshop/](workshop/) | Lab Guide: Overview, Prerequisites, Architecture, Step-by-step, Testing, Clean-up, Demo |

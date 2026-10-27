@@ -13,6 +13,7 @@ workshop/
 ├── docs/                     # Toàn bộ tài liệu (xem docs/README.md)
 │   ├── references/           # Tài liệu tham khảo gốc: quy định workshop, proposal mẫu
 │   ├── proposal/             # Bản đề xuất của đề tài (vi / en)
+│   ├── plan/                 # Kế hoạch theo phase (27/10 – 31/12)
 │   ├── software/             # Tài liệu phần mềm: SRS, use case, CSDL, API, test plan
 │   ├── architecture/         # Kiến trúc hạ tầng AWS, data flow
 │   │   └── diagrams/         # File sơ đồ (.drawio) và ảnh export (.png)
