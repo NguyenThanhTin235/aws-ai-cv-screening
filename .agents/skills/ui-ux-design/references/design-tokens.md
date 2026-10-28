@@ -21,10 +21,10 @@ This reference provides ready-to-use Vanilla CSS custom properties and core comp
   --color-text-muted: hsl(215, 12%, 58%);
   --color-text-inverse: hsl(0, 0%, 100%);
 
-  /* Brand Accents */
-  --color-brand-primary: hsl(221, 83%, 53%);
-  --color-brand-primary-hover: hsl(221, 83%, 45%);
-  --color-brand-subtle: hsl(221, 100%, 96%);
+  /* Brand Accents (Deep Forest Emerald #095744) */
+  --color-brand-primary: hsl(165, 81%, 19%); /* #095744 */
+  --color-brand-primary-hover: hsl(165, 80%, 24%); /* #0C6E56 */
+  --color-brand-subtle: hsl(165, 35%, 93%); /* #E8F4F1 */
 
   /* Semantic Feedback & Statuses */
   --color-status-success: hsl(142, 71%, 38%);
