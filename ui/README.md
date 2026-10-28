@@ -38,7 +38,7 @@ Các prompt đều tuân thủ nguyên tắc: **Không quy định code chi ti�
 
 ## 3. Cách Sử Dụng Với StitchAI
 
-1. Mở trang StitchAI (hoặc giao diện AI Design tương ứng).
-2. Mở file prompt tương ứng với trang bạn muốn thiết kế.
-3. Copy toàn bộ nội dung từ tiêu đề `[TÊN TRANG & MỤC ĐÍCH]` đến hết phần `[MÀU SẮC & PHONG CÁCH]`.
-4. Dán vào StitchAI và nhấn tạo giao diện.
+1. **Bước 1 (Khởi tạo ngữ cảnh):** Mở file [Template & Prompt Tổng Thể](file:///d:/AWS/workshop/ui/00-template-chung.md), copy toàn bộ khối **`MASTER CONTEXT PROMPT`** và dán vào StitchAI (mục System Prompt hoặc câu lệnh đầu tiên) để AI hiểu toàn bộ bài toán tuyển dụng, 3 nhóm đối tượng và tôn chỉ thẩm mỹ.
+2. **Bước 2 (Thiết kế từng màn hình):** Mở file prompt của trang bạn muốn thiết kế (trong danh sách mục 2 ở trên).
+3. **Bước 3:** Copy toàn bộ nội dung từ tiêu đề `[TÊN TRANG & MỤC ĐÍCH]` đến hết phần `[MÀU SẮC & PHONG CÁCH]`.
+4. **Bước 4:** Dán vào StitchAI và nhấn tạo giao diện.
