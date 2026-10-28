@@ -273,14 +273,14 @@ graph TB
   * *Thành công:* Tệp CV được tải lên S3 an toàn, xuất hiện trong danh sách kèm tùy chọn đặt làm mặc định hoặc xóa bỏ.
 * **Luồng sự kiện chính (Basic Flow):**
   1. **[Ứng viên]** Mở mục Quản lý CV, quan sát vùng kéo thả tài liệu (Dropzone) và bảng danh sách CV hiện có.
-  2. **[Ứng viên]** Kéo thả hoặc chọn tệp CV mới từ máy tính (định dạng `.pdf` hoặc `.docx`, dung lượng <= 5MB theo `BR-DOC-01`, `BR-DOC-02`).
+  2. **[Ứng viên]** Kéo thả hoặc chọn tệp CV mới từ máy tính (định dạng `.pdf` hoặc `.docx`, dung lượng <= 5MB theo `BR-DOC-01`).
   3. **[Hệ thống]** Tải tệp lên kho lưu trữ Amazon S3 qua Pre-signed URL an toàn, hiển thị thanh tiến trình 0% -> 100% và bổ sung mục mới vào bảng danh sách.
   4. **[Ứng viên]** Bấm nút gạt **"Đặt làm CV mặc định"** tại dòng tài liệu vừa tải.
   5. **[Hệ thống]** Gắn huy hiệu xanh lá *"Mặc định"* cạnh tệp và hiển thị thông báo: *"Đã thiết lập làm CV mặc định cho các lần nộp đơn sau."*
 * **Luồng sự kiện rẽ nhánh & Ngoại lệ (Alternative & Exception Flows):**
   * *2a. Chọn tệp sai định dạng (ví dụ: `.png`, `.zip`, `.exe`):* Vùng kéo thả đổi viền đỏ cảnh báo: *"Chỉ chấp nhận tệp định dạng PDF (.pdf) hoặc Microsoft Word (.docx). Vui lòng chọn lại."*
   * *2b. Dung lượng tệp vượt quá 5MB:* Hệ thống chặn ngay tại trình duyệt và hiển thị thông báo: *"Kích thước tệp vượt quá giới hạn 5MB cho phép."*
-* **Quy tắc nghiệp vụ & Ràng buộc (Business Rules & Constraints):** `BR-DOC-01`, `BR-DOC-02`.
+* **Quy tắc nghiệp vụ & Ràng buộc (Business Rules & Constraints):** `BR-DOC-01`.
 
 ---
 
@@ -333,10 +333,10 @@ graph TB
   * *Thất bại:* Giao diện giữ nguyên, hiển thị thông báo lỗi cụ thể để ứng viên điều chỉnh.
 * **Luồng sự kiện chính (Basic Flow):**
   1. **[Ứng viên]** Tại trang chi tiết việc làm, bấm nút **"Nộp đơn ứng tuyển ngay"**.
-  2. **[Hệ thống]** Kiểm tra tính hợp lệ: xác minh ứng viên chưa có đơn ứng tuyển nào đang trong quá trình xét duyệt cho vị trí này (`BR-DOC-03`). Hệ thống mở Modal nộp đơn chuyên nghiệp.
+  2. **[Hệ thống]** Kiểm tra tính hợp lệ: xác minh ứng viên chưa có đơn ứng tuyển nào đang trong quá trình xét duyệt cho vị trí này (`BR-DOC-02`). Hệ thống mở Modal nộp đơn chuyên nghiệp.
   3. **[Ứng viên]** Lựa chọn phương thức cung cấp CV:
      - *Lựa chọn A (Nộp nhanh):* Chọn sử dụng **"CV Mặc định"** sẵn có trong hồ sơ.
-     - *Lựa chọn B (Tải tệp mới):* Kéo thả hoặc chọn tệp CV từ thiết bị (chấp nhận định dạng `.pdf` hoặc `.docx`, dung lượng <= 5MB theo `BR-DOC-01`, `BR-DOC-02`).
+     - *Lựa chọn B (Tải tệp mới):* Kéo thả hoặc chọn tệp CV từ thiết bị (chấp nhận định dạng `.pdf` hoặc `.docx`, dung lượng <= 5MB theo `BR-DOC-01`).
   4. **[Ứng viên]** Đọc và tích chọn các điều khoản đồng thuận (`BR-PRIV-01`):
      - [x] *"Tôi đồng ý cho hệ thống AI phân tích dữ liệu CV phục vụ vị trí tuyển dụng này (Bắt buộc)."*
      - [x] *"Tôi đồng ý cho doanh nghiệp lưu trữ hồ sơ trong Kho tài năng (Talent Pool) để liên hệ cho các cơ hội nghề nghiệp tương lai (Tùy chọn)."*
@@ -348,7 +348,7 @@ graph TB
   * *2a. Ứng viên đã nộp đơn trước đó cho vị trí này:* Hệ thống chặn mở modal và hiển thị banner cảnh báo: *"Bạn đã có đơn ứng tuyển cho vị trí này đang được xem xét. Vui lòng theo dõi tiến độ tại trang lịch sử."*
   * *3a. Tệp tải lên sai định dạng hoặc vượt quá 5MB:* Hệ thống hiển thị cảnh báo đỏ trực tiếp dưới khung tải tệp, vô hiệu hóa nút nộp đơn.
   * *4a. Chưa tích chọn điều khoản bắt buộc:* Nút "Gửi hồ sơ ứng tuyển" giữ trạng thái vô hiệu hóa kèm dòng nhắc nhở nhỏ màu đỏ.
-* **Quy tắc nghiệp vụ & Ràng buộc (Business Rules & Constraints):** `BR-DOC-01..04`, `BR-STATE-01`, `BR-PRIV-01`, `BR-STATE-03`.
+* **Quy tắc nghiệp vụ & Ràng buộc (Business Rules & Constraints):** `BR-DOC-01..03`, `BR-STATE-01`, `BR-PRIV-01`, `BR-STATE-03`.
 
 ---
 
