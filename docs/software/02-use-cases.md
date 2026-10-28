@@ -907,5 +907,5 @@ Tài liệu **Đặc tả Trường hợp Sử dụng (`02-use-cases.md`) v2.1**
 Tài liệu này là cơ sở vững chắc để tiếp tục triển khai các tài liệu kỹ thuật tiếp theo trong **Phase 0**:
 - **Phase 0 — Ngày 2 (28/10):** Chốt Tech Stack chi tiết và chuẩn bị bộ dữ liệu mẫu trong `samples/`.
 - **Phase 0 — Ngày 3 (29/10):** Thiết kế Sơ đồ Kiến trúc Hệ thống ([03-architecture.md](file:///d:/AWS/workshop/docs/software/03-architecture.md)).
-- **Phase 0 — Ngày 4 (30/10):** Thiết kế CSDL DynamoDB & Đặc tả API RESTful ([04-api-design.md](file:///d:/AWS/workshop/docs/software/04-api-design.md)).
-- **Phase 0 — Ngày 5 (31/10):** Thiết kế Prompt Bedrock ([05-ai-pipeline.md](file:///d:/AWS/workshop/docs/software/05-ai-pipeline.md)) và Kế hoạch Kiểm thử ([06-test-plan.md](file:///d:/AWS/workshop/docs/software/06-test-plan.md)).
+- **Phase 0 — Ngày 4 (30/10):** Thiết kế CSDL DynamoDB, Đặc tả API RESTful & Thiết kế giao diện UI/UX ([03-database-design.md](file:///d:/AWS/workshop/docs/software/03-database-design.md), [04-api-spec.md](file:///d:/AWS/workshop/docs/software/04-api-spec.md), [07-ui-ux-design.md](file:///d:/AWS/workshop/docs/software/07-ui-ux-design.md)).
+- **Phase 0 — Ngày 5 (31/10):** Dự toán chi phí AWS Calculator, Thiết kế Prompt Bedrock và Kế hoạch Kiểm thử ([06-test-plan.md](file:///d:/AWS/workshop/docs/software/06-test-plan.md)).
