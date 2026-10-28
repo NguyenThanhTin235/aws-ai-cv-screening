@@ -329,7 +329,7 @@ graph TB
 * **Sự kiện kích hoạt (Trigger):** Ứng viên bấm nút **"Nộp đơn ứng tuyển ngay"** tại trang chi tiết tin tuyển dụng.
 * **Tiền điều kiện (Preconditions):** Ứng viên đã đăng nhập; tin tuyển dụng đang mở tiếp nhận đơn (`status = OPEN`).
 * **Hậu điều kiện (Postconditions):**
-  * *Thành công:* Đơn ứng tuyển được tạo với trạng thái `status = SUBMITTED`, `ai_status = PENDING`; tệp CV được lưu trữ an toàn trên S3; bản tin được đẩy vào hàng đợi SQS; email xác nhận được gửi tới ứng viên.
+  * *Thành công:* Đơn ứng tuyển được tạo với trạng thái `status = SUBMITTED`, `aiStatus = PENDING`; tệp CV được lưu trữ an toàn trên S3; bản tin được đẩy vào hàng đợi SQS; email xác nhận được gửi tới ứng viên.
   * *Thất bại:* Giao diện giữ nguyên, hiển thị thông báo lỗi cụ thể để ứng viên điều chỉnh.
 * **Luồng sự kiện chính (Basic Flow):**
   1. **[Ứng viên]** Tại trang chi tiết việc làm, bấm nút **"Nộp đơn ứng tuyển ngay"**.
@@ -355,7 +355,7 @@ graph TB
 #### 5.7. UC-CDD-07: Theo dõi Tiến trình Tuyển dụng & Lịch sử Hồ sơ
 * **Tác nhân chính (Primary Actor):** Ứng viên (`CDD`).
 * **Tác nhân hỗ trợ (Supporting Actors):** Không có.
-* **Mô tả (Description):** Cung cấp giao diện bảng theo dõi tiến độ minh bạch cho ứng viên tại trang Quản lý Đơn ứng tuyển (`SCR-CDD-HISTORY`). Tính năng thể hiện cơ chế vòng đời kép độc lập: tiến trình xử lý kỹ thuật của AI (`ai_status`) và trạng thái xét duyệt nghiệp vụ của Nhà tuyển dụng (`status`), giúp ứng viên nắm bắt chính xác hiện trạng hồ sơ mà không phải chờ đợi trong mơ hồ.
+* **Mô tả (Description):** Cung cấp giao diện bảng theo dõi tiến độ minh bạch cho ứng viên tại trang Quản lý Đơn ứng tuyển (`SCR-CDD-HISTORY`). Tính năng thể hiện cơ chế vòng đời kép độc lập: tiến trình xử lý kỹ thuật của AI (`aiStatus`) và trạng thái xét duyệt nghiệp vụ của Nhà tuyển dụng (`status`), giúp ứng viên nắm bắt chính xác hiện trạng hồ sơ mà không phải chờ đợi trong mơ hồ.
 * **Sự kiện kích hoạt (Trigger):** Ứng viên chọn mục **"Đơn ứng tuyển của tôi"** trên thanh điều hướng.
 * **Tiền điều kiện (Preconditions):** Ứng viên đã đăng nhập và đã nộp ít nhất một hồ sơ.
 * **Hậu điều kiện (Postconditions):**
@@ -363,7 +363,7 @@ graph TB
 * **Luồng sự kiện chính (Basic Flow):**
   1. **[Ứng viên]** Truy cập vào trang Quản lý Đơn ứng tuyển.
   2. **[Hệ thống]** Hiển thị danh sách các vị trí đã ứng tuyển dưới dạng bảng trực quan, mỗi dòng thể hiện song song 2 thông số tiến trình (`BR-STATE-01`):
-     - **Tiến trình Xử lý AI (`ai_status`):** Thể hiện qua huy hiệu màu động: `Đang tiếp nhận (PENDING)` -> `Đang trích xuất (EXTRACTING)` -> `Đang chấm điểm (SCORING)` -> `Đã hoàn tất (COMPLETED)`.
+     - **Tiến trình Xử lý AI (`aiStatus`):** Thể hiện qua huy hiệu màu động: `Đang tiếp nhận (PENDING)` -> `Đang trích xuất (EXTRACTING)` -> `Đang chấm điểm (SCORING)` -> `Đã hoàn tất (COMPLETED)`.
      - **Trạng thái Xét duyệt Tuyển dụng (`status`):** Thể hiện quy trình bước: `Đã nộp (SUBMITTED)` -> `Đang xét duyệt (UNDER_REVIEW)` -> `Mời phỏng vấn (INVITED)` / `Chưa phù hợp (REJECTED)` / `Đã rút đơn (WITHDRAWN)`.
   3. **[Ứng viên]** Bấm vào mốc tiến trình để xem dòng thời gian (Timeline) chi tiết (ví dụ: Nộp lúc 09:30, AI chấm xong lúc 09:31, HR xem xét lúc 14:00).
 * **Luồng sự kiện rẽ nhánh & Ngoại lệ (Alternative & Exception Flows):**
@@ -376,8 +376,8 @@ graph TB
 * **Tác nhân chính (Primary Actor):** Ứng viên (`CDD`).
 * **Tác nhân hỗ trợ (Supporting Actors):** Amazon Bedrock (Cung cấp dữ liệu phân tích đã lưu trữ).
 * **Mô tả (Description):** Mang lại sự minh bạch tuyệt đối cho ứng viên bằng cách cho phép xem Báo cáo Đánh giá Năng lực chi tiết do AI phân tích tại Modal Báo cáo AI (`SCR-CDD-REPORT-MODAL`). Báo cáo thể hiện điểm số Rubric 100đ, giải trình lý do xếp loại, phân tích điểm sáng năng lực và chỉ ra khoảng trống kỹ năng cần trau dồi so với yêu cầu của thị trường lao động.
-* **Sự kiện kích hoạt (Trigger):** Ứng viên bấm nút **"Xem Báo cáo AI"** tại dòng đơn ứng tuyển có `ai_status = COMPLETED`.
-* **Tiền điều kiện (Preconditions):** Đơn ứng tuyển đã hoàn tất quy trình phân tích AI (`ai_status = COMPLETED`).
+* **Sự kiện kích hoạt (Trigger):** Ứng viên bấm nút **"Xem Báo cáo AI"** tại dòng đơn ứng tuyển có `aiStatus = COMPLETED`.
+* **Tiền điều kiện (Preconditions):** Đơn ứng tuyển đã hoàn tất quy trình phân tích AI (`aiStatus = COMPLETED`).
 * **Hậu điều kiện (Postconditions):**
   * *Thành công:* Giao diện báo cáo trực quan hiển thị đầy đủ điểm số, biểu đồ và các khuyến nghị phát triển bản thân.
 * **Luồng sự kiện chính (Basic Flow):**
@@ -507,7 +507,7 @@ graph TB
 * **Tác nhân hỗ trợ (Supporting Actors):** Không có.
 * **Mô tả (Description):** Cung cấp giao diện bảng tổng hợp danh sách ứng viên thông minh tại màn hình Quản lý Hồ sơ Ứng viên (`SCR-RCT-RANKING`). Hệ thống tự động sắp xếp các hồ sơ theo thứ tự điểm AI từ cao nhất (100đ) xuống thấp nhất, gắn mã màu trực quan theo 3 mức độ phù hợp (Strong / Potential / Not Match) và cung cấp bộ lọc nhanh giúp HR sàng lọc hàng trăm CV trong vài giây mà không bỏ sót ứng viên tiềm năng.
 * **Sự kiện kích hoạt (Trigger):** Recruiter chọn một tin tuyển dụng và bấm vào mục **"Danh sách ứng viên"**.
-* **Tiền điều kiện (Preconditions):** Tin tuyển dụng đã có ứng viên nộp và AI đã hoàn tất chấm điểm (`ai_status = COMPLETED`).
+* **Tiền điều kiện (Preconditions):** Tin tuyển dụng đã có ứng viên nộp và AI đã hoàn tất chấm điểm (`aiStatus = COMPLETED`).
 * **Hậu điều kiện (Postconditions):**
   * *Thành công:* Danh sách ứng viên hiển thị thứ tự điểm số giảm dần kèm các huy hiệu phân loại và bộ lọc nhanh.
 * **Luồng sự kiện chính (Basic Flow):**
@@ -586,7 +586,7 @@ graph TB
 * **Sự kiện kích hoạt (Trigger):** Recruiter bấm nút **"Chấm lại bằng AI (Re-score)"**.
 * **Tiền điều kiện (Preconditions):** Hồ sơ đã từng có kết quả chấm AI trước đó; chưa vượt quá giới hạn 3 lần chấm lại trong vòng 1 giờ gần nhất (`BR-RETRY-02`).
 * **Hậu điều kiện (Postconditions):**
-  * *Thành công:* Trạng thái chuyển sang `ai_status = PENDING`, thông điệp được gửi vào SQS và kết quả chấm mới được cập nhật trên màn hình sau 30-60 giây.
+  * *Thành công:* Trạng thái chuyển sang `aiStatus = PENDING`, thông điệp được gửi vào SQS và kết quả chấm mới được cập nhật trên màn hình sau 30-60 giây.
   * *Thất bại:* Nút bấm bị vô hiệu hóa kèm thông báo thời gian chờ còn lại.
 * **Luồng sự kiện chính (Basic Flow):**
   1. **[Recruiter]** Bấm vào nút **"Chấm lại bằng AI (Re-score)"** trên màn hình chi tiết hồ sơ.
@@ -794,13 +794,13 @@ graph TB
 * **Tác nhân hỗ trợ (Supporting Actors):** Amazon SQS (Main Processing Queue), AWS Lambda.
 * **Mô tả (Description):** Đảm nhiệm vai trò tầng đệm tiếp nhận và điều phối các hồ sơ ứng tuyển mới nộp một cách bất đồng bộ thông qua hàng đợi Amazon SQS. Tính năng đảm bảo kiến trúc hệ thống luôn ổn định, có khả năng giãn tải (Decoupling) linh hoạt khi có lượng lớn ứng viên nộp đơn đồng thời, đồng thời áp dụng cơ chế Idempotency dựa trên `ApplicationId` để ngăn ngừa tuyệt đối việc xử lý trùng lặp.
 * **Sự kiện kích hoạt (Trigger):** Bản tin sự kiện nộp hồ sơ mới được đẩy vào hàng đợi Amazon SQS từ API ứng tuyển.
-* **Tiền điều kiện (Preconditions):** Tệp CV đã được tải lên S3 an toàn và bản ghi đơn ứng tuyển đã được tạo với `ai_status = PENDING`.
+* **Tiền điều kiện (Preconditions):** Tệp CV đã được tải lên S3 an toàn và bản ghi đơn ứng tuyển đã được tạo với `aiStatus = PENDING`.
 * **Hậu điều kiện (Postconditions):**
-  * *Thành công:* Message được Lambda tiếp nhận an toàn; trạng thái hiển thị trên giao diện của ứng viên chuyển sang `ai_status = EXTRACTING`.
+  * *Thành công:* Message được Lambda tiếp nhận an toàn; trạng thái hiển thị trên giao diện của ứng viên chuyển sang `aiStatus = EXTRACTING`.
 * **Luồng sự kiện chính (Basic Flow):**
   1. **[Hệ thống Nền]** Hàng đợi Amazon SQS nhận bản tin sự kiện khi có CV mới nộp, kích hoạt hàm xử lý ngầm AWS Lambda AI Worker.
   2. **[Hệ thống Nền]** Worker kiểm tra mã hồ sơ (`ApplicationId`) để đảm bảo tính duy nhất (cơ chế Idempotency - không xử lý trùng lặp theo `NFR-REL-03`).
-  3. **[Hệ thống Nền]** Cập nhật trạng thái hiển thị theo thời gian thực tới giao diện của ứng viên: `ai_status = EXTRACTING` (*"Đang đọc nội dung tài liệu CV..."*).
+  3. **[Hệ thống Nền]** Cập nhật trạng thái hiển thị theo thời gian thực tới giao diện của ứng viên: `aiStatus = EXTRACTING` (*"Đang đọc nội dung tài liệu CV..."*).
 * **Quy tắc nghiệp vụ & Ràng buộc (Business Rules & Constraints):** `NFR-REL-01`, `NFR-REL-03`.
 
 ---
@@ -829,13 +829,13 @@ graph TB
 * **Sự kiện kích hoạt (Trigger):** Hoàn tất bước trích xuất văn bản thô từ CV.
 * **Tiền điều kiện (Preconditions):** Đã có chuỗi văn bản CV sạch và nội dung tiêu chuẩn của JD.
 * **Hậu điều kiện (Postconditions):**
-  * *Thành công:* Điểm số 100đ, 4 trọng số Rubric, đoạn tóm tắt, điểm sáng và khoảng trống kỹ năng được lưu vào cơ sở dữ liệu; cập nhật `ai_status = COMPLETED`; email thông báo gửi tới ứng viên.
+  * *Thành công:* Điểm số 100đ, 4 trọng số Rubric, đoạn tóm tắt, điểm sáng và khoảng trống kỹ năng được lưu vào cơ sở dữ liệu; cập nhật `aiStatus = COMPLETED`; email thông báo gửi tới ứng viên.
 * **Luồng sự kiện chính (Basic Flow):**
   1. **[Hệ thống Nền]** Đưa văn bản qua bộ lọc khử định kiến PII (`NFR-SEC-03`): Thay thế Họ tên bằng `[CANDIDATE_NAME]`, xóa số điện thoại, email, địa chỉ cư trú, ngày sinh và đại từ nhân xưng giới tính.
-  2. **[Hệ thống Nền]** Cập nhật trạng thái hiển thị tới ứng viên: `ai_status = SCORING` (*"AI đang đối soát năng lực với tiêu chí JD..."*).
+  2. **[Hệ thống Nền]** Cập nhật trạng thái hiển thị tới ứng viên: `aiStatus = SCORING` (*"AI đang đối soát năng lực với tiêu chí JD..."*).
   3. **[Hệ thống Nền]** Gửi văn bản đã khử PII kèm prompt chuẩn hóa tới **Amazon Bedrock (Claude 3 Haiku)**, yêu cầu chấm điểm theo **Rubric 100 điểm chuẩn hóa** (`BR-SCORING-01`): Kỹ năng (40đ), Kinh nghiệm (30đ), Học vấn (15đ), Kỹ năng mềm (15đ).
   4. **[Hệ thống Nền]** Nhận phản hồi JSON có cấu trúc từ Bedrock, lưu điểm số, xếp loại Match Level, điểm mạnh và khoảng trống kỹ năng vào hệ thống.
-  5. **[Hệ thống Nền]** Cập nhật trạng thái `ai_status = COMPLETED` và kích hoạt Amazon SES gửi email thông báo kết quả sơ loại đã sẵn sàng tới ứng viên (`CDD11`, `BR-STATE-03`).
+  5. **[Hệ thống Nền]** Cập nhật trạng thái `aiStatus = COMPLETED` và kích hoạt Amazon SES gửi email thông báo kết quả sơ loại đã sẵn sàng tới ứng viên (`CDD11`, `BR-STATE-03`).
 * **Quy tắc nghiệp vụ & Ràng buộc (Business Rules & Constraints):** `BR-SCORING-01..03`, `NFR-SEC-03..04`, `NFR-PERF-01` (Thời gian xử lý toàn trình < 60 giây).
 
 ---
@@ -848,12 +848,12 @@ graph TB
 * **Tiền điều kiện (Preconditions):** Có sự cố phát sinh trong quá trình phân tích CV.
 * **Hậu điều kiện (Postconditions):**
   * *Thành công (sau thử lại):* Hồ sơ được chấm điểm thành công ở lần thử lại tiếp theo.
-  * *Cách ly thất bại:* Sau 3 lần thất bại, bản tin được chuyển vào DLQ; phát cảnh báo CloudWatch Alarm; hiển thị trạng thái `ai_status = FAILED` kèm thông báo thân thiện cho ứng viên.
+  * *Cách ly thất bại:* Sau 3 lần thất bại, bản tin được chuyển vào DLQ; phát cảnh báo CloudWatch Alarm; hiển thị trạng thái `aiStatus = FAILED` kèm thông báo thân thiện cho ứng viên.
 * **Luồng sự kiện chính (Basic Flow):**
   1. **[Hệ thống Nền]** Khi phát hiện lỗi quá tải từ nhà cung cấp dịch vụ AI, hệ thống tự động giữ lại bản tin trong hàng đợi và giãn thời gian thử lại sau vài giây.
   2. **[Hệ thống Nền]** Tự động thử lại tối đa 3 lần (`maxReceiveCount = 3` theo `NFR-REL-02`).
   3. **[Hệ thống Nền]** Nếu sau 3 lần vẫn không thành công: Tự động di chuyển bản tin vào **Dead-Letter Queue (DLQ)** để cách ly an toàn, đồng thời kích hoạt cảnh báo CloudWatch Alarm gửi tới Quản trị viên (`NFR-OPS-02`).
-  4. **[Hệ thống Nền]** Cập nhật trạng thái hiển thị minh bạch cho người dùng: `ai_status = FAILED` kèm thông điệp: *"Hệ thống AI đang quá tải tạm thời. Hồ sơ của bạn đã được bảo lưu an toàn và sẽ được tự động xử lý lại sớm nhất."*
+  4. **[Hệ thống Nền]** Cập nhật trạng thái hiển thị minh bạch cho người dùng: `aiStatus = FAILED` kèm thông điệp: *"Hệ thống AI đang quá tải tạm thời. Hồ sơ của bạn đã được bảo lưu an toàn và sẽ được tự động xử lý lại sớm nhất."*
 * **Quy tắc nghiệp vụ & Ràng buộc (Business Rules & Constraints):** `NFR-REL-02`, `NFR-OPS-02`.
 
 ---
@@ -868,7 +868,7 @@ graph TB
 | **`CDD`** | `UC-CDD-04` | `SCR-CDD-JOB-SEARCH` | Thanh tìm kiếm lớn, Chip lọc nhanh (Cấp bậc, Địa điểm, Lương), Thẻ tin việc làm (Job Card). |
 | **`CDD`** | `UC-CDD-05` | `SCR-CDD-SAVED-JOBS` | Danh sách việc làm đã lưu (Bookmark hình trái tim), Form đăng ký email Job Alerts. |
 | **`CDD`** | `UC-CDD-06` | `SCR-CDD-APPLY-MODAL` | Modal nộp đơn: Nút nộp bằng CV mặc định / Kéo thả CV mới, Thanh tiến trình upload %, Checkbox đồng ý AI. |
-| **`CDD`** | `UC-CDD-07` | `SCR-CDD-HISTORY` | Bảng việc làm đã nộp: 2 thanh tiến trình trực quan (`status` ATS và `ai_status` xử lý ngầm). |
+| **`CDD`** | `UC-CDD-07` | `SCR-CDD-HISTORY` | Bảng việc làm đã nộp: 2 thanh tiến trình trực quan (`status` ATS và `aiStatus` xử lý ngầm). |
 | **`CDD`** | `UC-CDD-08` | `SCR-CDD-REPORT-MODAL` | Modal Báo cáo AI: Vòng tròn điểm 100đ, Huy hiệu Match Level, 4 thanh đo Rubric, Điểm sáng & Kỹ năng thiếu. |
 | **`CDD`** | `UC-CDD-09` | `SCR-CDD-WITHDRAW-MODAL`| Modal xác nhận rút đơn, Dropdown chọn lý do rút, Badge xám "Đã rút đơn (WITHDRAWN)". |
 | **`CDD`** | `UC-CDD-10` | `SCR-CDD-PRIVACY` | Trang Quyền riêng tư: Switch bật/tắt Talent Pool, Nút tải file JSON dữ liệu, Nút đỏ "Xóa tài khoản". |
