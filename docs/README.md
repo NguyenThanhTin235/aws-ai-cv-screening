@@ -6,7 +6,7 @@
 | [proposal/](proposal/) | Bản đề xuất của đề tài |
 | [plan/](plan/) | Kế hoạch end-to-end theo phase (27/10 – 31/12), milestone, checklist |
 | [software/](software/) | Tài liệu phân tích – thiết kế phần mềm: yêu cầu, use case, CSDL, API, kiểm thử |
-| [architecture/](architecture/) | Kiến trúc hạ tầng AWS & data flow; sơ đồ trong `diagrams/` |
+| [architecture/](architecture/) | Kiến trúc hạ tầng AWS, quy chuẩn công nghệ ([tech-stack.md](architecture/tech-stack.md)) & data flow; sơ đồ trong `diagrams/` |
 | [workshop/](workshop/) | Lab Guide: Overview, Prerequisites, Architecture, Step-by-step, Testing, Clean-up, Demo |
 | [cost/](cost/) | Dự toán chi phí (AWS Pricing Calculator) & chiến lược tối ưu |
 
