@@ -14,7 +14,7 @@
 Tài liệu này đặc tả trực quan và chi tiết trình tự tương tác theo thời gian giữa các tác nhân người dùng (`Candidate`, `Recruiter`, `Admin`), các dịch vụ trên tầng Giao diện (`Web Portal SPA`), tầng Cổng điều hướng (`API Gateway`, `Cognito`), tầng Tính toán & Hàng đợi (`Lambda`, `SQS`), tầng Trí tuệ Nhân tạo (`Textract`, `Bedrock Claude 3 Haiku`), tầng Lưu trữ dữ liệu (`DynamoDB Single-Table`, `Amazon S3`) và tầng Thông báo (`Amazon SES`).
 
 ### Danh mục 6 Luồng Xử lý Cốt lõi:
-1. **Luồng 1 (SEQ-01):** Nộp Hồ sơ Ứng tuyển Trực tuyến Đa Định dạng (PDF/DOCX) & Khởi tạo Khóa Kháng Trùng.
+1. **Luồng 1 (SEQ-01):** Nộp Hồ sơ Ứng tuyển Trực tuyến Định dạng PDF & Khởi tạo Khóa Kháng Trùng.
 2. **Luồng 2 (SEQ-02):** Pipeline AI Trích xuất Văn bản, Khử PII & Chấm điểm Bedrock Rubric 100đ.
 3. **Luồng 3 (SEQ-03):** Ứng viên Rút đơn Tuyển dụng (`WITHDRAWN`) & Giải phóng Khóa Nộp lại Hợp lệ.
 4. **Luồng 4 (SEQ-04):** Đánh giá Đội nhóm HR (Multi-Reviewer), Side-by-side View & Ghi Audit Trail Bất biến.
@@ -23,7 +23,7 @@ Tài liệu này đặc tả trực quan và chi tiết trình tự tương tác
 
 ---
 
-## 2. SEQ-01: Nộp Hồ sơ Đa Định dạng (PDF/DOCX) & Khởi tạo Khóa Kháng Trùng
+## 2. SEQ-01: Nộp Hồ sơ Định dạng PDF (`.pdf`) & Khởi tạo Khóa Kháng Trùng
 
 Sơ đồ mô tả quy trình ứng viên tải tệp CV trực tiếp lên **Amazon S3 qua Presigned URL**, sau đó gọi API nộp đơn. Hệ thống sử dụng **DynamoDB `TransactWriteItems`** để tạo đơn nộp, khởi tạo khóa `ACTIVE_APP#<jobId>` chống nộp trùng (`BR-DOC-02`), ghi nhận đồng thuận (`BR-PRIV-01`) và kích hoạt chuỗi xử lý nền qua **Amazon SQS**.
 
@@ -41,13 +41,14 @@ sequenceDiagram
     participant SES as Amazon SES
 
     Note over CDD, S3: BƯỚC 1: XIN CẤP PRESIGNED URL & TẢI TỆP LÊN S3
-    CDD->>UI: Chọn tệp CV (.pdf hoặc .docx, <= 5MB) và bấm nộp
+    CDD->>UI: Đăng nhập (Login) và chọn tệp CV định dạng PDF (.pdf, <= 5MB)
+    UI->>COG: Login (SRP Auth)
+    COG-->>UI: Cấp JWT Token (ID Token, Access Token)
     UI->>APIGW: POST /api/v1/applications/upload-url (kèm JWT Bearer)
-    APIGW->>COG: Xác thực Token (Cognito Authorizer)
-    COG-->>APIGW: 200 OK (Claims: userId)
+    Note over APIGW: JWT Authorizer xác thực chữ ký JWT (qua JWKS) & giải mã Claims (userId)
     APIGW->>L_APP: Invoke handler (jobId, fileName, fileType, fileSize)
     activate L_APP
-    L_APP->>L_APP: Kiểm tra fileType IN (PDF, DOCX) & fileSize <= 5MB (BR-DOC-01)
+    L_APP->>L_APP: Kiểm tra fileType == 'PDF' (application/pdf) & fileSize <= 5MB (BR-DOC-01)
     L_APP->>S3: getSignedUrlPromise('putObject', { Key: temp-uploads/..., Expires: 300 })
     S3-->>L_APP: Presigned PUT URL (Hạn 5 phút theo BR-DOC-03)
     L_APP-->>APIGW: 200 OK { uploadUrl, s3Key, expiresInSeconds: 300 }
@@ -92,7 +93,7 @@ sequenceDiagram
 
 ## 3. SEQ-02: Pipeline AI Trích xuất Văn bản, Khử PII & Chấm điểm Bedrock Rubric 100đ
 
-Sơ đồ mô tả quy trình nền bất đồng bộ hoàn toàn: Lambda AI Worker nhận tin từ SQS, tự động phân luồng bóc tách văn bản theo định dạng (PDF qua Textract, DOCX qua OpenXML native), thực hiện **khử thông tin định danh (PII Redaction)** để loại bỏ thiên kiến, sau đó gửi prompt bọc XML tới **Amazon Bedrock (Claude 3 Haiku)** để chấm điểm theo Rubric 100 điểm (`BR-SCORING-01`).
+Sơ đồ mô tả quy trình nền bất đồng bộ hoàn toàn: Lambda AI Worker nhận tin từ SQS, kiểm tra chữ ký tệp PDF (`%PDF-`) và trích xuất văn bản qua **Amazon Textract (`DetectDocumentTextCommand`)**, thực hiện **khử thông tin định danh (PII Redaction)** để loại bỏ thiên kiến, sau đó gửi prompt bọc XML tới **Amazon Bedrock (Claude 3 Haiku)** để chấm điểm theo Rubric 100 điểm (`BR-SCORING-01`).
 
 ```mermaid
 sequenceDiagram
@@ -108,26 +109,25 @@ sequenceDiagram
     participant DLQ as SQS Dead-Letter Queue (DLQ)
     participant CW as CloudWatch Alarms
 
-    SQS->>WRK: SQS Event Trigger (BatchSize = 1, SQS Message Payload)
+    SQS->>WRK: 4. SQS -> Step Functions Trigger (CV đã qua S3 Quarantine & GuardDuty Malware Scan = NO_THREATS_FOUND)
     activate WRK
-    WRK->>DDB: UpdateItem APP#<applicationId> SET aiStatus = 'EXTRACTING'
-    WRK->>S3: GetObject(s3Key)
-    S3-->>WRK: File Buffer & Metadata
+    WRK->>DDB: 4. Kiểm tra Idempotency (document_id + versionId) & SET aiStatus = 'EXTRACTING'
+    WRK->>S3: GetObject(s3Key, Range: bytes=0-63)
+    S3-->>WRK: 64-byte PDF Header & Metadata (Kiểm tra MIME/Magic Bytes %PDF- & Size <= 5MB)
 
-    alt Tệp định dạng PDF (.pdf)
-        WRK->>TXT: DetectDocumentTextCommand({ Document: { Bytes: buffer } })
-        activate TXT
-        TXT-->>WRK: Blocks (LINE, WORD, Confidence Scores)
-        deactivate TXT
-        WRK->>WRK: Ghép nối chuỗi văn bản thô theo thứ tự đọc (Reading Order)
-    else Tệp định dạng Word (.docx)
-        WRK->>WRK: Phân tích OpenXML native qua thư viện mammoth (Extract raw text)
-    end
+    WRK->>WRK: Kiểm tra Magic Bytes (%PDF-) của tệp PDF hợp lệ (BR-DOC-01)
+    WRK->>TXT: 5a. StartDocumentTextDetection (Async) / DetectDocumentTextCommand({ Document: { S3Object: { Bucket, Name: s3Key } } })
+    activate TXT
+    TXT->>S3: Đọc trực tiếp tệp CV PDF từ S3 Quarantine/Verified (S3Object)
+    S3-->>TXT: Dữ liệu PDF gốc
+    TXT-->>WRK: 5a. Nội dung văn bản tài liệu (Blocks LINE, WORD, Confidence Scores)
+    deactivate TXT
+    WRK->>WRK: Làm sạch bố cục văn bản (Reading Order)
 
     WRK->>DDB: UpdateItem APP#<applicationId> SET aiStatus = 'SCORING'
     
-    Note over WRK, RED: Khử thông tin định danh & Thiên kiến nhân khẩu học (NFR-SEC-03)
-    WRK->>RED: sanitizeText(rawCvText)
+    Note over WRK, RED: Khử thông tin định danh cá nhân trước khi gửi Bedrock (NFR-SEC-03)
+    WRK->>RED: sanitizeText(extractedText)
     activate RED
     RED->>RED: 1. Regex che giấu Họ tên -> [CANDIDATE_NAME]
     RED->>RED: 2. Xóa số điện thoại, email cá nhân, địa chỉ cư trú
@@ -135,7 +135,7 @@ sequenceDiagram
     RED-->>WRK: sanitizedCvText (Văn bản thuần năng lực chuyên môn)
     deactivate RED
 
-    Note over WRK, BDR: Gọi Bedrock chấm điểm Rubric 100đ & Xuất JSON Schema
+    Note over WRK, BDR: 5b. Gọi Bedrock chuẩn hóa CV thành JSON & chấm điểm theo JD
     WRK->>DDB: GetItem JOB#<jobId> / METADATA (Lấy JD & Rubric Weights)
     DDB-->>WRK: Job Data & rubricWeights (Kỹ năng 40, KN 30, Học vấn 15, Trình bày 15)
     
@@ -143,7 +143,7 @@ sequenceDiagram
     Note over WRK, BDR: Prompt chống Injection: bọc nội dung trong thẻ XML <cv_content> và <job_description>
     activate BDR
     
-    alt Bedrock phản hồi thành công (< 15 giây)
+    alt Bedrock phản hồi thành công & JSON hợp lệ (< 15 giây)
         BDR-->>WRK: 200 OK (JSON Payload chuẩn Schema)
         deactivate BDR
         WRK->>WRK: Validate JSON Schema: totalScore, matchLevel, criteriaScores, strengths, gaps
@@ -151,11 +151,14 @@ sequenceDiagram
         WRK->>DDB: UpdateItem APP#<applicationId>:<br/>SET aiStatus = 'COMPLETED',<br/>aiEvaluation = :evalData,<br/>GSI1SK = 'SCORE#082#app_...'
         DDB-->>WRK: 200 OK (Lưu kết quả & Cập nhật Bảng xếp hạng)
         
-        WRK->>SES: SendEmail (Thông báo kết quả sơ loại AI đã sẵn sàng tới ứng viên)
+        WRK->>SES: PostToConnection (API Gateway WebSocket Push thông báo Real-time tới UI) & SendEmail (SES)
         WRK->>SQS: DeleteMessage (Xóa message khỏi hàng đợi)
-    else Bedrock gặp sự cố mạng hoặc quá tải (Lỗi tạm thời)
+    else Confidence Score Textract thấp (< 80%) hoặc Bedrock trả về JSON sai định dạng
+        WRK->>DDB: UpdateItem APP#<applicationId> SET aiStatus = 'NEEDS_MANUAL_REVIEW' (Amazon A2I / Human-in-the-Loop Fallback)
+        WRK->>SES: PostToConnection (WebSocket Push cập nhật trạng thái chờ HR Review thủ công)
+    else Bedrock / Textract gặp sự cố mạng hoặc quá tải (Lỗi tạm thời)
         BDR-->>WRK: 429 Too Many Requests / 500 Service Error
-        WRK->>WRK: Thử lại với cơ chế Exponential Backoff (Tối đa 3 lần theo NFR-REL-02)
+        WRK->>WRK: Step Functions Retry tự động (IntervalSeconds: 2, BackoffRate: 2.0, MaxAttempts: 3 theo NFR-REL-02)
         alt Thử lại lần 4 vẫn thất bại
             WRK->>DDB: UpdateItem APP#<applicationId> SET aiStatus = 'FAILED', failureReason = :err
             WRK->>DLQ: Chuyển message sự cố vào Dead-Letter Queue
@@ -245,7 +248,7 @@ sequenceDiagram
     deactivate L_REV
     APIGW-->>UI: 200 OK
 
-    UI->>S3: Tải file PDF/DOCX qua Presigned URL (S3 Data Events ghi nhận GetObject kèm grantId)
+    UI->>S3: Tải file CV PDF qua Presigned URL (S3 Data Events ghi nhận GetObject kèm grantId)
     S3-->>UI: File Content (Render tài liệu gốc trực tiếp trên khung bên trái)
 
     Note over RCT, DDB: BƯỚC 2: ĐÁNH GIÁ ĐỘI NHÓM ĐỘC LẬP (MULTI-REVIEWER)
@@ -410,5 +413,5 @@ sequenceDiagram
 - [x] Thiết kế đầy đủ **6 Sơ đồ Tuần tự Chi tiết (Mermaid Diagrams)** bao phủ 100% các nghiệp vụ trọng yếu nhất của hệ thống.
 - [x] Mỗi sơ đồ đều thể hiện rõ: Đánh số bước tuần tự (`autonumber`), các tác nhân tham gia, khối phân nhánh `alt / else`, ghi chú lưu ý dữ liệu và cơ chế xử lý ngoại lệ.
 - [x] Minh họa đầy đủ nguyên lý **Optimistic Concurrency Control (OCC)**, giao dịch phân tán DynamoDB `TransactWriteItems`, và cơ chế giải phóng khóa kháng trùng `ACTIVE_APP#<jobId>`.
-- [x] Thể hiện chi tiết cơ chế phân luồng đa định dạng (PDF qua Textract, DOCX qua OpenXML native) và quy trình lọc PII trước khi gọi LLM.
+- [x] Thể hiện chi tiết cơ chế kiểm tra định dạng PDF chuẩn hóa, bóc tách qua Amazon Textract và quy trình lọc PII trước khi gọi LLM.
 - [x] Mô hình hóa rõ ràng quy trình **Asynchronous DSR Pipeline** xử lý theo từng batch có kiểm soát, bảo vệ quyền riêng tư người dùng triệt để.

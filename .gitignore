@@ -38,5 +38,14 @@ Thumbs.db
 # Logs
 *.log
 
-# Internal Planning
+# Internal Planning & Architecture — KHÔNG push
 docs/plan/
+docs/architecture/
+
+# UI Design & Stitch Exports — KHÔNG push
+ui/
+
+# AI Agent Skills & Config — KHÔNG push
+.agents/
+.agent/
+

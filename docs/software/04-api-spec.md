@@ -119,7 +119,7 @@ graph LR
 | | `GET` | `/api/v1/users/me/favorites` | `Candidate` | Danh sách việc làm đã lưu (`AP14`) |
 | | `POST` | `/api/v1/users/me/alerts` | `Candidate` | Đăng ký nhận thông báo việc làm (`AP16`) |
 | | `DELETE` | `/api/v1/users/me/alerts/{alertId}`| `Candidate` | Hủy đăng ký nhận tin (`AP16`) |
-| **3. Applications** | `POST` | `/api/v1/applications/upload-url`| `Candidate` | Lấy Presigned URL tải CV (PDF/DOCX) (`AP32`) |
+| **3. Applications** | `POST` | `/api/v1/applications/upload-url`| `Candidate` | Lấy Presigned URL tải CV định dạng PDF (`AP32`) |
 | | `POST` | `/api/v1/applications` | `Candidate` | Nộp đơn ứng tuyển trực tuyến (`AP21`) |
 | | `GET` | `/api/v1/applications/my` | `Candidate` | Lịch sử các đơn đã nộp (`AP24`) |
 | | `GET` | `/api/v1/applications/{id}` | `Candidate, Recruiter` | Chi tiết đơn ứng tuyển (`AP22`) |
@@ -164,7 +164,7 @@ graph LR
 }
 ```
 * **Validation Rules:**
-  * `fileType`: Bắt buộc là `"PDF"` hoặc `"DOCX"` (`BR-DOC-01`).
+  * `fileType`: Bắt buộc là `"PDF"` (`application/pdf`, phần mở rộng `.pdf`) (`BR-DOC-01`).
   * `fileSize`: Số nguyên dương, $\le 5,242,880$ bytes (5MB) (`BR-DOC-01`).
 * **Response 200 OK:**
 ```json
@@ -186,10 +186,10 @@ graph LR
 * **POST Request Body:**
 ```json
 {
-  "fileName": "NguyenVanA_Backend_Senior.docx",
-  "fileType": "DOCX",
+  "fileName": "NguyenVanA_Backend_Senior.pdf",
+  "fileType": "PDF",
   "fileSize": 210450,
-  "s3Key": "users/usr_cdd_01J9X8P3M4R7T2W1V0K5N6Y8QZ/cvs/cv_01J9X8W2N1B4.docx",
+  "s3Key": "users/usr_cdd_01J9X8P3M4R7T2W1V0K5N6Y8QZ/cvs/cv_01J9X8W2N1B4.pdf",
   "isDefault": true
 }
 ```
@@ -199,8 +199,8 @@ graph LR
   "success": true,
   "data": {
     "cvId": "cv_01J9X8W2N1B4V6C8D0F2G4H6J8",
-    "fileName": "NguyenVanA_Backend_Senior.docx",
-    "fileType": "DOCX",
+    "fileName": "NguyenVanA_Backend_Senior.pdf",
+    "fileType": "PDF",
     "fileSize": 210450,
     "isDefault": true,
     "uploadedAt": "2026-10-28T10:00:00.000Z"

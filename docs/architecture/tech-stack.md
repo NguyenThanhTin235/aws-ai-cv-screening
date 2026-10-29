@@ -1,7 +1,7 @@
 # Quy Định Công Nghệ & Tech Stack — AI CV Screening Portal
 
 > **Tài liệu:** Đặc tả tiêu chuẩn công nghệ, nền tảng hạ tầng và quy chuẩn phát triển  
-> **Phiên bản:** 1.0 (Chính thức) · **Ngày ban hành:** 28/10/2026  
+> **Phiên bản:** 2.0 (Chuẩn hóa theo Kiến trúc Chính thức v11.0) · **Ngày ban hành:** 29/10/2026  
 > **Áp dụng cho:** Toàn bộ các Phase phát triển dự án (Phase 1 → Phase 6)
 
 ---
@@ -26,17 +26,21 @@ Tài liệu này thiết lập bộ khung công nghệ, các quyết định ki�
 | **AWS SDK** | **AWS SDK for JavaScript v3** | `@aws-sdk/client-*` | Cấu trúc modular tree-shaking, kích thước deployment package cực nhỏ (chỉ import đúng client cần dùng). |
 | **Frontend Framework** | **React** | 18.x / 19.x (Vite) | Tốc độ build siêu nhanh với Vite; SPA mượt mà, tối ưu hiệu năng render danh sách CV và bảng xếp hạng. |
 | **Giao diện (Styling)** | **Vanilla CSS + Design Tokens** | CSS Custom Properties | Tự do tùy biến 100%, không bị phụ thuộc/bloat CSS framework; giao diện Dark/Light hiện đại, Glassmorphism, Micro-animations. |
-| **Xác thực & Phân quyền** | **Amazon Cognito User Pools** | 3 Groups + Custom Attributes | Quản lý đăng nhập/đăng ký cho 3 vai trò: `Candidate`, `Recruiter`, `Admin`; liên kết `company_id` cho HR Team. |
-| **API Gateway** | **Amazon API Gateway** | HTTP API / REST API | Điểm tiếp nhận request từ Web Portal, xác thực bằng Cognito JWT Authorizer, định tuyến đến các Lambda Functions tương ứng. |
-| **Cơ sở dữ liệu** | **Amazon DynamoDB** | On-Demand (Single-Table) | Cơ sở dữ liệu NoSQL độ trễ mili-giây; thiết kế Single-Table Design (`PK`, `SK`, `GSI1`); hỗ trợ Time-to-Live (TTL) cho cache và dữ liệu tạm. |
-| **Lưu trữ tài liệu** | **Amazon S3** | Standard Tier (Private 100%) | Lưu trữ file CV tải lên (PDF, DOCX) và avatar; kích hoạt S3 Lifecycle (chuyển/xóa sau 90 ngày); Block Public Access toàn bộ. |
-| **Cơ chế tải file** | **S3 Presigned URLs** | PUT Object (Hạn 15 phút) | Trình duyệt tải file trực tiếp lên S3, không qua API Gateway/Lambda; tiết kiệm băng thông và loại trừ giới hạn 10MB payload của API Gateway. |
-| **Hàng đợi đệm bất đồng bộ** | **Amazon SQS** | Standard Queue + DLQ | Tách rời (Decoupling) giữa hành động nộp CV và quá trình xử lý AI; chịu tải đột biến (spike); Dead Letter Queue (DLQ) hứng lỗi sau 3 lần retry. |
-| **Trích xuất CV (PDF)** | **Amazon Textract** | `DetectDocumentText` API | Nhận diện và bóc tách chữ từ PDF tải lên S3 chuẩn xác, hỗ trợ cả định dạng một cột và nhiều cột. |
-| **Trích xuất CV (DOCX)** | **Thư viện `mammoth`** | Node.js native library | Chạy trực tiếp bên trong Worker Lambda; giải mã cấu trúc OpenXML `.docx` để bóc tách paragraphs và văn bản thô cực nhanh mà không cần Python subprocess. |
-| **Khử định danh & Thiên kiến** | **Custom PII Redactor** | Regex & Context Masking | Che giấu/xóa số điện thoại, email cụ thể, địa chỉ nhà riêng, ảnh/tuổi/giới tính trước khi gửi nội dung vào mô hình AI. |
-| **Generative AI / LLM** | **Amazon Bedrock** | Anthropic Claude 3 Haiku | Mô hình ngôn ngữ lớn tốc độ cao, chi phí tối ưu (~$0.25/1M token input); trích xuất thông tin, đánh giá Rubric 100đ, xuất JSON Schema nghiêm ngặt. |
-| **Dịch vụ Email** | **Amazon SES** | Simple Email Service | Tự động gửi email xác nhận nộp hồ sơ, thư mời phỏng vấn, thư từ chối; dùng template HTML chuyên nghiệp. |
+| **Bảo vệ biên & Tường lửa** | **AWS WAF** | WebACL (Managed + Rate Rules) | Chặn đứng tấn công SQL Injection (SQLi), Cross-Site Scripting (XSS), HTTP Flood (Layer 7 DDoS), Bot độc hại, Request bất thường và Rate Abuse ngay tại biên. |
+| **Phân phối nội dung (CDN)** | **Amazon CloudFront** | Global Edge Distribution | Phân phối toàn cầu ứng dụng Web SPA (AWS Amplify) và định tuyến lưu lượng API về API Gateway với TLS 1.3 Termination & HTTP/3. |
+| **Xác thực & Phân quyền** | **Amazon Cognito User Pools** | 3 Groups + Custom Attributes | Quản lý đăng nhập/đăng ký cho 3 vai trò: `Candidate`, `Recruiter`, `Admin`; cấp JWT cho API Gateway Authorizer; liên kết `company_id` cho HR Team. |
+| **API Gateway (REST & WebSocket)** | **Amazon API Gateway** | REST API + WebSocket API | **REST API** tiếp nhận nghiệp vụ đồng bộ kèm Cognito JWT Authorizer; **WebSocket API (`@connections`)** đẩy thông báo kết quả chấm điểm Real-time trực tiếp lên UI, thay thế hoàn toàn HTTP Polling. |
+| **Cơ sở dữ liệu** | **Amazon DynamoDB** | On-Demand (Single-Table) | Cơ sở dữ liệu NoSQL độ trễ mili-giây; lưu cấu trúc CV JSON, trạng thái đơn, khóa chống trùng **Idempotency (`document_id`)** và bảng xếp hạng `GSI1`. |
+| **Lưu trữ cách ly & Quét mã độc** | **Amazon S3 (`CV Quarantine`) + GuardDuty** | Malware Protection for S3 | Vùng cách ly tệp CV tải lên (`.pdf` <= 5MB); **Amazon GuardDuty Malware Protection for S3** tự động quét mã độc (`NO_THREATS_FOUND`) và kiểm tra chữ ký MIME `%PDF-` trước khi cho phép sử dụng. |
+| **Cơ chế tải file** | **S3 Presigned URLs** | PUT Object (Server Key, Hạn 5 phút) | Chỉ cấp cho tài nguyên đã xác minh quyền sở hữu; dùng `s3Key` do Server tự tạo, thời hạn 5 phút, ép chặt `application/pdf` <= 5MB tải trực tiếp lên S3 Quarantine. |
+| **Hàng đợi đệm bất đồng bộ** | **Amazon SQS** | Standard Queue + DLQ | Xếp hàng sự kiện từ S3 Quarantine, chống nghẽn đột biến và kiểm tra **Idempotency (`document_id`)** trước khi kích hoạt Step Functions; DLQ hứng lỗi sau 3 lần retry. |
+| **Điều phối Pipeline AI** | **AWS Step Functions** | Standard Workflow (State Machine) | Điều phối tuần tự **`5a. Amazon Textract`** (trích xuất văn bản) $\to$ **`5b. Amazon Bedrock`** (chuẩn hóa CV thành JSON); cấu hình `Retry` (`IntervalSeconds: 2, BackoffRate: 2.0`) trực tiếp tại từng State. |
+| **Trích xuất văn bản CV (`5a`)** | **Amazon Textract** | Async `StartDocumentTextDetection` / Sync API | Đọc trực tiếp tệp PDF từ S3 (`S3Object`), hỗ trợ API bất đồng bộ cho tài liệu lớn/nhiều trang mà không giữ kết nối HTTP chờ AI xử lý. |
+| **Kết nối mạng nội bộ** | **VPC Endpoints (AWS PrivateLink)** | Gateway EP + Full Interface EP | Duy trì **Zero Public IP** (Không dùng NAT Gateway ~32 USD/tháng); kết nối nội bộ từ Private Subnet tới S3, DynamoDB, Textract, Bedrock Runtime, SES, SQS, Step Functions, Secrets Manager và CloudWatch. |
+| **Khử định danh & Thiên kiến** | **Custom PII Redactor** | Regex & Context Masking | Che giấu/xóa số điện thoại, email cụ thể, địa chỉ nhà riêng, ảnh/tuổi/giới tính trên văn bản OCR trước khi gửi vào mô hình AI. |
+| **Generative AI / LLM (`5b`)** | **Amazon Bedrock Runtime** | Anthropic Claude 3 Haiku | Nhận văn bản từ Textract để **chuẩn hóa CV thành cấu trúc JSON** (`Skills`, `Experience`, `Education`, `Job matching`, `AI score`); chi phí tối ưu (~$0.25/1M token input); cam kết Zero Model Training. |
+| **Review Thủ công Fallback** | **Amazon A2I (Human-in-the-Loop)** | Manual Review Fallback Queue | Nhánh rẽ trong Step Functions khi Confidence Score của Textract thấp (`< 80%`) hoặc Bedrock trả về JSON sai định dạng, đẩy hồ sơ sang hàng đợi chờ HR Review thủ công. |
+| **Dịch vụ Email (`6`)** | **Amazon SES** | Simple Email Service | Tự động gửi email xác nhận nộp hồ sơ, thông báo kết quả phân tích CV, thư mời phỏng vấn qua kết nối nội bộ PrivateLink. |
 | **Giám sát & Nhật ký** | **Amazon CloudWatch** | Logs, Metrics, Alarms | Ghi log JSON có cấu trúc (gắn `traceId`, `applicationId`); Dashboard theo dõi số lượng CV, tỉ lệ lỗi AI; Alarms cảnh báo DLQ và lỗi 5xx. |
 | **Kiểm thử** | **Vitest / Jest** | Unit & Integration Test | Kiểm thử tự động các hàm business logic, module khử PII, hàm tính điểm Rubric và schema validator. |
 
@@ -67,12 +71,12 @@ Tài liệu này thiết lập bộ khung công nghệ, các quyết định ki�
   │   │   ├── reviews/
   │   │   └── talent-pool/
   │   └── workers/             # Các hàm background worker
-  │       ├── cv-processor/    # Nhận SQS event: Textract/DOCX -> PII -> Bedrock
+  │       ├── cv-processor/    # Nhận SQS event: Textract (PDF) -> PII -> Bedrock
   │       └── email-notifier/  # Nhận DynamoDB Stream / SNS -> SES Email
   └── shared/                  # Code dùng chung (layer hoặc symlink)
       ├── types/               # Type definitions, Enums, DTOs
       ├── utils/               # Logger, Response formatter, S3/Dynamo helpers
-      ├── parsers/             # mammoth docx parser
+      ├── validators/          # PDF MIME & Magic Bytes (%PDF-) validator
       └── pii/                 # Module khử PII regex & rules
   ```
 * **AWS SDK Client Reuse:** Toàn bộ AWS Clients (`DynamoDBClient`, `S3Client`, `BedrockRuntimeClient`) phải được khởi tạo **ngoài handler** (Global Scope) để tái sử dụng kết nối TCP qua các lần invoke (Execution Context Reuse).
@@ -88,11 +92,11 @@ Tài liệu này thiết lập bộ khung công nghệ, các quyết định ki�
   }
   ```
 
-### 3.3. Xử lý tài liệu & Pipeline AI
-* **Xử lý tài liệu đa định dạng:**
-  - File PDF: Gọi `DetectDocumentTextCommand` của Amazon Textract với đối tượng S3 trực tiếp.
-  - File DOCX: Đọc buffer từ S3 qua S3Client, truyền vào `mammoth.extractRawText({ buffer })` để lấy văn bản thuần sạch sẽ, giữ nguyên cấu trúc phân đoạn.
-  - Giới hạn file: Tối đa 5MB, độ dài văn bản sau trích xuất tối đa 50,000 ký tự (cắt gọt nếu vượt ngưỡng để tránh quá tải token).
+### 3.3. Xử lý tài liệu PDF & Pipeline AI
+* **Chuẩn hóa định dạng PDF duy nhất (`application/pdf`):**
+  - Hệ thống chỉ chấp nhận tệp CV định dạng **PDF (`.pdf`)** có dung lượng tối đa **5MB** và kiểm tra chữ ký Magic Bytes `%PDF-`.
+  - Gọi `DetectDocumentTextCommand` của **Amazon Textract** đọc đối tượng PDF từ S3 trực tiếp qua kết nối nội bộ AWS PrivateLink.
+  - Giới hạn văn bản sau trích xuất tối đa 50,000 ký tự (cắt gọt an toàn nếu vượt ngưỡng để tránh quá tải token).
 * **Quy chuẩn Khử PII & Thiên kiến:**
   - Áp dụng bộ lọc Regex để thay thế: Email (`[EMAIL_REDACTED]`), Số điện thoại (`[PHONE_REDACTED]`), Địa chỉ nhà cụ thể (`[ADDRESS_REDACTED]`).
   - Hướng dẫn System Prompt của LLM: "Bỏ qua các yếu tố về tuổi tác, giới tính, dân tộc, hình ảnh cá nhân; chỉ đánh giá dựa trên năng lực chuyên môn, kinh nghiệm thực tế, học vấn và cách thức tổ chức hồ sơ".
@@ -129,23 +133,26 @@ Tài liệu này thiết lập bộ khung công nghệ, các quyết định ki�
 ## 4. Khuôn khổ Giới hạn & Ranh giới Kỹ thuật (Do's & Don'ts)
 
 ### Những điều BẮT BUỘC (DO'S):
-- [x] Luôn dùng Presigned URL với thời hạn ngắn (tối đa 15 phút) để tải file lên S3.
-- [x] Luôn bọc nội dung đầu vào không tin cậy (CV text) trong các thẻ XML trước khi đưa vào LLM.
-- [x] Luôn cấu hình Dead Letter Queue (DLQ) cho SQS Queue để không làm mất dữ liệu khi Lambda xử lý AI bị lỗi.
-- [x] Luôn bật kiểm tra định dạng file (chỉ chấp nhận `application/pdf` và `.docx`) ngay từ khâu tạo presigned URL.
-- [x] Luôn lưu vết Audit Trail bất biến khi Recruiter thay đổi trạng thái hồ sơ ứng viên.
+- [x] Luôn dùng Presigned URL chỉ cấp cho tài nguyên đã xác minh quyền sở hữu, dùng `s3Key` do Server tự tạo, thời hạn ngắn (5 phút) và giới hạn chặt `application/pdf` <= 5MB.
+- [x] Luôn đưa tệp CV mới tải lên vào vùng cách ly **`Amazon S3 — CV Quarantine`** và quét mã độc qua **Amazon GuardDuty Malware Protection for S3** (`NO_THREATS_FOUND`) + kiểm tra Magic Bytes `%PDF-` trước khi cho phép tải xuống hoặc xử lý AI.
+- [x] Luôn kiểm tra **Idempotency (`document_id`, `versionId`, `task_id`)** trên DynamoDB trước khi thực thi Step Functions để chống xử lý trùng lặp khi S3 phát sinh sự kiện nhiều lần.
+- [x] Luôn điều phối tuần tự **`5a. Amazon Textract`** (hỗ trợ Async API cho tài liệu lớn, đọc trực tiếp `S3Object`) $\to$ **`5b. Amazon Bedrock`** (chuẩn hóa CV thành JSON) với cấu hình `Retry` (`IntervalSeconds: 2, BackoffRate: 2.0`) và nhánh Fallback **Amazon A2I (Human-in-the-Loop)**.
+- [x] Luôn bọc nội dung đầu vào không tin cậy (CV text) trong các thẻ XML trước khi đưa vào LLM và Validate JSON Schema trước khi lưu vào DynamoDB.
+- [x] Luôn thông báo kết quả thời gian thực qua **API Gateway WebSocket Push** (thay thế HTTP Polling) và lưu vết Audit Trail bất biến.
 
 ### Những điều TUYỆT ĐỐI KHÔNG (DON'TS):
-- [ ] **KHÔNG** truyền file nhị phân (binary CV) trực tiếp qua API Gateway để tránh chạm ngưỡng giới hạn 10MB payload.
-- [ ] **KHÔNG** hardcode bất kỳ AWS Access Key / Secret Key nào trong mã nguồn hoặc file cấu hình (luôn dùng IAM Role / Environment Variables).
-- [ ] **KHÔNG** mở Public Access cho S3 Bucket chứa hồ sơ ứng viên (luôn bật Block Public Access 100%).
+- [ ] **KHÔNG** truyền file nhị phân (binary CV) trực tiếp qua API Gateway hoặc tải toàn bộ PDF về RAM Lambda rồi mới gửi sang Textract.
+- [ ] **KHÔNG** giữ kết nối HTTP của người dùng để chờ AI xử lý hoặc dùng HTTP Polling liên tục từ trình duyệt.
+- [ ] **KHÔNG** cho phép tải xuống hoặc đưa vào AI các tệp CV trong vùng Quarantine chưa qua kiểm tra mã độc GuardDuty.
+- [ ] **KHÔNG** hardcode bất kỳ AWS Access Key / Secret Key nào trong mã nguồn hoặc file cấu hình (luôn dùng IAM Role / Secrets Manager).
+- [ ] **KHÔNG** mở Public Access cho S3 Bucket chứa hồ sơ ứng viên (luôn bật Block Public Access 100%) hoặc dùng NAT Gateway tốn kém khi đã có VPC Endpoints.
 - [ ] **KHÔNG** đưa dữ liệu định danh cá nhân nhạy cảm (SĐT, Email chính thức) vào prompt gửi lên mô hình AI.
-- [ ] **KHÔNG** dùng các dịch vụ máy chủ ảo EC2, RDS nếu không thật sự cần thiết nhằm bảo toàn kiến trúc 100% Serverless.
+- [ ] **KHÔNG** dùng các dịch vụ máy chủ ảo EC2, RDS nhằm bảo toàn kiến trúc 100% Serverless.
 
 ---
 
 ## 5. Định hướng Mở rộng Công nghệ (Post-MVP)
 
 Nếu còn thời gian sau Milestone M4:
-1. **AWS WAF (Web Application Firewall):** Gắn vào CloudFront Distribution và API Gateway để chặn SQL Injection, XSS, rate-limit chống spam bot.
-2. **OpenSearch Serverless (Nếu nâng cấp Talent Rediscovery):** Mở rộng tính năng tìm kiếm ứng viên tương đồng bằng Vector Search / Semantic Search thay vì từ khóa thuần.
+1. **Amazon OpenSearch Serverless (Vector Search cho Talent Rediscovery):** Mở rộng tính năng tìm kiếm ứng viên tương đồng bằng Vector Embeddings (Amazon Titan Text Embeddings v2) kết hợp truy vấn có cấu trúc trên DynamoDB.
+2. **Amazon QuickSight (BI Analytics cho HR Director):** Xây dựng bộ báo cáo phân tích chuyên sâu theo quý về phễu tuyển dụng (Hiring Funnel) và hiệu quả nguồn ứng viên.

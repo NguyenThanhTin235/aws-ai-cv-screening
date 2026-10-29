@@ -33,10 +33,10 @@ Hệ thống định nghĩa **3 tác nhân con người (Human Actors)** và **1
 
 | Actor | Mã vai trò | Mô tả vai trò | Phân nhóm Cognito |
 | :--- | :---: | :--- | :--- |
-| **Ứng viên (Candidate)** | `CDD` | Người tìm việc; tạo hồ sơ cá nhân, tìm kiếm việc làm, nộp CV (PDF/DOCX), theo dõi trạng thái ứng tuyển và xem kết quả phân tích AI. | `candidate` |
+| **Ứng viên (Candidate)** | `CDD` | Người tìm việc; tạo hồ sơ cá nhân, tìm kiếm việc làm, nộp CV định dạng PDF (`.pdf`), theo dõi trạng thái ứng tuyển và xem kết quả phân tích AI. | `candidate` |
 | **Nhà tuyển dụng (Recruiter)** | `RCT` | Đại diện cho Doanh nghiệp (HR Team); quản lý hồ sơ công ty, đăng tin tuyển dụng, xem bảng xếp hạng AI, đánh giá ứng viên (Human-in-the-loop), khai thác Talent Pool và gửi email phỏng vấn. | `recruiter` |
 | **Quản trị viên (Admin)** | `AD` | Quản trị vận hành hệ thống; kiểm duyệt tài khoản Recruiter, gỡ bỏ tin tuyển dụng vi phạm, giám sát sức khỏe hạ tầng, xử lý các yêu cầu tuân thủ dữ liệu. | `admin` |
-| **Hệ thống AI (System Worker)** | `SYS` | Quy trình nền tự động (Asynchronous Worker); trích xuất text từ PDF/DOCX, khử PII, gọi Amazon Bedrock chấm điểm theo rubric và phân tích Skill Gap. | *IAM Service Role* |
+| **Hệ thống AI (System Worker)** | `SYS` | Quy trình nền tự động (Asynchronous Worker); trích xuất text từ CV PDF qua Amazon Textract, khử PII, gọi Amazon Bedrock chấm điểm theo rubric và phân tích Skill Gap. | *IAM Service Role* |
 
 ### Ma trận Quyền hạn (Permission Matrix)
 
@@ -47,7 +47,7 @@ Hệ thống định nghĩa **3 tác nhân con người (Human Actors)** và **1
 | **CDD03** | Quản lý & Lưu trữ CV (Đặt CV mặc định) | ✅ | ❌ | ❌ | Quản lý nhiều bản CV cá nhân để nộp nhanh |
 | **CDD04** | Tìm kiếm & Lọc Tin tuyển dụng | ✅ | ✅ | ✅ | Public, người dùng chưa đăng nhập vẫn tra cứu được |
 | **CDD05** | Lưu Tin yêu thích & Đăng ký Job Alerts | ✅ | ❌ | ❌ | Cá nhân hóa tìm việc & nhận email thông báo (Post-MVP) |
-| **CDD06** | Nộp Hồ sơ Trực tiếp qua S3 Presigned URL | ✅ | ❌ | ❌ | Hỗ trợ PDF/DOCX tối đa 5MB, chống nộp trùng lặp |
+| **CDD06** | Nộp Hồ sơ Trực tiếp qua S3 Presigned URL | ✅ | ❌ | ❌ | Chỉ hỗ trợ định dạng PDF tối đa 5MB, chống nộp trùng lặp |
 | **CDD07** | Theo dõi Trạng thái Tuyển dụng & Lịch sử Đơn | ✅ | ❌ | ❌ | Theo dõi đồng thời `status` và `ai_status` |
 | **CDD08** | Xem Báo cáo Đánh giá AI Minh bạch | ✅ | ❌ | ❌ | Xem điểm số, điểm mạnh, kỹ năng cần hoàn thiện |
 | **CDD09** | Rút Đơn Ứng tuyển (`WITHDRAWN`) | ✅ | ❌ | ❌ | Chủ động rút đơn khi chưa có quyết định cuối |
@@ -136,7 +136,7 @@ Mục này đặc tả thuần túy các **tính năng và hành động** mà t
   * Lọc nhanh danh sách theo các mức xếp loại phù hợp của AI `[BR-SCORING-02]`.
 * **RCT04 (Giao diện Đối chiếu Song song - Side-by-side Review):**
   * Mở giao diện xem chi tiết ứng viên 3 cột trên cùng một màn hình:
-    * Cột 1: File CV gốc (PDF/DOCX) hiển thị qua Document Viewer bảo mật.
+    * Cột 1: File CV gốc định dạng PDF hiển thị qua PDF Viewer bảo mật.
     * Cột 2: Văn bản trích xuất sạch (Clean Extracted Text) sau bước khử PII.
     * Cột 3: Báo cáo đánh giá chi tiết của AI: điểm tổng, điểm thành phần, điểm mạnh/yếu và trích dẫn đối soát từ CV.
 * **RCT05 (Đánh giá Thủ công, Ghi chú & Quyết định Tuyển dụng):**
@@ -186,9 +186,9 @@ Mục này đặc tả thuần túy các **tính năng và hành động** mà t
 * **SYS01 (Điều phối Xử lý Bất đồng bộ qua Hàng đợi SQS):**
   * Nhận sự kiện S3 Event Notification khi có file CV mới, đẩy message vào Amazon SQS và gán `ai_status = PENDING`.
   * Lambda Worker lấy message từ SQS để xử lý theo thứ tự, giải phóng tải cho Web Client.
-* **SYS02 (Xử lý Đa định dạng & Trích xuất Văn bản PDF/DOCX):**
+* **SYS02 (Trích xuất Văn bản CV PDF qua Amazon Textract):**
   * Cập nhật `ai_status = EXTRACTING`.
-  * Trích xuất văn bản từ file PDF qua Amazon Textract hoặc đọc cấu trúc OpenXML từ file DOCX thành văn bản thuần `[BR-DOC-01]`.
+  * Kiểm tra tính hợp lệ của tệp PDF (Magic Bytes `%PDF-`) và trích xuất văn bản 100% Cloud-Native qua **Amazon Textract (`DetectDocumentText` API)** `[BR-DOC-01]`.
 * **SYS03 (Đối soát Đa chiều & Chấm điểm Tự động qua Bedrock LLM):**
   * Cập nhật `ai_status = SCORING`.
   * Đưa nội dung CV đã qua bộ lọc khử PII `[NFR-SEC-03]` và nội dung JD vào System Prompt an toàn `[NFR-SEC-04]`.
@@ -218,8 +218,8 @@ Mục này quy định toàn bộ các **luật lệ, điều kiện logic, côn
 
 ### 5.2. Quy tắc Định dạng & Nộp Hồ sơ (BR-DOC)
 
-* **BR-DOC-01 (Định dạng & Giới hạn Kích thước File):**
-  * Hệ thống chỉ chấp nhận đúng 2 định dạng file: **PDF** (`.pdf`) và **Microsoft Word** (`.docx`). Tuyệt đối từ chối các định dạng ảnh rời (.jpg/.png) hoặc file nén (.zip/.rar).
+* **BR-DOC-01 (Định dạng PDF Duy nhất & Giới hạn Kích thước File):**
+  * Hệ thống **chỉ chấp nhận duy nhất định dạng chuẩn PDF** (phần mở rộng `.pdf`, MIME type `application/pdf`, chữ ký đầu tệp Magic Bytes `%PDF-`). Tuyệt đối từ chối các định dạng khác (như file văn bản chỉnh sửa, ảnh rời `.jpg`/`.png` hoặc file nén `.zip`/`.rar`).
   * Dung lượng file tối đa là **5 MB**. Độ dài hồ sơ khuyến nghị từ **1 đến 3 trang**.
 * **BR-DOC-02 (Chống Nộp Trùng lặp):**
   * Mỗi ứng viên (căn cứ theo `CandidateId`) chỉ được phép nộp tối đa **1 hồ sơ đang hoạt động** cho mỗi vị trí tuyển dụng (`JobId`).
@@ -390,7 +390,7 @@ stateDiagram-v2
 | Trạng thái (`ai_status`) | Ý nghĩa kỹ thuật | Thành phần AWS thực thi | Hành vi hệ thống |
 | :--- | :--- | :---: | :--- |
 | **`PENDING`** | File CV đã nằm trên S3, message đang chờ trong hàng đợi SQS. | `Amazon S3` -> `Amazon SQS` | Worker chuẩn bị nhận việc. |
-| **`EXTRACTING`** | Đang gọi dịch vụ trích xuất văn bản từ file PDF/DOCX. | `AWS Lambda` + `Amazon Textract` | Đọc toàn bộ nội dung text thô của CV. |
+| **`EXTRACTING`** | Đang gọi dịch vụ Amazon Textract trích xuất văn bản từ file CV PDF. | `AWS Lambda` + `Amazon Textract` | Đọc toàn bộ nội dung text thô của CV PDF. |
 | **`SCORING`** | Đã có text; đang gửi prompt tới Bedrock LLM để đối soát JD và chấm điểm. | `AWS Lambda` + `Amazon Bedrock` | Chấm điểm, tóm tắt, xuất JSON theo schema. |
 | **`COMPLETED`** | AI hoàn tất phân tích thành công; toàn bộ điểm và nhận xét đã lưu vào DynamoDB. | `Amazon DynamoDB` | Dashboard hiển thị điểm số và thứ hạng ngay lập tức. |
 | **`FAILED`** | Xử lý lỗi (File hỏng, timeout, lỗi schema sau 3 lần retry). | `Amazon SQS` + `DLQ` + `CloudWatch` | Bắn Alarm cảnh báo; kích hoạt nút "Thử chấm lại" trên UI. |
@@ -433,7 +433,7 @@ Mục này đặc tả các **tiêu chuẩn chất lượng, quy chuẩn kỹ th
   * Tự động làm mờ hoặc loại bỏ các thông tin nhân khẩu học (tuổi tác, giới tính, tình trạng hôn nhân, ảnh chân dung, địa chỉ nhà chi tiết) trước khi dữ liệu được chuyển đến Amazon Bedrock.
   * Đảm bảo tính công bằng, tuân thủ các nguyên tắc AI có trách nhiệm (Responsible & Unbiased AI).
 * **NFR-SEC-04 (Phòng vệ Tấn công Prompt Injection):**
-  * Toàn bộ nội dung văn bản CV trích xuất từ Textract hoặc OpenXML được cô lập nghiêm ngặt trong các cặp thẻ XML/JSON (ví dụ: `<candidate_cv>...</candidate_cv>`).
+  * Toàn bộ nội dung văn bản CV trích xuất từ Amazon Textract được cô lập nghiêm ngặt trong các cặp thẻ XML/JSON (ví dụ: `<candidate_cv>...</candidate_cv>`).
   * System Prompt có chỉ thị kiên quyết yêu cầu mô hình LLM bỏ qua mọi câu lệnh yêu cầu sửa điểm hoặc chỉ đạo hành vi nằm trong phần nội dung CV.
 * **NFR-SEC-05 (Kiểm soát Truy cập & Nhật ký Tải CV - Access Logging):**
   * Chỉ Recruiter phụ trách tin tuyển dụng của công ty mới được cấp quyền lấy Presigned URL mở file CV gốc.
@@ -485,7 +485,7 @@ Mục này đặc tả các **tiêu chuẩn chất lượng, quy chuẩn kỹ th
 
 ## 8. Ràng buộc Kỹ thuật & Giả định (Constraints & Assumptions)
 
-1. **Định dạng tài liệu:** Hệ thống hỗ trợ 2 định dạng chuẩn: **PDF** (`.pdf`) và **Microsoft Word** (`.docx`). Không hỗ trợ các định dạng file ảnh rời (JPEG/PNG) hoặc file nén (.zip/.rar).
+1. **Định dạng tài liệu:** Hệ thống chỉ hỗ trợ duy nhất định dạng chuẩn **PDF** (`.pdf`, `application/pdf`). Không hỗ trợ các định dạng tài liệu văn bản khác, file ảnh rời (JPEG/PNG) hoặc file nén (.zip/.rar).
 2. **Kích thước file:** Giới hạn tối đa **5 MB** và số trang khuyến nghị từ **1 đến 3 trang** `[BR-DOC-01]`.
 3. **Mô hình Ngôn ngữ:** Giả định tài khoản AWS đã được cấp quyền truy cập mô hình ngôn ngữ lớn trên Amazon Bedrock (khuyến nghị **Anthropic Claude 3 Haiku** để đạt tốc độ xử lý cao nhất với chi phí thấp nhất).
 4. **Môi trường gửi Email:** Do Amazon SES ban đầu ở chế độ Sandbox, các địa chỉ email dùng để kiểm thử (cả ứng viên và nhà tuyển dụng) cần được Verify trước trên AWS SES Console.

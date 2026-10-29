@@ -258,7 +258,7 @@ graph TD
 +----------------------------------------------------+----------------------------------------------------+
 | KHUNG TRÁI: CV GỐC (50% WIDTH)                     | KHUNG PHẢI: PHÂN TÍCH AI & ĐỘI NHÓM HR (50% WIDTH) |
 | - Thanh công cụ: [Zoom -/+] [Tải file] [Trang 1/2] | - Tab 1: Báo cáo AI Rubric 4 tiêu chí               |
-| - Bộ đọc PDF/DOCX nhúng trực tiếp                  | - Tab 2: Điểm mạnh & Khoảng trống kỹ năng           |
+| - Bộ đọc PDF nhúng trực tiếp                       | - Tab 2: Điểm mạnh & Khoảng trống kỹ năng           |
 | - Highlight từ khóa kỹ năng phù hợp                | - Tab 3: Đánh giá Đội ngũ HR (Multi-Reviewer)      |
 |                                                    | - Form Chấm sao 1-5 & Ghi chú nội bộ               |
 |                                                    | - Nút hành động: [Mời Phỏng Vấn] [Từ Chối]         |
@@ -273,7 +273,7 @@ graph TD
 
 ### 3.3. Khung Kéo Thả Nộp Hồ Sơ (Dropzone & Presigned Uploading)
 
-* **Trạng thái Mặc định:** Viền nét đứt 2px (`border: 2px dashed var(--border-dark-medium)`), nền mờ `var(--glass-bg)`, icon đám mây, thông báo: *"Kéo thả tệp PDF hoặc DOCX (tối đa 5MB) vào đây hoặc bấm để chọn tệp"*.
+* **Trạng thái Mặc định:** Viền nét đứt 2px (`border: 2px dashed var(--border-dark-medium)`), nền mờ `var(--glass-bg)`, icon đám mây, thông báo: *"Kéo thả tệp PDF (tối đa 5MB) vào đây hoặc bấm để chọn tệp"*.
 * **Trạng thái Đang Kéo Tệp Trên Vùng (Drag-over):** Viền chuyển sang màu Primary phát sáng (`border-color: var(--color-primary-400)`), nền đổi sang ánh tím nhẹ, icon nảy nhẹ (Pulse animation).
 * **Trạng thái Đang Tải Lên (Uploading):**
   * Hiển thị thanh tiến trình thực tế 0% $\rightarrow$ 100% với gradient tím-cyan mượt.

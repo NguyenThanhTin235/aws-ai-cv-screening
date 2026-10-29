@@ -20,7 +20,7 @@ Database v2.0 đã xử lý phần lớn các vấn đề thiết kế được 
 
 - **Vị trí:** Database mục 9, các dòng UC-RCT-03 đến UC-RCT-05 và UC-SYS-01 đến UC-SYS-03.
 - UC-RCT-03 trong Use Case là bảng xếp hạng ứng viên, nhưng ma trận ghi quản lý tin tuyển dụng/AP10. UC-RCT-04 là side-by-side review, nhưng ma trận ghi leaderboard/AP23. UC-RCT-05 là đánh giá thủ công, nhưng dòng ma trận lại mô tả side-by-side.
-- UC-SYS-01 là điều phối hàng đợi; UC-SYS-02 mới là trích xuất PDF/DOCX; UC-SYS-03 bao gồm khử PII và chấm AI. Ma trận hiện lần lượt ghi trích xuất, khử PII và chấm điểm, làm lệch phạm vi các UC.
+- UC-SYS-01 là điều phối hàng đợi; UC-SYS-02 mới là trích xuất CV PDF qua Textract; UC-SYS-03 bao gồm khử PII và chấm AI. Ma trận hiện lần lượt ghi trích xuất, khử PII và chấm điểm, làm lệch phạm vi các UC.
 - Tiêu đề “32 Use Cases → 32 APs” gây hiểu nhầm: nhiều UC dùng nhiều AP, nhiều UC dùng chung AP, và UC-AD-04 dùng dịch vụ ngoài; đây không phải ánh xạ 1:1.
 - **Đề xuất:** Sửa tên/phạm vi và AP theo đúng mã UC từ tài liệu use case; đổi tiêu đề thành “Ma trận truy xuất 32 Use Cases tới Access Patterns/dịch vụ” và kiểm tra đủ 32 dòng với danh mục UC trước khi đánh dấu hoàn tất.
 

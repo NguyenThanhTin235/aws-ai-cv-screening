@@ -16,7 +16,7 @@ Tài liệu này đặc tả chi tiết toàn bộ **32 trường hợp sử d�
 ### Cấu trúc Chuẩn hóa của Mỗi Use Case:
 1. **Mã & Tên Use Case:** Định danh duy nhất theo cú pháp `UC-[PHÂN_HỆ]-[STT]`.
 2. **Tác nhân chính (Primary Actor):** Chủ thể khởi tạo hoặc trực tiếp thao tác thực hiện mục tiêu.
-3. **Tác nhân hỗ trợ (Supporting/Secondary Actors):** Các dịch vụ bên ngoài hoặc tiến trình nền hỗ trợ hoàn thành Use Case (Amazon Cognito, Amazon SES, Amazon S3, Amazon Bedrock, OpenXML Service,...).
+3. **Tác nhân hỗ trợ (Supporting/Secondary Actors):** Các dịch vụ bên ngoài hoặc tiến trình nền hỗ trợ hoàn thành Use Case (Amazon Cognito, Amazon SES, Amazon S3, Amazon Textract, Amazon Bedrock,...).
 4. **Mô tả (Description):** Mô tả chi tiết chức năng, mục đích nghiệp vụ, giá trị mang lại cho người dùng và ngữ cảnh màn hình giao diện tương tác (`SCR-...`).
 5. **Sự kiện kích hoạt (Trigger):** Hành động hoặc sự kiện thực tế khởi phát Use Case.
 6. **Tiền điều kiện (Preconditions):** Các điều kiện hệ thống bắt buộc phải thỏa mãn trước khi Use Case có thể bắt đầu.
@@ -31,7 +31,7 @@ Tài liệu này đặc tả chi tiết toàn bộ **32 trường hợp sử d�
 
 | Mã Actor | Tên Tác nhân | Phân loại | Vai trò trong Hệ sinh thái Trải nghiệm |
 | :---: | :--- | :---: | :--- |
-| **`CDD`** | **Ứng viên (Candidate)** | Tác nhân con người | Người tìm việc; tương tác trực tiếp với cổng thông tin việc làm, tạo hồ sơ năng lực, nộp CV (PDF/DOCX), theo dõi trạng thái hồ sơ theo thời gian thực, xem giải trình đánh giá năng lực minh bạch của AI, thực hiện quyền rút đơn và quản lý quyền riêng tư dữ liệu cá nhân (DSR). |
+| **`CDD`** | **Ứng viên (Candidate)** | Tác nhân con người | Người tìm việc; tương tác trực tiếp với cổng thông tin việc làm, tạo hồ sơ năng lực, nộp CV định dạng PDF (`.pdf`), theo dõi trạng thái hồ sơ theo thời gian thực, xem giải trình đánh giá năng lực minh bạch của AI, thực hiện quyền rút đơn và quản lý quyền riêng tư dữ liệu cá nhân (DSR). |
 | **`RCT`** | **Nhà tuyển dụng (Recruiter)** | Tác nhân con người | Chuyên viên nhân sự đại diện cho doanh nghiệp (làm việc theo HR Team); đăng tin tuyển dụng, xem bảng xếp hạng ứng viên do AI phân tích, đối chiếu trực quan CV gốc với nhận xét AI (Side-by-side Review), đưa ra quyết định tuyển dụng (Human-in-the-Loop), ghi chú nội bộ có nhật ký kiểm toán và khai thác Kho tài năng (Talent Pool). |
 | **`AD`** | **Quản trị viên (Administrator)** | Tác nhân con người | Người vận hành sàn tuyển dụng; theo dõi dashboard chỉ số sức khỏe hệ thống, kiểm duyệt nội dung tin tuyển dụng và tài khoản, theo dõi xử lý các hồ sơ gặp sự cố (DLQ) và phê duyệt các yêu cầu hủy định danh tài khoản người dùng theo luật dữ liệu cá nhân. |
 | **`SYS`** | **Tiến trình Xử lý Nền (System AI Worker)** | Tác nhân tự động | Tác nhân hệ thống tự động chạy ngầm; đảm nhiệm việc trích xuất văn bản từ CV, chạy bộ lọc khử thông tin nhạy cảm để đảm bảo chấm điểm không thiên vị, điều phối AI phân tích đối soát với JD, cập nhật kết quả và kích hoạt gửi email thông báo cho người dùng. |
@@ -48,7 +48,7 @@ Tài liệu này đặc tả chi tiết toàn bộ **32 trường hợp sử d�
 | 3 | `UC-CDD-03` | Quản lý Kho CV Cá nhân & Thiết lập CV Mặc định | `CDD` | `CDD03` | `BR-DOC-01`, `BR-DOC-02` |
 | 4 | `UC-CDD-04` | Tìm kiếm & Khám phá Cơ hội Việc làm | `CDD` | `CDD04` | — |
 | 5 | `UC-CDD-05` | Lưu Việc làm Yêu thích & Đăng ký Nhận tin Tuyển dụng | `CDD` | `CDD05` | — |
-| 6 | `UC-CDD-06` | Nộp Hồ sơ Ứng tuyển Trực tuyến (Hỗ trợ PDF & Word) | `CDD` | `CDD06` | `BR-DOC-01..04`, `BR-PRIV-01` |
+| 6 | `UC-CDD-06` | Nộp Hồ sơ Ứng tuyển Trực tuyến (Định dạng PDF) | `CDD` | `CDD06` | `BR-DOC-01..03`, `BR-PRIV-01` |
 | 7 | `UC-CDD-07` | Theo dõi Tiến trình Tuyển dụng & Lịch sử Hồ sơ | `CDD` | `CDD07` | `BR-STATE-01` |
 | 8 | `UC-CDD-08` | Xem Báo cáo Đánh giá Năng lực Minh bạch từ AI | `CDD` | `CDD08` | `BR-SCORING-01`, `BR-SCORING-02` |
 | 9 | `UC-CDD-09` | Rút Đơn Ứng tuyển Tuyển dụng (`WITHDRAWN`) | `CDD` | `CDD09` | `BR-STATE-01`, `BR-STATE-02` |
@@ -75,7 +75,7 @@ Tài liệu này đặc tả chi tiết toàn bộ **32 trường hợp sử d�
 | 28 | `UC-AD-05` | Phê duyệt & Thực thi Yêu cầu Hủy định danh DSR (`ANONYMIZED_USER`) | `AD` | `AD05` | `BR-PRIV-02`, `NFR-DATA-01..02` |
 | **IV** | **PHÂN HỆ TIẾN TRÌNH NỀN AI (SYSTEM WORKER - SYS): 4 USE CASES** | | | |
 | 29 | `UC-SYS-01` | Tiếp nhận & Điều phối Hồ sơ Bất đồng bộ qua Hàng đợi | `SYS` | `SYS01` | `NFR-REL-01`, `NFR-REL-03` |
-| 30 | `UC-SYS-02` | Tự động Nhận diện Định dạng & Trích xuất Văn bản PDF/DOCX | `SYS` | `SYS02` | `BR-DOC-01`, `NFR-COST-01` |
+| 30 | `UC-SYS-02` | Kiểm tra Tính hợp lệ & Trích xuất Văn bản CV PDF qua Amazon Textract | `SYS` | `SYS02` | `BR-DOC-01`, `NFR-COST-01` |
 | 31 | `UC-SYS-03` | Khử Dữ liệu Nhạy cảm PII & Chấm điểm Bedrock Rubric 100đ | `SYS` | `SYS03` | `BR-SCORING-01..03`, `NFR-SEC-03..04` |
 | 32 | `UC-SYS-04` | Tự phục hồi Khi Quá tải & Cách ly Bản tin Sự cố vào DLQ | `SYS` | `SYS04` | `NFR-REL-02`, `NFR-OPS-02` |
 
@@ -95,7 +95,7 @@ graph TB
         UC03["UC-CDD-03: Quản lý CV & Đặt CV mặc định"]
         UC04["UC-CDD-04: Tìm kiếm & Lọc việc làm"]
         UC05["UC-CDD-05: Lưu việc làm & Nhận thông báo"]
-        UC06["UC-CDD-06: Nộp đơn trực tuyến (PDF/DOCX)"]
+        UC06["UC-CDD-06: Nộp đơn trực tuyến (Định dạng PDF)"]
         UC07["UC-CDD-07: Theo dõi tiến độ 2 trạng thái"]
         UC08["UC-CDD-08: Xem Báo cáo AI giải trình"]
         UC09["UC-CDD-09: Rút đơn ứng tuyển (WITHDRAWN)"]
@@ -187,7 +187,7 @@ graph TB
 
     subgraph SYS_Group["Tiến Trình Nền AI (4 Use Cases)"]
         UC29["UC-SYS-01: Nhận & Điều phối hàng đợi SQS"]
-        UC30["UC-SYS-02: Đọc văn bản PDF/DOCX tự động"]
+        UC30["UC-SYS-02: Đọc văn bản CV PDF qua Amazon Textract"]
         UC31["UC-SYS-03: Khử PII & Chấm điểm 100đ"]
         UC32["UC-SYS-04: Tự thử lại & Báo động sự cố"]
     end
@@ -266,19 +266,19 @@ graph TB
 #### 5.3. UC-CDD-03: Quản lý Kho CV Cá nhân & Thiết lập CV Mặc định
 * **Tác nhân chính (Primary Actor):** Ứng viên (`CDD`).
 * **Tác nhân hỗ trợ (Supporting Actors):** Amazon S3 (Kho lưu trữ tài liệu bảo mật).
-* **Mô tả (Description):** Cung cấp không gian lưu trữ và quản lý tập trung các phiên bản CV của ứng viên tại màn hình Quản lý CV (`SCR-CDD-CV-LIST`). Ứng viên có thể tải lên nhiều bản CV (hỗ trợ cả định dạng `.pdf` và `.docx`), xóa bản cũ và chọn một bản ưng ý nhất làm "CV Mặc định" để phục vụ việc nộp hồ sơ nhanh 1-click.
+* **Mô tả (Description):** Cung cấp không gian lưu trữ và quản lý tập trung các phiên bản CV của ứng viên tại màn hình Quản lý CV (`SCR-CDD-CV-LIST`). Ứng viên có thể tải lên nhiều bản CV định dạng chuẩn PDF (`.pdf`), xóa bản cũ và chọn một bản ưng ý nhất làm "CV Mặc định" để phục vụ việc nộp hồ sơ nhanh 1-click.
 * **Sự kiện kích hoạt (Trigger):** Ứng viên chuyển sang tab **"Quản lý CV"** trong khu vực hồ sơ cá nhân.
 * **Tiền điều kiện (Preconditions):** Ứng viên đã đăng nhập tài khoản; có sẵn tệp CV trên thiết bị.
 * **Hậu điều kiện (Postconditions):**
   * *Thành công:* Tệp CV được tải lên S3 an toàn, xuất hiện trong danh sách kèm tùy chọn đặt làm mặc định hoặc xóa bỏ.
 * **Luồng sự kiện chính (Basic Flow):**
   1. **[Ứng viên]** Mở mục Quản lý CV, quan sát vùng kéo thả tài liệu (Dropzone) và bảng danh sách CV hiện có.
-  2. **[Ứng viên]** Kéo thả hoặc chọn tệp CV mới từ máy tính (định dạng `.pdf` hoặc `.docx`, dung lượng <= 5MB theo `BR-DOC-01`).
+  2. **[Ứng viên]** Kéo thả hoặc chọn tệp CV mới từ máy tính (định dạng chuẩn `.pdf`, dung lượng <= 5MB theo `BR-DOC-01`).
   3. **[Hệ thống]** Tải tệp lên kho lưu trữ Amazon S3 qua Pre-signed URL an toàn, hiển thị thanh tiến trình 0% -> 100% và bổ sung mục mới vào bảng danh sách.
   4. **[Ứng viên]** Bấm nút gạt **"Đặt làm CV mặc định"** tại dòng tài liệu vừa tải.
   5. **[Hệ thống]** Gắn huy hiệu xanh lá *"Mặc định"* cạnh tệp và hiển thị thông báo: *"Đã thiết lập làm CV mặc định cho các lần nộp đơn sau."*
 * **Luồng sự kiện rẽ nhánh & Ngoại lệ (Alternative & Exception Flows):**
-  * *2a. Chọn tệp sai định dạng (ví dụ: `.png`, `.zip`, `.exe`):* Vùng kéo thả đổi viền đỏ cảnh báo: *"Chỉ chấp nhận tệp định dạng PDF (.pdf) hoặc Microsoft Word (.docx). Vui lòng chọn lại."*
+  * *2a. Chọn tệp sai định dạng (ví dụ: `.png`, `.zip`, `.exe`):* Vùng kéo thả đổi viền đỏ cảnh báo: *"Chỉ chấp nhận tệp định dạng chuẩn PDF (.pdf). Vui lòng chọn lại."*
   * *2b. Dung lượng tệp vượt quá 5MB:* Hệ thống chặn ngay tại trình duyệt và hiển thị thông báo: *"Kích thước tệp vượt quá giới hạn 5MB cho phép."*
 * **Quy tắc nghiệp vụ & Ràng buộc (Business Rules & Constraints):** `BR-DOC-01`.
 
@@ -322,10 +322,10 @@ graph TB
 
 ---
 
-#### 5.6. UC-CDD-06: Nộp Hồ sơ Ứng tuyển Trực tuyến (Hỗ trợ PDF & Word)
+#### 5.6. UC-CDD-06: Nộp Hồ sơ Ứng tuyển Trực tuyến (Định dạng PDF)
 * **Tác nhân chính (Primary Actor):** Ứng viên (`CDD`).
 * **Tác nhân hỗ trợ (Supporting Actors):** Amazon S3 (Lưu trữ CV), Amazon SQS (Tiếp nhận message điều phối), Amazon SES (Gửi email biên nhận).
-* **Mô tả (Description):** Cho phép ứng viên nộp hồ sơ ứng tuyển trực tiếp vào vị trí mong muốn qua Modal Nộp hồ sơ (`SCR-CDD-APPLY-MODAL`). Hệ thống hỗ trợ nộp nhanh bằng CV mặc định có sẵn hoặc tải tệp CV mới (PDF/DOCX), yêu cầu người dùng xác nhận các điều khoản đồng thuận xử lý dữ liệu bằng AI và lưu trữ Talent Pool trước khi gửi.
+* **Mô tả (Description):** Cho phép ứng viên nộp hồ sơ ứng tuyển trực tiếp vào vị trí mong muốn qua Modal Nộp hồ sơ (`SCR-CDD-APPLY-MODAL`). Hệ thống hỗ trợ nộp nhanh bằng CV mặc định có sẵn hoặc tải tệp CV mới định dạng chuẩn PDF (`.pdf`), yêu cầu người dùng xác nhận các điều khoản đồng thuận xử lý dữ liệu bằng AI và lưu trữ Talent Pool trước khi gửi.
 * **Sự kiện kích hoạt (Trigger):** Ứng viên bấm nút **"Nộp đơn ứng tuyển ngay"** tại trang chi tiết tin tuyển dụng.
 * **Tiền điều kiện (Preconditions):** Ứng viên đã đăng nhập; tin tuyển dụng đang mở tiếp nhận đơn (`status = OPEN`).
 * **Hậu điều kiện (Postconditions):**
@@ -336,7 +336,7 @@ graph TB
   2. **[Hệ thống]** Kiểm tra tính hợp lệ: xác minh ứng viên chưa có đơn ứng tuyển nào đang trong quá trình xét duyệt cho vị trí này (`BR-DOC-02`). Hệ thống mở Modal nộp đơn chuyên nghiệp.
   3. **[Ứng viên]** Lựa chọn phương thức cung cấp CV:
      - *Lựa chọn A (Nộp nhanh):* Chọn sử dụng **"CV Mặc định"** sẵn có trong hồ sơ.
-     - *Lựa chọn B (Tải tệp mới):* Kéo thả hoặc chọn tệp CV từ thiết bị (chấp nhận định dạng `.pdf` hoặc `.docx`, dung lượng <= 5MB theo `BR-DOC-01`).
+     - *Lựa chọn B (Tải tệp mới):* Kéo thả hoặc chọn tệp CV từ thiết bị (chỉ chấp nhận định dạng chuẩn `.pdf`, dung lượng <= 5MB theo `BR-DOC-01`).
   4. **[Ứng viên]** Đọc và tích chọn các điều khoản đồng thuận (`BR-PRIV-01`):
      - [x] *"Tôi đồng ý cho hệ thống AI phân tích dữ liệu CV phục vụ vị trí tuyển dụng này (Bắt buộc)."*
      - [x] *"Tôi đồng ý cho doanh nghiệp lưu trữ hồ sơ trong Kho tài năng (Talent Pool) để liên hệ cho các cơ hội nghề nghiệp tương lai (Tùy chọn)."*
@@ -525,7 +525,7 @@ graph TB
 #### 5.15. UC-RCT-04: Đối chiếu Song song 3 Cột (Side-by-side Review)
 * **Tác nhân chính (Primary Actor):** Nhà tuyển dụng (`RCT`).
 * **Tác nhân hỗ trợ (Supporting Actors):** Không có.
-* **Mô tả (Description):** Cung cấp không gian làm việc chuyên sâu cho chuyên viên tuyển dụng tại màn hình Đối chiếu Song song 3 Cột (`SCR-RCT-SIDEBYSIDE`). Màn hình tích hợp toàn bộ thông tin cần thiết vào một giao diện duy nhất: hiển thị song song tệp CV gốc (PDF/DOCX), báo cáo phân tích chi tiết của AI và khu vực nhập đánh giá của con người, loại bỏ hoàn toàn việc phải chuyển đổi qua lại giữa nhiều tab trình duyệt.
+* **Mô tả (Description):** Cung cấp không gian làm việc chuyên sâu cho chuyên viên tuyển dụng tại màn hình Đối chiếu Song song 3 Cột (`SCR-RCT-SIDEBYSIDE`). Màn hình tích hợp toàn bộ thông tin cần thiết vào một giao diện duy nhất: hiển thị song song tệp CV gốc định dạng PDF, báo cáo phân tích chi tiết của AI và khu vực nhập đánh giá của con người, loại bỏ hoàn toàn việc phải chuyển đổi qua lại giữa nhiều tab trình duyệt.
 * **Sự kiện kích hoạt (Trigger):** Recruiter nhấp vào tên một ứng viên từ bảng xếp hạng.
 * **Tiền điều kiện (Preconditions):** Recruiter đang xem danh sách ứng viên của tin tuyển dụng thuộc quyền quản lý của công ty mình.
 * **Hậu điều kiện (Postconditions):**
@@ -533,7 +533,7 @@ graph TB
 * **Luồng sự kiện chính (Basic Flow):**
   1. **[Recruiter]** Nhấp vào tên một ứng viên trong danh sách xếp hạng.
   2. **[Hệ thống]** Mở giao diện làm việc **3 Cột song song chuyên nghiệp**:
-     - **Cột 1 (Bên trái — Tài liệu CV gốc):** Trình xem tài liệu trực tiếp hiển thị tệp PDF hoặc định dạng Word DOCX gốc của ứng viên.
+     - **Cột 1 (Bên trái — Tài liệu CV gốc):** Trình xem PDF trực tiếp hiển thị tệp CV PDF gốc của ứng viên.
      - **Cột 2 (Ở giữa — Báo cáo Phân tích AI):** Hiển thị chi tiết bảng điểm 4 phần Rubric 100đ, đoạn tóm tắt kinh nghiệm, danh sách điểm sáng đối chiếu JD và các khoảng trống kỹ năng.
      - **Cột 3 (Bên phải — Bảng Đánh giá & Ra Quyết định):** Khu vực tương tác dành riêng cho chuyên viên nhân sự thao tác đánh giá con người.
   3. **[Recruiter]** Đọc nội dung CV ở cột trái, đối soát với các luận điểm trích dẫn ở cột giữa để có cái nhìn toàn diện, khách quan về ứng viên.
@@ -675,13 +675,13 @@ graph TB
 #### 5.23. UC-RCT-12: Tải File CV An toàn & Nhật ký Kiểm toán Truy cập (Access Log)
 * **Tác nhân chính (Primary Actor):** Nhà tuyển dụng (`RCT`).
 * **Tác nhân hỗ trợ (Supporting Actors):** Amazon S3 (Sinh Pre-signed URL bảo mật tạm thời).
-* **Mô tả (Description):** Cung cấp cơ chế tải tệp CV gốc (.pdf/.docx) của ứng viên về máy tính nội bộ thông qua liên kết bảo mật tạm thời tại màn hình Đánh giá (`SCR-RCT-AUDIT-LOG`). Mỗi lượt tải tệp đều được hệ thống tự động ghi nhật ký kiểm toán truy cập (**Access Log**) lưu vết Recruiter nào đã tải, vào thời điểm nào và từ IP nào nhằm đảm bảo an ninh thông tin và ngăn ngừa rò rỉ dữ liệu cá nhân.
-* **Sự kiện kích hoạt (Trigger):** Recruiter bấm nút **"Tải CV gốc (.pdf / .docx)"**.
+* **Mô tả (Description):** Cung cấp cơ chế tải tệp CV gốc (`.pdf`) của ứng viên về máy tính nội bộ thông qua liên kết bảo mật tạm thời tại màn hình Đánh giá (`SCR-RCT-AUDIT-LOG`). Mỗi lượt tải tệp đều được hệ thống tự động ghi nhật ký kiểm toán truy cập (**Access Log**) lưu vết Recruiter nào đã tải, vào thời điểm nào và từ IP nào nhằm đảm bảo an ninh thông tin và ngăn ngừa rò rỉ dữ liệu cá nhân.
+* **Sự kiện kích hoạt (Trigger):** Recruiter bấm nút **"Tải CV gốc (.pdf)"**.
 * **Tiền điều kiện (Preconditions):** Recruiter thuộc tổ chức công ty sở hữu tin tuyển dụng (`BR-AUTH-03`).
 * **Hậu điều kiện (Postconditions):**
   * *Thành công:* Tệp CV được tải về thiết bị qua link tạm thời (tự hủy sau 5 phút theo `BR-DOC-03`); một dòng nhật ký truy cập tải file được lưu lại.
 * **Luồng sự kiện chính (Basic Flow):**
-  1. **[Recruiter]** Tại màn hình đối chiếu hồ sơ, bấm nút **"Tải CV gốc (.pdf / .docx)"**.
+  1. **[Recruiter]** Tại màn hình đối chiếu hồ sơ, bấm nút **"Tải CV gốc (.pdf)"**.
   2. **[Hệ thống]** Kiểm tra quyền truy cập hợp lệ, sinh liên kết tải bảo mật tạm thời Pre-signed URL từ Amazon S3 có hiệu lực trong đúng 5 phút (`BR-DOC-03`).
   3. **[Hệ thống]** Tự động ghi lại một dòng nhật ký kiểm toán truy cập tải tệp (**Access Audit Log** theo `NFR-SEC-05`), bao gồm: Recruiter ID, Application ID, Thời điểm chính xác và Địa chỉ IP yêu cầu.
   4. **[Recruiter]** Trình duyệt tự động tải tệp tài liệu an toàn về máy tính.
@@ -805,18 +805,18 @@ graph TB
 
 ---
 
-#### 5.30. UC-SYS-02: Tự động Nhận diện Định dạng & Trích xuất Văn bản PDF/DOCX
+#### 5.30. UC-SYS-02: Kiểm tra Tính hợp lệ & Trích xuất Văn bản CV PDF qua Amazon Textract
 * **Tác nhân chính (Primary Actor):** Tiến trình Nền AI Worker (`SYS`).
-* **Tác nhân hỗ trợ (Supporting Actors):** Amazon Textract (Đọc PDF thông minh), Thư viện OpenXML (Đọc DOCX trong bộ nhớ).
-* **Mô tả (Description):** Tự động nhận diện định dạng tệp tài liệu và thực hiện trích xuất toàn bộ nội dung văn bản thô từ CV một cách tối ưu chi phí. Hệ thống phân luồng xử lý thông minh: sử dụng Amazon Textract để phân tích cấu trúc văn bản/bảng biểu cho tệp `.pdf`, và sử dụng thư viện OpenXML phân tích trực tiếp cấu trúc XML trong bộ nhớ đối với tệp Word `.docx` (giúp tốc độ đọc siêu nhanh và hoàn toàn miễn phí chi phí Textract).
+* **Tác nhân hỗ trợ (Supporting Actors):** Amazon Textract (`DetectDocumentText` API).
+* **Mô tả (Description):** Kiểm tra chữ ký đầu tệp Magic Bytes (`%PDF-`) của tài liệu CV trên Amazon S3 và thực hiện trích xuất toàn bộ nội dung văn bản thô 100% Cloud-Native thông qua dịch vụ **Amazon Textract**. Hệ thống bảo toàn cấu trúc dòng chữ, nhiều cột và bảng biểu từ tệp `.pdf`, đồng thời lưu bộ nhớ đệm `sanitizedTextCache` để tiết kiệm chi phí OCR nếu có yêu cầu chấm điểm lại (Re-score).
 * **Sự kiện kích hoạt (Trigger):** Tiến trình nền bắt đầu xử lý tệp CV từ S3.
 * **Tiền điều kiện (Preconditions):** Tệp CV hợp lệ nằm trên kho lưu trữ Amazon S3.
 * **Hậu điều kiện (Postconditions):**
   * *Thành công:* Toàn bộ nội dung chữ thô của CV được trích xuất đầy đủ và làm sạch, chuẩn bị đưa vào bộ lọc khử định kiến.
 * **Luồng sự kiện chính (Basic Flow):**
-  1. **[Hệ thống Nền]** Nhận diện phần mở rộng của tệp CV:
-     - **Nếu là tệp `.pdf`:** Gọi API Amazon Textract DetectDocumentText để trích xuất văn bản từng dòng và các khối chữ.
-     - **Nếu là tệp `.docx`:** Giải nén và phân tích trực tiếp tài liệu cấu trúc OpenXML trong bộ nhớ (đảm bảo chi phí Textract = $0 theo `NFR-COST-01`).
+  1. **[Hệ thống Nền]** Tải tệp CV từ S3 và kiểm tra tính hợp lệ của tệp PDF (chữ ký Magic Bytes `%PDF-`):
+     - **Hợp lệ (`.pdf`):** Gọi API Amazon Textract `DetectDocumentText` qua AWS PrivateLink để trích xuất văn bản từng dòng và các khối chữ.
+     - **Tối ưu chi phí (`NFR-COST-01`):** Lưu kết quả trích xuất đã làm sạch vào bộ nhớ đệm `sanitizedTextCache` để tái sử dụng khi Re-score mà không cần gọi lại Textract.
   2. **[Hệ thống Nền]** Chuẩn hóa toàn bộ nội dung thành chuỗi văn bản sạch, loại bỏ các ký tự điều khiển rác sẵn sàng cho bước khử định kiến PII.
 * **Quy tắc nghiệp vụ & Ràng buộc (Business Rules & Constraints):** `BR-DOC-01`, `NFR-COST-01`.
 
@@ -864,7 +864,7 @@ graph TB
 | :---: | :---: | :--- | :--- |
 | **`CDD`** | `UC-CDD-01` | `SCR-CDD-AUTH` | Form Đăng ký/Đăng nhập, Checklist mật khẩu thời gian thực, Modal nhập OTP 6 số đếm ngược 60s. |
 | **`CDD`** | `UC-CDD-02` | `SCR-CDD-PROFILE` | Form hồ sơ cá nhân, Thanh tiến trình hoàn thiện %, Tag kỹ năng chọn nhanh, Link mạng xã hội. |
-| **`CDD`** | `UC-CDD-03` | `SCR-CDD-CV-LIST` | Vùng kéo thả Dropzone (.pdf/.docx <= 5MB), Nút gạt bật "CV Mặc định", Huy hiệu trạng thái CV. |
+| **`CDD`** | `UC-CDD-03` | `SCR-CDD-CV-LIST` | Vùng kéo thả Dropzone (`.pdf` <= 5MB), Nút gạt bật "CV Mặc định", Huy hiệu trạng thái CV. |
 | **`CDD`** | `UC-CDD-04` | `SCR-CDD-JOB-SEARCH` | Thanh tìm kiếm lớn, Chip lọc nhanh (Cấp bậc, Địa điểm, Lương), Thẻ tin việc làm (Job Card). |
 | **`CDD`** | `UC-CDD-05` | `SCR-CDD-SAVED-JOBS` | Danh sách việc làm đã lưu (Bookmark hình trái tim), Form đăng ký email Job Alerts. |
 | **`CDD`** | `UC-CDD-06` | `SCR-CDD-APPLY-MODAL` | Modal nộp đơn: Nút nộp bằng CV mặc định / Kéo thả CV mới, Thanh tiến trình upload %, Checkbox đồng ý AI. |
@@ -876,7 +876,7 @@ graph TB
 | **`RCT`** | `UC-RCT-01` | `SCR-RCT-COMPANY` | Trang hồ sơ công ty: Logo, Giới thiệu, Tab Nhóm nhân sự (HR Team), Nút mời đồng nghiệp qua email. |
 | **`RCT`** | `UC-RCT-02` | `SCR-RCT-JOB-EDIT` | Trình soạn thảo JD: Yêu cầu bắt buộc/ưu tiên, Nút Xem trước (Preview), Nút Xuất bản và Đóng tin. |
 | **`RCT`** | `UC-RCT-03` | `SCR-RCT-RANKING` | Bảng xếp hạng ứng viên theo điểm số AI, Bộ lọc nhanh Match Level (Xanh lá / Vàng / Xám). |
-| **`RCT`** | `UC-RCT-04` | `SCR-RCT-SIDEBYSIDE` | Màn hình đối chiếu 3 Cột: Cột 1 xem CV gốc PDF/DOCX, Cột 2 xem Báo cáo AI, Cột 3 bảng nhập đánh giá. |
+| **`RCT`** | `UC-RCT-04` | `SCR-RCT-SIDEBYSIDE` | Màn hình đối chiếu 3 Cột: Cột 1 xem CV gốc định dạng PDF, Cột 2 xem Báo cáo AI, Cột 3 bảng nhập đánh giá. |
 | **`RCT`** | `UC-RCT-05` | `SCR-RCT-EVALUATION` | Bảng đánh giá con người: Chấm sao (1-5 sao), Ô ghi chú nội bộ, Dòng thời gian lịch sử đánh giá HR. |
 | **`RCT`** | `UC-RCT-06` | `SCR-RCT-STATUS-CHANGE`| Dropdown chuyển trạng thái tuyển dụng (`INVITED`/`REJECTED`), Nhật ký Audit Trail bất biến. |
 | **`RCT`** | `UC-RCT-07` | `SCR-RCT-RESCORE-BTN` | Nút "Chấm lại bằng AI", Icon xoay chuyển động đang phân tích, Cảnh báo giới hạn 3 lần/giờ. |

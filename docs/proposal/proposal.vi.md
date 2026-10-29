@@ -47,8 +47,8 @@ graph TD
         subgraph MVP["Giai đoạn MVP (Bắt buộc hoàn thành trong 2 tháng)"]
             A1["Cognito RBAC (Admin / Recruiter / Candidate) & HR Team"]
             A2["Quản lý Company Profile & Tin tuyển dụng JD"]
-            A3["Nộp CV (PDF & DOCX) qua S3 Presigned URL & Rút đơn"]
-            A4["Pipeline AI: Trích xuất Textract/OpenXML + Lọc PII + Bedrock Rubric 100đ"]
+            A3["Nộp CV định dạng PDF qua S3 Presigned URL & Rút đơn"]
+            A4["Pipeline AI: Trích xuất Amazon Textract + Lọc PII + Bedrock Rubric 100đ"]
             A5["Recruiter: Bảng xếp hạng, Side-by-side Review & Audit Trail"]
             A6["Kho dữ liệu tài năng (Talent Pool) & Báo cáo Skill Gap"]
             A7["Email SES tự động, Tuân thủ DSR & Giám sát CloudWatch"]
@@ -65,8 +65,8 @@ graph TD
 * **Phạm vi MVP (Cốt lõi — Hoàn thành trước 20/12/2026):**
   * **Xác thực & Tổ chức:** Quản lý tài khoản qua **Amazon Cognito** với 3 nhóm vai trò (`Candidate`, `Recruiter`, `Admin`); hỗ trợ tài khoản công ty (**Company Profile**) cho phép nhiều thành viên HR Team cùng làm việc chung.
   * **Quản lý tuyển dụng & Ứng tuyển:** Nhà tuyển dụng đăng, sửa, đóng tin JD; Ứng viên tìm kiếm việc làm, quản lý hồ sơ cá nhân và CV mặc định.
-  * **Tiếp nhận hồ sơ linh hoạt:** Hỗ trợ định dạng kép (**PDF** và **Word .docx**) tối đa 5MB tải trực tiếp lên **Amazon S3** qua Presigned URL an toàn; cơ chế chống nộp trùng và quyền rút đơn ứng tuyển (**WITHDRAWN**); theo dõi song song 2 vòng đời trạng thái (`status` tuyển dụng và `ai_status` xử lý ngầm).
-  * **Pipeline AI khách quan & Không định kiến:** Xử lý bất đồng bộ qua **Amazon SQS** (+DLQ) và **AWS Lambda Worker**; trích xuất văn bản linh hoạt (Amazon Textract cho PDF, OpenXML parser cho DOCX); tự động loại bỏ/che mờ dữ liệu định danh cá nhân (**PII Redaction Filter**) trước khi gọi **Amazon Bedrock** (Claude 3 Haiku) chấm điểm theo **Rubric 100 điểm chuẩn hóa** (Kỹ năng, Kinh nghiệm, Học vấn, Kỹ năng mềm) xuất JSON Schema có cấu trúc.
+  * **Tiếp nhận hồ sơ PDF chuẩn hóa:** Hỗ trợ duy nhất định dạng chuẩn **PDF (`.pdf`, `application/pdf`)** tối đa 5MB tải trực tiếp lên **Amazon S3** qua Presigned URL an toàn; cơ chế chống nộp trùng và quyền rút đơn ứng tuyển (**WITHDRAWN**); theo dõi song song 2 vòng đời trạng thái (`status` tuyển dụng và `ai_status` xử lý ngầm).
+  * **Pipeline AI khách quan & Không định kiến:** Xử lý bất đồng bộ qua **Amazon SQS** (+DLQ) và **AWS Lambda Worker**; trích xuất văn bản 100% Cloud-Native qua **Amazon Textract** (`DetectDocumentText` API); tự động loại bỏ/che mờ dữ liệu định danh cá nhân (**PII Redaction Filter**) trước khi gọi **Amazon Bedrock** (Claude 3 Haiku) chấm điểm theo **Rubric 100 điểm chuẩn hóa** (Kỹ năng, Kinh nghiệm, Học vấn, Kỹ năng mềm) xuất JSON Schema có cấu trúc.
   * **Đánh giá đa chiều (Human-in-the-Loop):** Giao diện đối chiếu song song 3 cột (**Side-by-side Review**); Recruiter ghi chú nội bộ, cho điểm sao và cập nhật trạng thái kèm nhật ký kiểm toán bất biến (**Audit Trail**); hỗ trợ chấm lại (Re-score) có kiểm soát tần suất.
   * **Báo cáo & Tái sử dụng nguồn lực:** Báo cáo phân tích khoảng trống kỹ năng (**Skill Gap Analytics**); xây dựng Kho dữ liệu tài năng (**Talent Pool**) và tự động gợi ý ứng viên cũ phù hợp cho tin tuyển dụng mới (**Talent Rediscovery**).
   * **Bảo vệ quyền riêng tư & Vận hành:** Quản lý sự đồng ý theo mục đích (**Granular Consent**) và thực thi quyền chủ thể dữ liệu (**DSR Anonymization** — hủy định danh dữ liệu và xóa file CV trên S3); cam kết **Zero Model Training** trên Bedrock; gửi email tự động qua **Amazon SES**; thu thập logs tập trung, dashboard chỉ số và cảnh báo tự động qua **Amazon CloudWatch**; kịch bản dọn dẹp tài nguyên triệt để (**Clean-up**).
@@ -95,78 +95,142 @@ graph TD
 
 ## 4. Kiến trúc giải pháp sơ bộ (High-level Architecture)
 
-> [!NOTE]
-> *Sơ đồ kiến trúc chính thức vẽ bằng AWS Architecture Icons và phân tích chi tiết từng luồng dữ liệu sẽ được hoàn thiện tại `docs/architecture/` vào **Ngày 3 (29/10/2026)**.*
+> [!TIP]
+> **Tài liệu & Sơ đồ kiến trúc chính thức:**
+> - 📐 **Sơ đồ Draw.io gốc (Native XML):** [`docs/architecture/diagrams/system-architecture.drawio`](../architecture/diagrams/system-architecture.drawio) *(Đạt chuẩn AWS Architecture Icons `mxgraph.aws4`, 100% không lỗi hiển thị, có thể mở chỉnh sửa trực tiếp)*.
+> - 📖 **Thuyết minh kiến trúc chuyên sâu:** [`docs/architecture/system-architecture.md`](../architecture/system-architecture.md) *(Đặc tả 3 luồng dữ liệu, 5 quyết định kiến trúc ADR, đối chiếu 6 trụ cột AWS Well-Architected Framework)*.
 
-### 4.1. Phân tầng kiến trúc
-Hệ thống được thiết kế theo mô hình kiến trúc phân tầng Serverless:
+### 4.1. Phân tầng kiến trúc Serverless
 
-```text
-[ Người dùng ]
-      │
-      ▼ (HTTPS)
-[ AWS Amplify Hosting ] (Web Frontend: Next.js / React)
-      │
-      ├──────────────────────┐
-      ▼                      ▼
-[ Amazon Cognito ]     [ Amazon API Gateway ] (REST API)
-(User Authentication)        │ (Cognito Authorizer)
-                             ▼
-                     [ AWS Lambda Functions ] (API Handlers)
-                             │
-            ┌────────────────┼────────────────┐
-            ▼                ▼                ▼
-     [ Amazon S3 ]    [ Amazon DynamoDB ] [ Amazon SES ]
-     (Upload CV PDF)   (Jobs, Applicants)  (Email Notifications)
-            │
-            ▼ (S3 Event)
-     [ Amazon SQS ] (+ Dead-Letter Queue)
-            │
-            ▼
-     [ AWS Lambda Worker ]
-            │
-            ├─────────────────────────┐
-            ▼                         ▼
-   [ Amazon Textract ]       [ Amazon Bedrock ]
-(Trích xuất text từ CV)    (LLM chấm điểm & tóm tắt)
-            │                         │
-            └───────────┬─────────────┘
-                        ▼
-              [ Amazon DynamoDB ]
-             (Lưu kết quả phân tích)
+Hệ thống được thiết kế theo mô hình kiến trúc phân tầng 100% Serverless, tách rời giữa luồng tiếp nhận đồng bộ (Sync API) và luồng xử lý AI bất đồng bộ (Async AI Pipeline):
+
+```mermaid
+flowchart LR
+    subgraph Clients["Khách hàng & Người dùng"]
+        User["Candidate / HR / Admin<br/>(Web Browser)"]
+    end
+
+    subgraph AWS_Cloud["AWS Cloud (Region: us-east-1)"]
+        subgraph Ingress["Tầng Bảo vệ Biên, CDN & Tiếp nhận"]
+            WAF["AWS WAF<br/>(SQLi, XSS, Bot, Flood & Rate Guard)"]
+            CF["Amazon CloudFront<br/>(Global Edge CDN)"]
+            Amplify["AWS Amplify Hosting<br/>(React SPA)"]
+            Cognito["Amazon Cognito<br/>(User Pool + 3 Groups)"]
+            APIGW["Amazon API Gateway<br/>(REST API + Authorizer)"]
+            APIGW_WS["API Gateway WebSocket<br/>(Real-time Push)"]
+        end
+
+        subgraph VPC["Amazon VPC (10.0.0.0/16 — Zero Public IP / No NAT ~32 USD/tháng)"]
+            subgraph PrivSub["Private Subnet & Security Group"]
+                L_API["AWS Lambda<br/>(API & Tenant Guard)"]
+                L_Worker["AWS Lambda<br/>(Validate, Normalize & PII)"]
+                VPCE_GW["Gateway VPC Endpoint<br/>(S3 & DynamoDB)"]
+                VPCE_PL["Interface VPC Endpoint<br/>(AWS PrivateLink)"]
+            end
+        end
+
+        subgraph Regional["Dịch vụ Quản lý Vùng & Điều phối AI (Regional & AI Orchestration)"]
+            DDB[("6. Amazon DynamoDB<br/>(Lưu CV JSON, Trạng thái & Idempotency)")]
+            S3["3. Amazon S3 — CV Quarantine<br/>(Kiểm tra MIME %PDF-, Size <= 5MB)"]
+            GD["3. Amazon GuardDuty<br/>(Malware Protection for S3)"]
+            SQS["4. Amazon SQS<br/>(Xếp hàng & Chống trùng document_id)"]
+            SFN["4. AWS Step Functions<br/>(Điều phối 5a Textract -> 5b Bedrock)"]
+            SM["AWS Secrets Manager"]
+            TXT["5a. Amazon Textract<br/>(Trích xuất Văn bản Async/Sync)"]
+            Bedrock["5b. Amazon Bedrock Runtime<br/>(Chuẩn hóa CV thành JSON & Score)"]
+            A2I["Amazon A2I (Human-in-the-Loop)<br/>(Manual Review Fallback)"]
+            SES["6. Amazon SES (Email Notification)"]
+            DLQ["Amazon SQS (Dead-Letter Queue)"]
+            CW["Amazon CloudWatch (Logs, Metrics & Alarms)"]
+        end
+
+        subgraph Ops["Bảo mật, Mã hóa & Kiểm toán"]
+            IAM["AWS IAM (Least Privilege)"]
+            KMS["AWS KMS (Data Encryption)"]
+            CT["AWS CloudTrail & Budgets"]
+        end
+    end
+
+    User -->|1. HTTPS| CF
+    CF -.->|Kiểm tra WAF| WAF
+    CF -->|Amplify / Origin| Amplify
+    CF -->|2. Xin Presigned URL| APIGW
+    User -->|Login (Đăng nhập)| Cognito
+    Cognito -.->|JWT| APIGW
+    APIGW -->|2. JWT Authorizer| L_API
+    L_API -->|2. Xác minh Quyền & Cấp Presigned URL| VPCE_GW
+    VPCE_GW -->|6. Lưu CV JSON & Check Idempotency| DDB
+    VPCE_GW -->|2. Cấp Presigned URL (Quarantine Key)| S3
+    User ==>|3. Upload CV trực tiếp (Presigned URL, Server Key, Hạn 5p)| S3
+    S3 <-.->|3. Quét mã độc, MIME & Size| GD
+    S3 ==>|4a. S3 Event (CV Sạch mã độc)| SQS
+    SQS ==>|4b. Trigger Workflow (Idempotent)| SFN
+    L_API -.->|Đọc Secrets & Kích hoạt Re-score| VPCE_PL
+    L_Worker -->|6. Validate JSON -> Lưu DB & Cập nhật trạng thái| VPCE_GW
+    L_Worker -.->|Check Idempotency (document_id), Khử PII & Validate| VPCE_PL
+    VPCE_PL -.->|PrivateLink: SQS| SQS
+    VPCE_PL -.->|PrivateLink: Step Functions| SFN
+    VPCE_PL -.->|PrivateLink: Secrets Manager| SM
+    VPCE_PL -.->|PrivateLink: Textract| TXT
+    VPCE_PL -.->|PrivateLink: Bedrock Runtime| Bedrock
+    VPCE_PL -.->|PrivateLink: SES| SES
+    VPCE_PL -.->|PrivateLink: CloudWatch Logs| CW
+    S3 -.->|5a. Đọc trực tiếp CV PDF (S3Object)| TXT
+    SFN -.->|5a. Gọi Textract Async/Sync (Retry x2.0)| TXT
+    TXT ==>|5b. Văn bản OCR (Đã Khử PII) -> Chuẩn hóa JSON| Bedrock
+    SFN -.->|5b. Gọi Bedrock Chuẩn hóa JSON (Retry x2.0)| Bedrock
+    SFN -.->|Fallback: Low Confidence / Bad JSON| A2I
+    SFN -.->|6. Gửi Email| SES
+    VPCE_PL ==>|6. Push Event| APIGW_WS
+    APIGW_WS ==>|6. WebSocket Push (Real-time UI)| User
+    SFN -.->|Cách ly lỗi (> 3 lần)| DLQ
+    DLQ -.->|Kích hoạt Alarm| CW
 ```
 
-### 4.2. Danh mục dịch vụ AWS dự kiến
+### 4.2. Danh mục dịch vụ AWS chính thức
 
-| Dịch vụ AWS | Phân loại | Vai trò trong hệ thống |
+| Dịch vụ AWS | Phân loại | Vai trò kỹ thuật trong hệ thống |
 | :--- | :--- | :--- |
-| **AWS Amplify Hosting** | Frontend Hosting | Lưu trữ, phân phối và triển khai tự động (CI/CD từ GitHub) cho giao diện Web. |
-| **Amazon Cognito** | Security & Auth | Quản lý đăng ký, đăng nhập và phân quyền (Groups: `recruiter`, `candidate`). |
-| **Amazon API Gateway** | API Management | Cung cấp RESTful API, xác thực request qua Cognito Authorizer. |
-| **AWS Lambda** | Serverless Compute | Xử lý logic backend (quản lý JD, cấp S3 presigned URL, tiêu thụ queue, chấm điểm). |
-| **Amazon S3** | Object Storage | Lưu trữ an toàn các file CV PDF (Private bucket, mã hóa phía server). |
-| **Amazon SQS** | Message Queue | Đệm hàng đợi xử lý CV bất đồng bộ, đi kèm Dead-Letter Queue (DLQ) chống mất dữ liệu. |
-| **Amazon Textract** | AI Document | Tự động đọc và trích xuất nội dung chữ từ file CV PDF. |
-| **Amazon Bedrock** | Generative AI | Chạy mô hình ngôn ngữ lớn (Claude 3 Haiku / Sonnet) để đối soát CV với JD, chấm điểm và tóm tắt. |
-| **Amazon DynamoDB** | NoSQL Database | Lưu trữ dữ liệu tin tuyển dụng, thông tin ứng viên, điểm số và kết quả phân tích AI. |
-| **Amazon SES** | Communication | Gửi email thông báo tự động (xác nhận nộp hồ sơ, thư mời phỏng vấn). |
-| **Amazon CloudWatch** | Observability | Thu thập Logs tập trung, theo dõi Metrics và kích hoạt Alarms khi có sự cố. |
+| **AWS WAF** | Edge Security (Layer 7) | Bảo vệ biên ứng dụng chống SQL Injection, XSS, HTTP Flood, Bot độc hại, Request bất thường và lạm dụng tần suất (Rate Abuse). |
+| **Amazon CloudFront** | Global Edge CDN | Phân phối nội dung toàn cầu qua 600+ PoPs, kết thúc TLS 1.3 tại biên, tăng tốc tải ứng dụng Web SPA và định tuyến API về API Gateway. |
+| **AWS Amplify Hosting** | Frontend Hosting | Lưu trữ và tự động triển khai CI/CD từ GitHub cho giao diện React Vite SPA. |
+| **Amazon Cognito** | Identity & Security | Quản lý đăng ký, đăng nhập và phân quyền RBAC cho 3 vai trò (`Candidate`, `Recruiter`, `Admin`) kèm thuộc tính `company_id`. |
+| **Amazon API Gateway (REST & WebSocket)** | API & Real-time Push | **REST API** xác thực JWT qua Cognito Authorizer; **WebSocket API (`@connections`)** đẩy thông báo kết quả chấm điểm Real-time trực tiếp lên UI, thay thế hoàn toàn HTTP Polling. |
+| **AWS Lambda** | Serverless Compute | Thực thi business logic backend (`Lambda API` xác minh quyền & cấp Presigned URL; `Lambda Worker` kiểm tra Idempotency, khử PII & Validate JSON) trên Node.js 20.x TypeScript. |
+| **Amazon S3 (`CV Quarantine`) + GuardDuty** | Quarantine Storage & Malware Scan | Lưu trữ cách ly tệp CV định dạng PDF (`.pdf` <= 5MB); **Amazon GuardDuty Malware Protection for S3** tự động quét mã độc (`NO_THREATS_FOUND`) và kiểm tra chữ ký MIME `%PDF-` trước khi cho phép sử dụng. |
+| **S3 Presigned URLs** | Client-to-Storage | Chỉ cấp cho tài nguyên đã xác minh quyền sở hữu; dùng `s3Key` do Server tự tạo, thời hạn 5 phút, giới hạn chặt loại file `application/pdf` và kích thước `<= 5MB`. |
+| **Amazon SQS + DLQ** | Message Queue & Idempotency | Hàng đợi đệm chống nghẽn đột biến, kiểm tra **Idempotency (`document_id`)** trước khi kích hoạt Step Functions; Dead-Letter Queue (DLQ) cách ly lỗi sau 3 lần retry. |
+| **AWS Step Functions** | AI Workflow Orchestrator | Điều phối tuần tự **`5a. Amazon Textract`** (trích xuất văn bản) $\to$ **`5b. Amazon Bedrock`** (chuẩn hóa CV thành JSON) kèm chiến lược `Retry` (`IntervalSeconds: 2, BackoffRate: 2.0`) trực tiếp tại từng State. |
+| **Amazon Textract (`5a`)** | AI Document OCR | Đọc trực tiếp tệp PDF từ S3 (`S3Object`), hỗ trợ API bất đồng bộ (`StartDocumentTextDetection`) cho tài liệu lớn/nhiều trang mà không giữ kết nối HTTP chờ AI xử lý. |
+| **VPC Endpoints (AWS PrivateLink)** | Private Network Routing | Duy trì **Zero Public IP** (Không dùng NAT Gateway ~32 USD/tháng); định tuyến nội bộ từ Private Subnet tới S3, DynamoDB, Textract, Bedrock Runtime, SES, SQS, Step Functions, Secrets Manager và CloudWatch. |
+| **PII & Bias Redactor** | Responsible AI Module | Module Regex nội bộ làm mờ số điện thoại, email, địa chỉ, ảnh và đại từ nhân xưng trên văn bản OCR trước khi gửi vào LLM. |
+| **Amazon Bedrock Runtime (`5b`)** | Generative AI | Chạy mô hình Anthropic Claude 3 Haiku để **chuẩn hóa CV thành cấu trúc JSON** (`Skills`, `Experience`, `Education`, `Job matching`, `AI score`). |
+| **Amazon A2I (Human-in-the-Loop)** | Manual Review Fallback | Nhánh rẽ trong Step Functions khi Confidence Score của Textract thấp (`< 80%`) hoặc Bedrock trả về JSON sai định dạng, đẩy hồ sơ sang hàng đợi chờ HR Review thủ công. |
+| **Amazon DynamoDB (`6`)** | NoSQL Database | Cơ sở dữ liệu Single-Table độ trễ $< 10\text{ms}$, lưu dữ liệu CV JSON có cấu trúc, khóa chống trùng **Idempotency (`document_id`)** và bảng xếp hạng ứng viên (`GSI1`). |
+| **Amazon SES (`6`)** | Email Communication | Tự động gửi email biên nhận nộp đơn, thông báo kết quả phân tích CV và thư mời phỏng vấn qua kết nối nội bộ PrivateLink. |
+| **Amazon CloudWatch** | Observability | Thu thập JSON Structured Logs tập trung, theo dõi Metrics thời gian thực và kích hoạt Alarms cảnh báo lỗi DLQ. |
+
+### 4.3. 4 Trụ cột Kỹ thuật Tạo nên Sự Khác biệt
+1. **Tiếp nhận Cách ly & Quét Mã độc Tự động (Presigned URL + S3 Quarantine + GuardDuty):** Chỉ cấp Presigned URL cho tài nguyên đã xác minh quyền sở hữu với `s3Key` do Server tạo (hạn 5 phút); mọi tệp CV mới đều đi qua vùng cách ly `S3 — CV Quarantine` và được quét mã độc tự động bằng `Amazon GuardDuty Malware Protection for S3` trước khi sử dụng.
+2. **Điều phối Tuần tự `5a. Textract` $\to$ `5b. Bedrock JSON` & Nhánh Fallback `Amazon A2I`:** `AWS Step Functions` điều phối trực tiếp `Textract` (hỗ trợ Async OCR đọc từ `S3Object`) và `Bedrock` (chuẩn hóa CV thành JSON) với cấu hình `Retry` (`BackoffRate: 2.0`), tự động chuyển sang hàng đợi Review thủ công (`Amazon A2I`) nếu Confidence thấp hoặc JSON lỗi.
+3. **Chống Trùng Lặp Sự kiện (`Idempotency`) & Phản hồi Real-time qua WebSocket Push:** Kiểm tra `document_id` / `versionId` chống xử lý lặp khi S3 phát sinh sự kiện nhiều lần; đẩy kết quả trực tiếp lên giao diện qua `API Gateway WebSocket Push` thay thế hoàn toàn HTTP Polling.
+4. **Mạng Nội bộ Toàn diện (`Zero Public IP` & `Full AWS PrivateLink`):** Kết nối nội bộ 100% qua `Gateway VPC Endpoint` và `Interface VPC Endpoint` mà không cần tốn chi phí duy trì NAT Gateway (~32 USD/tháng/NAT).
 
 ---
 
 ## 5. Kế hoạch & Timeline xây dựng ứng dụng (Application Implementation Roadmap)
 
-Lộ trình phát triển hệ thống kéo dài trong 9 tuần (từ **27/10/2026** đến **31/12/2026**), được thiết kế tổng quát theo 7 giai đoạn (Phase) bám sát các mốc kiểm soát chất lượng chính (**Milestones M0 – M6**):
+Lộ trình phát triển hệ thống kéo dài trong 9 tuần (từ **27/10/2026** đến **31/12/2026**), được thiết kế theo **chiến lược triển khai song song (Hạ tầng AWS IaC + Website React/Vite chuyển đổi từ 13 màn hình Stitch UI có sẵn)** qua 7 giai đoạn (Phase) bám sát các mốc kiểm soát chất lượng chính (**Milestones M0 – M6**):
 
-| Giai đoạn (Phase) | Thời gian | Trọng tâm công việc chính | Mốc kiểm soát & Sản phẩm chính |
+| Giai đoạn (Phase) | Thời gian | Trọng tâm Cấu hình Dịch vụ AWS (18 Services) | Trọng tâm Xây dựng Website (13 Screens) & Mốc kiểm soát |
 | :---: | :---: | :--- | :--- |
-| **Phase 0**<br>Phân tích & Thiết kế | 27/10 – 31/10 | • Đặc tả yêu cầu (SRS theo 4 vai trò `CDD/RCT/AD/SYS`, quy tắc nghiệp vụ `BR`, phi chức năng `NFR`).<br>• Thiết kế kiến trúc Serverless trích xuất kép (PDF/DOCX), CSDL DynamoDB, API Spec và Rubric 100đ.<br>• Lập dự toán chi phí AWS Pricing Calculator (< $2.00/tháng). | **M0 (31/10):** Hoàn thành tài liệu SRS, sơ đồ kiến trúc, thiết kế API/DB và bản Proposal. |
-| **Phase 1**<br>Nền tảng & Hạ tầng | 01/11 – 08/11 | • Khởi tạo hạ tầng tự động qua IaC (AWS SAM/CDK).<br>• Cấu hình Cognito phân quyền (3 nhóm + HR Team), S3 Bucket (hỗ trợ PDF & DOCX), DynamoDB TTL và hàng đợi SQS + DLQ.<br>• Khởi tạo Frontend Web kết nối CI/CD trên AWS Amplify. | **M1 (08/11):** Hạ tầng đám mây sẵn sàng; đăng nhập và phân quyền hoạt động ổn định trên Web. |
-| **Phase 2**<br>Nghiệp vụ tuyển dụng | 09/11 – 22/11 | • Xây dựng module Company Profile & tin tuyển dụng JD.<br>• Phát triển tính năng nộp CV (PDF/DOCX) trực tiếp lên S3 qua Presigned URL an toàn.<br>• Xử lý hồ sơ cá nhân ứng viên, tính năng rút đơn (`WITHDRAWN`) và theo dõi 2 trạng thái song song. | **M2 (22/11):** Hoàn chỉnh luồng quản lý JD, nộp hồ sơ trực tuyến và theo dõi tiến trình tuyển dụng. |
-| **Phase 3**<br>Pipeline AI & Đánh giá | 23/11 – 06/12 | • Xây dựng pipeline ngầm: trích xuất Textract (PDF) / OpenXML (DOCX) và bộ lọc làm mờ PII khử định kiến.<br>• Tích hợp Bedrock Claude 3 Haiku chấm điểm Rubric 100đ xuất JSON.<br>• Giao diện Side-by-side Review 3 cột, ghi chú & cho điểm sao (Audit Trail), phân tích Skill Gap và Talent Pool Rediscovery. | **M3 (06/12):** Pipeline AI chấm điểm tự động; hệ thống đánh giá đa chiều và gợi ý nhân tài hoạt động trơn tru. |
-| **Phase 4**<br>Thông báo & Tuân thủ | 07/12 – 13/12 | • Tích hợp Amazon SES gửi email tự động (xác nhận đơn, thư mời phỏng vấn, thư từ chối, talent pool).<br>• Triển khai quản lý Consent, DSR Anonymization (`ANONYMIZED_USER`) và Access Audit Log.<br>• Thiết lập hệ thống giám sát CloudWatch (Dashboard, Alarms cho DLQ và lỗi 5xx). | **M4 (13/12):** Hệ thống email tự động, dashboard giám sát vận hành và tính năng bảo mật dữ liệu hoàn tất. |
-| **Phase 5**<br>Kiểm thử & Đóng băng | 14/12 – 20/12 | • Kiểm thử toàn diện chức năng, bảo mật Prompt Injection, kịch bản ngoại lệ và tải đồng thời 50 CV.<br>• Đối chiếu chi phí thực tế với dự toán; tạo seed data chuẩn.<br>• Đóng băng tính năng (**Feature Freeze 20/12**) và gắn tag release `v1.0.0`. | **M5 (20/12):** 100% test case đạt chuẩn; mã nguồn ổn định tuyệt đối, sẵn sàng cho demo. |
-| **Phase 6**<br>Tài liệu & Nộp bài | 21/12 – 31/12 | • Soạn thảo bộ Lab Guide song ngữ (vi/en) chi tiết đảm bảo tính tái lập 100%.<br>• Quay video demo 4 phân cảnh thực tế và hoàn thiện script clean-up $0.00.<br>• Rà soát checklist cuộc thi và nộp bài chính thức. | **M6 (31/12):** Bộ tài liệu hướng dẫn thực hành, video demo và hồ sơ bài nộp workshop hoàn thiện 100%. |
+| **Phase 0**<br>Phân tích & Thiết kế | 27/10 – 31/10 | • Đặc tả SRS (`CDD/RCT/AD/SYS`, `BR`, `NFR`), chốt kiến trúc Serverless 18 dịch vụ (`system-architecture.drawio`), CSDL DynamoDB (`WebSocketConnections`, `Idempotency`), API Spec (REST + WebSocket) và Rubric 100đ.<br>• Lập dự toán AWS Pricing Calculator (< $2.00/tháng). | **M0 (31/10):** Hoàn thành 100% tài liệu SRS, sơ đồ kiến trúc chuẩn hóa, thiết kế API/DB, 13 mẫu giao diện Stitch UI và bản Proposal. |
+| **Phase 1**<br>Nền tảng, Mạng & Auth | 01/11 – 08/11 | • Khởi tạo AWS CDK/SAM đa stack: `VPC (Zero Public IP / No NAT Gateway)`, `Gateway VPC Endpoints` (`S3`, `DynamoDB`) và 7 `Interface VPC Endpoints / PrivateLink` (bật/tắt qua cờ `enableVpcIsolation`).<br>• Cấu hình `Cognito` (3 nhóm + `custom:company_id`), `S3 Quarantine`, `SQS + DLQ`, `CloudFront + AWS WAF` và `Amplify Hosting`. | • Dựng khung **React + Vite**, chuyển đổi 2 màn hình `public-01` (Job Board) & `auth-02` (Login/Register/RBAC Guard).<br>• **M1 (08/11):** Hạ tầng mạng, Auth và khung Website hoạt động ổn định trên Cloud. |
+| **Phase 2**<br>Nghiệp vụ & S3 Quarantine | 09/11 – 22/11 | • Xây dựng `API Gateway REST` + `Lambda` quản lý Company Profile, JD, cấp **Presigned URL** (key do server tạo, khóa `application/pdf`, `<= 5MB`, hạn 5 phút).<br>• Cấu hình **S3 CV Quarantine + GuardDuty Malware Protection**, kiểm tra Magic Bytes (`%PDF-`) và kích hoạt `S3 Event` $\to$ `SQS` với kiểm tra **Idempotency** (`document_id` / `versionId`). | • Xây dựng 5 màn hình: `candidate-01`, `candidate-02` (Upload PDF trực tiếp lên S3 Quarantine), `candidate-03` (Dual-Status Tracker & Rút đơn), `recruiter-01`, `recruiter-02`.<br>• **M2 (22/11):** Hoàn chỉnh luồng đăng JD, nộp CV an toàn qua Quarantine và kích hoạt hàng đợi. |
+| **Phase 3**<br>Step Functions AI & A2I | 23/11 – 06/12 | • Cấu hình **AWS Step Functions** điều phối tuần tự: **Bước 5a (`Amazon Textract`)** đọc trực tiếp từ `S3Object` (Sync + Async cho PDF lớn) $\to$ Lọc PII $\to$ **Bước 5b (`Amazon Bedrock` Claude 3 Haiku)** chuẩn hóa CV thành JSON (Skills, Experience, Education, Job matching, AI score).<br>• Cấu hình `Retry (Interval 2s, BackoffRate 2.0)` và nhánh **Amazon A2I Fallback** khi Confidence < 80% hoặc lỗi JSON. | • Xây dựng 3 màn hình: `recruiter-03` (Kanban/Ranking), `recruiter-04` (Side-by-Side 3-Column Review + **A2I Manual Review Mode** + Audit Trail), `recruiter-05` (Talent Pool Rediscovery).<br>• **M3 (06/12):** Pipeline AI Step Functions chấm điểm tự động và giao diện đánh giá Recruiter hoàn tất. |
+| **Phase 4**<br>WebSocket, SES & Admin | 07/12 – 13/12 | • Triển khai **API Gateway WebSocket API** (`$connect`, `$disconnect`, `post_to_connection`) đẩy kết quả chấm điểm real-time (< 500ms) thay thế HTTP Polling.<br>• Tích hợp `Amazon SES` gửi email tự động; triển khai Consent, DSR Anonymization (`ANONYMIZED_USER`), Access Audit Log và `CloudWatch Dashboard & Alarms`. | • Tích hợp custom hook `useRealtimeApplicationStatus` (WebSocket Push) và hoàn thiện 4 màn hình cuối: `candidate-04`, `admin-01`, `admin-02`, `admin-03`, `admin-04`.<br>• **M4 (13/12):** Hoàn thành 100% 18 dịch vụ AWS và toàn bộ 13 màn hình Website. |
+| **Phase 5**<br>Kiểm thử & Đóng băng | 14/12 – 20/12 | • Kiểm thử toàn diện: S3 Quarantine/GuardDuty, Idempotency, Step Functions Retry/A2I Fallback, WebSocket Push, chống Prompt Injection và tải đồng thời 50 CV.<br>• Bật cờ `enableVpcIsolation` & `enableWaf` nghiệm thu mạng nội bộ `PrivateLink`, đối chiếu chi phí (< $2.00/tháng) và tạo seed data chuẩn. | • Kiểm thử E2E trên toàn bộ 13 màn hình Website; đóng băng tính năng (**Feature Freeze 20/12**) và gắn tag release `v1.0.0`.<br>• **M5 (20/12):** 100% test case đạt chuẩn, sẵn sàng cho demo. |
+| **Phase 6**<br>Tài liệu & Nộp bài | 21/12 – 31/12 | • Soạn thảo bộ Lab Guide song ngữ (`vi/en`) chi tiết đảm bảo tính tái lập 100%.<br>• Hoàn thiện script clean-up tự động (`$0.00` sau khi xóa stack) và báo cáo đối chiếu chi phí thực tế. | • Quay video demo 4 phân cảnh thực tế (bao gồm đồ thị Step Functions & WebSocket Real-time Push) và nộp bài chính thức.<br>• **M6 (31/12):** Hoàn thiện 100% hồ sơ bài nộp. |
 
 ---
 

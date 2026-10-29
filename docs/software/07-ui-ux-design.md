@@ -43,7 +43,7 @@ Toàn bộ các prompt đã được chuẩn hóa gọn gàng theo 3 trọng tâ
 | **Chung** | Quy định Template | [`ui/00-template-chung.md`](file:///d:/AWS/workshop/ui/00-template-chung.md) | Khung prompt mẫu & Bảng mã màu chuẩn |
 | **Xác thực** | Đăng nhập / Chọn vai trò | [`ui/auth/login-register.md`](file:///d:/AWS/workshop/ui/auth/login-register.md) | Đăng nhập đa vai trò, SSO, MFA |
 | **Ứng viên** | Tìm kiếm & Lọc việc làm | [`ui/candidate/01-job-search.md`](file:///d:/AWS/workshop/ui/candidate/01-job-search.md) | Bộ lọc kỹ năng, địa điểm, mức lương |
-| **Ứng viên** | Modal Nộp CV & Consent | [`ui/candidate/02-apply-modal.md`](file:///d:/AWS/workshop/ui/candidate/02-apply-modal.md) | Dropzone PDF/DOCX, Upload S3, Thỏa thuận AI |
+| **Ứng viên** | Modal Nộp CV & Consent | [`ui/candidate/02-apply-modal.md`](file:///d:/AWS/workshop/ui/candidate/02-apply-modal.md) | Dropzone PDF, Upload S3, Thỏa thuận AI |
 | **Ứng viên** | Dashboard & AI Skill Gap | [`ui/candidate/03-dashboard-skillgap.md`](file:///d:/AWS/workshop/ui/candidate/03-dashboard-skillgap.md) | Theo dõi tiến độ hồ sơ & Báo cáo kỹ năng |
 | **Ứng viên** | Quyền riêng tư & DSR | [`ui/candidate/04-privacy-dsr.md`](file:///d:/AWS/workshop/ui/candidate/04-privacy-dsr.md) | Bật/tắt Consent, Xuất JSON, Xóa tài khoản |
 | **Recruiter** | Dashboard Tuyển dụng | [`ui/recruiter/01-recruiter-dashboard.md`](file:///d:/AWS/workshop/ui/recruiter/01-recruiter-dashboard.md) | Chỉ số KPI, phễu tuyển dụng, phân bổ điểm AI |

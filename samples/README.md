@@ -1,6 +1,6 @@
 # Dữ liệu mẫu (Sample Dataset)
 
-Thư mục này chứa bộ dữ liệu mẫu phục vụ kiểm thử toàn bộ pipeline: Textract (PDF), Mammoth (DOCX), Khử PII (Regex), và Amazon Bedrock Rubric Scoring.
+Thư mục này chứa bộ dữ liệu mẫu phục vụ kiểm thử toàn bộ pipeline: Amazon Textract (PDF OCR), Khử PII (Regex), và Amazon Bedrock Rubric Scoring.
 
 > ⚠️ **Lưu ý bảo mật:** Toàn bộ dữ liệu dưới đây là **dữ liệu giả lập (Synthetic/Mock Data)**, không chứa thông tin cá nhân thật của bất kỳ ai.
 

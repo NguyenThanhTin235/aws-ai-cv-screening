@@ -43,7 +43,7 @@ graph TD
 ```
 
 #### Nguyên tắc cốt lõi:
-* **Tách rời dữ liệu nhị phân (Binary Offloading):** File CV gốc (PDF/DOCX) và avatar lưu trữ trên **Amazon S3**; DynamoDB chỉ lưu đường dẫn S3 Key (`s3Key`), dung lượng (`fileSize`), mã băm toàn vẹn (`fileHash`) và văn bản bóc tách phục vụ AI.
+* **Tách rời dữ liệu nhị phân (Binary Offloading):** File CV gốc định dạng PDF (`.pdf`) và avatar lưu trữ trên **Amazon S3**; DynamoDB chỉ lưu đường dẫn S3 Key (`s3Key`), dung lượng (`fileSize`), mã băm toàn vẹn (`fileHash`) và văn bản bóc tách phục vụ AI.
 * **Nguồn xác thực Email Authoritative:** **Amazon Cognito User Pool** là nguồn xác thực chính thức và quản lý tính duy nhất của email người dùng. Để bảo đảm kiểm tra email nhanh và toàn vẹn trong DynamoDB, hệ thống sử dụng thêm item phụ tra cứu email (`PK = EMAIL#<email>`, `SK = USER#<userId>`).
 * **Hai chỉ số toàn cục (GSI Minimalist):**
   * **`GSI1` (Phân loại & Bảng xếp hạng):**
@@ -73,7 +73,8 @@ graph TD
 | **Candidate CV** | Kho CV cá nhân tải sẵn | `USER#<candidateId>` | `CV#<cvId>` | `USER#<candidateId>` | `CV#DEFAULT#<isDefault>` | — | — | ❌ |
 | **Favorite Job** | Việc làm ứng viên đã lưu | `USER#<candidateId>` | `FAVORITE#<jobId>` | — | — | — | — | ❌ |
 | **Job Alert** | Đăng ký thông báo nhận tin việc làm | `USER#<candidateId>` | `ALERT#<alertId>` | — | — | — | — | ❌ |
-| **Application** | Đơn nộp & Kết quả phân tích AI | `APP#<applicationId>` | `METADATA` | `JOB#<jobId>` | `SCORE#<padScore>#<appId>` | `USER#<candidateId>` | `APP#<submittedAt>` | ❌ |
+| **Application** | Đơn nộp & Kết quả phân tích AI hiện hành | `APP#<applicationId>` | `METADATA` | `JOB#<jobId>` | `SCORE#<padScore>#<appId>` | `USER#<candidateId>` | `APP#<submittedAt>` | ❌ |
+| **AI Eval Version** | Lịch sử phiên bản chấm điểm AI (Versioned) | `APP#<applicationId>` | `EVAL#v<padVersion>` | — | — | — | — | ❌ |
 | **Active App Lock** | Khóa chống nộp trùng lặp có vòng đời | `USER#<candidateId>` | `ACTIVE_APP#<jobId>` | — | — | — | — | ❌ |
 | **Application Review** | Đánh giá độc lập của HR Team | `APP#<applicationId>` | `REVIEW#<reviewerId>` | — | — | — | — | ❌ |
 | **AuditTrail** | Nhật ký kiểm toán can thiệp đơn nộp | `APP#<applicationId>` | `AUDIT#<isoDate>#<auditId>` | `ACTOR#<actorId>` | `AUDIT#<isoDate>` | — | — | ❌ |
@@ -82,6 +83,7 @@ graph TD
 | **ConsentLog** | Lịch sử đồng thuận xử lý dữ liệu | `USER#<candidateId>` | `CONSENT#<isoDate>#<purpose>` | — | — | — | — | ✅ (90d) |
 | **Upload Session** | Phiên Presigned URL tạm thời | `UPLOAD#<token>` | `SESSION` | — | — | — | — | ✅ (15m) |
 | **Rescore RateLimit** | Bộ đếm tần suất gọi AI chấm điểm lại | `RATELIMIT#<applicationId>` | `RESCORE#<hourSlot>` | — | — | — | — | ✅ (1h) |
+| **Company AI Quota** | Hạn mức xử lý AI theo ngày của Công ty | `COMPANY#<companyId>` | `AI_QUOTA#<yyyy-mm-dd>` | — | — | — | — | ✅ (7d) |
 | **Notification Log** | Theo dõi gửi email SES & Idempotency | `NOTIF#<idempotencyKey>` | `EMAIL` | — | — | — | — | ✅ (30d) |
 
 ---
@@ -115,7 +117,7 @@ stateDiagram-v2
 
     state "Tiến trình Xử lý Kỹ thuật (aiStatus)" as AIPipelineLifecycle {
         [*] --> PENDING : Đẩy tin nhắn vào SQS Queue
-        PENDING --> EXTRACTING : Worker nhận việc & gọi Textract/OpenXML
+        PENDING --> EXTRACTING : Worker nhận việc & gọi Amazon Textract (PDF)
         EXTRACTING --> SCORING : Lọc PII & gọi Bedrock Claude Haiku
         SCORING --> COMPLETED : Ghi nhận Rubric 100đ & JSON Schema
         
@@ -219,7 +221,7 @@ Theo quy định tại `BR-PRIV-02` ([01-requirements.md](./01-requirements.md))
 
 | Vị trí lưu trữ dữ liệu | Đối tượng dữ liệu | Hành động xử lý DSR | Cơ sở pháp lý & Kỹ thuật |
 | :--- | :--- | :--- | :--- |
-| **Amazon S3** | File CV gốc (`.pdf`, `.docx`) | **Xóa vật lý vĩnh viễn** (`s3.deleteObjects`) kể cả các version | Triệt tiêu bản sao tài liệu cá nhân gốc. |
+| **Amazon S3** | File CV gốc định dạng PDF (`.pdf`) | **Xóa vật lý vĩnh viễn** (`s3.deleteObjects`) kể cả các version | Triệt tiêu bản sao tài liệu cá nhân gốc. |
 | **DynamoDB User** | `PK = USER#<id>`, `SK = PROFILE` | **Khử định danh hoàn toàn:** Đặt `candidateId = "ANONYMIZED_USER"`, `fullName = "ANONYMIZED_USER"`, xóa hẳn trường `email` (không lưu hash email để chống dò từ điển), xóa `phone`, `bio`, `links`. Đổi `status = "ANONYMIZED"`. | Vô hiệu hóa tài khoản, triệt tiêu mọi liên kết cá nhân. |
 | **DynamoDB Email Lookup** | `PK = EMAIL#<email>`, `SK = USER#<id>` | **Xóa bản ghi** (`DeleteItem`) | Giải phóng email, không lưu trữ PII tra cứu. |
 | **DynamoDB CV Items** | `PK = USER#<id>`, `SK = CV#<cvId>` | **Xóa toàn bộ bản ghi** (`DeleteItem`) | Xóa danh mục CV cá nhân. |
@@ -303,6 +305,8 @@ Phục vụ chức năng giám sát của Quản trị viên sàn Tuyển dụng
 | **AP32** | Quản lý phiên Presigned URL tải file tạm thời | `SYS` | `Put/Get` | Bảng chính | `PK = UPLOAD#<token>`, `SK = SESSION` (Code check `expiresAt` & TTL 15m) |
 | **AP33** | Bộ đếm tần suất Re-score AI (Rate-limit Atomic Counter) | `RCT, SYS` | `UpdateItem` | Bảng chính | `PK = RATELIMIT#<appId>`, `SK = RESCORE#<hourSlot>` (ADD count & condition < 3) |
 | **AP34** | Nhật ký thông báo email SES & Kiểm tra trùng lặp | `SYS` | `Put/Get` | Bảng chính | `PK = NOTIF#<idempotencyKey>`, `SK = EMAIL` (Idempotent check & TTL 30d) |
+| **AP35** | Lưu & Tra cứu lịch sử các phiên bản chấm điểm AI | `RCT, SYS` | `Put/Query` | Bảng chính | `PK = APP#<applicationId>` AND begins_with(`SK`, `EVAL#v`) |
+| **AP36** | Kiểm tra & Tăng hạn mức xử lý AI theo ngày của Công ty | `SYS` | `UpdateItem` | Bảng chính | `PK = COMPANY#<companyId>`, `SK = AI_QUOTA#<yyyy-mm-dd>` (ADD usedCount & condition <= dailyLimit) |
 
 ---
 
@@ -363,7 +367,7 @@ Bảng ma trận ánh xạ chính xác 100% từng Use Case với nghiệp vụ 
 | **UC-AD-04** | Giám sát Sự cố Hàng đợi Lỗi DLQ | Resilience | Amazon SQS DLQ Redrive & CloudWatch Alarm | SQS / CloudWatch | AWS SQS DLQ Queue |
 | **UC-AD-05** | Phê duyệt & Thực thi Yêu cầu DSR | Compliance | Orchestrate DSR Anonymization Pipeline | **AP03, AP31** | User Profile, S3, Consent |
 | **UC-SYS-01** | Tiếp nhận & Điều phối Hồ sơ Bất đồng bộ | Worker SQS | SQS Message Consumer Lambda Trigger | Amazon SQS | SQS Event Source Mapping |
-| **UC-SYS-02** | Trích xuất Văn bản CV (PDF/DOCX) | Worker Extract| S3 GetObject -> Textract/Mammoth -> Update DDB| **AP22** | `APP#<id>` SET aiStatus=EXTRACTING|
+| **UC-SYS-02** | Trích xuất Văn bản CV PDF qua Textract | Worker Extract| S3 GetObject -> Amazon Textract -> Update DDB| **AP22** | `APP#<id>` SET aiStatus=EXTRACTING|
 | **UC-SYS-03** | Khử PII & Chấm điểm Bedrock Rubric | Worker Bedrock| In-memory Regex PII Masking -> Bedrock Haiku | **AP22** | `APP#<id>` SET aiStatus=COMPLETED |
 | **UC-SYS-04** | Tự phục hồi Khi Quá tải & Cách ly DLQ | Resilience | Exponential Backoff Retry -> Send to SQS DLQ | SQS DLQ / AP22 | `APP#<id>` SET aiStatus=FAILED |
 
