@@ -83,7 +83,9 @@ export class StorageAndQueueStack extends cdk.Stack {
       timeToLiveAttribute: 'expire_at',
       encryption: dynamodb.TableEncryption.CUSTOMER_MANAGED,
       encryptionKey: this.encryptionKey,
-      pointInTimeRecovery: config.stage === 'prod',
+      pointInTimeRecoverySpecification: {
+        pointInTimeRecoveryEnabled: config.stage === 'prod'
+      },
       removalPolicy: config.removalPolicy
     });
 
@@ -173,3 +175,4 @@ export class StorageAndQueueStack extends cdk.Stack {
     });
   }
 }
+

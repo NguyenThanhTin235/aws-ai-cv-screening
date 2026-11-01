@@ -83,3 +83,4 @@ Object.entries(tags).forEach(([key, value]) => {
 });
 
 app.synth();
+

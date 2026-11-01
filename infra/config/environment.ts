@@ -32,3 +32,4 @@ export function getEnvironmentConfig(): EnvironmentConfig {
     notificationSenderEmail: process.env.SES_SENDER_EMAIL || 'no-reply@screening.example.com'
   };
 }
+

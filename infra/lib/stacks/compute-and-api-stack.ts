@@ -61,7 +61,7 @@ export class ComputeAndApiStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_20_X,
       handler: 'index.handler',
       code: lambda.Code.fromAsset(
-        path.join(__dirname, '../../../../backend/functions/api/health')
+        path.join(__dirname, '../../../backend/functions/api/health')
       ),
       timeout: cdk.Duration.seconds(10),
       memorySize: 256,
@@ -85,6 +85,18 @@ export class ComputeAndApiStack extends cdk.Stack {
       new apigateway.LambdaIntegration(this.healthFunction)
     );
 
+    // GET /api/v1/auth/me (Protected endpoint requiring Cognito JWT token)
+    const authResource = v1Resource.addResource('auth');
+    const meResource = authResource.addResource('me');
+    meResource.addMethod(
+      'GET',
+      new apigateway.LambdaIntegration(this.healthFunction),
+      {
+        authorizer: this.authorizer,
+        authorizationType: apigateway.AuthorizationType.COGNITO
+      }
+    );
+
     // Stack Outputs
     new cdk.CfnOutput(this, 'ApiUrlOutput', {
       value: this.restApi.url,
@@ -99,3 +111,4 @@ export class ComputeAndApiStack extends cdk.Stack {
     });
   }
 }
+

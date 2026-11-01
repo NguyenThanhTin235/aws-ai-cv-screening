@@ -8,7 +8,7 @@ import { EnvironmentConfig } from '../../config/environment';
 
 export interface ObservabilityStackProps extends cdk.StackProps {
   config: EnvironmentConfig;
-  restApi: apigateway.IRestApi;
+  restApi: apigateway.RestApi;
   healthFunction: lambda.IFunction;
   cvQueue: sqs.IQueue;
   cvDlq: sqs.IQueue;
@@ -130,3 +130,4 @@ export class ObservabilityStack extends cdk.Stack {
     });
   }
 }
+

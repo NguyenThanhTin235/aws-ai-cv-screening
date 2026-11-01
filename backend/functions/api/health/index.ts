@@ -1,3 +1,5 @@
+import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+
 export interface HealthResponse {
   status: 'UP' | 'DOWN';
   service: string;
@@ -6,7 +8,9 @@ export interface HealthResponse {
   region: string;
 }
 
-export const handler = async (event: any): Promise<any> => {
+export const handler = async (
+  _event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
   const stage = process.env.STAGE || 'dev';
   const region = process.env.AWS_REGION || 'us-east-1';
 
@@ -23,7 +27,8 @@ export const handler = async (event: any): Promise<any> => {
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token',
+      'Access-Control-Allow-Headers':
+        'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token',
       'Access-Control-Allow-Methods': 'GET,OPTIONS'
     },
     body: JSON.stringify(body)

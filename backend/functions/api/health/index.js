@@ -1,4 +1,4 @@
-exports.handler = async (event) => {
+exports.handler = async (_event) => {
   const stage = process.env.STAGE || 'dev';
   const region = process.env.AWS_REGION || 'us-east-1';
 
@@ -7,7 +7,8 @@ exports.handler = async (event) => {
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token',
+      'Access-Control-Allow-Headers':
+        'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token',
       'Access-Control-Allow-Methods': 'GET,OPTIONS'
     },
     body: JSON.stringify({
