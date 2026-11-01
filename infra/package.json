@@ -10,7 +10,8 @@
     "synth": "cdk synth",
     "diff": "cdk diff",
     "deploy": "cdk deploy",
-    "destroy": "cdk destroy"
+    "destroy": "cdk destroy",
+    "test": "npm run build && cdk synth"
   },
   "dependencies": {
     "aws-cdk-lib": "^2.170.0",
