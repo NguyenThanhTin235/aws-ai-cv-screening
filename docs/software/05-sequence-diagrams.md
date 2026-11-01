@@ -11,7 +11,7 @@
 
 ## 1. Tổng quan & Danh mục Sơ đồ Tuần tự
 
-Tài liệu này đặc tả trực quan và chi tiết trình tự tương tác theo thời gian giữa các tác nhân người dùng (`Candidate`, `Recruiter`, `Admin`), các dịch vụ trên tầng Giao diện (`Web Portal SPA`), tầng Cổng điều hướng (`API Gateway`, `Cognito`), tầng Tính toán & Hàng đợi (`Lambda`, `SQS`), tầng Trí tuệ Nhân tạo (`Textract`, `Bedrock Claude 3 Haiku`), tầng Lưu trữ dữ liệu (`DynamoDB Single-Table`, `Amazon S3`) và tầng Thông báo (`Amazon SES`).
+Tài liệu này đặc tả trực quan và chi tiết trình tự tương tác theo thời gian giữa các tác nhân người dùng (`Candidate`, `Recruiter`, `Admin`), các dịch vụ trên tầng Giao diện (`Web Portal SPA`), tầng Cổng điều hướng (`API Gateway`, `Cognito`), tầng Tính toán & Hàng đợi (`Lambda`, `SQS`), tầng Trí tuệ Nhân tạo (`Textract`, `Bedrock Claude Haiku 4.5`), tầng Lưu trữ dữ liệu (`DynamoDB Single-Table`, `Amazon S3`) và tầng Thông báo (`Amazon SES`).
 
 ### Danh mục 6 Luồng Xử lý Cốt lõi:
 1. **Luồng 1 (SEQ-01):** Nộp Hồ sơ Ứng tuyển Trực tuyến Định dạng PDF & Khởi tạo Khóa Kháng Trùng.
@@ -93,25 +93,27 @@ sequenceDiagram
 
 ## 3. SEQ-02: Pipeline AI Trích xuất Văn bản, Khử PII & Chấm điểm Bedrock Rubric 100đ
 
-Sơ đồ mô tả quy trình nền bất đồng bộ hoàn toàn: Lambda AI Worker nhận tin từ SQS, kiểm tra chữ ký tệp PDF (`%PDF-`) và trích xuất văn bản qua **Amazon Textract (`DetectDocumentTextCommand`)**, thực hiện **khử thông tin định danh (PII Redaction)** để loại bỏ thiên kiến, sau đó gửi prompt bọc XML tới **Amazon Bedrock (Claude 3 Haiku)** để chấm điểm theo Rubric 100 điểm (`BR-SCORING-01`).
+Sơ đồ mô tả quy trình nền bất đồng bộ hoàn toàn: Sau khi GuardDuty hoàn tất quét mã độc với trạng thái `NO_THREATS_FOUND`, **Amazon EventBridge Rule** đẩy thông điệp vào SQS. **Amazon EventBridge Pipes** kết nối SQS khởi chạy **AWS Step Functions** (`ExecutionName = document_id`). Nhằm chống tràn giới hạn payload 256 KB của Step Functions, hệ thống áp dụng **Claim-Check Pattern**: Textract trích xuất văn bản từ `S3Object` và lưu kết quả raw OCR ra S3; Lambda AI Worker đọc từ S3, kiểm tra chữ ký tệp PDF (`%PDF-`), thực hiện **khử thông tin định danh (PII Redaction)** để loại bỏ thiên kiến và lưu đệm `sanitizedTextCache` (< 15 KB); sau đó gửi prompt bọc XML tới **Amazon Bedrock (Claude Haiku 4.5)** để chuẩn hóa JSON và chấm điểm theo Rubric 100 điểm (`BR-SCORING-01`).
 
 ```mermaid
 sequenceDiagram
     autonumber
-    participant SQS as Amazon SQS (cv-screening-queue)
+    participant SQS as 4a. Amazon SQS (cv-screening-queue)
+    participant SFN as 4b. AWS Step Functions
     participant WRK as Lambda (AIWorkerService)
     participant S3 as Amazon S3 (CV Storage Bucket)
     participant TXT as Amazon Textract
     participant RED as In-Memory PII Redactor
-    participant BDR as Amazon Bedrock (Claude 3 Haiku)
+    participant BDR as Amazon Bedrock (Claude Haiku 4.5)
     participant DDB as Amazon DynamoDB (Single-Table)
     participant SES as Amazon SES
     participant DLQ as SQS Dead-Letter Queue (DLQ)
     participant CW as CloudWatch Alarms
 
-    SQS->>WRK: 4. SQS -> Step Functions Trigger (CV đã qua S3 Quarantine & GuardDuty Malware Scan = NO_THREATS_FOUND)
+    SQS->>SFN: 4b. Trigger Workflow (ExecutionName = document_id)
+    SFN->>WRK: 4c. Kiểm tra Idempotency & Xác minh PDF
     activate WRK
-    WRK->>DDB: 4. Kiểm tra Idempotency (document_id + versionId) & SET aiStatus = 'EXTRACTING'
+    WRK->>DDB: 4d. Kiểm tra Idempotency (document_id + versionId) & SET aiStatus = 'EXTRACTING'
     WRK->>S3: GetObject(s3Key, Range: bytes=0-63)
     S3-->>WRK: 64-byte PDF Header & Metadata (Kiểm tra MIME/Magic Bytes %PDF- & Size <= 5MB)
 
@@ -139,7 +141,7 @@ sequenceDiagram
     WRK->>DDB: GetItem JOB#<jobId> / METADATA (Lấy JD & Rubric Weights)
     DDB-->>WRK: Job Data & rubricWeights (Kỹ năng 40, KN 30, Học vấn 15, Trình bày 15)
     
-    WRK->>BDR: InvokeModelCommand (Claude 3 Haiku)
+    WRK->>BDR: InvokeModelCommand (Claude Haiku 4.5)
     Note over WRK, BDR: Prompt chống Injection: bọc nội dung trong thẻ XML <cv_content> và <job_description>
     activate BDR
     
@@ -297,7 +299,7 @@ sequenceDiagram
     participant APIGW as Amazon API Gateway
     participant L_POOL as Lambda (TalentPoolService)
     participant DDB as Amazon DynamoDB (Single-Table)
-    participant BDR as Amazon Bedrock (Claude 3 Haiku)
+    participant BDR as Amazon Bedrock (Claude Haiku 4.5)
 
     Note over RCT, DDB: GIAI ĐOẠN 1: LƯU ỨNG VIÊN TIỀM NĂNG VÀO KHO TÀI NĂNG
     RCT->>UI: Tại hồ sơ ứng viên bị từ chối ở JD hiện tại (nhưng đạt 82đ), bấm "Lưu vào Talent Pool"

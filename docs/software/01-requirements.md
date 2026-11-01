@@ -192,7 +192,7 @@ Mục này đặc tả thuần túy các **tính năng và hành động** mà t
 * **SYS03 (Đối soát Đa chiều & Chấm điểm Tự động qua Bedrock LLM):**
   * Cập nhật `ai_status = SCORING`.
   * Đưa nội dung CV đã qua bộ lọc khử PII `[NFR-SEC-03]` và nội dung JD vào System Prompt an toàn `[NFR-SEC-04]`.
-  * Gọi Amazon Bedrock (Claude 3 Haiku) chấm điểm định lượng theo rubric `[BR-SCORING-01]` và xuất kết quả chuẩn JSON Schema `[BR-SCORING-03]`.
+  * Gọi Amazon Bedrock (Claude Haiku 4.5) chấm điểm định lượng theo rubric `[BR-SCORING-01]` và xuất kết quả chuẩn JSON Schema `[BR-SCORING-03]`.
   * Lưu trữ kết quả vào DynamoDB và cập nhật `ai_status = COMPLETED`.
 * **SYS04 (Cơ chế Tự phục hồi, Retry & Đẩy lỗi vào Dead-Letter Queue):**
   * Tự động thử lại tối đa 3 lần cho các lỗi mạng tạm thời hoặc timeout `[NFR-REL-02]`.
@@ -487,5 +487,5 @@ Mục này đặc tả các **tiêu chuẩn chất lượng, quy chuẩn kỹ th
 
 1. **Định dạng tài liệu:** Hệ thống chỉ hỗ trợ duy nhất định dạng chuẩn **PDF** (`.pdf`, `application/pdf`). Không hỗ trợ các định dạng tài liệu văn bản khác, file ảnh rời (JPEG/PNG) hoặc file nén (.zip/.rar).
 2. **Kích thước file:** Giới hạn tối đa **5 MB** và số trang khuyến nghị từ **1 đến 3 trang** `[BR-DOC-01]`.
-3. **Mô hình Ngôn ngữ:** Giả định tài khoản AWS đã được cấp quyền truy cập mô hình ngôn ngữ lớn trên Amazon Bedrock (khuyến nghị **Anthropic Claude 3 Haiku** để đạt tốc độ xử lý cao nhất với chi phí thấp nhất).
+3. **Mô hình Ngôn ngữ:** Giả định tài khoản AWS đã được cấp quyền truy cập mô hình ngôn ngữ lớn trên Amazon Bedrock (khuyến nghị **Anthropic Claude Haiku 4.5** để đạt tốc độ xử lý cao nhất với chi phí tối ưu).
 4. **Môi trường gửi Email:** Do Amazon SES ban đầu ở chế độ Sandbox, các địa chỉ email dùng để kiểm thử (cả ứng viên và nhà tuyển dụng) cần được Verify trước trên AWS SES Console.

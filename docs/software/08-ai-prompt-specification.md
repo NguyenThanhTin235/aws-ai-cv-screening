@@ -1,7 +1,7 @@
 # ĐẶC TẢ HỆ THỐNG PROMPT & BEDROCK RUNTIME ENGINE (AI PROMPT SPECIFICATION)
 
 # Đề tài: AI CV Screening Portal — Sàng Lọc & Chấm Điểm CV Bằng Generative AI
-> **Phiên bản:** v1.0 — 29/10/2026 · **Mô hình mục tiêu:** `anthropic.claude-3-haiku-20240307-v1:0` (Amazon Bedrock)  
+> **Phiên bản:** v2.0 — 30/10/2026 · **Mô hình mục tiêu:** `anthropic.claude-haiku-4-5-20251001-v1:0` (alias: `anthropic.claude-haiku-4-5`) (Amazon Bedrock)  
 > **Tuân thủ quy chuẩn:** `BR-SCORING-01..03`, `BR-HITL-01`, `BR-PRIV-01`, `NFR-AI-GOV-01`, `NFR-SEC-04`
 
 ---
@@ -15,7 +15,7 @@ flowchart LR
     A["🎯 Định lượng Chuẩn xác<br/>(100đ Rubric & Math Invariant)"] --- B["🛡️ Phòng vệ Injection<br/>(XML Tags Isolation)"]
     B --- C["⚖️ Công bằng & Khử Thiên kiến<br/>(Bias-free & PII Masking)"]
     C --- D["📦 Dữ liệu Có cấu trúc<br/>(Strict JSON Schema & Zod)"]
-    D --- E["⚡ Tối ưu Hiệu năng & Chi phí<br/>(Claude 3 Haiku, Low Temp)"]
+    D --- E["⚡ Tối ưu Hiệu năng & Chi phí<br/>(Claude Haiku 4.5, Low Temp)"]
 ```
 
 1. **Tính Bất biến Toán học (Mathematical Invariant):** Tổng điểm `totalScore` bắt buộc phải bằng chính xác tổng số học của 4 tiêu chí thành phần:
@@ -24,7 +24,7 @@ flowchart LR
 2. **Cô lập Dữ liệu & Chống Prompt Injection (`NFR-SEC-04`):** Nội dung từ CV và JD là dữ liệu người dùng không tin cậy (Untrusted Input). Chúng bắt buộc phải được đóng gói bên trong các cặp thẻ XML riêng biệt (`<job_description>`, `<candidate_cv>`). Mô hình được huấn luyện bằng System Prompt nghiêm ngặt để coi mọi câu lệnh nằm trong thẻ này chỉ là **dữ liệu thụ động để đối soát**, từ chối mọi nỗ lực ghi đè vai trò (Role Hijacking) hoặc can thiệp điểm số.
 3. **Đánh giá Trung lập & Khử Thiên kiến (`NFR-AI-GOV-01`):** Hệ thống chỉ tập trung vào năng lực kỹ thuật, kinh nghiệm thực chiến và thành tựu đã được chứng minh. Tuyệt đối không suy diễn hay đánh giá dựa trên tuổi tác, giới tính, hôn nhân, chủng tộc, trường phái hay ngoại hình.
 4. **Chuẩn hóa Đầu ra (Strict JSON Output):** 100% phản hồi từ Bedrock phải tuân thủ JSON Schema chuẩn, sẵn sàng để Backend parse và lưu trực tiếp vào Amazon DynamoDB mà không cần xử lý chuỗi phức tạp.
-5. **Tối ưu Chi phí & Độ trễ (Cost & Latency Optimization):** Sử dụng mô hình **Anthropic Claude 3 Haiku** với `temperature: 0.1` để đảm bảo kết quả có tính tái lập cao (Reproducibility), tốc độ phản hồi trung bình < 3 giây và chi phí chỉ ~0.001 USD cho mỗi lần chấm CV.
+5. **Tối ưu Chi phí & Độ trễ (Cost & Latency Optimization):** Sử dụng mô hình **Anthropic Claude Haiku 4.5** với `temperature: 0.1` để đảm bảo kết quả có tính tái lập cao (Reproducibility), tốc độ phản hồi cực nhanh < 2 giây, trí tuệ tiệm cận frontier model và chi phí chỉ ~0.0065 USD cho mỗi lần chấm CV.
 
 ---
 
@@ -35,7 +35,7 @@ sequenceDiagram
     autonumber
     participant SQS as Amazon SQS
     participant Worker as AWS Lambda (score-cv)
-    participant Bedrock as Amazon Bedrock (Claude 3 Haiku)
+    participant Bedrock as Amazon Bedrock (Claude Haiku 4.5)
     participant DDB as Amazon DynamoDB
     participant DLQ as SQS Dead-Letter Queue
 
@@ -64,7 +64,7 @@ sequenceDiagram
 
 | Tham số | Giá trị Cấu hình | Mục đích Kỹ thuật |
 | :--- | :--- | :--- |
-| **Model ID** | `anthropic.claude-3-haiku-20240307-v1:0` | Chi phí rẻ, tốc độ xử lý nhanh, tuân thủ schema JSON xuất sắc. |
+| **Model ID** | `anthropic.claude-haiku-4-5-20251001-v1:0` (alias: `anthropic.claude-haiku-4-5`) | Trí tuệ vượt trội tiệm cận Sonnet, tốc độ siêu tốc, tuân thủ schema JSON tuyệt đối. |
 | **Max Tokens** | `2500` | Đủ dung lượng cho báo cáo phân tích sâu sắc kèm 4 câu hỏi phỏng vấn. |
 | **Temperature** | `0.1` | Giảm thiểu tối đa ảo giác (Hallucination), giữ điểm số nhất quán khi chấm lại. |
 | **Top-P** | `0.9` | Tập trung vào phân phối xác suất từ ngữ cốt lõi, tránh lan man. |
@@ -326,7 +326,7 @@ import { AIEvaluationSchema, AIEvaluationResult } from './schema';
 
 export class BedrockScoringService {
   private client: BedrockRuntimeClient;
-  private readonly modelId = 'anthropic.claude-3-haiku-20240307-v1:0';
+  private readonly modelId = process.env.BEDROCK_MODEL_ID || 'anthropic.claude-haiku-4-5-20251001-v1:0';
 
   constructor(region: string = process.env.AWS_REGION || 'us-east-1') {
     this.client = new BedrockRuntimeClient({ region });

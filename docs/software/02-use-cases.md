@@ -824,8 +824,8 @@ graph TB
 
 #### 5.31. UC-SYS-03: Khử Dữ liệu Nhạy cảm PII & Chấm điểm Bedrock Rubric 100đ
 * **Tác nhân chính (Primary Actor):** Tiến trình Nền AI Worker (`SYS`).
-* **Tác nhân hỗ trợ (Supporting Actors):** Amazon Bedrock (Anthropic Claude 3 Haiku), Amazon SES (Gửi thông báo kết quả).
-* **Mô tả (Description):** Thực hiện quy trình sàng lọc không thiên vị cốt lõi của nền tảng. Hệ thống chủ động loại bỏ hoàn toàn các thông tin nhân khẩu học nhạy cảm (Họ tên, tuổi, giới tính, số điện thoại, email, địa chỉ nhà) khỏi văn bản CV trước khi gửi tới mô hình Generative AI **Anthropic Claude 3 Haiku trên Amazon Bedrock**. AI tiến hành đối soát khách quan với tiêu chí JD và trả về kết quả JSON có cấu trúc theo Rubric 100 điểm chuẩn hóa.
+* **Tác nhân hỗ trợ (Supporting Actors):** Amazon Bedrock (Anthropic Claude Haiku 4.5), Amazon SES (Gửi thông báo kết quả).
+* **Mô tả (Description):** Thực hiện quy trình sàng lọc không thiên vị cốt lõi của nền tảng. Hệ thống chủ động loại bỏ hoàn toàn các thông tin nhân khẩu học nhạy cảm (Họ tên, tuổi, giới tính, số điện thoại, email, địa chỉ nhà) khỏi văn bản CV trước khi gửi tới mô hình Generative AI **Anthropic Claude Haiku 4.5 trên Amazon Bedrock**. AI tiến hành đối soát khách quan với tiêu chí JD và trả về kết quả JSON có cấu trúc theo Rubric 100 điểm chuẩn hóa.
 * **Sự kiện kích hoạt (Trigger):** Hoàn tất bước trích xuất văn bản thô từ CV.
 * **Tiền điều kiện (Preconditions):** Đã có chuỗi văn bản CV sạch và nội dung tiêu chuẩn của JD.
 * **Hậu điều kiện (Postconditions):**
@@ -833,7 +833,7 @@ graph TB
 * **Luồng sự kiện chính (Basic Flow):**
   1. **[Hệ thống Nền]** Đưa văn bản qua bộ lọc khử định kiến PII (`NFR-SEC-03`): Thay thế Họ tên bằng `[CANDIDATE_NAME]`, xóa số điện thoại, email, địa chỉ cư trú, ngày sinh và đại từ nhân xưng giới tính.
   2. **[Hệ thống Nền]** Cập nhật trạng thái hiển thị tới ứng viên: `aiStatus = SCORING` (*"AI đang đối soát năng lực với tiêu chí JD..."*).
-  3. **[Hệ thống Nền]** Gửi văn bản đã khử PII kèm prompt chuẩn hóa tới **Amazon Bedrock (Claude 3 Haiku)**, yêu cầu chấm điểm theo **Rubric 100 điểm chuẩn hóa** (`BR-SCORING-01`): Kỹ năng (40đ), Kinh nghiệm (30đ), Học vấn (15đ), Kỹ năng mềm (15đ).
+  3. **[Hệ thống Nền]** Gửi văn bản đã khử PII kèm prompt chuẩn hóa tới **Amazon Bedrock (Claude Haiku 4.5)**, yêu cầu chấm điểm theo **Rubric 100 điểm chuẩn hóa** (`BR-SCORING-01`): Kỹ năng (40đ), Kinh nghiệm (30đ), Học vấn (15đ), Kỹ năng mềm (15đ).
   4. **[Hệ thống Nền]** Nhận phản hồi JSON có cấu trúc từ Bedrock, lưu điểm số, xếp loại Match Level, điểm mạnh và khoảng trống kỹ năng vào hệ thống.
   5. **[Hệ thống Nền]** Cập nhật trạng thái `aiStatus = COMPLETED` và kích hoạt Amazon SES gửi email thông báo kết quả sơ loại đã sẵn sàng tới ứng viên (`CDD11`, `BR-STATE-03`).
 * **Quy tắc nghiệp vụ & Ràng buộc (Business Rules & Constraints):** `BR-SCORING-01..03`, `NFR-SEC-03..04`, `NFR-PERF-01` (Thời gian xử lý toàn trình < 60 giây).

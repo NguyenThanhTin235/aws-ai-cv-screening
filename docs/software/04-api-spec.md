@@ -509,7 +509,7 @@ graph LR
         "Làm thế nào bạn thiết kế phân tán Partition Key để chống Hot Partition trong DynamoDB?"
       ],
       "evaluatedAt": "2026-10-28T10:16:15.000Z",
-      "modelUsed": "anthropic.claude-3-haiku-20240307-v1:0"
+      "modelUsed": "anthropic.claude-haiku-4-5-20251001-v1:0"
     }
   }
 }

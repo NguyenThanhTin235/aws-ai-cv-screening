@@ -72,7 +72,7 @@ graph LR
 
 ### 1.3. Trí Tuệ Nhân Tạo Có Trách Nhiệm (Responsible & Explainable AI UX)
 * **Nguyên tắc Hỗ trợ Quyết định (Decision Support):** AI không bao giờ tự động loại hay nhận ứng viên. Mọi điểm số và nhận xét từ Bedrock đều gắn nhãn rõ ràng:  
-  `✨ Phân tích Hỗ trợ bởi Amazon Bedrock (Claude 3 Haiku)`.
+  `✨ Phân tích Hỗ trợ bởi Amazon Bedrock (Claude Haiku 4.5)`.
 * **Giải trình Đa Chiều (Explainability by Design):** Không bao giờ hiển thị một con số điểm trơ trọi. Điểm số bắt buộc phải bóc tách thành:
   1. Thang đo 4 tiêu chí Rubric chuẩn hóa (`BR-SCORING-01`).
   2. Huy hiệu phân loại Match Level (`Strong Match`, `Potential Match`, `Not Match`).

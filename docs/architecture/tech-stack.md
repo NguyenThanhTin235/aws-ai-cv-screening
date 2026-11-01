@@ -26,21 +26,21 @@ Tài liệu này thiết lập bộ khung công nghệ, các quyết định ki�
 | **AWS SDK** | **AWS SDK for JavaScript v3** | `@aws-sdk/client-*` | Cấu trúc modular tree-shaking, kích thước deployment package cực nhỏ (chỉ import đúng client cần dùng). |
 | **Frontend Framework** | **React** | 18.x / 19.x (Vite) | Tốc độ build siêu nhanh với Vite; SPA mượt mà, tối ưu hiệu năng render danh sách CV và bảng xếp hạng. |
 | **Giao diện (Styling)** | **Vanilla CSS + Design Tokens** | CSS Custom Properties | Tự do tùy biến 100%, không bị phụ thuộc/bloat CSS framework; giao diện Dark/Light hiện đại, Glassmorphism, Micro-animations. |
-| **Bảo vệ biên & Tường lửa** | **AWS WAF** | WebACL (Managed + Rate Rules) | Chặn đứng tấn công SQL Injection (SQLi), Cross-Site Scripting (XSS), HTTP Flood (Layer 7 DDoS), Bot độc hại, Request bất thường và Rate Abuse ngay tại biên. |
-| **Phân phối nội dung (CDN)** | **Amazon CloudFront** | Global Edge Distribution | Phân phối toàn cầu ứng dụng Web SPA (AWS Amplify) và định tuyến lưu lượng API về API Gateway với TLS 1.3 Termination & HTTP/3. |
+| **Bảo vệ biên & Tường lửa** | **AWS WAF** | Global WebACL (Managed + Rate Rules) | Chặn đứng tấn công SQLi, XSS, HTTP Flood (Layer 7 DDoS), Bot độc hại, Request bất thường và Rate Abuse bao phủ cả 3 luồng: Web SPA, REST API và WebSocket Handshake. |
+| **Phân phối nội dung (CDN) & Cửa ngõ Biên** | **Amazon CloudFront** | Unified Edge Ingress (Single Domain) | Cửa ngõ biên hợp nhất phân phối Web SPA (Amplify), chuyển tiếp REST API (kèm Custom Header `X-Origin-Verify`) và WebSocket Upgrade Handshake với TLS 1.3 Termination & HTTP/3. |
 | **Xác thực & Phân quyền** | **Amazon Cognito User Pools** | 3 Groups + Custom Attributes | Quản lý đăng nhập/đăng ký cho 3 vai trò: `Candidate`, `Recruiter`, `Admin`; cấp JWT cho API Gateway Authorizer; liên kết `company_id` cho HR Team. |
-| **API Gateway (REST & WebSocket)** | **Amazon API Gateway** | REST API + WebSocket API | **REST API** tiếp nhận nghiệp vụ đồng bộ kèm Cognito JWT Authorizer; **WebSocket API (`@connections`)** đẩy thông báo kết quả chấm điểm Real-time trực tiếp lên UI, thay thế hoàn toàn HTTP Polling. |
+| **API Gateway (REST & WebSocket)** | **Amazon API Gateway** | REST API (Origin Lockdown) + WebSocket | **REST API** khóa cứng bằng Resource Policy (chỉ nhận traffic từ CloudFront kèm `X-Origin-Verify`) + Cognito JWT Authorizer; **WebSocket API (`@connections`)** bảo vệ 3 lớp (WAF Handshake + Route `$connect` Lambda Authorizer + Stage Throttling) đẩy kết quả Real-time lên UI. |
 | **Cơ sở dữ liệu** | **Amazon DynamoDB** | On-Demand (Single-Table) | Cơ sở dữ liệu NoSQL độ trễ mili-giây; lưu cấu trúc CV JSON, trạng thái đơn, khóa chống trùng **Idempotency (`document_id`)** và bảng xếp hạng `GSI1`. |
 | **Lưu trữ cách ly & Quét mã độc** | **Amazon S3 (`CV Quarantine`) + GuardDuty** | Malware Protection for S3 | Vùng cách ly tệp CV tải lên (`.pdf` <= 5MB); **Amazon GuardDuty Malware Protection for S3** tự động quét mã độc (`NO_THREATS_FOUND`) và kiểm tra chữ ký MIME `%PDF-` trước khi cho phép sử dụng. |
 | **Cơ chế tải file** | **S3 Presigned URLs** | PUT Object (Server Key, Hạn 5 phút) | Chỉ cấp cho tài nguyên đã xác minh quyền sở hữu; dùng `s3Key` do Server tự tạo, thời hạn 5 phút, ép chặt `application/pdf` <= 5MB tải trực tiếp lên S3 Quarantine. |
 | **Hàng đợi đệm bất đồng bộ** | **Amazon SQS** | Standard Queue + DLQ | Xếp hàng sự kiện từ S3 Quarantine, chống nghẽn đột biến và kiểm tra **Idempotency (`document_id`)** trước khi kích hoạt Step Functions; DLQ hứng lỗi sau 3 lần retry. |
 | **Điều phối Pipeline AI** | **AWS Step Functions** | Standard Workflow (State Machine) | Điều phối tuần tự **`5a. Amazon Textract`** (trích xuất văn bản) $\to$ **`5b. Amazon Bedrock`** (chuẩn hóa CV thành JSON); cấu hình `Retry` (`IntervalSeconds: 2, BackoffRate: 2.0`) trực tiếp tại từng State. |
 | **Trích xuất văn bản CV (`5a`)** | **Amazon Textract** | Async `StartDocumentTextDetection` / Sync API | Đọc trực tiếp tệp PDF từ S3 (`S3Object`), hỗ trợ API bất đồng bộ cho tài liệu lớn/nhiều trang mà không giữ kết nối HTTP chờ AI xử lý. |
-| **Kết nối mạng nội bộ** | **VPC Endpoints (AWS PrivateLink)** | Gateway EP + Full Interface EP | Duy trì **Zero Public IP** (Không dùng NAT Gateway ~32 USD/tháng); kết nối nội bộ từ Private Subnet tới S3, DynamoDB, Textract, Bedrock Runtime, SES, SQS, Step Functions, Secrets Manager và CloudWatch. |
+| **Tầng mạng Serverless** | **Pure Serverless (Zero-VPC / Zero-Cost Network)** | AWS Global Backbone + TLS 1.3 | Tuân thủ **AWS Serverless Lens**: Không dùng VPC, loại bỏ 8 PrivateLink Interface Endpoints (tiết kiệm $115.20/tháng) và NAT Gateway ($32.40/tháng); chi phí mạng cố định = **$0.00/tháng**; bảo mật Zero-Trust qua IAM Least Privilege & S3 Block Public Access. |
 | **Khử định danh & Thiên kiến** | **Custom PII Redactor** | Regex & Context Masking | Che giấu/xóa số điện thoại, email cụ thể, địa chỉ nhà riêng, ảnh/tuổi/giới tính trên văn bản OCR trước khi gửi vào mô hình AI. |
-| **Generative AI / LLM (`5b`)** | **Amazon Bedrock Runtime** | Anthropic Claude 3 Haiku | Nhận văn bản từ Textract để **chuẩn hóa CV thành cấu trúc JSON** (`Skills`, `Experience`, `Education`, `Job matching`, `AI score`); chi phí tối ưu (~$0.25/1M token input); cam kết Zero Model Training. |
+| **Generative AI / LLM (`5b`)** | **Amazon Bedrock Runtime** | Anthropic Claude Haiku 4.5 | Nhận văn bản từ Textract để **chuẩn hóa CV thành cấu trúc JSON** (`Skills`, `Experience`, `Education`, `Job matching`, `AI score`); tốc độ cực nhanh, trí tuệ tiệm cận frontier model; cam kết Zero Model Training (`anthropic.claude-haiku-4-5-20251001-v1:0`). |
 | **Review Thủ công Fallback** | **Amazon A2I (Human-in-the-Loop)** | Manual Review Fallback Queue | Nhánh rẽ trong Step Functions khi Confidence Score của Textract thấp (`< 80%`) hoặc Bedrock trả về JSON sai định dạng, đẩy hồ sơ sang hàng đợi chờ HR Review thủ công. |
-| **Dịch vụ Email (`6`)** | **Amazon SES** | Simple Email Service | Tự động gửi email xác nhận nộp hồ sơ, thông báo kết quả phân tích CV, thư mời phỏng vấn qua kết nối nội bộ PrivateLink. |
+| **Dịch vụ Email (`6`)** | **Amazon SES** | Simple Email Service | Tự động gửi email xác nhận nộp hồ sơ, thông báo kết quả phân tích CV, thư mời phỏng vấn qua AWS SDK. |
 | **Giám sát & Nhật ký** | **Amazon CloudWatch** | Logs, Metrics, Alarms | Ghi log JSON có cấu trúc (gắn `traceId`, `applicationId`); Dashboard theo dõi số lượng CV, tỉ lệ lỗi AI; Alarms cảnh báo DLQ và lỗi 5xx. |
 | **Kiểm thử** | **Vitest / Jest** | Unit & Integration Test | Kiểm thử tự động các hàm business logic, module khử PII, hàm tính điểm Rubric và schema validator. |
 
@@ -95,12 +95,12 @@ Tài liệu này thiết lập bộ khung công nghệ, các quyết định ki�
 ### 3.3. Xử lý tài liệu PDF & Pipeline AI
 * **Chuẩn hóa định dạng PDF duy nhất (`application/pdf`):**
   - Hệ thống chỉ chấp nhận tệp CV định dạng **PDF (`.pdf`)** có dung lượng tối đa **5MB** và kiểm tra chữ ký Magic Bytes `%PDF-`.
-  - Gọi `DetectDocumentTextCommand` của **Amazon Textract** đọc đối tượng PDF từ S3 trực tiếp qua kết nối nội bộ AWS PrivateLink.
+  - Gọi `DetectDocumentTextCommand` của **Amazon Textract** đọc đối tượng PDF từ S3 trực tiếp qua tham chiếu `S3Object`.
   - Giới hạn văn bản sau trích xuất tối đa 50,000 ký tự (cắt gọt an toàn nếu vượt ngưỡng để tránh quá tải token).
 * **Quy chuẩn Khử PII & Thiên kiến:**
   - Áp dụng bộ lọc Regex để thay thế: Email (`[EMAIL_REDACTED]`), Số điện thoại (`[PHONE_REDACTED]`), Địa chỉ nhà cụ thể (`[ADDRESS_REDACTED]`).
   - Hướng dẫn System Prompt của LLM: "Bỏ qua các yếu tố về tuổi tác, giới tính, dân tộc, hình ảnh cá nhân; chỉ đánh giá dựa trên năng lực chuyên môn, kinh nghiệm thực tế, học vấn và cách thức tổ chức hồ sơ".
-* **Quy chuẩn Gọi Amazon Bedrock (Claude 3 Haiku):**
+* **Quy chuẩn Gọi Amazon Bedrock (Claude Haiku 4.5):**
   - Sử dụng API `InvokeModelCommand` hoặc `ConverseCommand`.
   - Khung Prompt: Bọc toàn bộ nội dung CV và JD vào các thẻ XML riêng biệt (`<job_description>`, `<candidate_cv>`) để triệt tiêu nguy cơ Prompt Injection từ file CV của ứng viên.
   - Cấu trúc Output: Ép định dạng phản hồi bằng JSON Schema nghiêm ngặt, bao gồm:

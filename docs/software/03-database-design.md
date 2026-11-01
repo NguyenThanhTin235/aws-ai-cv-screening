@@ -118,7 +118,7 @@ stateDiagram-v2
     state "Tiến trình Xử lý Kỹ thuật (aiStatus)" as AIPipelineLifecycle {
         [*] --> PENDING : Đẩy tin nhắn vào SQS Queue
         PENDING --> EXTRACTING : Worker nhận việc & gọi Amazon Textract (PDF)
-        EXTRACTING --> SCORING : Lọc PII & gọi Bedrock Claude Haiku
+        EXTRACTING --> SCORING : Lọc PII & gọi Bedrock Claude Haiku 4.5
         SCORING --> COMPLETED : Ghi nhận Rubric 100đ & JSON Schema
         
         EXTRACTING --> FAILED : File lỗi hoặc không trích xuất được
@@ -368,7 +368,7 @@ Bảng ma trận ánh xạ chính xác 100% từng Use Case với nghiệp vụ 
 | **UC-AD-05** | Phê duyệt & Thực thi Yêu cầu DSR | Compliance | Orchestrate DSR Anonymization Pipeline | **AP03, AP31** | User Profile, S3, Consent |
 | **UC-SYS-01** | Tiếp nhận & Điều phối Hồ sơ Bất đồng bộ | Worker SQS | SQS Message Consumer Lambda Trigger | Amazon SQS | SQS Event Source Mapping |
 | **UC-SYS-02** | Trích xuất Văn bản CV PDF qua Textract | Worker Extract| S3 GetObject -> Amazon Textract -> Update DDB| **AP22** | `APP#<id>` SET aiStatus=EXTRACTING|
-| **UC-SYS-03** | Khử PII & Chấm điểm Bedrock Rubric | Worker Bedrock| In-memory Regex PII Masking -> Bedrock Haiku | **AP22** | `APP#<id>` SET aiStatus=COMPLETED |
+| **UC-SYS-03** | Khử PII & Chấm điểm Bedrock Rubric | Worker Bedrock| In-memory Regex PII Masking -> Bedrock Haiku 4.5 | **AP22** | `APP#<id>` SET aiStatus=COMPLETED |
 | **UC-SYS-04** | Tự phục hồi Khi Quá tải & Cách ly DLQ | Resilience | Exponential Backoff Retry -> Send to SQS DLQ | SQS DLQ / AP22 | `APP#<id>` SET aiStatus=FAILED |
 
 ---
@@ -427,7 +427,7 @@ Bảng ma trận ánh xạ chính xác 100% từng Use Case với nghiệp vụ 
       "Làm thế nào bạn thiết kế phân tán Partition Key để chống Hot Partition trong DynamoDB?"
     ],
     "evaluatedAt": "2026-10-28T10:16:15.000Z",
-    "modelUsed": "anthropic.claude-3-haiku-20240307-v1:0"
+    "modelUsed": "anthropic.claude-haiku-4-5-20251001-v1:0"
   },
   "reviewCount": 2,
   "avgRating": 4.5,
