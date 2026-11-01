@@ -815,7 +815,7 @@ graph TB
   * *Thành công:* Toàn bộ nội dung chữ thô của CV được trích xuất đầy đủ và làm sạch, chuẩn bị đưa vào bộ lọc khử định kiến.
 * **Luồng sự kiện chính (Basic Flow):**
   1. **[Hệ thống Nền]** Tải tệp CV từ S3 và kiểm tra tính hợp lệ của tệp PDF (chữ ký Magic Bytes `%PDF-`):
-     - **Hợp lệ (`.pdf`):** Gọi API Amazon Textract `DetectDocumentText` qua AWS PrivateLink để trích xuất văn bản từng dòng và các khối chữ.
+     - **Hợp lệ (`.pdf`):** Gọi API Amazon Textract `DetectDocumentText` qua kết nối AWS Global Backbone bảo mật bằng IAM Least Privilege để trích xuất văn bản từng dòng và các khối chữ.
      - **Tối ưu chi phí (`NFR-COST-01`):** Lưu kết quả trích xuất đã làm sạch vào bộ nhớ đệm `sanitizedTextCache` để tái sử dụng khi Re-score mà không cần gọi lại Textract.
   2. **[Hệ thống Nền]** Chuẩn hóa toàn bộ nội dung thành chuỗi văn bản sạch, loại bỏ các ký tự điều khiển rác sẵn sàng cho bước khử định kiến PII.
 * **Quy tắc nghiệp vụ & Ràng buộc (Business Rules & Constraints):** `BR-DOC-01`, `NFR-COST-01`.
