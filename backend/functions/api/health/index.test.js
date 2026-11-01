@@ -14,3 +14,4 @@ test('GET /api/v1/health returns 200 with UP status and CORS headers', async () 
   assert.ok(body.timestamp);
   assert.ok(body.stage);
 });
+
