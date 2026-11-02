@@ -76,6 +76,7 @@ export class StorageAndQueueStack extends cdk.Stack {
       removalPolicy: config.removalPolicy,
       autoDeleteObjects: config.removalPolicy === cdk.RemovalPolicy.DESTROY
     });
+    this.quarantineBucket.enableEventBridgeNotification();
 
     // 2.1 Amazon GuardDuty Malware Protection for S3 (Prefix: quarantine/)
     const guardDutyRole = new iam.Role(this, 'GuardDutyScanRole', {
@@ -91,7 +92,9 @@ export class StorageAndQueueStack extends cdk.Stack {
         actions: [
           's3:GetBucketLocation',
           's3:GetBucketOwnershipControls',
-          's3:ListBucket'
+          's3:ListBucket',
+          's3:GetBucketNotification',
+          's3:PutBucketNotification'
         ],
         resources: [this.quarantineBucket.bucketArn]
       })
