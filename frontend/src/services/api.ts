@@ -23,7 +23,9 @@ class ApiService {
   }
 
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-    const url = API_BASE_URL ? `${API_BASE_URL}${endpoint}` : endpoint;
+    const cleanBase = API_BASE_URL.replace(/\/+$/, '');
+    const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    const url = cleanBase ? `${cleanBase}${cleanEndpoint}` : endpoint;
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
       ...(options.headers as Record<string, string>)
