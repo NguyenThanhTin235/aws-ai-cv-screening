@@ -84,19 +84,63 @@ export class StorageAndQueueStack extends cdk.Stack {
       description: 'IAM Role for GuardDuty Malware Protection Plan to scan CV uploads in S3'
     });
 
-    this.quarantineBucket.grantRead(guardDutyRole);
+    // 1. Bucket ownership validation & config checks
     guardDutyRole.addToPolicy(
       new iam.PolicyStatement({
+        sid: 'AllowCheckBucketOwnershipAndConfig',
         actions: [
+          's3:GetBucketLocation',
+          's3:GetBucketOwnershipControls',
+          's3:ListBucket'
+        ],
+        resources: [this.quarantineBucket.bucketArn]
+      })
+    );
+
+    // 2. Allow Put validation object during plan setup
+    guardDutyRole.addToPolicy(
+      new iam.PolicyStatement({
+        sid: 'AllowPutValidationObject',
+        actions: ['s3:PutObject'],
+        resources: [`${this.quarantineBucket.bucketArn}/malware-protection-resource-validation-object`]
+      })
+    );
+
+    // 3. Scan & tagging permissions on bucket objects
+    guardDutyRole.addToPolicy(
+      new iam.PolicyStatement({
+        sid: 'AllowMalwareScanAndTagging',
+        actions: [
+          's3:GetObject',
+          's3:GetObjectVersion',
           's3:PutObjectTagging',
-          's3:GetObjectTagging',
           's3:PutObjectVersionTagging',
+          's3:GetObjectTagging',
           's3:GetObjectVersionTagging'
         ],
         resources: [`${this.quarantineBucket.bucketArn}/*`]
       })
     );
 
+    // 4. EventBridge rule management for scan notifications
+    guardDutyRole.addToPolicy(
+      new iam.PolicyStatement({
+        sid: 'AllowManageEventBridgeManagedRule',
+        actions: [
+          'events:PutRule',
+          'events:DeleteRule',
+          'events:PutTargets',
+          'events:RemoveTargets',
+          'events:DescribeRule',
+          'events:ListTargetsByRule'
+        ],
+        resources: [
+          `arn:${cdk.Aws.PARTITION}:events:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:rule/DO-NOT-DELETE-AmazonGuardDutyMalwareProtectionS3-*`
+        ]
+      })
+    );
+
+    // 5. KMS permissions for decrypting & validating S3 objects
     this.encryptionKey.grantDecrypt(guardDutyRole);
     this.encryptionKey.grant(guardDutyRole, 'kms:GenerateDataKey*');
 
@@ -118,6 +162,7 @@ export class StorageAndQueueStack extends cdk.Stack {
         { key: 'Environment', value: config.stage }
       ]
     });
+    this.malwareProtectionPlan.node.addDependency(guardDutyRole);
 
     // 3. Amazon DynamoDB - Single-Table Design
     this.mainTable = new dynamodb.Table(this, 'MainTable', {
