@@ -270,3 +270,4 @@ export const OtpVerification: React.FC = () => {
     </div>
   );
 };
+

@@ -521,3 +521,4 @@ export const JobBoard: React.FC = () => {
     </div>
   );
 };
+

@@ -43,3 +43,4 @@ export interface HealthStatus {
   timestamp?: string;
   latencyMs?: number;
 }
+

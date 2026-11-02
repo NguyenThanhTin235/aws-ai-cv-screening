@@ -120,3 +120,4 @@ export const RecruiterDashboard: React.FC = () => {
     </div>
   );
 };
+

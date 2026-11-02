@@ -120,3 +120,4 @@ export const CandidateDashboard: React.FC = () => {
     </div>
   );
 };
+
