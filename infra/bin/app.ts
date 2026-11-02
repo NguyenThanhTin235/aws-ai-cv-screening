@@ -11,7 +11,7 @@ const app = new cdk.App();
 const config = getEnvironmentConfig();
 
 const env: cdk.Environment = {
-  account: process.env.CDK_DEFAULT_ACCOUNT || process.env.AWS_ACCOUNT_ID,
+  account: process.env.CDK_DEFAULT_ACCOUNT || process.env.AWS_ACCOUNT_ID || '145443242997',
   region: config.region
 };
 
