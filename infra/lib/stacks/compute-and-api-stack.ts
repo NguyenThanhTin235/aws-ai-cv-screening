@@ -35,11 +35,10 @@ export class ComputeAndApiStack extends cdk.Stack {
     this.restApi = new apigateway.RestApi(this, 'RestApi', {
       restApiName: `${config.projectName}-${config.stage}-rest-api`,
       description: `AI CV Screening Portal REST API (${config.stage}) - Pure Serverless v12.0`,
+      cloudWatchRole: false,
       deployOptions: {
         stageName: config.stage,
-        metricsEnabled: true,
-        loggingLevel: apigateway.MethodLoggingLevel.INFO,
-        dataTraceEnabled: config.stage !== 'prod'
+        metricsEnabled: true
       },
       defaultCorsPreflightOptions: {
         allowOrigins: config.corsAllowedOrigins,
