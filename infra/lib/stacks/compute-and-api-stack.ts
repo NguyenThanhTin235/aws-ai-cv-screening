@@ -6,6 +6,9 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as s3 from 'aws-cdk-lib/aws-s3';
+import * as wafv2 from 'aws-cdk-lib/aws-wafv2';
+import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
+import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
 import { EnvironmentConfig } from '../../config/environment';
 
 export interface ComputeAndApiStackProps extends cdk.StackProps {
@@ -13,12 +16,15 @@ export interface ComputeAndApiStackProps extends cdk.StackProps {
   userPool: cognito.IUserPool;
   mainTable: dynamodb.ITable;
   quarantineBucket: s3.IBucket;
+  webAclArn?: string;
 }
 
 export class ComputeAndApiStack extends cdk.Stack {
   public readonly restApi: apigateway.RestApi;
   public readonly authorizer: apigateway.CognitoUserPoolsAuthorizer;
   public readonly healthFunction: lambda.Function;
+  public readonly webAclAssociation?: wafv2.CfnWebACLAssociation;
+  public readonly distribution: cloudfront.Distribution;
 
   constructor(scope: Construct, id: string, props: ComputeAndApiStackProps) {
     super(scope, id, props);
@@ -97,6 +103,27 @@ export class ComputeAndApiStack extends cdk.Stack {
       }
     );
 
+    // 5. AWS WAF Association (Regional WebACL protection for REST API)
+    if (props.webAclArn) {
+      this.webAclAssociation = new wafv2.CfnWebACLAssociation(this, 'ApiGatewayWebAclAssociation', {
+        resourceArn: this.restApi.deploymentStage.stageArn,
+        webAclArn: props.webAclArn
+      });
+    }
+
+    // 6. Amazon CloudFront Distribution (Edge CDN Ingress)
+    this.distribution = new cloudfront.Distribution(this, 'ApiDistribution', {
+      comment: `${config.projectName}-${config.stage}-edge-cdn`,
+      defaultBehavior: {
+        origin: new origins.RestApiOrigin(this.restApi),
+        viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+        allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
+        cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
+        originRequestPolicy: cloudfront.OriginRequestPolicy.ALL_VIEWER_EXCEPT_HOST_HEADER,
+        responseHeadersPolicy: cloudfront.ResponseHeadersPolicy.CORS_ALLOW_ALL_ORIGINS
+      }
+    });
+
     // Stack Outputs
     new cdk.CfnOutput(this, 'ApiUrlOutput', {
       value: this.restApi.url,
@@ -108,6 +135,18 @@ export class ComputeAndApiStack extends cdk.Stack {
       value: `${this.restApi.url}api/v1/health`,
       description: 'Public Health Check Endpoint URL',
       exportName: `${config.projectName}-${config.stage}-HealthCheckUrl`
+    });
+
+    new cdk.CfnOutput(this, 'CloudFrontDomainOutput', {
+      value: this.distribution.distributionDomainName,
+      description: 'CloudFront Edge CDN Domain Name',
+      exportName: `${config.projectName}-${config.stage}-CloudFrontDomain`
+    });
+
+    new cdk.CfnOutput(this, 'CloudFrontDistributionIdOutput', {
+      value: this.distribution.distributionId,
+      description: 'CloudFront Distribution ID',
+      exportName: `${config.projectName}-${config.stage}-CloudFrontDistributionId`
     });
   }
 }

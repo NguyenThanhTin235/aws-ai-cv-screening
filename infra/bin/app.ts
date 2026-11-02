@@ -37,7 +37,7 @@ const storageAndQueueStack = new StorageAndQueueStack(
   }
 );
 
-// 3. Compute & API Stack (API Gateway REST, Cognito Authorizer, Health Lambda)
+// 3. Compute & API Stack (API Gateway REST, Cognito Authorizer, Health Lambda, CloudFront, WAF)
 const computeAndApiStack = new ComputeAndApiStack(
   app,
   `${config.projectName}-${config.stage}-compute-and-api`,
@@ -47,11 +47,12 @@ const computeAndApiStack = new ComputeAndApiStack(
     userPool: authAndEdgeStack.userPool,
     mainTable: storageAndQueueStack.mainTable,
     quarantineBucket: storageAndQueueStack.quarantineBucket,
+    webAclArn: authAndEdgeStack.webAclArn,
     description: `Compute & API Stack for ${config.projectName} (${config.stage})`
   }
 );
-computeAndApiStack.addDependency(authAndEdgeStack);
-computeAndApiStack.addDependency(storageAndQueueStack);
+computeAndApiStack.addStackDependency(authAndEdgeStack);
+computeAndApiStack.addStackDependency(storageAndQueueStack);
 
 // 4. Observability Stack (CloudWatch Dashboard, Alarms)
 const observabilityStack = new ObservabilityStack(
@@ -67,8 +68,8 @@ const observabilityStack = new ObservabilityStack(
     description: `Observability & Monitoring Stack for ${config.projectName} (${config.stage})`
   }
 );
-observabilityStack.addDependency(computeAndApiStack);
-observabilityStack.addDependency(storageAndQueueStack);
+observabilityStack.addStackDependency(computeAndApiStack);
+observabilityStack.addStackDependency(storageAndQueueStack);
 
 // Global Tagging
 const tags = {

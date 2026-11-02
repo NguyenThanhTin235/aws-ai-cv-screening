@@ -5,6 +5,8 @@ import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as sqs from 'aws-cdk-lib/aws-sqs';
 import * as kms from 'aws-cdk-lib/aws-kms';
 import * as secretsmanager from 'aws-cdk-lib/aws-secretsmanager';
+import * as guardduty from 'aws-cdk-lib/aws-guardduty';
+import * as iam from 'aws-cdk-lib/aws-iam';
 import { EnvironmentConfig } from '../../config/environment';
 
 export interface StorageAndQueueStackProps extends cdk.StackProps {
@@ -14,6 +16,7 @@ export interface StorageAndQueueStackProps extends cdk.StackProps {
 export class StorageAndQueueStack extends cdk.Stack {
   public readonly encryptionKey: kms.Key;
   public readonly quarantineBucket: s3.Bucket;
+  public readonly malwareProtectionPlan: guardduty.CfnMalwareProtectionPlan;
   public readonly mainTable: dynamodb.Table;
   public readonly cvQueue: sqs.Queue;
   public readonly cvDlq: sqs.Queue;
@@ -72,6 +75,48 @@ export class StorageAndQueueStack extends cdk.Stack {
       ],
       removalPolicy: config.removalPolicy,
       autoDeleteObjects: config.removalPolicy === cdk.RemovalPolicy.DESTROY
+    });
+
+    // 2.1 Amazon GuardDuty Malware Protection for S3 (Prefix: quarantine/)
+    const guardDutyRole = new iam.Role(this, 'GuardDutyScanRole', {
+      roleName: `${config.projectName}-${config.stage}-guardduty-scan-role`,
+      assumedBy: new iam.ServicePrincipal('malware-protection-plan.guardduty.amazonaws.com'),
+      description: 'IAM Role for GuardDuty Malware Protection Plan to scan CV uploads in S3'
+    });
+
+    this.quarantineBucket.grantRead(guardDutyRole);
+    guardDutyRole.addToPolicy(
+      new iam.PolicyStatement({
+        actions: [
+          's3:PutObjectTagging',
+          's3:GetObjectTagging',
+          's3:PutObjectVersionTagging',
+          's3:GetObjectVersionTagging'
+        ],
+        resources: [`${this.quarantineBucket.bucketArn}/*`]
+      })
+    );
+
+    this.encryptionKey.grantDecrypt(guardDutyRole);
+    this.encryptionKey.grant(guardDutyRole, 'kms:GenerateDataKey*');
+
+    this.malwareProtectionPlan = new guardduty.CfnMalwareProtectionPlan(this, 'QuarantineMalwareProtectionPlan', {
+      role: guardDutyRole.roleArn,
+      protectedResource: {
+        s3Bucket: {
+          bucketName: this.quarantineBucket.bucketName,
+          objectPrefixes: ['quarantine/']
+        }
+      },
+      actions: {
+        tagging: {
+          status: 'ENABLED'
+        }
+      },
+      tags: [
+        { key: 'Project', value: config.projectName },
+        { key: 'Environment', value: config.stage }
+      ]
     });
 
     // 3. Amazon DynamoDB - Single-Table Design
@@ -154,6 +199,12 @@ export class StorageAndQueueStack extends cdk.Stack {
       value: this.quarantineBucket.bucketName,
       description: 'CV Quarantine Bucket Name',
       exportName: `${config.projectName}-${config.stage}-QuarantineBucketName`
+    });
+
+    new cdk.CfnOutput(this, 'MalwareProtectionPlanIdOutput', {
+      value: this.malwareProtectionPlan.ref,
+      description: 'GuardDuty Malware Protection Plan ID',
+      exportName: `${config.projectName}-${config.stage}-MalwareProtectionPlanId`
     });
 
     new cdk.CfnOutput(this, 'MainTableNameOutput', {
