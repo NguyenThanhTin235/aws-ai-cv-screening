@@ -46,8 +46,8 @@ export const Footer: React.FC = () => {
               >
                 <BrainIcon size={16} color="#ffffff" />
               </div>
-              <span style={{ fontSize: '16px', fontWeight: '700', color: 'var(--color-primary)' }}>
-                CloudTalent<span style={{ color: 'var(--color-primary-container)', fontWeight: '500' }}>.AI</span>
+              <span style={{ fontSize: '17px', fontWeight: '700', color: 'var(--color-primary)' }}>
+                Cloud<span style={{ color: 'var(--color-primary-container)', fontWeight: '600' }}>Job</span>
               </span>
             </div>
 
@@ -159,7 +159,7 @@ export const Footer: React.FC = () => {
             color: 'var(--color-on-surface-variant)'
           }}
         >
-          <p>© 2025 CloudTalent.AI. Được phát triển trên nền tảng AWS Cloud-Native. Toàn bộ bản quyền được bảo lưu.</p>
+          <p>© 2026 CloudJob. Được phát triển trên nền tảng AWS Cloud-Native. Toàn bộ bản quyền được bảo lưu.</p>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <span

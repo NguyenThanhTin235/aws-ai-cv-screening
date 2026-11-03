@@ -41,11 +41,6 @@ export const Navbar: React.FC = () => {
     admin: 'Quản trị viên'
   };
 
-  const isCurrentPath = (path: string) => {
-    if (path === '/') return location.pathname === '/';
-    return location.pathname.startsWith(path);
-  };
-
   return (
     <header
       style={{
@@ -99,41 +94,15 @@ export const Navbar: React.FC = () => {
             </div>
             <span
               style={{
-                fontSize: '18px',
+                fontSize: '19px',
                 fontWeight: '700',
                 color: 'var(--color-primary)',
                 letterSpacing: '-0.02em'
               }}
             >
-              CloudTalent<span style={{ color: 'var(--color-primary-container)', fontWeight: '500' }}>.AI</span>
+              Cloud<span style={{ color: 'var(--color-primary-container)', fontWeight: '600' }}>Job</span>
             </span>
           </Link>
-
-          {/* Portal Role Badge */}
-          <span
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '3px 10px',
-              borderRadius: 'var(--radius-full)',
-              backgroundColor: 'var(--color-surface-container)',
-              color: 'var(--color-on-surface-variant)',
-              fontSize: '11px',
-              fontWeight: '600',
-              border: '1px solid var(--color-surface-container-high)'
-            }}
-          >
-            <span
-              style={{
-                width: '6px',
-                height: '6px',
-                borderRadius: '50%',
-                backgroundColor: 'var(--color-primary-container)'
-              }}
-            />
-            {role === 'recruiter' ? 'Recruiter Portal' : role === 'admin' ? 'Admin Ops' : 'Candidate Portal'}
-          </span>
         </div>
 
         {/* Center Navigation Links */}
@@ -141,7 +110,7 @@ export const Navbar: React.FC = () => {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '24px',
+            gap: '28px',
             height: '64px'
           }}
         >
@@ -152,9 +121,9 @@ export const Navbar: React.FC = () => {
               display: 'flex',
               alignItems: 'center',
               fontSize: '14px',
-              fontWeight: isCurrentPath('/') ? '700' : '500',
-              color: isCurrentPath('/') ? 'var(--color-primary-container)' : 'var(--color-on-surface-variant)',
-              borderBottom: isCurrentPath('/') ? '2px solid var(--color-primary-container)' : '2px solid transparent',
+              fontWeight: location.pathname === '/' ? '700' : '500',
+              color: location.pathname === '/' ? 'var(--color-primary-container)' : 'var(--color-on-surface-variant)',
+              borderBottom: location.pathname === '/' ? '2px solid var(--color-primary-container)' : '2px solid transparent',
               textDecoration: 'none',
               transition: 'all 0.15s ease'
             }}
@@ -162,25 +131,8 @@ export const Navbar: React.FC = () => {
             Việc làm
           </Link>
 
-          <Link
-            to="/candidate"
-            style={{
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              fontSize: '14px',
-              fontWeight: isCurrentPath('/candidate') ? '700' : '500',
-              color: isCurrentPath('/candidate') ? 'var(--color-primary-container)' : 'var(--color-on-surface-variant)',
-              borderBottom: isCurrentPath('/candidate') ? '2px solid var(--color-primary-container)' : '2px solid transparent',
-              textDecoration: 'none',
-              transition: 'all 0.15s ease'
-            }}
-          >
-            Hồ sơ của tôi
-          </Link>
-
-          <Link
-            to="/candidate"
+          <a
+            href="#cam-nang"
             style={{
               height: '100%',
               display: 'flex',
@@ -188,15 +140,16 @@ export const Navbar: React.FC = () => {
               fontSize: '14px',
               fontWeight: '500',
               color: 'var(--color-on-surface-variant)',
+              borderBottom: '2px solid transparent',
               textDecoration: 'none',
               transition: 'color 0.15s ease'
             }}
           >
-            Báo cáo AI &amp; Match
-          </Link>
+            Cẩm nang
+          </a>
 
           <a
-            href="#cam-nang-cv-ai"
+            href="#blog"
             style={{
               height: '100%',
               display: 'flex',
@@ -204,11 +157,29 @@ export const Navbar: React.FC = () => {
               fontSize: '14px',
               fontWeight: '500',
               color: 'var(--color-on-surface-variant)',
+              borderBottom: '2px solid transparent',
               textDecoration: 'none',
               transition: 'color 0.15s ease'
             }}
           >
-            Cẩm nang CV AI
+            Blog
+          </a>
+
+          <a
+            href="#lien-he"
+            style={{
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              fontSize: '14px',
+              fontWeight: '500',
+              color: 'var(--color-on-surface-variant)',
+              borderBottom: '2px solid transparent',
+              textDecoration: 'none',
+              transition: 'color 0.15s ease'
+            }}
+          >
+            Liên hệ
           </a>
         </nav>
 
