@@ -466,11 +466,20 @@ export const JobBoard: React.FC = () => {
   // Sort State
   const [sortBy, setSortBy] = useState('ai-best');
 
+  // Pagination State (8 jobs per page)
+  const JOBS_PER_PAGE = 8;
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
   // Bookmarked Jobs
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
 
   // Rubric Modal State (for viewing AI score details on job cards)
   const [activeRubricJob, setActiveRubricJob] = useState<DetailedJob | null>(null);
+
+  // Auto-reset page to 1 when filters or sorting change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [keyword, selectedLocations, workModes, levels, salaryRange, includeNegotiable, selectedSkills, sortBy]);
 
   // Toggle skill selection
   const handleToggleSkill = (skill: string) => {
@@ -510,6 +519,7 @@ export const JobBoard: React.FC = () => {
       'Lead / Principal Architect': false
     });
     setSelectedSkills([]);
+    setCurrentPage(1);
   };
 
   // Selected provinces count & check
@@ -536,9 +546,6 @@ export const JobBoard: React.FC = () => {
   const filteredSubdivisions = currentSubdivisions.filter((item) =>
     item.toLowerCase().includes(districtQuery.toLowerCase().trim())
   );
-
-  // Count active work modes
-  const activeWorkModesCount = Object.values(workModes).filter(Boolean).length;
 
   // Filter & sort logic
   const filteredJobs = JOBS_DATA.filter((job) => {
@@ -610,6 +617,14 @@ export const JobBoard: React.FC = () => {
     }
     return 0;
   });
+
+  // Pagination calculations
+  const totalJobs = filteredJobs.length;
+  const totalPages = Math.max(1, Math.ceil(totalJobs / JOBS_PER_PAGE));
+  const safeCurrentPage = Math.min(currentPage, totalPages);
+  const startIndex = (safeCurrentPage - 1) * JOBS_PER_PAGE;
+  const endIndex = Math.min(startIndex + JOBS_PER_PAGE, totalJobs);
+  const paginatedJobs = filteredJobs.slice(startIndex, endIndex);
 
   const handleApply = (_job: DetailedJob) => {
     if (!isAuthenticated) {
@@ -993,16 +1008,13 @@ export const JobBoard: React.FC = () => {
               <div className="jb-filter-group">
                 <div className="jb-filter-group-title">
                   <span>Hình thức làm việc</span>
-                  <span style={{ fontSize: '11px', color: 'var(--color-on-surface-variant)', fontWeight: '400' }}>
-                    {activeWorkModesCount} đã chọn
-                  </span>
                 </div>
                 {[
-                  { key: 'Toàn thời gian', count: 18 },
-                  { key: 'Bán thời gian', count: 3 },
-                  { key: 'Làm từ xa / Remote', count: 12 },
-                  { key: 'Hybrid linh hoạt', count: 9 }
-                ].map(({ key, count }) => (
+                  'Toàn thời gian',
+                  'Bán thời gian',
+                  'Làm từ xa / Remote',
+                  'Hybrid linh hoạt'
+                ].map((key) => (
                   <label key={key} className="jb-filter-checkbox-row">
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <input
@@ -1015,7 +1027,6 @@ export const JobBoard: React.FC = () => {
                       />
                       <span>{key}</span>
                     </div>
-                    <span className="jb-filter-count-badge">{count}</span>
                   </label>
                 ))}
               </div>
@@ -1026,12 +1037,12 @@ export const JobBoard: React.FC = () => {
                   <span>Cấp bậc kinh nghiệm</span>
                 </div>
                 {[
-                  { key: 'Intern', count: 3 },
-                  { key: 'Fresher / Junior', count: 4 },
-                  { key: 'Middle', count: 10 },
-                  { key: 'Senior Specialist', count: 14 },
-                  { key: 'Lead / Principal Architect', count: 6 }
-                ].map(({ key, count }) => (
+                  'Intern',
+                  'Fresher / Junior',
+                  'Middle',
+                  'Senior Specialist',
+                  'Lead / Principal Architect'
+                ].map((key) => (
                   <label key={key} className="jb-filter-checkbox-row">
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <input
@@ -1044,7 +1055,6 @@ export const JobBoard: React.FC = () => {
                       />
                       <span>{key}</span>
                     </div>
-                    <span className="jb-filter-count-badge">{count}</span>
                   </label>
                 ))}
               </div>
@@ -1160,7 +1170,7 @@ export const JobBoard: React.FC = () => {
               {/* Action Buttons */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '8px' }}>
                 <button type="button" className="jb-btn-apply-filters">
-                  Áp dụng bộ lọc ({filteredJobs.length})
+                  Áp dụng bộ lọc
                 </button>
                 <button
                   type="button"
@@ -1227,7 +1237,7 @@ export const JobBoard: React.FC = () => {
                     </button>
                   </div>
                 ) : (
-                  filteredJobs.map((job) => {
+                  paginatedJobs.map((job) => {
                     const isBookmarked = bookmarkedIds.includes(job.id);
                     return (
                       <article key={job.id} className="jb-job-card">
@@ -1382,36 +1392,57 @@ export const JobBoard: React.FC = () => {
               </div>
 
               {/* PAGINATION BAR */}
-              <div className="jb-pagination-bar">
-                <span style={{ fontSize: '13px', color: 'var(--color-on-surface-variant)' }}>
-                  Hiển thị <strong style={{ color: 'var(--color-on-surface)' }}>1 - {filteredJobs.length}</strong> trong tổng số <strong style={{ color: 'var(--color-on-surface)' }}>24</strong> việc làm
-                </span>
+              {totalJobs > 0 && (
+                <div className="jb-pagination-bar">
+                  <span style={{ fontSize: '13px', color: 'var(--color-on-surface-variant)' }}>
+                    Hiển thị <strong style={{ color: 'var(--color-on-surface)' }}>{startIndex + 1} - {endIndex}</strong> trong tổng số <strong style={{ color: 'var(--color-on-surface)' }}>{totalJobs}</strong> việc làm
+                  </span>
 
-                <nav className="jb-pagination-nav" aria-label="Phân trang danh sách việc làm">
-                  <button type="button" className="jb-page-btn-wide" disabled>
-                    <ChevronLeftIcon size={14} />
-                    <span>Trước</span>
-                  </button>
+                  {totalPages > 1 && (
+                    <nav className="jb-pagination-nav" aria-label="Phân trang danh sách việc làm">
+                      <button
+                        type="button"
+                        className="jb-page-btn-wide"
+                        disabled={safeCurrentPage <= 1}
+                        onClick={() => {
+                          setCurrentPage((p) => Math.max(1, p - 1));
+                          document.querySelector('.jb-workspace')?.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                      >
+                        <ChevronLeftIcon size={14} />
+                        <span>Trước</span>
+                      </button>
 
-                  <button type="button" className="jb-page-btn active">
-                    1
-                  </button>
-                  <button type="button" className="jb-page-btn">
-                    2
-                  </button>
-                  <button type="button" className="jb-page-btn">
-                    3
-                  </button>
-                  <button type="button" className="jb-page-btn">
-                    4
-                  </button>
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                        <button
+                          key={pageNum}
+                          type="button"
+                          className={`jb-page-btn ${pageNum === safeCurrentPage ? 'active' : ''}`}
+                          onClick={() => {
+                            setCurrentPage(pageNum);
+                            document.querySelector('.jb-workspace')?.scrollIntoView({ behavior: 'smooth' });
+                          }}
+                        >
+                          {pageNum}
+                        </button>
+                      ))}
 
-                  <button type="button" className="jb-page-btn-wide">
-                    <span>Sau</span>
-                    <ChevronRightIcon size={14} />
-                  </button>
-                </nav>
-              </div>
+                      <button
+                        type="button"
+                        className="jb-page-btn-wide"
+                        disabled={safeCurrentPage >= totalPages}
+                        onClick={() => {
+                          setCurrentPage((p) => Math.min(totalPages, p + 1));
+                          document.querySelector('.jb-workspace')?.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                      >
+                        <span>Sau</span>
+                        <ChevronRightIcon size={14} />
+                      </button>
+                    </nav>
+                  )}
+                </div>
+              )}
 
               {/* BOTTOM CALL-TO-ACTION PROMO BANNER */}
               <div className="jb-promo-banner">
