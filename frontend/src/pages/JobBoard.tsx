@@ -246,7 +246,7 @@ export const JobBoard: React.FC = () => {
   // Search & Filter States
   const [keyword, setKeyword] = useState('AWS Senior');
   const [locationFilter, setLocationFilter] = useState('all');
-  const [isAiMatchingActive, setIsAiMatchingActive] = useState(true);
+  const isAiMatchingActive = true;
 
   // Work Mode filter states
   const [workModes, setWorkModes] = useState<Record<string, boolean>>({
@@ -442,16 +442,9 @@ export const JobBoard: React.FC = () => {
       <section className="jb-hero">
         <div className="jb-container">
           <div className="jb-hero-headline-box">
-            <div className="jb-pill-badge">
-              <BrainIcon size={16} color="var(--color-primary-container)" />
-              <span>Khảo sát năng lực tự động với AWS Bedrock &amp; Claude Haiku 4.5</span>
-            </div>
             <h1 className="jb-hero-title">
-              Khám Phá Việc Làm Công Nghệ &amp; Khảo Sát Điểm Phù Hợp Bằng AI
+              CloudJob - Nâng tầm sự nghiệp, Kết nối việc làm Cloud
             </h1>
-            <p className="jb-hero-subtitle">
-              Hơn 500+ cơ hội việc làm Cloud, DevOps, AI &amp; Kỹ nghệ phần mềm được tính toán độ tương thích chuẩn xác từ hồ sơ thật của bạn qua AWS Bedrock AI.
-            </p>
           </div>
 
           {/* Main Floating Search Bar Card */}
@@ -490,30 +483,6 @@ export const JobBoard: React.FC = () => {
                 </select>
               </div>
 
-              {/* AI Matching Toggle Pill */}
-              <div className="jb-ai-toggle-pill">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
-                  <SparklesIcon size={20} color="var(--color-tertiary-container)" />
-                  <div style={{ overflow: 'hidden' }}>
-                    <p style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-on-surface)', margin: 0 }}>
-                      AI Matching
-                    </p>
-                    <p style={{ fontSize: '11px', color: 'var(--color-on-surface-variant)', margin: 0, textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
-                      Khớp với CV Tuấn Hoàng
-                    </p>
-                  </div>
-                </div>
-
-                <label className="jb-switch" aria-label="Bật/Tắt tính toán độ tương thích AI">
-                  <input
-                    type="checkbox"
-                    checked={isAiMatchingActive}
-                    onChange={(e) => setIsAiMatchingActive(e.target.checked)}
-                  />
-                  <span className="jb-slider" />
-                </label>
-              </div>
-
               {/* Submit Search Button */}
               <button type="submit" className="jb-btn-search">
                 <span>Tìm kiếm</span>
@@ -524,8 +493,8 @@ export const JobBoard: React.FC = () => {
 
           {/* Trending Keywords */}
           <div className="jb-trending-row">
-            <span style={{ fontWeight: '600', color: 'var(--color-on-surface)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <TrendingUpIcon size={16} color="var(--color-primary-container)" />
+            <span style={{ fontWeight: '600', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <TrendingUpIcon size={16} color="#90d4bb" />
               Từ khóa hot:
             </span>
             {[
