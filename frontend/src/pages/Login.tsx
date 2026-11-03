@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { UserRole } from '../types';
-import { EyeIcon, EyeOffIcon } from '../components/common/Icons';
+import { EyeIcon, EyeOffIcon, AlertCircleIcon } from '../components/common/Icons';
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -170,7 +170,7 @@ export const Login: React.FC = () => {
               }}
             >
               <div style={{ fontWeight: '600', fontSize: '13px', color: '#acf1d7' }}>
-                ✓ AI Rubric 100đ Chuẩn Xác
+                AI Rubric 100đ Chuẩn Xác
               </div>
               <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.75)', marginTop: '2px' }}>
                 Đối chiếu tiêu chí ma trận đánh giá tự động dựa trên Claude Haiku 4.5 và DynamoDB.
@@ -186,7 +186,7 @@ export const Login: React.FC = () => {
               }}
             >
               <div style={{ fontWeight: '600', fontSize: '13px', color: '#acf1d7' }}>
-                ✓ Khử định kiến PII tự động
+                Khử định kiến PII tự động
               </div>
               <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.75)', marginTop: '2px' }}>
                 Tuân thủ Nghị định 13/2023/NĐ-CP &amp; GDPR, ẩn danh thông tin cá nhân đa tầng trước phân tích.
@@ -202,7 +202,7 @@ export const Login: React.FC = () => {
               }}
             >
               <div style={{ fontWeight: '600', fontSize: '13px', color: '#acf1d7' }}>
-                ✓ Bảo mật chuẩn AWS Serverless
+                Bảo mật chuẩn AWS Serverless
               </div>
               <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.75)', marginTop: '2px' }}>
                 Kiến trúc Pure Serverless Zero-VPC ($0.00/tháng), KMS CMK, S3 Quarantine và GuardDuty.
@@ -271,7 +271,7 @@ export const Login: React.FC = () => {
             }}
           >
             <div style={{ fontSize: '11px', fontWeight: '600', color: 'var(--color-outline)', marginBottom: '6px' }}>
-              ⚡ ĐIỀN NHANH DỮ LIỆU THỬ NGHIỆM:
+              Điền nhanh dữ liệu thử nghiệm:
             </div>
             <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
               <button
@@ -330,7 +330,10 @@ export const Login: React.FC = () => {
                 marginBottom: '16px'
               }}
             >
-              ⚠️ {errorMsg}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <AlertCircleIcon size={16} />
+                <span>{errorMsg}</span>
+              </div>
             </div>
           )}
 

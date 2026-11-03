@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { ShieldIcon, CheckIcon, AlertCircleIcon } from '../components/common/Icons';
 
 export const OtpVerification: React.FC = () => {
   const navigate = useNavigate();
@@ -118,7 +119,7 @@ export const OtpVerification: React.FC = () => {
             fontSize: '28px'
           }}
         >
-          ✉️
+          <ShieldIcon size={32} color="var(--color-primary-container)" />
         </div>
 
         <h1 style={{ fontSize: '22px', fontWeight: '800', color: 'var(--color-on-surface)' }}>
@@ -152,10 +153,14 @@ export const OtpVerification: React.FC = () => {
               padding: '10px',
               borderRadius: 'var(--radius-sm)',
               fontSize: '13px',
-              marginBottom: '16px'
+              marginBottom: '16px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
             }}
           >
-            ⚠️ {errorMsg}
+            <AlertCircleIcon size={16} />
+            <span>{errorMsg}</span>
           </div>
         )}
 
@@ -168,10 +173,14 @@ export const OtpVerification: React.FC = () => {
               borderRadius: 'var(--radius-sm)',
               fontSize: '13px',
               marginBottom: '16px',
-              fontWeight: '600'
+              fontWeight: '600',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
             }}
           >
-            ✓ {successMsg}
+            <CheckIcon size={16} />
+            <span>{successMsg}</span>
           </div>
         )}
 

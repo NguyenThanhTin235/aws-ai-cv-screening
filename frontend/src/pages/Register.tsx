@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { UserRole } from '../types';
+import { CheckIcon, AlertCircleIcon } from '../components/common/Icons';
 
 export const Register: React.FC = () => {
   const navigate = useNavigate();
@@ -160,10 +161,14 @@ export const Register: React.FC = () => {
               padding: '10px 14px',
               borderRadius: 'var(--radius-sm)',
               fontSize: '13px',
-              marginBottom: '20px'
+              marginBottom: '20px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
             }}
           >
-            ⚠️ {errorMsg}
+            <AlertCircleIcon size={16} />
+            <span>{errorMsg}</span>
           </div>
         )}
 
@@ -304,23 +309,27 @@ export const Register: React.FC = () => {
               style={{
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
-                gap: '4px',
+                gap: '6px',
                 marginTop: '8px',
                 fontSize: '11px',
                 color: 'var(--color-outline)'
               }}
             >
-              <div style={{ color: hasMinLength ? '#006c4c' : 'inherit' }}>
-                {hasMinLength ? '✓' : '○'} Tối thiểu 8 ký tự
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: hasMinLength ? '#006c4c' : 'inherit' }}>
+                <CheckIcon size={12} color={hasMinLength ? '#006c4c' : 'var(--color-outline)'} />
+                <span>Tối thiểu 8 ký tự</span>
               </div>
-              <div style={{ color: hasUppercase ? '#006c4c' : 'inherit' }}>
-                {hasUppercase ? '✓' : '○'} Ít nhất 1 chữ in hoa
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: hasUppercase ? '#006c4c' : 'inherit' }}>
+                <CheckIcon size={12} color={hasUppercase ? '#006c4c' : 'var(--color-outline)'} />
+                <span>Ít nhất 1 chữ in hoa</span>
               </div>
-              <div style={{ color: hasDigit ? '#006c4c' : 'inherit' }}>
-                {hasDigit ? '✓' : '○'} Ít nhất 1 chữ số
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: hasDigit ? '#006c4c' : 'inherit' }}>
+                <CheckIcon size={12} color={hasDigit ? '#006c4c' : 'var(--color-outline)'} />
+                <span>Ít nhất 1 chữ số</span>
               </div>
-              <div style={{ color: hasSpecial ? '#006c4c' : 'inherit' }}>
-                {hasSpecial ? '✓' : '○'} Ít nhất 1 ký tự đặc biệt
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: hasSpecial ? '#006c4c' : 'inherit' }}>
+                <CheckIcon size={12} color={hasSpecial ? '#006c4c' : 'var(--color-outline)'} />
+                <span>Ít nhất 1 ký tự đặc biệt</span>
               </div>
             </div>
           </div>

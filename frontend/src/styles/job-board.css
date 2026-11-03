@@ -1,0 +1,1011 @@
+/* Job Board & Candidate Portal Design System Styles */
+
+.jb-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+@media (min-width: 640px) {
+  .jb-container {
+    padding: 0 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .jb-container {
+    padding: 0 32px;
+  }
+}
+
+/* Hero Section */
+.jb-hero {
+  background: linear-gradient(180deg, var(--color-surface-container-low) 0%, var(--color-surface) 60%, #f7f9fb 100%);
+  padding: 36px 0 24px 0;
+  border-bottom: 1px solid var(--color-surface-container);
+}
+
+.jb-hero-headline-box {
+  max-width: 760px;
+  margin: 0 auto 28px auto;
+  text-align: center;
+}
+
+.jb-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background-color: rgba(9, 87, 68, 0.1);
+  color: var(--color-primary-container);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.jb-hero-title {
+  font-size: 30px;
+  line-height: 1.25;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+
+@media (min-width: 640px) {
+  .jb-hero-title {
+    font-size: 34px;
+  }
+}
+
+.jb-hero-subtitle {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--color-on-surface-variant);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* Floating Search Bar Card */
+.jb-search-card {
+  background-color: var(--color-surface-container-lowest);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--color-surface-container-high);
+  padding: 16px;
+}
+
+.jb-search-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .jb-search-grid {
+    grid-template-columns: 4fr 3fr 3fr 2fr;
+  }
+}
+
+.jb-input-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-container-low);
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.jb-input-field:focus-within {
+  background-color: var(--color-surface-container-lowest);
+  border-color: var(--color-primary-container);
+  box-shadow: 0 0 0 3px rgba(9, 87, 68, 0.15);
+}
+
+.jb-input-field input,
+.jb-input-field select {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--color-on-surface);
+  outline: none;
+}
+
+.jb-ai-toggle-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  background-color: rgba(218, 226, 253, 0.45);
+  border: 1px solid rgba(218, 226, 253, 0.7);
+}
+
+/* Toggle Switch */
+.jb-switch {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.jb-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.jb-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-surface-container-high);
+  transition: 0.2s;
+  border-radius: 22px;
+}
+
+.jb-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.2s;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.jb-switch input:checked + .jb-slider {
+  background-color: var(--color-primary-container);
+}
+
+.jb-switch input:checked + .jb-slider:before {
+  transform: translateX(16px);
+}
+
+/* Search Button */
+.jb-btn-search {
+  height: 44px;
+  width: 100%;
+  padding: 0 20px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary);
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.jb-btn-search:hover {
+  background-color: var(--color-primary);
+}
+
+/* Trending Keywords */
+.jb-trending-row {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+}
+
+.jb-trending-pill {
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-surface-container-high);
+  color: var(--color-on-surface);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+.jb-trending-pill:hover {
+  background-color: var(--color-surface-container);
+  border-color: var(--color-outline-variant);
+}
+
+/* Main 2-Column Grid */
+.jb-workspace {
+  padding: 32px 0 60px 0;
+}
+
+.jb-workspace-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .jb-workspace-grid {
+    grid-template-columns: 290px 1fr;
+  }
+}
+
+/* Aside Filter Panel */
+.jb-filter-panel {
+  background-color: var(--color-surface-container-lowest);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-surface-container-high);
+  box-shadow: var(--shadow-sm);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.jb-filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-surface-container);
+}
+
+.jb-filter-header h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  margin: 0;
+}
+
+.jb-filter-reset-btn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-on-surface-variant);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.jb-filter-reset-btn:hover {
+  color: var(--color-primary-container);
+}
+
+.jb-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.jb-filter-group-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-on-surface);
+  margin: 0;
+}
+
+.jb-filter-checkbox-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--color-on-surface);
+  padding: 3px 0;
+}
+
+.jb-filter-checkbox-row:hover {
+  color: var(--color-primary-container);
+}
+
+.jb-filter-count-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-on-surface-variant);
+  background-color: var(--color-surface-container);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+/* Dual Range Slider Track */
+.jb-slider-track {
+  position: relative;
+  height: 6px;
+  width: 100%;
+  background-color: var(--color-surface-container);
+  border-radius: 4px;
+  margin: 14px 0 10px 0;
+}
+
+.jb-slider-fill {
+  position: absolute;
+  left: 20%;
+  right: 15%;
+  height: 100%;
+  background-color: var(--color-primary-container);
+  border-radius: 4px;
+}
+
+.jb-slider-thumb-left {
+  position: absolute;
+  left: 20%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 2px solid var(--color-primary-container);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  cursor: grab;
+}
+
+.jb-slider-thumb-right {
+  position: absolute;
+  right: 15%;
+  top: 50%;
+  transform: translate(50%, -50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 2px solid var(--color-primary-container);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  cursor: grab;
+}
+
+.jb-salary-range-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.jb-salary-range-pill {
+  padding: 3px 8px;
+  background-color: var(--color-surface-container);
+  border-radius: 4px;
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+
+/* Skill Tag Pills */
+.jb-skill-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.jb-skill-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--color-surface-container-high);
+  background-color: var(--color-surface-container-low);
+  color: var(--color-on-surface-variant);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.jb-skill-pill-btn:hover {
+  background-color: var(--color-surface-container);
+  border-color: var(--color-outline-variant);
+}
+
+.jb-skill-pill-btn.active {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary);
+  border-color: var(--color-primary-container);
+}
+
+/* Rubric Transparency Box */
+.jb-rubric-box {
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-container-low);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Aside Action Buttons */
+.jb-btn-apply-filters {
+  width: 100%;
+  padding: 11px 16px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary);
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.2s ease;
+}
+
+.jb-btn-apply-filters:hover {
+  background-color: var(--color-primary);
+}
+
+.jb-btn-clear-filters {
+  width: 100%;
+  padding: 9px 16px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-container);
+  color: var(--color-on-surface);
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.jb-btn-clear-filters:hover {
+  background-color: var(--color-surface-container-high);
+}
+
+/* Right Feed: Status Bar */
+.jb-feed-status-bar {
+  background-color: var(--color-surface-container-lowest);
+  border-radius: var(--radius-lg);
+  padding: 14px 20px;
+  border: 1px solid var(--color-surface-container-high);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .jb-feed-status-bar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.jb-status-title-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.jb-status-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.jb-status-pill {
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  background-color: rgba(9, 87, 68, 0.08);
+  color: var(--color-primary-container);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.jb-sort-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+}
+
+.jb-sort-select {
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-container);
+  border: 1px solid transparent;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-on-surface);
+  outline: none;
+  cursor: pointer;
+}
+
+/* Job Cards */
+.jb-job-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.jb-job-card {
+  background-color: var(--color-surface-container-lowest);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-surface-container-high);
+  box-shadow: var(--shadow-sm);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.jb-job-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-outline-variant);
+}
+
+.jb-card-accent-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background-color: var(--color-primary-container);
+}
+
+.jb-card-top-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .jb-card-top-row {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+.jb-company-info-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.jb-company-logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.jb-company-name-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+}
+
+.jb-company-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.jb-job-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  line-height: 1.35;
+  margin-top: 4px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.jb-job-title:hover {
+  color: var(--color-primary-container);
+}
+
+/* AI Match & Status Badges */
+.jb-match-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  background-color: rgba(9, 87, 68, 0.1);
+  color: var(--color-primary-container);
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: opacity 0.25s ease;
+}
+
+.jb-new-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-secondary-container);
+  color: var(--color-on-secondary-container);
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.jb-hot-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-error-container);
+  color: var(--color-on-error-container);
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Quick Info Row */
+.jb-quick-info-row {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 20px;
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+}
+
+.jb-info-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.jb-info-salary {
+  color: var(--color-primary-container);
+  font-weight: 700;
+}
+
+.jb-job-desc {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--color-on-surface-variant);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Tag Pills */
+.jb-tag-row {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.jb-tag-pill {
+  padding: 4px 10px;
+  border-radius: 4px;
+  background-color: var(--color-surface-container);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-on-surface);
+}
+
+/* Card Bottom Perks & Actions */
+.jb-card-bottom-row {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-surface-container);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+@media (min-width: 640px) {
+  .jb-card-bottom-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.jb-perks-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+}
+
+.jb-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.jb-btn-bookmark {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-container);
+  color: var(--color-on-surface-variant);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.jb-btn-bookmark:hover {
+  background-color: var(--color-surface-container-high);
+  color: var(--color-on-surface);
+}
+
+.jb-btn-rubric {
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-container);
+  color: var(--color-primary-container);
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.jb-btn-rubric:hover {
+  background-color: var(--color-surface-container-high);
+}
+
+.jb-btn-apply {
+  padding: 8px 18px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary);
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.2s ease;
+}
+
+.jb-btn-apply:hover {
+  background-color: var(--color-primary);
+}
+
+/* Pagination Bar */
+.jb-pagination-bar {
+  background-color: var(--color-surface-container-lowest);
+  border-radius: var(--radius-lg);
+  padding: 14px 20px;
+  border: 1px solid var(--color-surface-container-high);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+@media (min-width: 640px) {
+  .jb-pagination-bar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.jb-pagination-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.jb-page-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-container);
+  color: var(--color-on-surface);
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.jb-page-btn:hover:not(:disabled) {
+  background-color: var(--color-surface-container-high);
+}
+
+.jb-page-btn.active {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary);
+}
+
+.jb-page-btn-wide {
+  padding: 0 12px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-container);
+  color: var(--color-on-surface);
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.jb-page-btn-wide:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Bottom CTA Promo Banner */
+.jb-promo-banner {
+  margin-top: 32px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(90deg, rgba(172, 241, 215, 0.45) 0%, var(--color-surface-container-low) 50%, var(--color-surface-container-lowest) 100%);
+  border: 1px solid var(--color-surface-container-high);
+  padding: 24px 28px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .jb-promo-banner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.jb-promo-content {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.jb-promo-icon-box {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.jb-promo-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  margin-bottom: 4px;
+}
+
+.jb-promo-desc {
+  font-size: 14px;
+  color: var(--color-on-surface-variant);
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+.jb-btn-promo {
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary);
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
+}
+
+.jb-btn-promo:hover {
+  background-color: var(--color-primary);
+}
+
+/* Modal Overlay & Dialog */
+.jb-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.jb-modal-dialog {
+  background-color: var(--color-surface-container-lowest);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  max-width: 680px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid var(--color-surface-container-high);
+}
+
+.jb-modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-surface-container);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.jb-modal-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  margin: 0;
+}
+
+.jb-modal-close-btn {
+  background: none;
+  border: none;
+  color: var(--color-on-surface-variant);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jb-modal-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
