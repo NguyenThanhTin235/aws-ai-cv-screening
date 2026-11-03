@@ -34,236 +34,19 @@ import {
   XIcon
 } from '../components/common/Icons';
 
-export interface DetailedJob {
-  id: string;
-  title: string;
-  companyName: string;
-  companyScale: string;
-  isVerified: boolean;
-  matchScore?: number;
-  badgeType?: 'match' | 'new' | 'hot';
-  salaryText: string;
-  salaryMin: number;
-  salaryMax: number;
-  location: string;
-  experience: string;
-  postedTime: string;
-  workType: 'Toàn thời gian' | 'Bán thời gian' | 'Làm từ xa / Remote' | 'Hybrid linh hoạt';
-  level: 'Fresher / Junior' | 'Middle' | 'Senior Specialist' | 'Lead / Principal Architect';
-  description: string;
-  skills: string[];
-  perks: string;
-  perkType: 'star' | 'bolt' | 'award' | 'gift' | 'shield';
-  logoGradient: string;
-  logoType: 'cloud' | 'bank' | 'brain' | 'cart' | 'shield';
-  isTopMatch?: boolean;
-  rubricBreakdown?: {
-    total: number;
-    experience: number;
-    skills: number;
-    education: number;
-    culture: number;
-    summary: string;
-    strengths: string[];
-    improvements: string[];
-  };
-}
+import { ALL_JOBS, DetailedJob } from '../data/jobsData';
+export type { DetailedJob };
 
-const JOBS_DATA: DetailedJob[] = [
-  {
-    id: 'job_001',
-    title: 'Senior AWS Cloud Architect (Serverless & FinOps)',
-    companyName: 'CloudNexus Solutions',
-    companyScale: 'Quy mô: 250+ nhân sự',
-    isVerified: true,
-    matchScore: 95,
-    badgeType: 'match',
-    salaryText: '$3,000 - $4,200 / tháng',
-    salaryMin: 3000,
-    salaryMax: 4200,
-    location: 'Quận 1, TP. Hồ Chí Minh (Hỗ trợ 2 ngày Remote/tuần)',
-    experience: '5+ năm kinh nghiệm',
-    postedTime: 'Đăng 2 giờ trước',
-    workType: 'Toàn thời gian',
-    level: 'Senior Specialist',
-    description:
-      'Thiết kế kiến trúc hệ thống High Availability chịu tải 100k+ RPS trên nền tảng AWS Lambda, DynamoDB, API Gateway và tối ưu hóa chi phí đám mây FinOps. Trực tiếp làm việc cùng các Enterprise Lead Architect khu vực APAC.',
-    skills: ['AWS Lambda', 'Terraform', 'DynamoDB', 'FinOps', 'Docker', 'Kubernetes EKS'],
-    perks: 'Thưởng hiệu suất AWS Cert • Bảo hiểm quốc tế • Thưởng dự án Quý',
-    perkType: 'star',
-    logoGradient: 'linear-gradient(135deg, #095744 0%, #246955 100%)',
-    logoType: 'cloud',
-    isTopMatch: true,
-    rubricBreakdown: {
-      total: 95,
-      experience: 34,
-      skills: 29,
-      education: 15,
-      culture: 17,
-      summary:
-        'Hồ sơ của bạn khớp 95% với yêu cầu vị trí nhờ kinh nghiệm 5+ năm kiến trúc AWS Serverless, chứng chỉ AWS Solutions Architect Professional và kinh nghiệm FinOps đã kiểm chứng.',
-      strengths: [
-        'Kinh nghiệm thực chiến thiết kế AWS Lambda & DynamoDB chịu tải cao (>100k RPS)',
-        'Sử dụng thành thạo Terraform và Amazon CloudWatch Metrics',
-        'Có chứng chỉ AWS Solutions Architect Professional hợp lệ'
-      ],
-      improvements: [
-        'Bổ sung thêm các dự án cụ thể về quản lý FinOps đa tài khoản AWS Organizations'
-      ]
-    }
-  },
-  {
-    id: 'job_002',
-    title: 'Lead DevOps Engineer (AWS EKS & GitOps Automation)',
-    companyName: 'FinStream Digital Bank',
-    companyScale: 'Tài chính & Ngân hàng',
-    isVerified: true,
-    matchScore: 91,
-    badgeType: 'match',
-    salaryText: '$2,800 - $3,800 / tháng',
-    salaryMin: 2800,
-    salaryMax: 3800,
-    location: 'Cầu Giấy, Hà Nội • Làm việc từ xa (Remote 100%)',
-    experience: '4+ năm DevOps / SRE',
-    postedTime: 'Đăng 5 giờ trước',
-    workType: 'Làm từ xa / Remote',
-    level: 'Lead / Principal Architect',
-    description:
-      'Quản lý cụm Kubernetes EKS nhiều môi trường (Production/Staging), thiết lập chuẩn hóa GitOps với ArgoCD và hệ thống giám sát Prometheus/Grafana phục vụ hạ tầng lõi Core Banking.',
-    skills: ['AWS EKS', 'ArgoCD', 'GitOps', 'Terraform', 'Prometheus', 'CI/CD'],
-    perks: 'Cung cấp MacBook Pro M3 Max • 18 ngày phép năm • Xét thưởng 2 lần/năm',
-    perkType: 'bolt',
-    logoGradient: 'linear-gradient(135deg, #565e74 0%, #131b2e 100%)',
-    logoType: 'bank',
-    rubricBreakdown: {
-      total: 91,
-      experience: 32,
-      skills: 28,
-      education: 14,
-      culture: 17,
-      summary:
-        'Điểm tương thích rất cao trong mảng vận hành AWS EKS và tự động hóa GitOps với ArgoCD theo chuẩn PCI-DSS của ngân hàng.',
-      strengths: [
-        'Kinh nghiệm sâu về Kubernetes EKS multi-cluster',
-        'Làm chủ quy trình CI/CD GitOps bảo mật cao',
-        'Kinh nghiệm giám sát hạ tầng với Prometheus & Grafana'
-      ],
-      improvements: [
-        'Cần mở rộng kinh nghiệm về Service Mesh (Istio / AWS App Mesh)'
-      ]
-    }
-  },
-  {
-    id: 'job_003',
-    title: 'Senior Backend Engineer (Python & AWS Bedrock GenAI)',
-    companyName: 'DataPulse Intelligence',
-    companyScale: 'AI SaaS Startup',
-    isVerified: true,
-    matchScore: 88,
-    badgeType: 'match',
-    salaryText: '$2,500 - $3,500 / tháng',
-    salaryMin: 2500,
-    salaryMax: 3500,
-    location: 'Hải Châu, Đà Nẵng / Hybrid 3 ngày',
-    experience: '3+ năm Python',
-    postedTime: 'Hôm qua',
-    workType: 'Hybrid linh hoạt',
-    level: 'Senior Specialist',
-    description:
-      'Xây dựng backend cho giải pháp RAG enterprise, tích hợp API từ AWS Bedrock (Claude Haiku 4.5, Titan Embeddings), OpenSearch Serverless và tối ưu hóa xử lý truy vấn embedding đồng thời.',
-    skills: ['Python', 'FastAPI', 'AWS Bedrock', 'LangChain', 'OpenSearch', 'Docker'],
-    perks: 'ESOP cổ phần ưu đãi • Tài trợ 100% chi phí thi chứng chỉ AWS Specialty',
-    perkType: 'award',
-    logoGradient: 'linear-gradient(135deg, #45009b 0%, #6106d2 100%)',
-    logoType: 'brain',
-    rubricBreakdown: {
-      total: 88,
-      experience: 30,
-      skills: 27,
-      education: 15,
-      culture: 16,
-      summary:
-        'Hồ sơ phù hợp tốt với việc phát triển ứng dụng GenAI trên AWS Bedrock và xử lý vector search với OpenSearch Serverless.',
-      strengths: [
-        'Kỹ năng Python và FastAPI vững vàng',
-        'Có kinh nghiệm tích hợp LLM APIs và LangChain orchestration'
-      ],
-      improvements: [
-        'Nâng cao kiến thức về fine-tuning embeddings và RAG evaluation metrics'
-      ]
-    }
-  },
-  {
-    id: 'job_004',
-    title: 'Senior Fullstack Engineer (React 19 & Node.js Microservices)',
-    companyName: 'OmniRetail eCommerce Corp',
-    companyScale: 'Bán lẻ đa kênh',
-    isVerified: false,
-    badgeType: 'new',
-    salaryText: '$2,200 - $3,200 / tháng',
-    salaryMin: 2200,
-    salaryMax: 3200,
-    location: 'TP. Hồ Chí Minh • Toàn thời gian',
-    experience: '4+ năm kinh nghiệm',
-    postedTime: 'Đăng 6 giờ trước',
-    workType: 'Toàn thời gian',
-    level: 'Middle',
-    description:
-      'Phát triển web app merchant dashboard với React 19, TypeScript, hệ thống Microservices backend triển khai trên AWS ECS Fargate, cơ sở dữ liệu PostgreSQL partitioned.',
-    skills: ['React', 'TypeScript', 'Node.js', 'AWS ECS', 'PostgreSQL', 'GraphQL'],
-    perks: 'Gói khám sức khỏe VIP Vinmec • Ăn trưa miễn phí tại văn phòng',
-    perkType: 'gift',
-    logoGradient: 'linear-gradient(135deg, #131b2e 0%, #565e74 100%)',
-    logoType: 'cart'
-  },
-  {
-    id: 'job_005',
-    title: 'Cloud Security & Compliance Engineer (AWS IAM / DevSecOps)',
-    companyName: 'SecOps Guardian Enterprise',
-    companyScale: 'An ninh mạng & Compliance',
-    isVerified: true,
-    badgeType: 'hot',
-    salaryText: '$2,600 - $3,600 / tháng',
-    salaryMin: 2600,
-    salaryMax: 3600,
-    location: 'TP. Hồ Chí Minh / Hà Nội (Hybrid)',
-    experience: '3-5 năm Cloud Security',
-    postedTime: 'Hôm qua',
-    workType: 'Hybrid linh hoạt',
-    level: 'Middle',
-    description:
-      'Thiết lập và giám sát chính sách AWS Security Hub, GuardDuty, AWS KMS, IAM Least-privilege cho hạ tầng tài chính tuân thủ Nghị định 13/2023/NĐ-CP và tiêu chuẩn ISO 27001 / PCI-DSS.',
-    skills: ['AWS IAM', 'KMS', 'Security Hub', 'CIS Benchmark', 'Python'],
-    perks: 'Trợ cấp bảo mật định kỳ • Đào tạo chứng chỉ AWS Security Specialty',
-    perkType: 'shield',
-    logoGradient: 'linear-gradient(135deg, #ba1a1a 0%, #93000a 100%)',
-    logoType: 'shield'
-  }
-];
+const JOBS_DATA: DetailedJob[] = ALL_JOBS;
 
 interface ProvinceData {
   id: string;
   name: string;
-  districts: string[];
+  districts: string[]; // Tỉnh, Quận/huyện cũ
+  wards_after_2025: string[]; // Tỉnh, Phường/xã sau 1/7/2025 (Mới)
 }
 
 const VIETNAM_PROVINCES: ProvinceData[] = [
-  {
-    id: 'hcm',
-    name: 'Hồ Chí Minh',
-    districts: [
-      'Quận 1',
-      'Quận 3',
-      'Quận 7',
-      'Thành phố Thủ Đức',
-      'Bình Thạnh',
-      'Tân Bình',
-      'Phú Nhuận',
-      'Gò Vấp',
-      'Quận 10',
-      'Quận 12'
-    ]
-  },
   {
     id: 'hn',
     name: 'Hà Nội',
@@ -277,7 +60,180 @@ const VIETNAM_PROVINCES: ProvinceData[] = [
       'Bắc Từ Liêm',
       'Thanh Xuân',
       'Hà Đông',
-      'Long Biên'
+      'Long Biên',
+      'Hoàng Mai',
+      'Tây Hồ',
+      'Huyện Gia Lâm',
+      'Huyện Đông Anh',
+      'Huyện Hoài Đức',
+      'Huyện Thanh Trì',
+      'Huyện Thạch Thất'
+    ],
+    wards_after_2025: [
+      'Phường Dịch Vọng Hậu (Cầu Giấy)',
+      'Phường Dịch Vọng (Cầu Giấy)',
+      'Phường Trung Hòa (Cầu Giấy)',
+      'Phường Yên Hòa (Cầu Giấy)',
+      'Phường Mai Dịch (Cầu Giấy)',
+      'Phường Nghĩa Đô (Cầu Giấy)',
+      'Phường Mễ Trì (Nam Từ Liêm)',
+      'Phường Mỹ Đình 1 (Nam Từ Liêm)',
+      'Phường Mỹ Đình 2 (Nam Từ Liêm)',
+      'Phường Trung Văn (Nam Từ Liêm)',
+      'Phường Cổ Nhuế 1 (Bắc Từ Liêm)',
+      'Phường Cổ Nhuế 2 (Bắc Từ Liêm)',
+      'Phường Tràng Tiền (Hoàn Kiếm)',
+      'Phường Hàng Bạc (Hoàn Kiếm)',
+      'Phường Hàng Bài (Hoàn Kiếm)',
+      'Phường Điện Biên (Ba Đình)',
+      'Phường Kim Mã (Ba Đình)',
+      'Phường Liễu Giai (Ba Đình)',
+      'Phường Giảng Võ (Ba Đình)',
+      'Phường Láng Hạ (Đống Đa)',
+      'Phường Cát Linh (Đống Đa)',
+      'Phường Ô Chợ Dừa (Đống Đa)',
+      'Phường Nhân Chính (Thanh Xuân)',
+      'Phường Khương Mai (Thanh Xuân)',
+      'Phường Bách Khoa (Hai Bà Trưng)',
+      'Phường Đồng Tâm (Hai Bà Trưng)',
+      'Phường Mộ Lao (Hà Đông)',
+      'Phường Vạn Phúc (Hà Đông)',
+      'Phường Hoàng Liệt (Hoàng Mai)',
+      'Phường Bồ Đề (Long Biên)',
+      'Phường Quảng An (Tây Hồ)'
+    ]
+  },
+  {
+    id: 'hcm',
+    name: 'Hồ Chí Minh',
+    districts: [
+      'Quận 1',
+      'Quận 3',
+      'Quận 4',
+      'Quận 5',
+      'Quận 6',
+      'Quận 7',
+      'Quận 8',
+      'Quận 10',
+      'Quận 11',
+      'Quận 12',
+      'Thành phố Thủ Đức',
+      'Bình Thạnh',
+      'Tân Bình',
+      'Tân Phú',
+      'Phú Nhuận',
+      'Gò Vấp',
+      'Bình Tân',
+      'Huyện Hóc Môn',
+      'Huyện Củ Chi',
+      'Huyện Bình Chánh',
+      'Huyện Nhà Bè',
+      'Huyện Cần Giờ'
+    ],
+    wards_after_2025: [
+      'Phường Bến Nghé (Quận 1)',
+      'Phường Bến Thành (Quận 1)',
+      'Phường Đa Kao (Quận 1)',
+      'Phường Tân Định (Quận 1)',
+      'Phường Cầu Kho (Quận 1)',
+      'Phường Cầu Ông Lãnh (Quận 1)',
+      'Phường Võ Thị Sáu (Quận 3)',
+      'Phường 9 (Quận 3)',
+      'Phường 11 (Quận 3)',
+      'Phường Thảo Điền (TP. Thủ Đức)',
+      'Phường An Khánh (TP. Thủ Đức)',
+      'Phường Thủ Thiêm (TP. Thủ Đức)',
+      'Phường Hiệp Bình Chánh (TP. Thủ Đức)',
+      'Phường Hiệp Bình Phước (TP. Thủ Đức)',
+      'Phường Linh Trung (TP. Thủ Đức)',
+      'Phường Tăng Nhơn Phú A (TP. Thủ Đức)',
+      'Phường Tăng Nhơn Phú B (TP. Thủ Đức)',
+      'Phường Trường Thọ (TP. Thủ Đức)',
+      'Phường Tân Phong (Quận 7)',
+      'Phường Tân Phú (Quận 7)',
+      'Phường Tân Thuận Đông (Quận 7)',
+      'Phường 25 (Bình Thạnh)',
+      'Phường 14 (Bình Thạnh)',
+      'Phường 2 (Tân Bình)',
+      'Phường 12 (Tân Bình)',
+      'Phường 15 (Tân Bình)',
+      'Phường 2 (Phú Nhuận)',
+      'Phường 7 (Phú Nhuận)',
+      'Phường 1 (Gò Vấp)',
+      'Phường 10 (Gò Vấp)',
+      'Phường An Lạc (Bình Tân)',
+      'Xã Phước Kiển (Nhà Bè)',
+      'Xã Tân Kiên (Bình Chánh)',
+      'Xã Vĩnh Lộc A (Bình Chánh)'
+    ]
+  },
+  {
+    id: 'bn',
+    name: 'Bắc Ninh',
+    districts: [
+      'Thành phố Bắc Ninh',
+      'Từ Sơn',
+      'Yên Phong',
+      'Quế Võ',
+      'Tiên Du',
+      'Thuận Thành'
+    ],
+    wards_after_2025: [
+      'Phường Suối Hoa (TP. Bắc Ninh)',
+      'Phường Tiền An (TP. Bắc Ninh)',
+      'Phường Ninh Xá (TP. Bắc Ninh)',
+      'Phường Kinh Bắc (TP. Bắc Ninh)',
+      'Phường Đại Phúc (TP. Bắc Ninh)',
+      'Phường Đồng Kỵ (Từ Sơn)',
+      'Phường Trang Hạ (Từ Sơn)',
+      'Phường Phù Chẩn (Từ Sơn)',
+      'Phường Phương Liễu (Quế Võ)',
+      'Xã Yên Trung (Yên Phong)',
+      'Xã Đông Phong (Yên Phong)'
+    ]
+  },
+  {
+    id: 'dnai',
+    name: 'Đồng Nai',
+    districts: [
+      'Thành phố Biên Hòa',
+      'Long Thành',
+      'Nhơn Trạch',
+      'Trảng Bom',
+      'Vĩnh Cửu'
+    ],
+    wards_after_2025: [
+      'Phường Quyết Thắng (TP. Biên Hòa)',
+      'Phường Trung Dũng (TP. Biên Hòa)',
+      'Phường Thống Nhất (TP. Biên Hòa)',
+      'Phường Tân Phong (TP. Biên Hòa)',
+      'Phường Long Bình (TP. Biên Hòa)',
+      'Phường Trảng Dài (TP. Biên Hòa)',
+      'Xã Long Đức (Long Thành)',
+      'Xã An Phước (Long Thành)',
+      'Xã Hiệp Phước (Nhơn Trạch)',
+      'Xã Phú Hội (Nhơn Trạch)'
+    ]
+  },
+  {
+    id: 'hy',
+    name: 'Hưng Yên',
+    districts: [
+      'Thành phố Hưng Yên',
+      'Văn Giang (Ecopark)',
+      'Văn Lâm',
+      'Mỹ Hào',
+      'Yên Mỹ'
+    ],
+    wards_after_2025: [
+      'Phường Hiến Nam (TP. Hưng Yên)',
+      'Phường Lam Sơn (TP. Hưng Yên)',
+      'Phường An Tảo (TP. Hưng Yên)',
+      'Xã Phụng Công (Văn Giang)',
+      'Xã Cửu Cao (Văn Giang)',
+      'Xã Xuân Quan (Văn Giang)',
+      'Xã Như Quỳnh (Văn Lâm)',
+      'Phường Bần Yên Nhân (Mỹ Hào)'
     ]
   },
   {
@@ -289,38 +245,24 @@ const VIETNAM_PROVINCES: ProvinceData[] = [
       'Sơn Trà',
       'Ngũ Hành Sơn',
       'Liên Chiểu',
-      'Cẩm Lệ'
-    ]
-  },
-  {
-    id: 'bn',
-    name: 'Bắc Ninh',
-    districts: [
-      'Thành phố Bắc Ninh',
-      'Từ Sơn',
-      'Yên Phong',
-      'Quế Võ',
-      'Tiên Du'
-    ]
-  },
-  {
-    id: 'dnai',
-    name: 'Đồng Nai',
-    districts: [
-      'Thành phố Biên Hòa',
-      'Long Thành',
-      'Nhơn Trạch',
-      'Trảng Bom'
-    ]
-  },
-  {
-    id: 'hy',
-    name: 'Hưng Yên',
-    districts: [
-      'Thành phố Hưng Yên',
-      'Văn Giang (Ecopark)',
-      'Văn Lâm',
-      'Mỹ Hào'
+      'Cẩm Lệ',
+      'Huyện Hòa Vang'
+    ],
+    wards_after_2025: [
+      'Phường Hải Châu 1 (Hải Châu)',
+      'Phường Hải Châu 2 (Hải Châu)',
+      'Phường Thạch Thang (Hải Châu)',
+      'Phường Thuận Phước (Hải Châu)',
+      'Phường Vĩnh Trung (Thanh Khê)',
+      'Phường Tam Thuận (Thanh Khê)',
+      'Phường An Hải Bắc (Sơn Trà)',
+      'Phường Phước Mỹ (Sơn Trà)',
+      'Phường Mỹ An (Ngũ Hành Sơn)',
+      'Phường Khuê Mỹ (Ngũ Hành Sơn)',
+      'Phường Hòa Minh (Liên Chiểu)',
+      'Phường Hòa Khánh Bắc (Liên Chiểu)',
+      'Phường Khuê Trung (Cẩm Lệ)',
+      'Phường Hòa Thọ Đông (Cẩm Lệ)'
     ]
   },
   {
@@ -330,7 +272,17 @@ const VIETNAM_PROVINCES: ProvinceData[] = [
       'Hồng Bàng',
       'Ngô Quyền',
       'Lê Chân',
-      'Hải An'
+      'Hải An',
+      'Dương Kinh',
+      'Huyện Thủy Nguyên'
+    ],
+    wards_after_2025: [
+      'Phường Hoàng Văn Thụ (Hồng Bàng)',
+      'Phường Phan Bội Châu (Hồng Bàng)',
+      'Phường Máy Tơ (Ngô Quyền)',
+      'Phường Cầu Đất (Ngô Quyền)',
+      'Phường An Dương (Lê Chân)',
+      'Phường Đằng Hải (Hải An)'
     ]
   },
   {
@@ -340,7 +292,22 @@ const VIETNAM_PROVINCES: ProvinceData[] = [
       'Thủ Dầu Một',
       'Dĩ An',
       'Thuận An',
-      'Bến Cát'
+      'Bến Cát',
+      'Tân Uyên',
+      'Bàu Bàng'
+    ],
+    wards_after_2025: [
+      'Phường Phú Cường (Thủ Dầu Một)',
+      'Phường Phú Hòa (Thủ Dầu Một)',
+      'Phường Hiệp Thành (Thủ Dầu Một)',
+      'Phường Chánh Nghĩa (Thủ Dầu Một)',
+      'Phường Dĩ An (Dĩ An)',
+      'Phường An Bình (Dĩ An)',
+      'Phường Đông Hòa (Dĩ An)',
+      'Phường Lái Thiêu (Thuận An)',
+      'Phường An Phú (Thuận An)',
+      'Phường Thuận Giao (Thuận An)',
+      'Phường Mỹ Phước (Bến Cát)'
     ]
   },
   {
@@ -349,7 +316,17 @@ const VIETNAM_PROVINCES: ProvinceData[] = [
     districts: [
       'Ninh Kiều',
       'Cái Răng',
-      'Bình Thủy'
+      'Bình Thủy',
+      'Ô Môn',
+      'Thốt Nốt'
+    ],
+    wards_after_2025: [
+      'Phường Tân An (Ninh Kiều)',
+      'Phường An Cư (Ninh Kiều)',
+      'Phường An Phú (Ninh Kiều)',
+      'Phường Hưng Phú (Cái Răng)',
+      'Phường Lê Bình (Cái Răng)',
+      'Phường Bình Thủy (Bình Thủy)'
     ]
   }
 ];
@@ -395,6 +372,55 @@ export const JobBoard: React.FC = () => {
     }
   };
 
+  const handleSelectProvinceRow = (provId: string) => {
+    setFocusedProvinceId(provId);
+    setDistrictQuery('');
+  };
+
+  const handleToggleProvince = (provName: string, provId: string) => {
+    setFocusedProvinceId(provId);
+    setDistrictQuery('');
+
+    const isAlreadySelected = selectedLocations.includes(provName);
+
+    if (isAlreadySelected) {
+      // Uncheck this province & its districts/wards
+      const provObj = VIETNAM_PROVINCES.find((p) => p.id === provId);
+      const newSelected = selectedLocations.filter((loc) => {
+        if (!provObj) return loc !== provName;
+        return (
+          loc !== provName &&
+          !provObj.districts.includes(loc) &&
+          !provObj.wards_after_2025.includes(loc)
+        );
+      });
+      setSelectedLocations(newSelected);
+
+      // If exactly 1 remaining province is selected, switch focus to it
+      const remainingProvinces = VIETNAM_PROVINCES.filter(
+        (p) => p.id !== provId && newSelected.includes(p.name)
+      );
+      if (remainingProvinces.length === 1) {
+        setFocusedProvinceId(remainingProvinces[0].id);
+      }
+    } else {
+      // Check this province
+      const newSelected = [...selectedLocations, provName];
+      const newSelectedProvinces = VIETNAM_PROVINCES.filter((p) =>
+        newSelected.includes(p.name)
+      );
+      // If multiple provinces are selected, clear all sub-district/ward selections
+      if (newSelectedProvinces.length > 1) {
+        const provinceNamesOnly = newSelected.filter((loc) =>
+          VIETNAM_PROVINCES.some((p) => p.name === loc)
+        );
+        setSelectedLocations(provinceNamesOnly);
+      } else {
+        setSelectedLocations(newSelected);
+      }
+    }
+  };
+
   const handleClearAllLocations = () => {
     setSelectedLocations([]);
   };
@@ -413,6 +439,7 @@ export const JobBoard: React.FC = () => {
 
   // Seniority filter states
   const [levels, setLevels] = useState<Record<string, boolean>>({
+    Intern: false,
     'Fresher / Junior': false,
     Middle: true,
     'Senior Specialist': true,
@@ -432,8 +459,9 @@ export const JobBoard: React.FC = () => {
     'Serverless'
   ];
 
-  // Verified Rubric Toggle
-  const [rubricOnly, setRubricOnly] = useState(true);
+  // Salary Filter States (in Triệu VND, tối thiểu 1 triệu)
+  const [salaryRange, setSalaryRange] = useState<[number, number]>([1, 100]);
+  const [includeNegotiable, setIncludeNegotiable] = useState(true);
 
   // Sort State
   const [sortBy, setSortBy] = useState('ai-best');
@@ -441,7 +469,7 @@ export const JobBoard: React.FC = () => {
   // Bookmarked Jobs
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
 
-  // Rubric Modal State
+  // Rubric Modal State (for viewing AI score details on job cards)
   const [activeRubricJob, setActiveRubricJob] = useState<DetailedJob | null>(null);
 
   // Toggle skill selection
@@ -466,6 +494,8 @@ export const JobBoard: React.FC = () => {
   const handleResetFilters = () => {
     setKeyword('');
     setSelectedLocations([]);
+    setSalaryRange([1, 100]);
+    setIncludeNegotiable(true);
     setWorkModes({
       'Toàn thời gian': false,
       'Bán thời gian': false,
@@ -473,14 +503,20 @@ export const JobBoard: React.FC = () => {
       'Hybrid linh hoạt': false
     });
     setLevels({
+      Intern: false,
       'Fresher / Junior': false,
       Middle: false,
       'Senior Specialist': false,
       'Lead / Principal Architect': false
     });
     setSelectedSkills([]);
-    setRubricOnly(false);
   };
+
+  // Selected provinces count & check
+  const selectedProvinces = VIETNAM_PROVINCES.filter((p) =>
+    selectedLocations.includes(p.name)
+  );
+  const hasMultipleProvincesSelected = selectedProvinces.length > 1;
 
   // Province and district filtering for location picker
   const filteredProvinces = VIETNAM_PROVINCES.filter((p) =>
@@ -489,11 +525,17 @@ export const JobBoard: React.FC = () => {
 
   const activeProvinceObj = VIETNAM_PROVINCES.find((p) => p.id === focusedProvinceId);
 
-  const filteredDistricts = activeProvinceObj
-    ? activeProvinceObj.districts.filter((d) =>
-        d.toLowerCase().includes(districtQuery.toLowerCase().trim())
-      )
-    : [];
+  // If multiple provinces are selected, right pane districts are empty ("để trống huyện")
+  const currentSubdivisions =
+    hasMultipleProvincesSelected || !activeProvinceObj
+      ? []
+      : locSearchMode === 'after_2025'
+      ? activeProvinceObj.wards_after_2025
+      : activeProvinceObj.districts;
+
+  const filteredSubdivisions = currentSubdivisions.filter((item) =>
+    item.toLowerCase().includes(districtQuery.toLowerCase().trim())
+  );
 
   // Count active work modes
   const activeWorkModesCount = Object.values(workModes).filter(Boolean).length;
@@ -511,9 +553,20 @@ export const JobBoard: React.FC = () => {
 
     // Location match
     if (selectedLocations.length > 0) {
-      const matchesLocation = selectedLocations.some((loc) =>
-        job.location.toLowerCase().includes(loc.toLowerCase())
-      );
+      const matchesLocation = selectedLocations.some((loc) => {
+        const jobLoc = job.location.toLowerCase();
+        const cleanLoc = loc.replace(/\s*\(.*?\)\s*/g, '').trim().toLowerCase();
+        const match = loc.match(/\((.*?)\)/);
+        const parentDistrict = match ? match[1].toLowerCase() : null;
+
+        return (
+          jobLoc.includes(loc.toLowerCase()) ||
+          jobLoc.includes(cleanLoc) ||
+          (parentDistrict && jobLoc.includes(parentDistrict)) ||
+          (cleanLoc.includes('hồ chí minh') && (jobLoc.includes('hcm') || jobLoc.includes('hồ chí minh'))) ||
+          (cleanLoc.includes('hà nội') && (jobLoc.includes('hà nội') || jobLoc.includes('hn')))
+        );
+      });
       if (!matchesLocation) return false;
     }
 
@@ -541,10 +594,10 @@ export const JobBoard: React.FC = () => {
       if (!hasSkill) return false;
     }
 
-    // Rubric only
-    if (rubricOnly && !job.rubricBreakdown) {
-      // Allow jobs that have verified rubric
-      return false;
+    // Salary range match (in Triệu VND)
+    if (job.salaryMin !== undefined && job.salaryMax !== undefined) {
+      const inSalaryRange = job.salaryMax >= salaryRange[0] && job.salaryMin <= salaryRange[1];
+      if (!inSalaryRange) return false;
     }
 
     return true;
@@ -689,7 +742,10 @@ export const JobBoard: React.FC = () => {
                       <button
                         type="button"
                         className={`jb-loc-radio-pill ${locSearchMode === 'legacy' ? 'active' : ''}`}
-                        onClick={() => setLocSearchMode('legacy')}
+                        onClick={() => {
+                          setLocSearchMode('legacy');
+                          setDistrictQuery('');
+                        }}
                       >
                         <span className="jb-loc-radio-dot">
                           {locSearchMode === 'legacy' && <span className="jb-loc-radio-dot-inner" />}
@@ -700,7 +756,10 @@ export const JobBoard: React.FC = () => {
                       <button
                         type="button"
                         className={`jb-loc-radio-pill ${locSearchMode === 'after_2025' ? 'active' : ''}`}
-                        onClick={() => setLocSearchMode('after_2025')}
+                        onClick={() => {
+                          setLocSearchMode('after_2025');
+                          setDistrictQuery('');
+                        }}
                       >
                         <span className="jb-loc-radio-dot">
                           {locSearchMode === 'after_2025' && <span className="jb-loc-radio-dot-inner" />}
@@ -732,19 +791,24 @@ export const JobBoard: React.FC = () => {
                               <div
                                 key={prov.id}
                                 className={`jb-loc-item-row ${isFocused ? 'focused' : ''}`}
-                                onClick={() => setFocusedProvinceId(prov.id)}
+                                onClick={() => handleSelectProvinceRow(prov.id)}
                               >
-                                <label
+                                <div
                                   className="jb-loc-item-left-content"
                                   onClick={(e) => e.stopPropagation()}
                                 >
                                   <input
                                     type="checkbox"
                                     checked={isChecked}
-                                    onChange={() => handleToggleLocation(prov.name)}
+                                    onChange={() => handleToggleProvince(prov.name, prov.id)}
                                   />
-                                  <span>{prov.name}</span>
-                                </label>
+                                  <span
+                                    onClick={() => handleSelectProvinceRow(prov.id)}
+                                    style={{ cursor: 'pointer' }}
+                                  >
+                                    {prov.name}
+                                  </span>
+                                </div>
                                 <ChevronRightIcon size={14} color="var(--color-outline)" />
                               </div>
                             );
@@ -758,29 +822,61 @@ export const JobBoard: React.FC = () => {
                           <SearchIcon size={16} color="var(--color-outline)" />
                           <input
                             type="text"
-                            placeholder="Nhập Phường/Xã/Quận/Huyện"
+                            disabled={hasMultipleProvincesSelected}
+                            placeholder={
+                              hasMultipleProvincesSelected
+                                ? 'Không khả dụng khi chọn nhiều tỉnh'
+                                : locSearchMode === 'after_2025'
+                                ? 'Nhập Phường/Xã/Quận/Huyện'
+                                : 'Nhập Quận/Huyện'
+                            }
                             value={districtQuery}
                             onChange={(e) => setDistrictQuery(e.target.value)}
+                            style={
+                              hasMultipleProvincesSelected
+                                ? { cursor: 'not-allowed', opacity: 0.6 }
+                                : {}
+                            }
                           />
                         </div>
 
                         <div className="jb-loc-scroll-list">
-                          {activeProvinceObj ? (
-                            filteredDistricts.length > 0 ? (
-                              filteredDistricts.map((dist) => {
-                                const isChecked = selectedLocations.includes(dist);
+                          {hasMultipleProvincesSelected ? (
+                            <div className="jb-loc-empty-state">
+                              <svg width="84" height="84" viewBox="0 0 100 100" fill="none" style={{ opacity: 0.85 }}>
+                                <path d="M 62 50 C 72 50, 78 58, 85 64" stroke="#bfc9c3" strokeWidth="1.5" strokeLinecap="round" />
+                                <rect x="36" y="44" width="8" height="24" rx="3" fill="#e6e8ea" stroke="#6f7974" strokeWidth="1.5" />
+                                <path d="M 44 48 C 44 44, 60 44, 60 48 L 59 68 C 59 70, 43 70, 44 68 Z" fill="#f2f4f6" stroke="#6f7974" strokeWidth="1.5" />
+                                <path d="M 45 69 L 45 78 C 45 80, 50 80, 50 78 L 50 69" fill="#f2f4f6" stroke="#6f7974" strokeWidth="1.5" />
+                                <path d="M 53 69 L 53 78 C 53 80, 58 80, 58 78 L 58 69" fill="#f2f4f6" stroke="#6f7974" strokeWidth="1.5" />
+                                <path d="M 48 50 C 54 53, 58 54, 62 50" stroke="#6f7974" strokeWidth="2" strokeLinecap="round" />
+                                <circle cx="52" cy="30" r="16" fill="#f2f4f6" stroke="#6f7974" strokeWidth="1.5" />
+                                <path d="M 54 22 C 60 22, 64 26, 64 30 C 64 34, 60 38, 54 38 Z" fill="rgba(9, 87, 68, 0.15)" stroke="var(--color-primary-container)" strokeWidth="1.5" />
+                                <rect x="42" y="27" width="3" height="7" rx="1.5" fill="#6f7974" />
+                              </svg>
+                              <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--color-on-surface)', marginTop: '12px' }}>
+                                Đang chọn {selectedProvinces.length} Tỉnh/Thành phố
+                              </p>
+                              <p style={{ fontSize: '12px', color: 'var(--color-outline)', marginTop: '4px', maxWidth: '240px', lineHeight: 1.4 }}>
+                                Danh sách quận/huyện để trống khi chọn từ 2 tỉnh trở lên.
+                              </p>
+                            </div>
+                          ) : activeProvinceObj ? (
+                            filteredSubdivisions.length > 0 ? (
+                              filteredSubdivisions.map((item) => {
+                                const isChecked = selectedLocations.includes(item);
                                 return (
                                   <label
-                                    key={dist}
+                                    key={item}
                                     className="jb-loc-item-row"
                                   >
                                     <div className="jb-loc-item-left-content">
                                       <input
                                         type="checkbox"
                                         checked={isChecked}
-                                        onChange={() => handleToggleLocation(dist)}
+                                        onChange={() => handleToggleLocation(item)}
                                       />
-                                      <span>{dist}</span>
+                                      <span>{item}</span>
                                     </div>
                                   </label>
                                 );
@@ -788,17 +884,24 @@ export const JobBoard: React.FC = () => {
                             ) : (
                               <div className="jb-loc-empty-state">
                                 <p style={{ fontSize: '13px', color: 'var(--color-outline)' }}>
-                                  Không tìm thấy khu vực phù hợp
+                                  {locSearchMode === 'after_2025'
+                                    ? 'Không tìm thấy phường/xã phù hợp'
+                                    : 'Không tìm thấy quận/huyện phù hợp'}
                                 </p>
                               </div>
                             )
                           ) : (
                             <div className="jb-loc-empty-state">
-                              <svg width="84" height="84" viewBox="0 0 100 100" fill="none">
-                                <circle cx="50" cy="40" r="22" stroke="#bfc9c3" strokeWidth="2" strokeDasharray="3 3" />
-                                <circle cx="50" cy="40" r="14" stroke="#90d4bb" strokeWidth="2" />
-                                <path d="M50 32v8l6 3" stroke="#095744" strokeWidth="2" strokeLinecap="round" />
-                                <path d="M30 75c0-11 9-20 20-20s20 9 20 20" stroke="#bfc9c3" strokeWidth="2" />
+                              <svg width="84" height="84" viewBox="0 0 100 100" fill="none" style={{ opacity: 0.85 }}>
+                                <path d="M 62 50 C 72 50, 78 58, 85 64" stroke="#bfc9c3" strokeWidth="1.5" strokeLinecap="round" />
+                                <rect x="36" y="44" width="8" height="24" rx="3" fill="#e6e8ea" stroke="#6f7974" strokeWidth="1.5" />
+                                <path d="M 44 48 C 44 44, 60 44, 60 48 L 59 68 C 59 70, 43 70, 44 68 Z" fill="#f2f4f6" stroke="#6f7974" strokeWidth="1.5" />
+                                <path d="M 45 69 L 45 78 C 45 80, 50 80, 50 78 L 50 69" fill="#f2f4f6" stroke="#6f7974" strokeWidth="1.5" />
+                                <path d="M 53 69 L 53 78 C 53 80, 58 80, 58 78 L 58 69" fill="#f2f4f6" stroke="#6f7974" strokeWidth="1.5" />
+                                <path d="M 48 50 C 54 53, 58 54, 62 50" stroke="#6f7974" strokeWidth="2" strokeLinecap="round" />
+                                <circle cx="52" cy="30" r="16" fill="#f2f4f6" stroke="#6f7974" strokeWidth="1.5" />
+                                <path d="M 54 22 C 60 22, 64 26, 64 30 C 64 34, 60 38, 54 38 Z" fill="rgba(9, 87, 68, 0.15)" stroke="var(--color-primary-container)" strokeWidth="1.5" />
+                                <rect x="42" y="27" width="3" height="7" rx="1.5" fill="#6f7974" />
                               </svg>
                               <p style={{ fontSize: '13px', color: 'var(--color-outline)', marginTop: '8px' }}>
                                 Vui lòng chọn Tỉnh/Thành phố
@@ -923,6 +1026,7 @@ export const JobBoard: React.FC = () => {
                   <span>Cấp bậc kinh nghiệm</span>
                 </div>
                 {[
+                  { key: 'Intern', count: 3 },
                   { key: 'Fresher / Junior', count: 4 },
                   { key: 'Middle', count: 10 },
                   { key: 'Senior Specialist', count: 14 },
@@ -945,31 +1049,85 @@ export const JobBoard: React.FC = () => {
                 ))}
               </div>
 
-              {/* Group 3: Salary Range */}
+              {/* Group 3: Salary Range (VND) */}
               <div className="jb-filter-group" style={{ paddingTop: '8px', borderTop: '1px solid var(--color-surface-container)' }}>
                 <div className="jb-filter-group-title">
                   <span>Mức lương mong muốn</span>
                   <span style={{ fontSize: '12px', color: 'var(--color-primary-container)', fontWeight: '700' }}>
-                    $1,200 - $4,500
+                    {salaryRange[0]} - {salaryRange[1]} triệu VNĐ
                   </span>
                 </div>
 
                 <div className="jb-slider-track">
-                  <div className="jb-slider-fill" />
-                  <div className="jb-slider-thumb-left" />
-                  <div className="jb-slider-thumb-right" />
+                  <div
+                    className="jb-slider-fill"
+                    style={{
+                      left: `${Math.max(0, ((salaryRange[0] - 1) / 119) * 100)}%`,
+                      right: `${Math.max(0, 100 - ((salaryRange[1] - 1) / 119) * 100)}%`
+                    }}
+                  />
+                  <input
+                    type="range"
+                    min={1}
+                    max={120}
+                    step={1}
+                    value={salaryRange[0]}
+                    onChange={(e) => {
+                      const val = Math.min(Number(e.target.value), salaryRange[1] - 1);
+                      setSalaryRange([val, salaryRange[1]]);
+                    }}
+                    className="jb-salary-input-range"
+                    aria-label="Mức lương tối thiểu"
+                  />
+                  <input
+                    type="range"
+                    min={1}
+                    max={120}
+                    step={1}
+                    value={salaryRange[1]}
+                    onChange={(e) => {
+                      const val = Math.max(Number(e.target.value), salaryRange[0] + 1);
+                      setSalaryRange([salaryRange[0], val]);
+                    }}
+                    className="jb-salary-input-range"
+                    aria-label="Mức lương tối đa"
+                  />
                 </div>
 
                 <div className="jb-salary-range-display">
-                  <div className="jb-salary-range-pill">$1,200/tháng</div>
+                  <div className="jb-salary-range-pill">{salaryRange[0]} triệu/tháng</div>
                   <span style={{ color: 'var(--color-on-surface-variant)' }}>đến</span>
-                  <div className="jb-salary-range-pill">$4,500/tháng</div>
+                  <div className="jb-salary-range-pill">{salaryRange[1]} triệu/tháng</div>
                 </div>
 
-                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '6px', cursor: 'pointer', fontSize: '13px', color: 'var(--color-on-surface-variant)' }}>
+                <div className="jb-salary-preset-row">
+                  {[
+                    { label: 'Tất cả', range: [1, 120] as [number, number] },
+                    { label: '1 - 10 tr (Intern)', range: [1, 10] as [number, number] },
+                    { label: '10 - 50 tr', range: [10, 50] as [number, number] },
+                    { label: '50 - 80 tr', range: [50, 80] as [number, number] },
+                    { label: 'Trên 80 tr', range: [80, 120] as [number, number] }
+                  ].map((preset) => {
+                    const isPresetActive =
+                      salaryRange[0] === preset.range[0] && salaryRange[1] === preset.range[1];
+                    return (
+                      <button
+                        key={preset.label}
+                        type="button"
+                        className={`jb-salary-preset-btn ${isPresetActive ? 'active' : ''}`}
+                        onClick={() => setSalaryRange(preset.range)}
+                      >
+                        {preset.label}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '8px', cursor: 'pointer', fontSize: '13px', color: 'var(--color-on-surface-variant)' }}>
                   <input
                     type="checkbox"
-                    defaultChecked
+                    checked={includeNegotiable}
+                    onChange={(e) => setIncludeNegotiable(e.target.checked)}
                     style={{ accentColor: 'var(--color-primary-container)', width: '15px', height: '15px' }}
                   />
                   <span>Bao gồm lương &quot;Thỏa thuận&quot;</span>
@@ -997,26 +1155,6 @@ export const JobBoard: React.FC = () => {
                     );
                   })}
                 </div>
-              </div>
-
-              {/* Group 5: Verified Rubric Toggle */}
-              <div className="jb-rubric-box">
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-on-surface)' }}>
-                    Minh bạch Rubric AI
-                  </span>
-                  <label className="jb-switch" style={{ width: '32px', height: '18px' }} aria-label="Chỉ hiện việc có Rubric AI">
-                    <input
-                      type="checkbox"
-                      checked={rubricOnly}
-                      onChange={(e) => setRubricOnly(e.target.checked)}
-                    />
-                    <span className="jb-slider" />
-                  </label>
-                </div>
-                <p style={{ fontSize: '12px', color: 'var(--color-on-surface-variant)', margin: 0, lineHeight: 1.45 }}>
-                  Chỉ hiển thị các tin có bộ tiêu chí chấm điểm tự động đã qua thẩm định.
-                </p>
               </div>
 
               {/* Action Buttons */}

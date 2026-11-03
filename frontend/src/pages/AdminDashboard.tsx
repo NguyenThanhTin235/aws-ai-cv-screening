@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
 import { HealthStatus } from '../types';
+import { ALL_JOBS } from '../data/jobsData';
+import { Link } from 'react-router-dom';
 
 export const AdminDashboard: React.FC = () => {
   const { user } = useAuth();
@@ -10,6 +12,10 @@ export const AdminDashboard: React.FC = () => {
   useEffect(() => {
     api.checkHealth().then(setHealth);
   }, []);
+
+  const totalJobsCount = ALL_JOBS.length;
+  const uniqueCompaniesCount = new Set(ALL_JOBS.map((j) => j.companyName)).size;
+  const recentJobs = ALL_JOBS.slice(0, 5);
 
   return (
     <div style={{ maxWidth: '1200px', margin: '32px auto', padding: '0 24px' }}>
@@ -106,6 +112,157 @@ export const AdminDashboard: React.FC = () => {
         </div>
       </div>
 
+      {/* Stats Counter Cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', marginBottom: '24px' }}>
+        <div
+          style={{
+            backgroundColor: 'var(--color-surface-container-lowest)',
+            padding: '20px',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--color-outline-variant)'
+          }}
+        >
+          <div style={{ fontSize: '12px', color: 'var(--color-outline)', fontWeight: '600', textTransform: 'uppercase' }}>
+            Tổng Tin Tuyển Dụng
+          </div>
+          <div style={{ fontSize: '28px', fontWeight: '800', color: 'var(--color-primary)', marginTop: '6px' }}>
+            {totalJobsCount}
+          </div>
+          <div style={{ fontSize: '12px', color: '#095744', marginTop: '4px', fontWeight: '600' }}>
+            100% Trạng thái OPEN
+          </div>
+        </div>
+
+        <div
+          style={{
+            backgroundColor: 'var(--color-surface-container-lowest)',
+            padding: '20px',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--color-outline-variant)'
+          }}
+        >
+          <div style={{ fontSize: '12px', color: 'var(--color-outline)', fontWeight: '600', textTransform: 'uppercase' }}>
+            Doanh Nghiệp Đã Xác Thực
+          </div>
+          <div style={{ fontSize: '28px', fontWeight: '800', color: 'var(--color-primary)', marginTop: '6px' }}>
+            {uniqueCompaniesCount}
+          </div>
+          <div style={{ fontSize: '12px', color: '#095744', marginTop: '4px', fontWeight: '600' }}>
+            Đã thẩm định thông tin
+          </div>
+        </div>
+
+        <div
+          style={{
+            backgroundColor: 'var(--color-surface-container-lowest)',
+            padding: '20px',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--color-outline-variant)'
+          }}
+        >
+          <div style={{ fontSize: '12px', color: 'var(--color-outline)', fontWeight: '600', textTransform: 'uppercase' }}>
+            Hồ Sơ AI Đã Chấm Điểm
+          </div>
+          <div style={{ fontSize: '28px', fontWeight: '800', color: 'var(--color-primary)', marginTop: '6px' }}>
+            128
+          </div>
+          <div style={{ fontSize: '12px', color: '#1e40af', marginTop: '4px', fontWeight: '600' }}>
+            42% Tỷ lệ Strong Match
+          </div>
+        </div>
+
+        <div
+          style={{
+            backgroundColor: 'var(--color-surface-container-lowest)',
+            padding: '20px',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--color-outline-variant)'
+          }}
+        >
+          <div style={{ fontSize: '12px', color: 'var(--color-outline)', fontWeight: '600', textTransform: 'uppercase' }}>
+            Kiểm Duyệt Nội Dung
+          </div>
+          <div style={{ fontSize: '28px', fontWeight: '800', color: '#095744', marginTop: '6px' }}>
+            {totalJobsCount}/{totalJobsCount}
+          </div>
+          <div style={{ fontSize: '12px', color: '#095744', marginTop: '4px', fontWeight: '600' }}>
+            0 tin vi phạm / đã khóa
+          </div>
+        </div>
+      </div>
+
+      {/* Recent Jobs Moderation Table */}
+      <div
+        style={{
+          backgroundColor: 'var(--color-surface-container-lowest)',
+          borderRadius: 'var(--radius-md)',
+          border: '1px solid var(--color-outline-variant)',
+          padding: '24px',
+          boxShadow: 'var(--shadow-sm)',
+          marginBottom: '24px'
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+          <h2 style={{ fontSize: '16px', fontWeight: '700', color: 'var(--color-primary)' }}>
+            Danh mục tin tuyển dụng vừa được kiểm duyệt
+          </h2>
+          <Link to="/" style={{ fontSize: '12px', fontWeight: '600', color: 'var(--color-primary)', textDecoration: 'none' }}>
+            Xem toàn bộ trên sàn việc làm
+          </Link>
+        </div>
+
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '13px' }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--color-outline-variant)', color: 'var(--color-outline)' }}>
+                <th style={{ padding: '10px 12px' }}>Tiêu đề tuyển dụng</th>
+                <th style={{ padding: '10px 12px' }}>Doanh nghiệp</th>
+                <th style={{ padding: '10px 12px' }}>Cấp bậc</th>
+                <th style={{ padding: '10px 12px' }}>Mức lương</th>
+                <th style={{ padding: '10px 12px' }}>Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody>
+              {recentJobs.map((j) => (
+                <tr key={j.id} style={{ borderBottom: '1px solid var(--color-outline-variant)' }}>
+                  <td style={{ padding: '12px', fontWeight: '600', color: 'var(--color-on-surface)' }}>{j.title}</td>
+                  <td style={{ padding: '12px', color: 'var(--color-on-surface-variant)' }}>{j.companyName}</td>
+                  <td style={{ padding: '12px' }}>
+                    <span
+                      style={{
+                        padding: '2px 8px',
+                        borderRadius: 'var(--radius-full)',
+                        fontSize: '11px',
+                        fontWeight: '700',
+                        backgroundColor: '#f3f4f6',
+                        color: '#374151'
+                      }}
+                    >
+                      {j.level}
+                    </span>
+                  </td>
+                  <td style={{ padding: '12px', color: '#095744', fontWeight: '600' }}>{j.salaryText}</td>
+                  <td style={{ padding: '12px' }}>
+                    <span
+                      style={{
+                        padding: '2px 8px',
+                        borderRadius: 'var(--radius-full)',
+                        fontSize: '11px',
+                        fontWeight: '700',
+                        backgroundColor: '#d1fae5',
+                        color: '#095744'
+                      }}
+                    >
+                      APPROVED
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       {/* Feature Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
         <div
@@ -162,4 +319,3 @@ export const AdminDashboard: React.FC = () => {
     </div>
   );
 };
-

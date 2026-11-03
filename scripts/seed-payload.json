@@ -1,0 +1,3551 @@
+[
+  {
+    "PK": "COMPANY#comp_06F758280AAA49D3",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#Authentic Education Hub",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_06F758280AAA49D3",
+    "companyName": "Authentic Education Hub",
+    "companyScale": "100-250 nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_FE52139B0B414A4C",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#CMC Technology & Solution",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_FE52139B0B414A4C",
+    "companyName": "CMC Technology & Solution",
+    "companyScale": "1000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_9DB9FD9B147D43EF",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#Công ty Cổ phần 9Pay",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_9DB9FD9B147D43EF",
+    "companyName": "Công ty Cổ phần 9Pay",
+    "companyScale": "150-300 nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_3F87FC59330A4111",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#Euroland Asia",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_3F87FC59330A4111",
+    "companyName": "Euroland Asia",
+    "companyScale": "100-250 nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_6A893D919A774932",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#KMS Technology Vietnam",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_6A893D919A774932",
+    "companyName": "KMS Technology Vietnam",
+    "companyScale": "1000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_5ED329196CD34D7A",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#VNG Corporation",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_5ED329196CD34D7A",
+    "companyName": "VNG Corporation",
+    "companyScale": "2000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_A7F89C9A9E514775",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#VinSOC (Tập đoàn Vingroup)",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_A7F89C9A9E514775",
+    "companyName": "VinSOC (Tập đoàn Vingroup)",
+    "companyScale": "500-1000 nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_212BC0E80E7A4947",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#CÔNG TY TNHH DE HEUS VIỆT NAM",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_212BC0E80E7A4947",
+    "companyName": "CÔNG TY TNHH DE HEUS VIỆT NAM",
+    "companyScale": "1000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_93EF303FFB40453E",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#Công ty TNHH Vexere",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_93EF303FFB40453E",
+    "companyName": "Công ty TNHH Vexere",
+    "companyScale": "250-500 nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_E712134A1AC04D83",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#MiTek Vietnam",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_E712134A1AC04D83",
+    "companyName": "MiTek Vietnam",
+    "companyScale": "500-1000 nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_F1C7A667EDBB416B",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#Techcombank",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_F1C7A667EDBB416B",
+    "companyName": "Techcombank",
+    "companyScale": "10000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_B006450AB9314F6C",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#FPT Software",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_B006450AB9314F6C",
+    "companyName": "FPT Software",
+    "companyScale": "30000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_0588F8A6F7FC4248",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#One Mount Group",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_0588F8A6F7FC4248",
+    "companyName": "One Mount Group",
+    "companyScale": "2000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_B1331813FD3F4824",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#NAB Innovation Centre Vietnam",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_B1331813FD3F4824",
+    "companyName": "NAB Innovation Centre Vietnam",
+    "companyScale": "1000-2500 nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_A17C38CD3EA14102",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#Ví MoMo (Công ty Cổ phần Dịch vụ Di động Trực tuyến)",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_A17C38CD3EA14102",
+    "companyName": "Ví MoMo (Công ty Cổ phần Dịch vụ Di động Trực tuyến)",
+    "companyScale": "2000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_3B708520E7DC41F5",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#Bosch Global Software Technologies Vietnam",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_3B708520E7DC41F5",
+    "companyName": "Bosch Global Software Technologies Vietnam",
+    "companyScale": "3000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_2D0B7BD5B93947EF",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#Shopee / Sea Group Vietnam",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_2D0B7BD5B93947EF",
+    "companyName": "Shopee / Sea Group Vietnam",
+    "companyScale": "5000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_9E95E3A15B614647",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#Tổng Công ty Giải pháp Doanh nghiệp Viettel (Viettel Solutions)",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_9E95E3A15B614647",
+    "companyName": "Tổng Công ty Giải pháp Doanh nghiệp Viettel (Viettel Solutions)",
+    "companyScale": "5000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_D01A299142F64F78",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#Công ty Công nghệ Thông tin VNPT (VNPT-IT)",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_D01A299142F64F78",
+    "companyName": "Công ty Công nghệ Thông tin VNPT (VNPT-IT)",
+    "companyScale": "3000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_184A13FFF3AF4412",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#Axon Vietnam (Axon Enterprise)",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_184A13FFF3AF4412",
+    "companyName": "Axon Vietnam (Axon Enterprise)",
+    "companyScale": "500-1000 nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_04AAB7F24C3E49A1",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#VPBank (Ngân hàng TMCP Việt Nam Thịnh Vượng)",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_04AAB7F24C3E49A1",
+    "companyName": "VPBank (Ngân hàng TMCP Việt Nam Thịnh Vượng)",
+    "companyScale": "10000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_80AD93D78C3144C7",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#Tiki (Công ty Cổ phần Ti Ki)",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_80AD93D78C3144C7",
+    "companyName": "Tiki (Công ty Cổ phần Ti Ki)",
+    "companyScale": "2000-5000 nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_96FF2D1250444CAF",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#Amanotes (Công ty Cổ phần Công nghệ Âm nhạc Amanotes)",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_96FF2D1250444CAF",
+    "companyName": "Amanotes (Công ty Cổ phần Công nghệ Âm nhạc Amanotes)",
+    "companyScale": "250-500 nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_A12465026710404C",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#MBBank (Ngân hàng TMCP Quân Đội)",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_A12465026710404C",
+    "companyName": "MBBank (Ngân hàng TMCP Quân Đội)",
+    "companyScale": "10000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_9808045A3E3144E2",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#VinBigData (Tập đoàn Vingroup)",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_9808045A3E3144E2",
+    "companyName": "VinBigData (Tập đoàn Vingroup)",
+    "companyScale": "500-1000 nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_A68AAD4DFC334773",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#TMA Solutions (TMA Tech Group)",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_A68AAD4DFC334773",
+    "companyName": "TMA Solutions (TMA Tech Group)",
+    "companyScale": "4000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_A205FD5447F04DAF",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#ZaloPay (Công ty Cổ phần Zion - Tập đoàn VNG)",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_A205FD5447F04DAF",
+    "companyName": "ZaloPay (Công ty Cổ phần Zion - Tập đoàn VNG)",
+    "companyScale": "1000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_C2D87BC7A58A460E",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#Trusting Social (AI Fintech)",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_C2D87BC7A58A460E",
+    "companyName": "Trusting Social (AI Fintech)",
+    "companyScale": "250-500 nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_96DC5AEA91604C76",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#Prudential Vietnam Assurance",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_96DC5AEA91604C76",
+    "companyName": "Prudential Vietnam Assurance",
+    "companyScale": "2000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_7B482D1073D54F8A",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#ShopeePay / SeaMoney Vietnam",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_7B482D1073D54F8A",
+    "companyName": "ShopeePay / SeaMoney Vietnam",
+    "companyScale": "3000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_0D580A8B95374CAB",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#VNG Corporation",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_0D580A8B95374CAB",
+    "companyName": "VNG Corporation",
+    "companyScale": "2000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_7D38F54A7C344F4E",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#FPT Software",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_7D38F54A7C344F4E",
+    "companyName": "FPT Software",
+    "companyScale": "30000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_419A52BDED3945E5",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#Viettel Solutions (Tổng Công ty Giải pháp Doanh nghiệp Viettel)",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_419A52BDED3945E5",
+    "companyName": "Viettel Solutions (Tổng Công ty Giải pháp Doanh nghiệp Viettel)",
+    "companyScale": "5000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_39A8679A840248CA",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#Techcombank (Ngân hàng TMCP Kỹ Thương Việt Nam)",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_39A8679A840248CA",
+    "companyName": "Techcombank (Ngân hàng TMCP Kỹ Thương Việt Nam)",
+    "companyScale": "10000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "COMPANY#comp_CA1BA627275B437A",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANIES",
+    "GSI1SK": "NAME#KMS Technology Vietnam",
+    "GSI2PK": "STATUS#ACTIVE",
+    "GSI2SK": "CREATED#2026-10-25T08:00:00.000Z",
+    "entityType": "COMPANY",
+    "companyId": "comp_CA1BA627275B437A",
+    "companyName": "KMS Technology Vietnam",
+    "companyScale": "1000+ nhân sự",
+    "website": "",
+    "logoUrl": "",
+    "status": "ACTIVE",
+    "isVerified": true,
+    "createdAt": "2026-10-25T08:00:00.000Z",
+    "updatedAt": "2026-11-01T08:00:00.000Z"
+  },
+  {
+    "PK": "JOB#job_ED0363FBAE304D04",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_06F758280AAA49D3",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.378084+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.378084+00:00",
+    "entityType": "JOB",
+    "jobId": "job_ED0363FBAE304D04",
+    "title": "Senior DevOps Engineer (AWS & Azure Hybrid)",
+    "companyId": "comp_06F758280AAA49D3",
+    "companyName": "Authentic Education Hub",
+    "level": "SENIOR",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tầng 5, Tòa nhà Detech, Duy Tân, Cầu Giấy, Hà Nội",
+      "province": "Hà Nội",
+      "district": "Cầu Giấy",
+      "ward": "Phường Dịch Vọng Hậu (Cầu Giấy)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 35,
+      "max": 40,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "35 - 40 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 5,
+      "yearsMax": null,
+      "experienceText": "5+ năm kinh nghiệm quản trị hệ thống và CI/CD"
+    },
+    "skills": [
+      "AWS",
+      "Azure",
+      "CI/CD",
+      "Docker",
+      "Kubernetes",
+      "Linux",
+      "Python",
+      "Terraform"
+    ],
+    "description": "Chịu trách nhiệm thiết kế, triển khai và tự động hóa hạ tầng đám mây Hybrid (AWS và Microsoft Azure), tối ưu hóa luồng CI/CD cho toàn bộ khối phát triển phần mềm giáo dục trực tuyến.",
+    "requirements": [
+      "Tối thiểu 5 năm kinh nghiệm làm việc ở vị trí DevOps Engineer hoặc Cloud Infrastructure Engineer",
+      "Thành thạo quản trị và vận hành các dịch vụ cốt lõi trên AWS (EC2, S3, RDS, VPC) và Azure (AKS, Virtual Machines)",
+      "Kinh nghiệm sâu với Infrastructure as Code (Terraform) và Container Orchestration (Docker, Kubernetes)",
+      "Thành thạo viết script tự động hóa với Python hoặc Bash shell trên môi trường Linux",
+      "Ưu tiên ứng viên có chứng chỉ AWS Certified Solutions Architect hoặc Azure Solutions Architect Expert"
+    ],
+    "benefits": [
+      "Mức thu nhập hấp dẫn từ 35 - 40 triệu VNĐ/tháng, thưởng hiệu quả kinh doanh hàng quý",
+      "Chế độ làm việc Hybrid linh hoạt (2 ngày remote / tuần), cấp MacBook Pro M3",
+      "Gói bảo hiểm sức khỏe PTI cao cấp cho nhân viên",
+      "Được tài trợ 100% kinh phí thi các chứng chỉ quốc tế AWS / Azure / CKA"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "TopCV",
+      "originalUrl": "https://topcv.vn/viec-lam/senior-devops-engineer-aws-azure",
+      "crawledAt": "2026-11-03T05:16:40.378084+00:00"
+    },
+    "sourceUrl": "https://topcv.vn/viec-lam/senior-devops-engineer-aws-azure",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.378084+00:00",
+    "updatedAt": "2026-11-03T05:16:40.378084+00:00"
+  },
+  {
+    "PK": "JOB#job_2A5215739CD84DD0",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_FE52139B0B414A4C",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.379090+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.379090+00:00",
+    "entityType": "JOB",
+    "jobId": "job_2A5215739CD84DD0",
+    "title": "Cloud Solutions Architect (AWS / Multi-Cloud)",
+    "companyId": "comp_FE52139B0B414A4C",
+    "companyName": "CMC Technology & Solution",
+    "level": "LEAD_ARCHITECT",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tòa nhà CMC Tower, Quận 1, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Quận 1",
+      "ward": "Phường Bến Nghé (Quận 1)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 70,
+      "max": 95,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "70 - 95 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 7,
+      "yearsMax": null,
+      "experienceText": "7+ năm kinh nghiệm kiến trúc giải pháp Cloud"
+    },
+    "skills": [
+      "AWS",
+      "Azure",
+      "FinOps",
+      "GCP",
+      "Kubernetes",
+      "Microservices",
+      "Serverless",
+      "System Design",
+      "Terraform"
+    ],
+    "description": "Tư vấn và thiết kế kiến trúc đám mây toàn diện cho các khách hàng doanh nghiệp khối Tài chính - Ngân hàng, xây dựng mô hình High Availability, Multi-Region và Disaster Recovery trên AWS và Azure.",
+    "requirements": [
+      "Tối thiểu 7 năm kinh nghiệm trong ngành CNTT, trong đó ít nhất 3 năm ở vai trò Solutions Architect",
+      "Hiểu biết chuyên sâu về kiến trúc Microservices, Event-driven, Serverless và bảo mật trên AWS/GCP/Azure",
+      "Thành thạo thiết kế mạng đám mây, VPC Peering, Transit Gateway, Direct Connect",
+      "Bắt buộc có chứng chỉ AWS Solutions Architect Professional hoặc Google Professional Cloud Architect",
+      "Kỹ năng thuyết trình và tư vấn giải pháp kỹ thuật cấp C-Level xuất sắc"
+    ],
+    "benefits": [
+      "Thu nhập thỏa thuận từ 70 - 95 triệu VNĐ/tháng kèm theo thưởng dự án lớn",
+      "Môi trường làm việc chuẩn quốc tế, cơ hội dẫn dắt các dự án quy mô quốc gia",
+      "Bảo hiểm sức khỏe VIP Bảo Việt toàn diện cho gia đình",
+      "Phụ cấp công tác và trang thiết bị làm việc công nghệ cao"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "TopCV",
+      "originalUrl": "https://topcv.vn/viec-lam/cloud-solutions-architect-cmc",
+      "crawledAt": "2026-11-03T05:16:40.379090+00:00"
+    },
+    "sourceUrl": "https://topcv.vn/viec-lam/cloud-solutions-architect-cmc",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.379090+00:00",
+    "updatedAt": "2026-11-03T05:16:40.379090+00:00"
+  },
+  {
+    "PK": "JOB#job_376E30772E8F4B5A",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_9DB9FD9B147D43EF",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.380094+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.380094+00:00",
+    "entityType": "JOB",
+    "jobId": "job_376E30772E8F4B5A",
+    "title": "DevOps & SRE Engineer (Kubernetes & CI/CD)",
+    "companyId": "comp_9DB9FD9B147D43EF",
+    "companyName": "Công ty Cổ phần 9Pay",
+    "level": "MIDDLE",
+    "workplaceType": "ON_SITE",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tầng 6, Tòa nhà D-Office, Nam Từ Liêm, Hà Nội",
+      "province": "Hà Nội",
+      "district": "Nam Từ Liêm",
+      "ward": "Phường Mỹ Đình 2 (Nam Từ Liêm)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 30,
+      "max": 45,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "30 - 45 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 3,
+      "yearsMax": null,
+      "experienceText": "3-5 năm kinh nghiệm DevOps / SRE"
+    },
+    "skills": [
+      "AWS",
+      "ArgoCD",
+      "CI/CD",
+      "Docker",
+      "Git",
+      "Grafana",
+      "Kubernetes",
+      "Linux",
+      "Prometheus"
+    ],
+    "description": "Đảm bảo tính sẵn sàng 99.99% cho hệ thống cổng thanh toán trực tuyến, quản lý cụm Kubernetes Production, triển khai hệ thống Observability và tối ưu hóa CI/CD pipelines.",
+    "requirements": [
+      "Từ 3 năm kinh nghiệm thực chiến với hệ thống thanh toán hoặc thương mại điện tử chịu tải cao",
+      "Thành thạo quản trị Kubernetes (K8s), Docker, Helm chart và ArgoCD (GitOps)",
+      "Kinh nghiệm thiết lập hệ thống cảnh báo và giám sát với Prometheus, Grafana, Alertmanager, ELK Stack",
+      "Thành thạo cấu hình CI/CD trên GitLab CI hoặc GitHub Actions",
+      "Kinh nghiệm xử lý sự cố hệ thống Production (Incident Management & Post-mortem)"
+    ],
+    "benefits": [
+      "Mức lương cạnh tranh từ 30 - 45 triệu VNĐ/tháng, đánh giá tăng lương định kỳ 6 tháng/lần",
+      "Thưởng tháng 13 + thưởng KPI hiệu suất dự án thanh toán (2-4 tháng lương)",
+      "Cơm trưa miễn phí tại công ty, phụ cấp gửi xe và teambuilding hàng năm",
+      "Bảo hiểm sức khỏe PVI cao cấp"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "TopCV",
+      "originalUrl": "https://topcv.vn/viec-lam/devops-sre-engineer-9pay",
+      "crawledAt": "2026-11-03T05:16:40.380094+00:00"
+    },
+    "sourceUrl": "https://topcv.vn/viec-lam/devops-sre-engineer-9pay",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.380094+00:00",
+    "updatedAt": "2026-11-03T05:16:40.380094+00:00"
+  },
+  {
+    "PK": "JOB#job_0A7EE98F3F114FEE",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_3F87FC59330A4111",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.381349+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.381349+00:00",
+    "entityType": "JOB",
+    "jobId": "job_0A7EE98F3F114FEE",
+    "title": "Cloud & DevOps Engineer (Azure & AWS)",
+    "companyId": "comp_3F87FC59330A4111",
+    "companyName": "Euroland Asia",
+    "level": "MIDDLE",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Kim Mã, Ba Đình, Hà Nội",
+      "province": "Hà Nội",
+      "district": "Ba Đình",
+      "ward": "Phường Kim Mã (Ba Đình)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 35,
+      "max": 50,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "35 - 50 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 4,
+      "yearsMax": null,
+      "experienceText": "4+ năm kinh nghiệm quản trị hạ tầng Cloud"
+    },
+    "skills": [
+      "AWS",
+      "Ansible",
+      "Azure",
+      "CI/CD",
+      "Docker",
+      "Linux",
+      "PostgreSQL",
+      "Terraform"
+    ],
+    "description": "Vận hành và phát triển hạ tầng đám mây phục vụ các khách hàng doanh nghiệp châu Âu, cấu hình bảo mật tuân thủ GDPR trên nền tảng Microsoft Azure và Amazon Web Services.",
+    "requirements": [
+      "Từ 4 năm kinh nghiệm làm việc với hệ sinh thái Microsoft Azure và AWS",
+      "Thành thạo thiết kế hạ tầng bằng Terraform và Ansible",
+      "Có kiến thức vững chắc về bảo mật đám mây, Identity Access Management (IAM), SSO, SSL/TLS",
+      "Tiếng Anh giao tiếp và làm việc tốt với đội ngũ kỹ sư Thụy Điển"
+    ],
+    "benefits": [
+      "Thu nhập 35 - 50 triệu VNĐ/tháng, 15 ngày phép năm",
+      "Môi trường văn hóa Bắc Âu cởi mở, không OT",
+      "Chế độ bảo hiểm sức khỏe quốc tế Liberty",
+      "Khóa đào tạo tiếng Anh và tài trợ chứng chỉ công nghệ hàng năm"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "ITviec",
+      "originalUrl": "https://itviec.com/jobs/cloud-devops-engineer-euroland",
+      "crawledAt": "2026-11-03T05:16:40.381349+00:00"
+    },
+    "sourceUrl": "https://itviec.com/jobs/cloud-devops-engineer-euroland",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.381349+00:00",
+    "updatedAt": "2026-11-03T05:16:40.381349+00:00"
+  },
+  {
+    "PK": "JOB#job_680515E803314724",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_6A893D919A774932",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.382345+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.382345+00:00",
+    "entityType": "JOB",
+    "jobId": "job_680515E803314724",
+    "title": "Senior Cloud Infrastructure Engineer (AWS EKS & FinOps)",
+    "companyId": "comp_6A893D919A774932",
+    "companyName": "KMS Technology Vietnam",
+    "level": "SENIOR",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Đường Bạch Đằng, Quận Hải Châu, TP. Đà Nẵng",
+      "province": "Đà Nẵng",
+      "district": "Hải Châu",
+      "ward": "Phường Thạch Thang (Hải Châu)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 45,
+      "max": 65,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "45 - 65 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 5,
+      "yearsMax": null,
+      "experienceText": "5+ năm kinh nghiệm Cloud & Infrastructure"
+    },
+    "skills": [
+      "AWS",
+      "ArgoCD",
+      "CI/CD",
+      "FinOps",
+      "Golang",
+      "Kubernetes",
+      "Python",
+      "Terraform"
+    ],
+    "description": "Chịu trách nhiệm kiến trúc cụm AWS EKS quy mô hàng nghìn Pods, thiết lập các giải pháp FinOps tự động giúp cắt giảm 30% chi phí hạ tầng điện toán đám mây cho sản phẩm SaaS.",
+    "requirements": [
+      "Tối thiểu 5 năm kinh nghiệm quản trị hạ tầng đám mây AWS quy mô lớn",
+      "Thành thạo Kubernetes, Service Mesh (Istio), Ingress Controller, HPA/KEDA",
+      "Kinh nghiệm thực tiễn về AWS Cost Optimization, Savings Plans, Spot Instances và FinOps tools (Kubecost)",
+      "Kỹ năng lập trình tự động hóa mạnh với Python hoặc Golang"
+    ],
+    "benefits": [
+      "Lương từ 45 - 65 triệu VNĐ/tháng kèm gói thưởng Sign-on bonus hấp dẫn",
+      "Trang bị Laptop Dell XPS hoặc MacBook Pro M3 mới nhất",
+      "Bảo hiểm sức khỏe toàn diện PVI cho nhân viên và 01 người thân",
+      "Câu lạc bộ thể thao, gym và ngân sách học tập cá nhân $1000/năm"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "ITviec",
+      "originalUrl": "https://itviec.com/jobs/senior-cloud-infrastructure-kms",
+      "crawledAt": "2026-11-03T05:16:40.382345+00:00"
+    },
+    "sourceUrl": "https://itviec.com/jobs/senior-cloud-infrastructure-kms",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.382345+00:00",
+    "updatedAt": "2026-11-03T05:16:40.382345+00:00"
+  },
+  {
+    "PK": "JOB#job_8E434EE230534518",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_5ED329196CD34D7A",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.383343+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.383343+00:00",
+    "entityType": "JOB",
+    "jobId": "job_8E434EE230534518",
+    "title": "Principal Cloud Solutions Architect",
+    "companyId": "comp_5ED329196CD34D7A",
+    "companyName": "VNG Corporation",
+    "level": "LEAD_ARCHITECT",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "VNG Campus, Khu chế xuất Tân Thuận, Quận 7, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Quận 7",
+      "ward": "Phường Tân Thuận Đông (Quận 7)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 85,
+      "max": 130,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "85 - 130 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 8,
+      "yearsMax": null,
+      "experienceText": "8+ năm kinh nghiệm kiến trúc hệ thống phân tán"
+    },
+    "skills": [
+      "AWS",
+      "Cloud",
+      "Kafka",
+      "Kubernetes",
+      "Microservices",
+      "Redis",
+      "Security",
+      "System Design"
+    ],
+    "description": "Định hướng chiến lược Cloud & Platform cho các sản phẩm phục vụ hàng chục triệu người dùng hoạt động đồng thời (Zalo, ZaloPay, Zing), giải quyết các bài toán độ trễ thấp và chịu tải siêu lớn.",
+    "requirements": [
+      "Ít nhất 8 năm kinh nghiệm thực chiến với các hệ thống phân tán quy mô lớn (High Traffic / Low Latency)",
+      "Chuyên gia về kiến trúc Hybrid Cloud, Kubernetes, Multi-Data Center Replication",
+      "Có khả năng định hình chiến lược công nghệ dài hạn và nâng cao năng lực cho đội ngũ kỹ sư trưởng",
+      "Có uy tín và đóng góp trong cộng đồng công nghệ Cloud Native tại Việt Nam"
+    ],
+    "benefits": [
+      "Mức thu nhập cạnh tranh hàng đầu thị trường từ 85 - 130 triệu VNĐ/tháng",
+      "Gói cổ phiếu thưởng ESOP giá trị cao theo thâm niên và đóng góp",
+      "Khu phức hợp VNG Campus đẳng cấp quốc tế với hồ bơi, phòng gym, cantin chuẩn 5 sao",
+      "Gói bảo hiểm sức khỏe VIP toàn cầu"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "ITviec",
+      "originalUrl": "https://itviec.com/jobs/principal-cloud-solutions-architect-vng",
+      "crawledAt": "2026-11-03T05:16:40.383343+00:00"
+    },
+    "sourceUrl": "https://itviec.com/jobs/principal-cloud-solutions-architect-vng",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.383343+00:00",
+    "updatedAt": "2026-11-03T05:16:40.383343+00:00"
+  },
+  {
+    "PK": "JOB#job_A22949A86CF1450F",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_A7F89C9A9E514775",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.384343+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.384343+00:00",
+    "entityType": "JOB",
+    "jobId": "job_A22949A86CF1450F",
+    "title": "DevSecOps Engineer (AWS Security & Terraform)",
+    "companyId": "comp_A7F89C9A9E514775",
+    "companyName": "VinSOC (Tập đoàn Vingroup)",
+    "level": "MIDDLE",
+    "workplaceType": "ON_SITE",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tòa nhà Symphony, Chu Huy Mân, Long Biên, Hà Nội",
+      "province": "Hà Nội",
+      "district": "Long Biên",
+      "ward": "Phường Phúc Đồng (Long Biên)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 40,
+      "max": 60,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "40 - 60 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 4,
+      "yearsMax": null,
+      "experienceText": "4+ năm kinh nghiệm DevSecOps / Cloud Security"
+    },
+    "skills": [
+      "AWS",
+      "CI/CD",
+      "DevOps",
+      "Docker",
+      "Kubernetes",
+      "Linux",
+      "Terraform"
+    ],
+    "description": "Xây dựng khung kiến trúc bảo mật tự động hóa trong luồng CI/CD (SAST/DAST/SCA), kiểm thử tuân thủ bảo mật hạ tầng AWS theo tiêu chuẩn ISO 27001 và PCI-DSS cho hệ sinh thái VinFast & Vingroup.",
+    "requirements": [
+      "Tối thiểu 4 năm kinh nghiệm làm việc chuyên sâu về Cloud Security hoặc DevSecOps",
+      "Thành thạo tích hợp các công cụ quét mã nguồn và lỗ hổng (SonarQube, Snyk, Trivy, Aqua Security) vào CI/CD",
+      "Hiểu biết sâu sắc về AWS Security Services: GuardDuty, Security Hub, WAF, AWS Shield, KMS, IAM Policies",
+      "Ưu tiên ứng viên có chứng chỉ AWS Certified Security Specialty hoặc CISSP"
+    ],
+    "benefits": [
+      "Thu nhập 40 - 60 triệu VNĐ/tháng, thưởng thành tích cuối năm 2-3 tháng lương",
+      "Chế độ ưu đãi khi mua xe VinFast và sử dụng dịch vụ trong hệ sinh thái Vingroup (Vinhomes, Vinmec, Vinpearl)",
+      "Bảo hiểm sức khỏe cao cấp Vinmec",
+      "Cơ hội làm việc với các hệ thống hạ tầng kết nối IoT xe điện thông minh toàn cầu"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "ITviec",
+      "originalUrl": "https://itviec.com/jobs/devsecops-engineer-vinsoc",
+      "crawledAt": "2026-11-03T05:16:40.384343+00:00"
+    },
+    "sourceUrl": "https://itviec.com/jobs/devsecops-engineer-vinsoc",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.384343+00:00",
+    "updatedAt": "2026-11-03T05:16:40.384343+00:00"
+  },
+  {
+    "PK": "JOB#job_7029F287749A472F",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_212BC0E80E7A4947",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.385858+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.385858+00:00",
+    "entityType": "JOB",
+    "jobId": "job_7029F287749A472F",
+    "title": "Azure Cloud Infrastructure Engineer",
+    "companyId": "comp_212BC0E80E7A4947",
+    "companyName": "CÔNG TY TNHH DE HEUS VIỆT NAM",
+    "level": "MIDDLE",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tòa nhà Pearl Plaza, Quận Bình Thạnh, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Bình Thạnh",
+      "ward": "Phường 25 (Bình Thạnh)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 35,
+      "max": 55,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "35 - 55 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 3,
+      "yearsMax": null,
+      "experienceText": "3-5 năm kinh nghiệm quản trị hạ tầng Azure"
+    },
+    "skills": [
+      "Azure",
+      "CI/CD",
+      "Cloud",
+      "Linux",
+      "PowerShell",
+      "Terraform",
+      "Windows Server"
+    ],
+    "description": "Quản lý và mở rộng hạ tầng Cloud khu vực Châu Á trên nền tảng Microsoft Azure, triển khai giải pháp sao lưu, phục hồi thảm họa và giám sát tự động cho chuỗi nhà máy sản xuất.",
+    "requirements": [
+      "Từ 3 năm kinh nghiệm quản trị hệ thống hạ tầng Microsoft Azure (Azure IaaS & PaaS)",
+      "Thành thạo viết kịch bản Infrastructure as Code với Terraform hoặc Bicep/ARM",
+      "Kinh nghiệm quản trị mạng đám mây: Virtual Network, ExpressRoute, VPN Gateway, Azure Firewall",
+      "Có chứng chỉ Microsoft Certified: Azure Administrator Associate (AZ-104) là lợi thế"
+    ],
+    "benefits": [
+      "Mức lương 35 - 55 triệu VNĐ/tháng, trợ cấp điện thoại và ăn trưa",
+      "Thưởng tháng 13 + thưởng hiệu quả kinh doanh của tập đoàn Hà Lan",
+      "Bảo hiểm sức khỏe quốc tế cao cấp",
+      "Môi trường đa quốc gia, cơ hội đào tạo và công tác tại trụ sở Hà Lan"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "VietnamWorks",
+      "originalUrl": "https://vietnamworks.com/azure-cloud-engineer-asia-de-heus",
+      "crawledAt": "2026-11-03T05:16:40.385858+00:00"
+    },
+    "sourceUrl": "https://vietnamworks.com/azure-cloud-engineer-asia-de-heus",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.385858+00:00",
+    "updatedAt": "2026-11-03T05:16:40.385858+00:00"
+  },
+  {
+    "PK": "JOB#job_D5A005B489704007",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_93EF303FFB40453E",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.386873+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.386873+00:00",
+    "entityType": "JOB",
+    "jobId": "job_D5A005B489704007",
+    "title": "Senior Platform & SRE Engineer (AWS Multi-Region)",
+    "companyId": "comp_93EF303FFB40453E",
+    "companyName": "Công ty TNHH Vexere",
+    "level": "SENIOR",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Quận 1, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Quận 1",
+      "ward": "Phường Bến Nghé (Quận 1)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 45,
+      "max": 70,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "45 - 70 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 5,
+      "yearsMax": null,
+      "experienceText": "5+ năm kinh nghiệm SRE / Platform Engineer"
+    },
+    "skills": [
+      "AWS",
+      "ArgoCD",
+      "DevOps",
+      "Golang",
+      "Grafana",
+      "Kubernetes",
+      "Microservices",
+      "OpenTelemetry",
+      "Prometheus",
+      "Terraform"
+    ],
+    "description": "Xây dựng Internal Developer Platform (IDP), vận hành kiến trúc Microservices phân tán trên AWS phục vụ hàng triệu giao dịch đặt vé tàu xe mỗi ngày vào các dịp cao điểm Tết.",
+    "requirements": [
+      "Tối thiểu 5 năm kinh nghiệm về SRE, Platform Engineering trên AWS",
+      "Thành thạo Kubernetes, Chaos Engineering, Load Testing (k6, Locust) và Performance Tuning",
+      "Thành thạo Terraform, GitOps (ArgoCD) và giám sát hệ thống bằng Grafana, OpenTelemetry",
+      "Tư duy giải quyết bài toán tải cao (Peak Season Readiness) và giảm thời gian phục hồi sự cố (MTTR)"
+    ],
+    "benefits": [
+      "Thu nhập 45 - 70 triệu VNĐ/tháng, xét tăng lương 2 lần/năm",
+      "Chế độ làm việc Hybrid linh hoạt, tài trợ vé du lịch hàng năm",
+      "Bảo hiểm sức khỏe PVI toàn diện",
+      "Thưởng dự án và cổ phần ưu đãi ESOP cho nhân sự chủ chốt"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "LinkedIn",
+      "originalUrl": "https://linkedin.com/jobs/view/senior-platform-sre-vexere",
+      "crawledAt": "2026-11-03T05:16:40.386873+00:00"
+    },
+    "sourceUrl": "https://linkedin.com/jobs/view/senior-platform-sre-vexere",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.386873+00:00",
+    "updatedAt": "2026-11-03T05:16:40.386873+00:00"
+  },
+  {
+    "PK": "JOB#job_DE6D2361AD2349D9",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_E712134A1AC04D83",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.386873+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.386873+00:00",
+    "entityType": "JOB",
+    "jobId": "job_DE6D2361AD2349D9",
+    "title": "AWS Cloud Solutions Architect (Serverless & Microservices)",
+    "companyId": "comp_E712134A1AC04D83",
+    "companyName": "MiTek Vietnam",
+    "level": "LEAD_ARCHITECT",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Khu Công nghệ cao, TP. Thủ Đức, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Thành phố Thủ Đức",
+      "ward": "Phường Tăng Nhơn Phú B (Thành phố Thủ Đức)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 60,
+      "max": 90,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "60 - 90 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 6,
+      "yearsMax": null,
+      "experienceText": "6+ năm kinh nghiệm kiến trúc AWS Cloud"
+    },
+    "skills": [
+      "AWS",
+      "DynamoDB",
+      "EventBridge",
+      "Lambda",
+      "Microservices",
+      "Serverless",
+      "System Design",
+      "Terraform"
+    ],
+    "description": "Chịu trách nhiệm thiết kế và dẫn dắt triển khai các hệ thống phần mềm kỹ thuật xây dựng quy mô lớn trên nền tảng AWS Serverless (Lambda, EventBridge, DynamoDB) phục vụ thị trường Mỹ, Úc và Châu Âu.",
+    "requirements": [
+      "Từ 6 năm kinh nghiệm thiết kế kiến trúc phần mềm, ít nhất 3 năm thực chiến chuyên sâu với AWS Serverless",
+      "Thành thạo kiến trúc hướng sự kiện (Event-Driven Architecture), Microservices và DDD (Domain-Driven Design)",
+      "Thành thạo Infrastructure as Code với Terraform hoặc AWS CDK",
+      "Bắt buộc có chứng chỉ AWS Solutions Architect Professional"
+    ],
+    "benefits": [
+      "Thu nhập từ 60 - 90 triệu VNĐ/tháng, thưởng tháng 13 và thưởng hiệu suất toàn cầu",
+      "Chế độ làm việc kết hợp Hybrid (2-3 ngày WFH)",
+      "Bảo hiểm sức khỏe Liberty hạng Diamond cho nhân viên và vợ/chồng/con cái",
+      "Cơ hội đi công tác và tu nghiệp ngắn hạn tại Mỹ và Úc"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "LinkedIn",
+      "originalUrl": "https://linkedin.com/jobs/view/aws-solutions-architect-mitek",
+      "crawledAt": "2026-11-03T05:16:40.386873+00:00"
+    },
+    "sourceUrl": "https://linkedin.com/jobs/view/aws-solutions-architect-mitek",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.386873+00:00",
+    "updatedAt": "2026-11-03T05:16:40.386873+00:00"
+  },
+  {
+    "PK": "JOB#job_8E5DB11B3727435B",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_F1C7A667EDBB416B",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.387878+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.387878+00:00",
+    "entityType": "JOB",
+    "jobId": "job_8E5DB11B3727435B",
+    "title": "Senior Solutions Architect (Cloud & Microservices)",
+    "companyId": "comp_F1C7A667EDBB416B",
+    "companyName": "Techcombank",
+    "level": "LEAD_ARCHITECT",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tòa nhà Techcombank, 6 Quang Trung, Hoàn Kiếm, Hà Nội",
+      "province": "Hà Nội",
+      "district": "Quận Hoàn Kiếm",
+      "ward": "Phường Cửa Nam (Quận Hoàn Kiếm)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 75,
+      "max": 110,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "75 - 110 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 8,
+      "yearsMax": null,
+      "experienceText": "8+ năm kinh nghiệm kiến trúc hệ thống tài chính"
+    },
+    "skills": [
+      "AWS",
+      "FinOps",
+      "GCP",
+      "Kafka",
+      "Kubernetes",
+      "Microservices",
+      "Security",
+      "System Design",
+      "Terraform"
+    ],
+    "description": "Chịu trách nhiệm thiết kế tổng thể kiến trúc hệ thống Core Banking và Open Banking trên nền tảng Cloud Native, đảm bảo tính sẵn sàng cao (High Availability), bảo mật cấp ngân hàng và tuân thủ chuẩn PCI-DSS.",
+    "requirements": [
+      "Tối thiểu 8 năm kinh nghiệm trong ngành CNTT, trong đó ít nhất 4 năm ở vai trò Solutions Architect cho hệ thống ngân hàng hoặc tài chính",
+      "Chuyên gia về kiến trúc đám mây AWS hoặc GCP, thành thạo thiết kế mạng đám mây an toàn, Zero Trust và Data Encryption",
+      "Thành thạo Microservices, Event-Driven Architecture (Kafka), Container Orchestration (Kubernetes)",
+      "Bắt buộc có chứng chỉ AWS Solutions Architect Professional hoặc Google Professional Cloud Architect"
+    ],
+    "benefits": [
+      "Mức thu nhập hàng đầu ngành ngân hàng từ 75 - 110 triệu VNĐ/tháng + thưởng hiệu suất năm 3-5 tháng lương",
+      "Chính sách vay ưu đãi lãi suất đặc biệt cho cán bộ nhân viên mua nhà và ô tô",
+      "Gói bảo hiểm sức khỏe Techcombank Care toàn diện cho gia đình",
+      "Môi trường Agile hiện đại tại trụ sở Landmark 6 Quang Trung"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "LinkedIn",
+      "originalUrl": "https://linkedin.com/jobs/view/techcombank-cloud-solutions-architect",
+      "crawledAt": "2026-11-03T05:16:40.387878+00:00"
+    },
+    "sourceUrl": "https://linkedin.com/jobs/view/techcombank-cloud-solutions-architect",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.387878+00:00",
+    "updatedAt": "2026-11-03T05:16:40.387878+00:00"
+  },
+  {
+    "PK": "JOB#job_82158EE9E9D6436F",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_B006450AB9314F6C",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.388873+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.388873+00:00",
+    "entityType": "JOB",
+    "jobId": "job_82158EE9E9D6436F",
+    "title": "Lead Azure DevOps Engineer (Global Cloud Delivery)",
+    "companyId": "comp_B006450AB9314F6C",
+    "companyName": "FPT Software",
+    "level": "LEAD_ARCHITECT",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "F-Town 3, Khu Công nghệ cao, TP. Thủ Đức, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Thành phố Thủ Đức",
+      "ward": "Phường Tân Phú (Thành phố Thủ Đức)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 50,
+      "max": 80,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "50 - 80 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 6,
+      "yearsMax": null,
+      "experienceText": "6+ năm kinh nghiệm Azure DevOps & Cloud Delivery"
+    },
+    "skills": [
+      "ArgoCD",
+      "Azure",
+      "CI/CD",
+      "DevOps",
+      "Docker",
+      "Kubernetes",
+      "Linux",
+      "Terraform"
+    ],
+    "description": "Dẫn dắt đội ngũ kỹ sư Cloud DevOps trong các chương trình chuyển đổi đám mây quy mô lớn cho các khách hàng Fortune 500 tại thị trường Nhật Bản và Bắc Mỹ trên nền tảng Microsoft Azure.",
+    "requirements": [
+      "Từ 6 năm kinh nghiệm thực chiến về DevOps và quản trị đám mây Microsoft Azure",
+      "Thành thạo Azure DevOps, GitHub Actions, Terraform, ARM/Bicep Templates",
+      "Kinh nghiệm sâu về quản trị cụm Azure Kubernetes Service (AKS), Ingress Controller, Azure Monitor",
+      "Có chứng chỉ Microsoft Certified: DevOps Engineer Expert hoặc Azure Solutions Architect",
+      "Kỹ năng tiếng Anh lưu loát trong giao tiếp và làm việc với khách hàng toàn cầu"
+    ],
+    "benefits": [
+      "Thu nhập cạnh tranh 50 - 80 triệu VNĐ/tháng kèm theo thưởng dự án toàn cầu",
+      "Chế độ làm việc Hybrid linh hoạt, khuôn viên F-Town chuẩn quốc tế với sân golf, hồ bơi",
+      "Gói bảo hiểm sức khỏe cao cấp FPT Care",
+      "Cơ hội Onsite dài hạn và ngắn hạn tại Mỹ, Nhật Bản, Singapore, Châu Âu"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "TopCV",
+      "originalUrl": "https://topcv.vn/viec-lam/lead-azure-devops-engineer-fpt",
+      "crawledAt": "2026-11-03T05:16:40.388873+00:00"
+    },
+    "sourceUrl": "https://topcv.vn/viec-lam/lead-azure-devops-engineer-fpt",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.388873+00:00",
+    "updatedAt": "2026-11-03T05:16:40.388873+00:00"
+  },
+  {
+    "PK": "JOB#job_7FDDB6EDEDB84582",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_0588F8A6F7FC4248",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.390390+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.390390+00:00",
+    "entityType": "JOB",
+    "jobId": "job_7FDDB6EDEDB84582",
+    "title": "Senior System Platform & DevOps Engineer",
+    "companyId": "comp_0588F8A6F7FC4248",
+    "companyName": "One Mount Group",
+    "level": "SENIOR",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tòa nhà Times City, 458 Minh Khai, Hai Bà Trưng, Hà Nội",
+      "province": "Hà Nội",
+      "district": "Quận Hai Bà Trưng",
+      "ward": "Phường Vĩnh Tuy (Quận Hai Bà Trưng)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 45,
+      "max": 65,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "45 - 65 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 5,
+      "yearsMax": null,
+      "experienceText": "5+ năm kinh nghiệm hạ tầng hệ thống lớn"
+    },
+    "skills": [
+      "AWS",
+      "Ansible",
+      "ArgoCD",
+      "CI/CD",
+      "Elasticsearch",
+      "GCP",
+      "Grafana",
+      "Kafka",
+      "Kubernetes",
+      "Linux",
+      "Prometheus",
+      "Python",
+      "Redis",
+      "Terraform"
+    ],
+    "description": "Vận hành và tối ưu hóa hạ tầng đám mây phân tán đa nền tảng (AWS & GCP) phục vụ hệ sinh thái VinID và OneHousing với hàng triệu người dùng và hàng tỷ bản ghi dữ liệu.",
+    "requirements": [
+      "Tối thiểu 5 năm kinh nghiệm quản trị hệ thống Linux và hạ tầng đám mây lớn",
+      "Thành thạo Kubernetes (EKS/GKE), xây dựng pipeline tự động hóa CI/CD với GitLab CI / ArgoCD",
+      "Thành thạo Terraform, Ansible và ngôn ngữ script Python/Bash",
+      "Hiểu biết chuyên sâu về hệ thống dữ liệu lớn và hàng đợi phân tán: Kafka, Elasticsearch, Redis",
+      "Kinh nghiệm xây dựng hệ thống giám sát toàn diện với Prometheus, Grafana, VictoriaMetrics"
+    ],
+    "benefits": [
+      "Lương từ 45 - 65 triệu VNĐ/tháng, xét tăng lương 2 lần/năm",
+      "Chính sách đãi ngộ hấp dẫn, thưởng cuối năm từ 2-4 tháng lương",
+      "Gói bảo hiểm sức khỏe cao cấp Bảo Việt cho nhân viên và người thân",
+      "Trang bị thiết bị làm việc MacBook Pro cấu hình tối đa"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "ITviec",
+      "originalUrl": "https://itviec.com/jobs/senior-devops-platform-onemount",
+      "crawledAt": "2026-11-03T05:16:40.390390+00:00"
+    },
+    "sourceUrl": "https://itviec.com/jobs/senior-devops-platform-onemount",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.390390+00:00",
+    "updatedAt": "2026-11-03T05:16:40.390390+00:00"
+  },
+  {
+    "PK": "JOB#job_4CFF613701F84D71",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_B1331813FD3F4824",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.391389+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.391389+00:00",
+    "entityType": "JOB",
+    "jobId": "job_4CFF613701F84D71",
+    "title": "Principal DevOps & Cloud Reliability Engineer",
+    "companyId": "comp_B1331813FD3F4824",
+    "companyName": "NAB Innovation Centre Vietnam",
+    "level": "LEAD_ARCHITECT",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tòa nhà The Hallmark, Khu đô thị mới Thủ Thiêm, TP. Thủ Đức, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Thành phố Thủ Đức",
+      "ward": "Phường An Khánh (Thành phố Thủ Đức)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 90,
+      "max": 140,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "90 - 140 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 8,
+      "yearsMax": null,
+      "experienceText": "8+ năm kinh nghiệm DevOps & SRE ngân hàng"
+    },
+    "skills": [
+      "AWS",
+      "CI/CD",
+      "Docker",
+      "FinOps",
+      "Kubernetes",
+      "Lambda",
+      "Security",
+      "System Design",
+      "Terraform"
+    ],
+    "description": "Dẫn dắt chiến lược Cloud Reliability và tự động hóa cho các nền tảng số trọng yếu của Ngân hàng Quốc gia Úc (NAB), đảm bảo các tiêu chuẩn Zero Downtime và quy chuẩn bảo mật ngân hàng quốc tế.",
+    "requirements": [
+      "Từ 8 năm kinh nghiệm làm việc trong lĩnh vực DevOps, SRE và kiến trúc hạ tầng Cloud",
+      "Chuyên gia thực chiến trên hạ tầng AWS (EKS, Lambda, Transit Gateway, KMS, GuardDuty)",
+      "Thành thạo thiết kế Infrastructure as Code ở quy mô Enterprise với Terraform Cloud, Pulumi",
+      "Kinh nghiệm sâu sắc về Chaos Engineering, Disaster Recovery và Observability (Splunk, Dynatrace)",
+      "Khả năng lãnh đạo kỹ thuật và huấn luyện cho đội ngũ kỹ sư tại Việt Nam và Úc"
+    ],
+    "benefits": [
+      "Mức thu nhập cạnh tranh hàng đầu thị trường từ 90 - 140 triệu VNĐ/tháng",
+      "Mô hình làm việc kết hợp Hybrid linh hoạt (lên văn phòng 2 ngày/tuần)",
+      "Cơ hội đi công tác và làm việc tại trụ sở chính của NAB tại Melbourne, Úc",
+      "Bảo hiểm sức khỏe quốc tế toàn diện cho cả gia đình (vợ/chồng và con cái)",
+      "Tài khoản học tập không giới hạn trên O'Reilly, Udemy, Cloud Academy"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "ITviec",
+      "originalUrl": "https://itviec.com/jobs/principal-devops-cloud-nab",
+      "crawledAt": "2026-11-03T05:16:40.391389+00:00"
+    },
+    "sourceUrl": "https://itviec.com/jobs/principal-devops-cloud-nab",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.391389+00:00",
+    "updatedAt": "2026-11-03T05:16:40.391389+00:00"
+  },
+  {
+    "PK": "JOB#job_9B4D1D3688BB40A5",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_A17C38CD3EA14102",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.392399+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.392399+00:00",
+    "entityType": "JOB",
+    "jobId": "job_9B4D1D3688BB40A5",
+    "title": "Senior Cloud SRE & Infrastructure Engineer",
+    "companyId": "comp_A17C38CD3EA14102",
+    "companyName": "Ví MoMo (Công ty Cổ phần Dịch vụ Di động Trực tuyến)",
+    "level": "SENIOR",
+    "workplaceType": "ON_SITE",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tòa nhà Phú Mỹ Hưng, Quận 7, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Quận 7",
+      "ward": "Phường Tân Phong (Quận 7)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 45,
+      "max": 70,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "45 - 70 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 5,
+      "yearsMax": null,
+      "experienceText": "5+ năm kinh nghiệm SRE hệ thống tải lớn"
+    },
+    "skills": [
+      "AWS",
+      "CI/CD",
+      "Helm",
+      "Kafka",
+      "Kubernetes",
+      "MongoDB",
+      "PostgreSQL",
+      "Prometheus",
+      "Redis",
+      "Terraform"
+    ],
+    "description": "Đảm bảo tính sẵn sàng và khả năng tự phục hồi của hạ tầng siêu ứng dụng MoMo phục vụ hơn 30 triệu người dùng, tối ưu hóa cụm Kubernetes hàng trăm node và xử lý các đợt bùng nổ giao dịch hàng chục nghìn TPS.",
+    "requirements": [
+      "Tối thiểu 5 năm kinh nghiệm quản trị hạ tầng điện toán đám mây AWS và Google Cloud",
+      "Thành thạo Kubernetes ở quy mô Production, viết Helm charts, Kubernetes Operators",
+      "Kinh nghiệm xử lý các hệ thống chịu tải siêu lớn (High Traffic, Low Latency, High Concurrency)",
+      "Thành thạo quản lý cơ sở dữ liệu phân tán: Redis Cluster, Kafka Cluster, MongoDB, PostgreSQL",
+      "Khả năng on-call và phản ứng nhanh xử lý sự cố khẩn cấp (Incident Management)"
+    ],
+    "benefits": [
+      "Thu nhập từ 45 - 70 triệu VNĐ/tháng, thưởng tháng 13 và thưởng hiệu suất cuối năm rất cao",
+      "14 ngày nghỉ phép/năm, phụ cấp ăn trưa và gửi xe",
+      "Gói bảo hiểm sức khỏe VIP toàn diện",
+      "Môi trường công nghệ Fintech năng động, được tự do đề xuất và thử nghiệm giải pháp mới"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "TopCV",
+      "originalUrl": "https://topcv.vn/viec-lam/senior-cloud-sre-momo",
+      "crawledAt": "2026-11-03T05:16:40.392399+00:00"
+    },
+    "sourceUrl": "https://topcv.vn/viec-lam/senior-cloud-sre-momo",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.392399+00:00",
+    "updatedAt": "2026-11-03T05:16:40.392399+00:00"
+  },
+  {
+    "PK": "JOB#job_CC0E5E3B8AFB490A",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_3B708520E7DC41F5",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.393393+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.393393+00:00",
+    "entityType": "JOB",
+    "jobId": "job_CC0E5E3B8AFB490A",
+    "title": "Cloud Solutions Architect (Azure IoT & Embedded Platform)",
+    "companyId": "comp_3B708520E7DC41F5",
+    "companyName": "Bosch Global Software Technologies Vietnam",
+    "level": "LEAD_ARCHITECT",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tòa nhà E-Town Central, 11 Đoàn Văn Bơ, Quận 4, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Quận 4",
+      "ward": "Phường 9 (Quận 4)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 70,
+      "max": 100,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "70 - 100 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 7,
+      "yearsMax": null,
+      "experienceText": "7+ năm kinh nghiệm kiến trúc Cloud & IoT"
+    },
+    "skills": [
+      "Azure",
+      "Cloud",
+      "Docker",
+      "Kubernetes",
+      "Linux",
+      "Microservices",
+      "Python",
+      "System Design"
+    ],
+    "description": "Thiết kế kiến trúc nền tảng Cloud IoT trên Microsoft Azure kết nối hàng triệu thiết bị phần cứng thông minh của tập đoàn Bosch trên toàn cầu trong các lĩnh vực Automotive và Smart Industry.",
+    "requirements": [
+      "Từ 7 năm kinh nghiệm thiết kế phần mềm và giải pháp đám mây",
+      "Chuyên sâu về hệ sinh thái Microsoft Azure: Azure IoT Hub, Azure Event Hubs, Stream Analytics, Cosmos DB, AKS",
+      "Kinh nghiệm thiết kế kiến trúc bảo mật thiết bị đầu cuối đến đám mây (End-to-End IoT Security)",
+      "Bắt buộc có chứng chỉ Microsoft Certified: Azure Solutions Architect Expert",
+      "Giao tiếp tiếng Anh thành thạo để làm việc với các chuyên gia kỹ thuật tại Đức và Ấn Độ"
+    ],
+    "benefits": [
+      "Thu nhập thỏa thuận từ 70 - 100 triệu VNĐ/tháng + thưởng hiệu quả kinh doanh hàng năm",
+      "Chính sách làm việc Hybrid linh hoạt, hỗ trợ chi phí thiết bị làm việc tại nhà",
+      "Bảo hiểm sức khỏe quốc tế cao cấp cho nhân viên và gia đình",
+      "Cơ hội đi đào tạo và công tác tại Đức, Nhật Bản và Singapore"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "LinkedIn",
+      "originalUrl": "https://linkedin.com/jobs/view/bosch-cloud-solutions-architect",
+      "crawledAt": "2026-11-03T05:16:40.393393+00:00"
+    },
+    "sourceUrl": "https://linkedin.com/jobs/view/bosch-cloud-solutions-architect",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.393393+00:00",
+    "updatedAt": "2026-11-03T05:16:40.393393+00:00"
+  },
+  {
+    "PK": "JOB#job_1B7F36D9EEC54C0D",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_2D0B7BD5B93947EF",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.394392+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.394392+00:00",
+    "entityType": "JOB",
+    "jobId": "job_1B7F36D9EEC54C0D",
+    "title": "Senior Site Reliability Engineer (Cloud Platform SRE)",
+    "companyId": "comp_2D0B7BD5B93947EF",
+    "companyName": "Shopee / Sea Group Vietnam",
+    "level": "SENIOR",
+    "workplaceType": "ON_SITE",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tòa nhà Saigon Centre, 65 Lê Lợi, Quận 1, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Quận 1",
+      "ward": "Phường Bến Nghé (Quận 1)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 60,
+      "max": 95,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "60 - 95 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 5,
+      "yearsMax": null,
+      "experienceText": "5+ năm kinh nghiệm SRE sàn thương mại điện tử"
+    },
+    "skills": [
+      "Cloud",
+      "DevOps",
+      "Docker",
+      "Golang",
+      "Grafana",
+      "Kubernetes",
+      "Linux",
+      "OpenTelemetry",
+      "Prometheus",
+      "Python"
+    ],
+    "description": "Vận hành và tối ưu hóa hạ tầng Cloud Platform phục vụ các đợt siêu sale lớn nhất khu vực Đông Nam Á (9.9, 11.11, 12.12), đảm bảo hệ thống chịu được lưu lượng tải đột biến hàng trăm triệu request mỗi giây.",
+    "requirements": [
+      "Tối thiểu 5 năm kinh nghiệm làm việc ở vị trí SRE hoặc DevOps cho các hệ thống quy mô lớn",
+      "Hiểu biết sâu sắc về Linux kernel, TCP/IP, Network Tuning, Storage I/O và Container runtime",
+      "Thành thạo lập trình Go (Golang) hoặc Python để tự động hóa hạ tầng và công cụ nội bộ",
+      "Kinh nghiệm quản lý cụm Kubernetes hàng nghìn node, Prometheus, Thanos, OpenTelemetry",
+      "Tư duy phân tích và giải quyết sự cố dưới áp lực cao trong các chiến dịch lớn"
+    ],
+    "benefits": [
+      "Mức lương cạnh tranh hàng đầu khu vực từ 60 - 95 triệu VNĐ/tháng kèm theo thưởng cuối năm cực kỳ hấp dẫn",
+      "Đồ ăn nhẹ, đồ uống và hoa quả miễn phí hàng ngày tại văn phòng Saigon Centre hiện đại",
+      "Gói bảo hiểm sức khỏe VIP toàn diện",
+      "Ngân sách tài trợ phát triển kỹ năng cá nhân và chứng chỉ công nghệ quốc tế"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "LinkedIn",
+      "originalUrl": "https://linkedin.com/jobs/view/shopee-cloud-platform-sre",
+      "crawledAt": "2026-11-03T05:16:40.394392+00:00"
+    },
+    "sourceUrl": "https://linkedin.com/jobs/view/shopee-cloud-platform-sre",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.394392+00:00",
+    "updatedAt": "2026-11-03T05:16:40.394392+00:00"
+  },
+  {
+    "PK": "JOB#job_66A5AF842FBD4D28",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_9E95E3A15B614647",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.395896+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.395896+00:00",
+    "entityType": "JOB",
+    "jobId": "job_66A5AF842FBD4D28",
+    "title": "Kỹ Sư Trưởng Kiến Trúc Đám Mây (Cloud Platform Architect)",
+    "companyId": "comp_9E95E3A15B614647",
+    "companyName": "Tổng Công ty Giải pháp Doanh nghiệp Viettel (Viettel Solutions)",
+    "level": "LEAD_ARCHITECT",
+    "workplaceType": "ON_SITE",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Số 1 Giang Văn Minh, Ba Đình, Hà Nội",
+      "province": "Hà Nội",
+      "district": "Ba Đình",
+      "ward": "Phường Kim Mã (Ba Đình)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 65,
+      "max": 90,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "65 - 90 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 7,
+      "yearsMax": null,
+      "experienceText": "7+ năm kinh nghiệm kiến trúc hạ tầng Cloud viễn thông"
+    },
+    "skills": [
+      "AWS",
+      "Azure",
+      "Cloud",
+      "Kubernetes",
+      "Linux",
+      "OpenStack",
+      "Security",
+      "System Design"
+    ],
+    "description": "Chủ trì thiết kế kiến trúc nền tảng Viettel Cloud phục vụ Chính phủ điện tử, Đô thị thông minh và các tập đoàn kinh tế trọng điểm quốc gia, làm chủ công nghệ hạ tầng đám mây Make in Vietnam.",
+    "requirements": [
+      "Từ 7 năm kinh nghiệm trong ngành CNTT, ít nhất 3 năm làm Kiến trúc sư trưởng hạ tầng Cloud",
+      "Am hiểu sâu sắc về kiến trúc OpenStack, VMware, Kubernetes và Public Cloud (AWS, Azure)",
+      "Có năng lực thiết kế hệ thống Trung tâm dữ liệu phân tán (Multi-Datacenter, Software-Defined Networking)",
+      "Hiểu biết về các tiêu chuẩn an toàn thông tin cấp quốc gia, cấp độ 4-5 và Nghị định bảo vệ dữ liệu cá nhân",
+      "Có chứng chỉ chuyên gia kiến trúc quốc tế (AWS SAP, CKA, OpenStack Administrator)"
+    ],
+    "benefits": [
+      "Thu nhập 65 - 90 triệu VNĐ/tháng, thu nhập bình quân cả năm lên đến 1.2 - 1.5 tỷ VNĐ/năm",
+      "Môi trường nghiên cứu và làm chủ công nghệ hạ tầng cốt lõi tầm cỡ quốc gia",
+      "Chế độ bảo hiểm sức khỏe cao cấp Viettel Care",
+      "Các chế độ phúc lợi nghỉ dưỡng và teambuilding thường niên tại các resort hàng đầu"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "TopCV",
+      "originalUrl": "https://topcv.vn/viec-lam/truong-kien-truc-dam-may-viettel",
+      "crawledAt": "2026-11-03T05:16:40.395896+00:00"
+    },
+    "sourceUrl": "https://topcv.vn/viec-lam/truong-kien-truc-dam-may-viettel",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.395896+00:00",
+    "updatedAt": "2026-11-03T05:16:40.395896+00:00"
+  },
+  {
+    "PK": "JOB#job_A4CE2D3EC91D44D7",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_D01A299142F64F78",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.396908+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.396908+00:00",
+    "entityType": "JOB",
+    "jobId": "job_A4CE2D3EC91D44D7",
+    "title": "Kỹ Sư DevOps / DevSecOps (Hạ Tầng Cloud Quốc Gia)",
+    "companyId": "comp_D01A299142F64F78",
+    "companyName": "Công ty Công nghệ Thông tin VNPT (VNPT-IT)",
+    "level": "MIDDLE",
+    "workplaceType": "ON_SITE",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tòa nhà VNPT, 57 Huỳnh Thúc Kháng, Đống Đa, Hà Nội",
+      "province": "Hà Nội",
+      "district": "Quận Đống Đa",
+      "ward": "Phường Láng Hạ (Quận Đống Đa)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 30,
+      "max": 45,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "30 - 45 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 3,
+      "yearsMax": null,
+      "experienceText": "3-5 năm kinh nghiệm quản trị hạ tầng DevOps"
+    },
+    "skills": [
+      "Ansible",
+      "CI/CD",
+      "Cloud",
+      "DevOps",
+      "Docker",
+      "Git",
+      "Jenkins",
+      "Kubernetes",
+      "Linux",
+      "Terraform"
+    ],
+    "description": "Vận hành hệ thống CI/CD tự động và triển khai hạ tầng Container cho các sản phẩm chuyển đổi số quốc gia của tập đoàn VNPT trong các lĩnh vực Y tế điện tử (VNPT-HIS), Giáo dục (VNPT-Edu) và Hóa đơn điện tử.",
+    "requirements": [
+      "Từ 3 năm kinh nghiệm thực tế về DevOps, System Admin hoặc Cloud Infrastructure",
+      "Thành thạo công cụ tự động hóa: Ansible, Terraform, Jenkins, GitLab CI",
+      "Kinh nghiệm quản trị hệ thống Linux (RHEL, Ubuntu), Docker container và cụm Kubernetes",
+      "Có kiến thức về an toàn thông tin mạng, tích hợp các công cụ kiểm tra bảo mật (SonarQube, OWASP ZAP)",
+      "Tinh thần kỷ luật cao, sẵn sàng tham gia trực vận hành hệ thống trọng yếu"
+    ],
+    "benefits": [
+      "Thu nhập từ 30 - 45 triệu VNĐ/tháng, thưởng các ngày lễ Tết và hiệu quả công việc định kỳ",
+      "Môi trường làm việc ổn định, cơ hội thăng tiến rõ ràng trong tập đoàn viễn thông hàng đầu",
+      "Chế độ bảo hiểm theo quy định nhà nước và gói bảo hiểm sức khỏe nâng cao",
+      "Hỗ trợ kinh phí đào tạo và thi các chứng chỉ quốc tế uy tín"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "VietnamWorks",
+      "originalUrl": "https://vietnamworks.com/ky-su-devops-vnpt-it",
+      "crawledAt": "2026-11-03T05:16:40.396908+00:00"
+    },
+    "sourceUrl": "https://vietnamworks.com/ky-su-devops-vnpt-it",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.396908+00:00",
+    "updatedAt": "2026-11-03T05:16:40.396908+00:00"
+  },
+  {
+    "PK": "JOB#job_C41C2073DDDA42CC",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_184A13FFF3AF4412",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.397908+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.397908+00:00",
+    "entityType": "JOB",
+    "jobId": "job_C41C2073DDDA42CC",
+    "title": "Senior Cloud DevOps & Security Engineer",
+    "companyId": "comp_184A13FFF3AF4412",
+    "companyName": "Axon Vietnam (Axon Enterprise)",
+    "level": "SENIOR",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tòa nhà Deutsches Haus, 33 Lê Duẩn, Quận 1, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Quận 1",
+      "ward": "Phường Bến Nghé (Quận 1)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 55,
+      "max": 85,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "55 - 85 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 5,
+      "yearsMax": null,
+      "experienceText": "5+ năm kinh nghiệm Cloud Security & DevOps"
+    },
+    "skills": [
+      "AWS",
+      "Azure",
+      "CI/CD",
+      "DevOps",
+      "Docker",
+      "Kubernetes",
+      "Python",
+      "Terraform"
+    ],
+    "description": "Thiết kế và duy trì hạ tầng đám mây công cộng đạt chuẩn an ninh nghiêm ngặt FedRAMP và CJIS của Hoa Kỳ phục vụ hệ sinh thái thiết bị cảnh sát và cơ quan an ninh công cộng toàn cầu.",
+    "requirements": [
+      "Tối thiểu 5 năm kinh nghiệm làm việc về Cloud Engineering, DevOps hoặc DevSecOps",
+      "Thành thạo hạ tầng AWS và Azure, kiến trúc mạng an toàn, VPN, Direct Connect, IAM",
+      "Thành thạo Terraform, Docker, Kubernetes và tự động hóa CI/CD với GitHub Enterprise",
+      "Hiểu biết thực tiễn về các tiêu chuẩn an ninh nghiêm ngặt (SOC 2, FedRAMP, ISO 27001)",
+      "Giao tiếp tiếng Anh thành thạo như người bản ngữ để phối hợp cùng trụ sở tại Seattle, Mỹ"
+    ],
+    "benefits": [
+      "Mức lương cạnh tranh 55 - 85 triệu VNĐ/tháng, gói thưởng cổ phiếu RSU của tập đoàn công nghệ Mỹ",
+      "Làm việc tại tòa nhà chuẩn xanh Deutsches Haus sang trọng tại trung tâm Quận 1",
+      "Chế độ làm việc kết hợp linh hoạt, 20 ngày nghỉ phép hưởng lương mỗi năm",
+      "Gói bảo hiểm sức khỏe quốc tế cao cấp cho nhân viên và cả gia đình"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "ITviec",
+      "originalUrl": "https://itviec.com/jobs/senior-cloud-devops-security-axon",
+      "crawledAt": "2026-11-03T05:16:40.397908+00:00"
+    },
+    "sourceUrl": "https://itviec.com/jobs/senior-cloud-devops-security-axon",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.397908+00:00",
+    "updatedAt": "2026-11-03T05:16:40.397908+00:00"
+  },
+  {
+    "PK": "JOB#job_9317498E0B9E479F",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_04AAB7F24C3E49A1",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.397908+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.397908+00:00",
+    "entityType": "JOB",
+    "jobId": "job_9317498E0B9E479F",
+    "title": "Senior Cloud Platform & DevOps Engineer (AWS & OpenShift)",
+    "companyId": "comp_04AAB7F24C3E49A1",
+    "companyName": "VPBank (Ngân hàng TMCP Việt Nam Thịnh Vượng)",
+    "level": "SENIOR",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tòa nhà VPBank Tower, 89 Láng Hạ, Đống Đa, Hà Nội",
+      "province": "Hà Nội",
+      "district": "Quận Đống Đa",
+      "ward": "Phường Láng Hạ (Quận Đống Đa)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 45,
+      "max": 70,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "45 - 70 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 5,
+      "yearsMax": null,
+      "experienceText": "5+ năm kinh nghiệm Cloud Platform ngân hàng"
+    },
+    "skills": [
+      "AWS",
+      "Ansible",
+      "CI/CD",
+      "Docker",
+      "Kubernetes",
+      "Linux",
+      "Prometheus",
+      "Security",
+      "Terraform"
+    ],
+    "description": "Quản trị và tối ưu hóa hạ tầng đám mây lai (Hybrid Cloud với AWS và OpenShift On-premise) cho các ứng dụng ngân hàng số NEO, phục vụ hàng chục triệu giao dịch tài chính an toàn mỗi ngày.",
+    "requirements": [
+      "Tối thiểu 5 năm kinh nghiệm quản trị hệ thống Linux, Cloud Infrastructure và DevOps",
+      "Thành thạo AWS Cloud (EC2, VPC, EKS, RDS, IAM) và Red Hat OpenShift Container Platform",
+      "Kinh nghiệm viết Infrastructure as Code bằng Terraform và tự động hóa với Ansible, GitLab CI",
+      "Am hiểu sâu sắc về tiêu chuẩn an toàn bảo mật tài chính ngân hàng (PCI-DSS, ISO 27001)"
+    ],
+    "benefits": [
+      "Mức lương cạnh tranh 45 - 70 triệu VNĐ/tháng kèm theo thưởng cuối năm từ 3-5 tháng lương",
+      "Chế độ vay ưu đãi dành riêng cho cán bộ nhân viên ngân hàng VPBank",
+      "Gói bảo hiểm sức khỏe VIP VPBank Care cho bản thân và người thân",
+      "Môi trường chuyển đổi số năng động hàng đầu ngành tài chính"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "ITviec",
+      "originalUrl": "https://itviec.com/jobs/senior-cloud-devops-vpbank",
+      "crawledAt": "2026-11-03T05:16:40.397908+00:00"
+    },
+    "sourceUrl": "https://itviec.com/jobs/senior-cloud-devops-vpbank",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.397908+00:00",
+    "updatedAt": "2026-11-03T05:16:40.397908+00:00"
+  },
+  {
+    "PK": "JOB#job_CAD1C0F4EC18477D",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_80AD93D78C3144C7",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.398901+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.398901+00:00",
+    "entityType": "JOB",
+    "jobId": "job_CAD1C0F4EC18477D",
+    "title": "Senior DevOps Engineer (E-commerce Cloud Infrastructure)",
+    "companyId": "comp_80AD93D78C3144C7",
+    "companyName": "Tiki (Công ty Cổ phần Ti Ki)",
+    "level": "SENIOR",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tòa nhà Viettel Complex, 285 Cách Mạng Tháng 8, Quận 10, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Quận 10",
+      "ward": "Phường 12 (Quận 10)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 40,
+      "max": 65,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "40 - 65 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 4,
+      "yearsMax": null,
+      "experienceText": "4-6 năm kinh nghiệm DevOps sàn thương mại điện tử"
+    },
+    "skills": [
+      "AWS",
+      "Ansible",
+      "CI/CD",
+      "Docker",
+      "GCP",
+      "Kafka",
+      "Kubernetes",
+      "Linux",
+      "MongoDB",
+      "MySQL",
+      "PostgreSQL",
+      "Python",
+      "Redis",
+      "Terraform"
+    ],
+    "description": "Vận hành và tự động hóa hạ tầng đám mây AWS & GCP chịu tải cao cho sàn TMĐT Tiki, xây dựng hệ thống tự động co giãn (Auto Scaling) cho các sự kiện flash sale hàng triệu người truy cập cùng lúc.",
+    "requirements": [
+      "Từ 4 năm kinh nghiệm làm việc ở vị trí DevOps, System Administrator trên nền tảng AWS hoặc GCP",
+      "Thành thạo Kubernetes (EKS/GKE), Docker và các công cụ quản lý hạ tầng Terraform, Ansible",
+      "Thành thạo lập trình scripting tự động hóa với Python hoặc Bash",
+      "Kinh nghiệm quản lý hệ thống cơ sở dữ liệu lớn (MySQL, PostgreSQL, MongoDB, Redis, Kafka)"
+    ],
+    "benefits": [
+      "Lương từ 40 - 65 triệu VNĐ/tháng, xét tăng lương định kỳ hàng năm",
+      "Chế độ làm việc kết hợp linh hoạt Hybrid (2-3 ngày WFH)",
+      "Bảo hiểm sức khỏe cao cấp TikiCare và ưu đãi giảm giá khi mua hàng trên Tiki",
+      "Môi trường công nghệ thuần Product với văn hóa học hỏi cởi mở"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "TopCV",
+      "originalUrl": "https://topcv.vn/viec-lam/senior-devops-engineer-tiki",
+      "crawledAt": "2026-11-03T05:16:40.398901+00:00"
+    },
+    "sourceUrl": "https://topcv.vn/viec-lam/senior-devops-engineer-tiki",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.398901+00:00",
+    "updatedAt": "2026-11-03T05:16:40.398901+00:00"
+  },
+  {
+    "PK": "JOB#job_91DB6A3264A54E96",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_96FF2D1250444CAF",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.400425+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.400425+00:00",
+    "entityType": "JOB",
+    "jobId": "job_91DB6A3264A54E96",
+    "title": "Senior Site Reliability Engineer (Global Gaming Cloud)",
+    "companyId": "comp_96FF2D1250444CAF",
+    "companyName": "Amanotes (Công ty Cổ phần Công nghệ Âm nhạc Amanotes)",
+    "level": "SENIOR",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tòa nhà Bcons Tower, Đoàn Văn Bơ, Quận 4, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Quận 4",
+      "ward": "Phường 9 (Quận 4)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 50,
+      "max": 75,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "50 - 75 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 5,
+      "yearsMax": null,
+      "experienceText": "5+ năm kinh nghiệm SRE & Cloud Gaming"
+    },
+    "skills": [
+      "AWS",
+      "Cloud",
+      "DevOps",
+      "FinOps",
+      "Golang",
+      "Grafana",
+      "Kubernetes",
+      "Prometheus",
+      "Python",
+      "Terraform"
+    ],
+    "description": "Bảo đảm hiệu năng siêu mượt mà và tính sẵn sàng 99.99% cho hệ sinh thái game âm nhạc toàn cầu với hơn 3 tỷ lượt tải, thiết kế hạ tầng Multi-Region trên AWS có độ trễ cực thấp.",
+    "requirements": [
+      "Tối thiểu 5 năm kinh nghiệm về SRE, Platform Engineering trên hạ tầng AWS",
+      "Thành thạo quản lý Kubernetes cụm đa vùng (Multi-Region EKS), Service Mesh, CloudFront CDN",
+      "Thành thạo viết công cụ tự động hóa bằng Golang hoặc Python",
+      "Kinh nghiệm xử lý bài toán tối ưu chi phí hạ tầng Cloud (FinOps) quy mô hàng triệu USD/năm"
+    ],
+    "benefits": [
+      "Mức thu nhập cạnh tranh 50 - 75 triệu VNĐ/tháng + thưởng hiệu suất sản phẩm toàn cầu",
+      "Giờ làm việc linh hoạt không chấm công, chính sách WFH mở rộng",
+      "Bảo hiểm sức khỏe quốc tế cao cấp",
+      "Ngân sách $1500/năm cho việc học tập và tham gia các hội thảo công nghệ quốc tế (AWS re:Invent)"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "ITviec",
+      "originalUrl": "https://itviec.com/jobs/senior-sre-amanotes",
+      "crawledAt": "2026-11-03T05:16:40.400425+00:00"
+    },
+    "sourceUrl": "https://itviec.com/jobs/senior-sre-amanotes",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.400425+00:00",
+    "updatedAt": "2026-11-03T05:16:40.400425+00:00"
+  },
+  {
+    "PK": "JOB#job_31ECADAAA86F45A5",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_A12465026710404C",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.400425+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.400425+00:00",
+    "entityType": "JOB",
+    "jobId": "job_31ECADAAA86F45A5",
+    "title": "Lead Cloud & DevSecOps Engineer (Digital Banking Platform)",
+    "companyId": "comp_A12465026710404C",
+    "companyName": "MBBank (Ngân hàng TMCP Quân Đội)",
+    "level": "LEAD_ARCHITECT",
+    "workplaceType": "ON_SITE",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tòa nhà MB Grand Tower, 63 Lê Văn Lương, Cầu Giấy, Hà Nội",
+      "province": "Hà Nội",
+      "district": "Cầu Giấy",
+      "ward": "Phường Trung Hòa (Cầu Giấy)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 60,
+      "max": 90,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "60 - 90 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 7,
+      "yearsMax": null,
+      "experienceText": "7+ năm kinh nghiệm DevSecOps & Cloud Security"
+    },
+    "skills": [
+      "AWS",
+      "Azure",
+      "CI/CD",
+      "DevOps",
+      "Kubernetes",
+      "Security",
+      "System Design",
+      "Terraform"
+    ],
+    "description": "Chỉ đạo chiến lược DevSecOps và tự động hóa hạ tầng đám mây cho toàn bộ ứng dụng MBBank App phục vụ hơn 25 triệu khách hàng, tích hợp các chuẩn an toàn thông tin quân đội nghiêm ngặt.",
+    "requirements": [
+      "Từ 7 năm kinh nghiệm làm việc về kiến trúc hệ thống, DevOps và bảo mật an toàn thông tin",
+      "Chuyên gia về kiến trúc đám mây AWS và Azure, thiết kế hạ tầng tuân thủ chuẩn an ninh cấp độ 4",
+      "Thành thạo tích hợp quy trình DevSecOps (SAST/DAST/SCA), quản trị container bảo mật (Aqua/Prisma)",
+      "Kỹ năng dẫn dắt và huấn luyện đội ngũ kỹ sư hạ tầng hơn 30 nhân sự"
+    ],
+    "benefits": [
+      "Thu nhập 60 - 90 triệu VNĐ/tháng + thưởng hiệu quả kinh doanh ngân hàng (4-6 tháng lương)",
+      "Chế độ đãi ngộ xuất sắc của tập đoàn Quân đội",
+      "Gói bảo hiểm sức khỏe MB Care cao cấp cho bản thân và gia đình",
+      "Cơ hội làm chủ các dự án hạ tầng số quy mô cấp quốc gia"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "TopCV",
+      "originalUrl": "https://topcv.vn/viec-lam/lead-cloud-devsecops-mbbank",
+      "crawledAt": "2026-11-03T05:16:40.400425+00:00"
+    },
+    "sourceUrl": "https://topcv.vn/viec-lam/lead-cloud-devsecops-mbbank",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.400425+00:00",
+    "updatedAt": "2026-11-03T05:16:40.400425+00:00"
+  },
+  {
+    "PK": "JOB#job_17F8B84522F94F12",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_9808045A3E3144E2",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.401425+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.401425+00:00",
+    "entityType": "JOB",
+    "jobId": "job_17F8B84522F94F12",
+    "title": "Cloud DevOps & MLOps Platform Architect",
+    "companyId": "comp_9808045A3E3144E2",
+    "companyName": "VinBigData (Tập đoàn Vingroup)",
+    "level": "LEAD_ARCHITECT",
+    "workplaceType": "ON_SITE",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tòa nhà Century Tower, Times City, Hai Bà Trưng, Hà Nội",
+      "province": "Hà Nội",
+      "district": "Quận Hai Bà Trưng",
+      "ward": "Phường Vĩnh Tuy (Quận Hai Bà Trưng)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 80,
+      "max": 120,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "80 - 120 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 8,
+      "yearsMax": null,
+      "experienceText": "8+ năm kinh nghiệm kiến trúc hạ tầng AI & Cloud"
+    },
+    "skills": [
+      "AWS",
+      "ArgoCD",
+      "Docker",
+      "GCP",
+      "Kubernetes",
+      "Python",
+      "System Design",
+      "Terraform"
+    ],
+    "description": "Thiết kế kiến trúc hạ tầng tính toán hiệu năng cao (HPC Cloud) và luồng MLOps tự động hóa phục vụ huấn luyện và triển khai mô hình ngôn ngữ lớn (ViGPT) và trợ lý ảo thông minh trên xe điện VinFast.",
+    "requirements": [
+      "Tối thiểu 8 năm kinh nghiệm kiến trúc hệ thống Cloud và hạ tầng AI/BigData",
+      "Thành thạo quản lý cụm GPU quy mô lớn (NVIDIA H100/A100) trên Kubernetes (K8s) và AWS/GCP",
+      "Kinh nghiệm triển khai pipeline MLOps với Kubeflow, MLflow, Triton Inference Server",
+      "Thành thạo Infrastructure as Code (Terraform), GitOps (ArgoCD) và giám sát hạ tầng GPU"
+    ],
+    "benefits": [
+      "Mức thu nhập 80 - 120 triệu VNĐ/tháng, thưởng thành tích công nghệ đột phá",
+      "Chính sách ưu đãi mua nhà Vinhomes và xe điện VinFast đặc quyền",
+      "Bảo hiểm sức khỏe cao cấp Vinmec toàn diện",
+      "Môi trường nghiên cứu làm việc trực tiếp cùng các nhà khoa học dữ liệu hàng đầu thế giới"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "LinkedIn",
+      "originalUrl": "https://linkedin.com/jobs/view/vinbigdata-cloud-mlops-architect",
+      "crawledAt": "2026-11-03T05:16:40.401425+00:00"
+    },
+    "sourceUrl": "https://linkedin.com/jobs/view/vinbigdata-cloud-mlops-architect",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.401425+00:00",
+    "updatedAt": "2026-11-03T05:16:40.401425+00:00"
+  },
+  {
+    "PK": "JOB#job_AA560822F8AD44A4",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_A68AAD4DFC334773",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.402444+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.402444+00:00",
+    "entityType": "JOB",
+    "jobId": "job_AA560822F8AD44A4",
+    "title": "Cloud Solutions Architect (AWS & Azure Enterprise Migration)",
+    "companyId": "comp_A68AAD4DFC334773",
+    "companyName": "TMA Solutions (TMA Tech Group)",
+    "level": "LEAD_ARCHITECT",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Công viên Phần mềm Quang Trung, Quận 12, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Quận 12",
+      "ward": "Phường Tân Chánh Hiệp (Quận 12)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 65,
+      "max": 95,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "65 - 95 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 7,
+      "yearsMax": null,
+      "experienceText": "7+ năm kinh nghiệm tư vấn di chuyển đám mây"
+    },
+    "skills": [
+      "AWS",
+      "Architecture",
+      "Azure",
+      "Cloud",
+      "Docker",
+      "Microservices",
+      "System Design",
+      "Terraform"
+    ],
+    "description": "Lãnh đạo các dự án di chuyển hạ tầng từ On-premise lên nền tảng AWS và Azure (Cloud Migration) cho các khách hàng viễn thông và tài chính tại Bắc Mỹ, Nhật Bản và Úc.",
+    "requirements": [
+      "Từ 7 năm kinh nghiệm thiết kế kiến trúc phần mềm và hạ tầng đám mây",
+      "Kinh nghiệm thực chiến về các chiến lược di chuyển Cloud: Rehost, Replatform, Refactor (6 Rs)",
+      "Thành thạo các công cụ Cloud Migration: AWS Migration Hub, Azure Migrate, Database Migration Service",
+      "Bắt buộc có chứng chỉ AWS Certified Solutions Architect Professional hoặc Azure Solutions Architect",
+      "Tiếng Anh giao tiếp thành thạo trong môi trường làm việc quốc tế"
+    ],
+    "benefits": [
+      "Thu nhập thỏa thuận từ 65 - 95 triệu VNĐ/tháng + thưởng dự án xuất sắc",
+      "Khuôn viên TMA Innovation Park hiện đại với sân bóng đá, tennis, phòng gym",
+      "Gói bảo hiểm sức khỏe cao cấp TMA Care",
+      "Cơ hội đi công tác và làm việc Onsite tại Canada, Mỹ, Úc"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "ITviec",
+      "originalUrl": "https://itviec.com/jobs/cloud-solutions-architect-tma",
+      "crawledAt": "2026-11-03T05:16:40.402444+00:00"
+    },
+    "sourceUrl": "https://itviec.com/jobs/cloud-solutions-architect-tma",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.402444+00:00",
+    "updatedAt": "2026-11-03T05:16:40.402444+00:00"
+  },
+  {
+    "PK": "JOB#job_7D011E5340484317",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_A205FD5447F04DAF",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.403431+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.403431+00:00",
+    "entityType": "JOB",
+    "jobId": "job_7D011E5340484317",
+    "title": "Senior Cloud Infrastructure Engineer (FinOps & Kubernetes)",
+    "companyId": "comp_A205FD5447F04DAF",
+    "companyName": "ZaloPay (Công ty Cổ phần Zion - Tập đoàn VNG)",
+    "level": "SENIOR",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "VNG Campus, Khu chế xuất Tân Thuận, Quận 7, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Quận 7",
+      "ward": "Phường Tân Thuận Đông (Quận 7)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 55,
+      "max": 80,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "55 - 80 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 5,
+      "yearsMax": null,
+      "experienceText": "5+ năm kinh nghiệm hạ tầng ví điện tử"
+    },
+    "skills": [
+      "AWS",
+      "FinOps",
+      "Golang",
+      "Grafana",
+      "Kafka",
+      "Kubernetes",
+      "Prometheus",
+      "Python",
+      "Terraform"
+    ],
+    "description": "Thiết kế và tối ưu hóa hạ tầng điện toán đám mây cho ví điện tử ZaloPay, xây dựng cơ chế quản lý chi phí đám mây (FinOps) tự động và đảm bảo hệ thống thanh toán tức thời không gián đoạn.",
+    "requirements": [
+      "Tối thiểu 5 năm kinh nghiệm quản trị hạ tầng Cloud AWS và Kubernetes quy mô lớn",
+      "Kinh nghiệm sâu về FinOps: Tối ưu chi phí Compute, Storage, Data Transfer và Reserved Instances",
+      "Thành thạo lập trình Go (Golang) hoặc Python để phát triển công cụ tự động hóa nội bộ",
+      "Hiểu biết về bảo mật hệ thống thanh toán quốc tế PCI-DSS Level 1"
+    ],
+    "benefits": [
+      "Thu nhập cạnh tranh từ 55 - 80 triệu VNĐ/tháng + gói cổ phiếu thưởng ESOP VNG",
+      "Làm việc tại khu phức hợp hiện đại VNG Campus chuẩn Silicon Valley",
+      "Gói bảo hiểm sức khỏe VIP toàn diện",
+      "Cơm trưa miễn phí chuẩn nhà hàng 5 sao và các hoạt động thể thao đa dạng"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "LinkedIn",
+      "originalUrl": "https://linkedin.com/jobs/view/zalopay-cloud-infrastructure-engineer",
+      "crawledAt": "2026-11-03T05:16:40.403431+00:00"
+    },
+    "sourceUrl": "https://linkedin.com/jobs/view/zalopay-cloud-infrastructure-engineer",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.403431+00:00",
+    "updatedAt": "2026-11-03T05:16:40.403431+00:00"
+  },
+  {
+    "PK": "JOB#job_1225FF9F958A44A1",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_C2D87BC7A58A460E",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.404430+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.404430+00:00",
+    "entityType": "JOB",
+    "jobId": "job_1225FF9F958A44A1",
+    "title": "Senior Platform DevOps Engineer (AWS Big Data Infrastructure)",
+    "companyId": "comp_C2D87BC7A58A460E",
+    "companyName": "Trusting Social (AI Fintech)",
+    "level": "SENIOR",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tòa nhà Bitexco Financial Tower, Quận 1, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Quận 1",
+      "ward": "Phường Bến Nghé (Quận 1)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 50,
+      "max": 80,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "50 - 80 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 5,
+      "yearsMax": null,
+      "experienceText": "5+ năm kinh nghiệm DevOps dữ liệu lớn"
+    },
+    "skills": [
+      "AWS",
+      "CI/CD",
+      "Docker",
+      "Kafka",
+      "Kubernetes",
+      "Linux",
+      "Python",
+      "Terraform"
+    ],
+    "description": "Quản trị hạ tầng phân tích dữ liệu lớn trên AWS (EMR, Spark, Kafka, Presto) phục vụ chấm điểm tín dụng AI cho hơn 1 tỷ người dùng tại các thị trường mới nổi Đông Nam Á và Ấn Độ.",
+    "requirements": [
+      "Tối thiểu 5 năm kinh nghiệm về DevOps, Data Platform Engineering trên AWS",
+      "Thành thạo quản lý hạ tầng Big Data: Apache Spark, Kafka, Presto, Hadoop, Airflow",
+      "Thành thạo Terraform, Kubernetes (EKS), Docker và tự động hóa CI/CD",
+      "Kỹ năng lập trình tốt với Python và am hiểu về quản trị an ninh dữ liệu nhạy cảm"
+    ],
+    "benefits": [
+      "Mức lương hấp dẫn 50 - 80 triệu VNĐ/tháng kèm theo thưởng cổ phần công ty AI giá trị cao",
+      "Văn phòng làm việc tại tầng cao Bitexco với view toàn cảnh TP. Hồ Chí Minh",
+      "Bảo hiểm sức khỏe cao cấp toàn diện",
+      "Văn hóa làm việc chuẩn công nghệ quốc tế với đồng nghiệp từ Singapore, Mỹ, Ấn Độ"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "LinkedIn",
+      "originalUrl": "https://linkedin.com/jobs/view/trusting-social-platform-devops",
+      "crawledAt": "2026-11-03T05:16:40.404430+00:00"
+    },
+    "sourceUrl": "https://linkedin.com/jobs/view/trusting-social-platform-devops",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.404430+00:00",
+    "updatedAt": "2026-11-03T05:16:40.404430+00:00"
+  },
+  {
+    "PK": "JOB#job_D0D842599B424A06",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_96DC5AEA91604C76",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.404430+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.404430+00:00",
+    "entityType": "JOB",
+    "jobId": "job_D0D842599B424A06",
+    "title": "Cloud Infrastructure & DevOps Specialist (Microsoft Azure)",
+    "companyId": "comp_96DC5AEA91604C76",
+    "companyName": "Prudential Vietnam Assurance",
+    "level": "MIDDLE",
+    "workplaceType": "HYBRID",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tòa nhà M-Plaza, 39 Lê Duẩn, Quận 1, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Quận 1",
+      "ward": "Phường Bến Nghé (Quận 1)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 38,
+      "max": 55,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "38 - 55 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 3,
+      "yearsMax": null,
+      "experienceText": "3-5 năm kinh nghiệm quản trị hạ tầng Azure"
+    },
+    "skills": [
+      "Azure",
+      "CI/CD",
+      "Cloud",
+      "DevOps",
+      "PowerShell",
+      "Terraform",
+      "Windows Server"
+    ],
+    "description": "Vận hành và chuẩn hóa hạ tầng đám mây Microsoft Azure cho hệ thống bảo hiểm nhân thọ cốt lõi, triển khai tự động hóa bằng Terraform và giám sát an toàn thông tin theo tiêu chuẩn tập đoàn Prudential Anh Quốc.",
+    "requirements": [
+      "Từ 3 năm kinh nghiệm quản trị hạ tầng đám mây Microsoft Azure",
+      "Thành thạo tự động hóa hạ tầng với Terraform, Azure CLI và PowerShell",
+      "Kinh nghiệm cấu hình luồng CI/CD với Azure DevOps và GitHub Actions",
+      "Có chứng chỉ Microsoft Certified: Azure Administrator Associate (AZ-104)"
+    ],
+    "benefits": [
+      "Thu nhập từ 38 - 55 triệu VNĐ/tháng + thưởng hiệu suất kinh doanh năm",
+      "18 ngày nghỉ phép hưởng lương/năm, chế độ làm việc Hybrid linh hoạt",
+      "Bảo hiểm sức khỏe quốc tế cao cấp cho nhân viên và người thân",
+      "Gói bảo hiểm nhân thọ ưu đãi đặc quyền của Prudential"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "VietnamWorks",
+      "originalUrl": "https://vietnamworks.com/azure-devops-specialist-prudential",
+      "crawledAt": "2026-11-03T05:16:40.404430+00:00"
+    },
+    "sourceUrl": "https://vietnamworks.com/azure-devops-specialist-prudential",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.404430+00:00",
+    "updatedAt": "2026-11-03T05:16:40.404430+00:00"
+  },
+  {
+    "PK": "JOB#job_7C6DCAD567F14D93",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_7B482D1073D54F8A",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:16:40.405935+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:16:40.405935+00:00",
+    "entityType": "JOB",
+    "jobId": "job_7C6DCAD567F14D93",
+    "title": "Senior DevOps Engineer (Fintech High-Throughput Platform)",
+    "companyId": "comp_7B482D1073D54F8A",
+    "companyName": "ShopeePay / SeaMoney Vietnam",
+    "level": "SENIOR",
+    "workplaceType": "ON_SITE",
+    "employmentType": "FULL_TIME",
+    "location": {
+      "fullAddress": "Tòa nhà Saigon Centre, 65 Lê Lợi, Quận 1, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Quận 1",
+      "ward": "Phường Bến Nghé (Quận 1)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 50,
+      "max": 80,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "50 - 80 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 5,
+      "yearsMax": null,
+      "experienceText": "5+ năm kinh nghiệm DevOps dịch vụ thanh toán"
+    },
+    "skills": [
+      "AWS",
+      "CI/CD",
+      "DevOps",
+      "Docker",
+      "Golang",
+      "Grafana",
+      "Kubernetes",
+      "Linux",
+      "OpenTelemetry",
+      "Prometheus",
+      "Python"
+    ],
+    "description": "Quản trị và nâng cao độ tin cậy của nền tảng thanh toán điện tử ShopeePay, xử lý lưu lượng hàng trăm nghìn giao dịch mỗi phút trong các đợt Siêu Sale của hệ sinh thái Shopee.",
+    "requirements": [
+      "Tối thiểu 5 năm kinh nghiệm làm việc về DevOps hoặc SRE cho hệ thống thanh toán hoặc thương mại điện tử",
+      "Thành thạo quản lý hạ tầng đám mây AWS, cụm Kubernetes quy mô lớn",
+      "Thành thạo CI/CD pipelines, công cụ giám sát Prometheus, Grafana, OpenTelemetry",
+      "Thành thạo lập trình script với Golang hoặc Python và xử lý sự cố hệ thống Production tải cao"
+    ],
+    "benefits": [
+      "Thu nhập hấp dẫn từ 50 - 80 triệu VNĐ/tháng + thưởng cuối năm cực kỳ cạnh tranh",
+      "Ăn sáng, đồ ăn nhẹ và đồ uống miễn phí hàng ngày tại tòa nhà Saigon Centre sang trọng",
+      "Gói bảo hiểm sức khỏe VIP toàn diện",
+      "Môi trường công nghệ Fintech quy mô khu vực với cơ hội thăng tiến rộng mở"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "TopCV",
+      "originalUrl": "https://topcv.vn/viec-lam/senior-devops-shopeepay",
+      "crawledAt": "2026-11-03T05:16:40.405935+00:00"
+    },
+    "sourceUrl": "https://topcv.vn/viec-lam/senior-devops-shopeepay",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:16:40.405935+00:00",
+    "updatedAt": "2026-11-03T05:16:40.405935+00:00"
+  },
+  {
+    "PK": "JOB#job_E1FCD99254D7473E",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_0D580A8B95374CAB",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:23:44.130365+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:23:44.130365+00:00",
+    "entityType": "JOB",
+    "jobId": "job_E1FCD99254D7473E",
+    "title": "Thực Tập Sinh Kỹ Sư Đám Mây & DevOps (Cloud & DevOps Engineer Intern)",
+    "companyId": "comp_0D580A8B95374CAB",
+    "companyName": "VNG Corporation",
+    "level": "INTERN",
+    "workplaceType": "HYBRID",
+    "employmentType": "INTERNSHIP",
+    "location": {
+      "fullAddress": "VNG Campus, Khu chế xuất Tân Thuận, Quận 7, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Quận 7",
+      "ward": "Phường Tân Thuận Đông (Quận 7)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 6,
+      "max": 10,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "6 - 10 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 0,
+      "yearsMax": null,
+      "experienceText": "Không yêu cầu kinh nghiệm, ưu tiên sinh viên năm cuối"
+    },
+    "skills": [
+      "AWS",
+      "CI/CD",
+      "Cloud",
+      "Docker",
+      "Git",
+      "Linux",
+      "Python"
+    ],
+    "description": "Tham gia hỗ trợ đội ngũ Cloud Platform vận hành và giám sát hạ tầng đám mây AWS, triển khai container hóa với Docker và xây dựng script tự động hóa CI/CD cho các sản phẩm công nghệ của VNG.",
+    "requirements": [
+      "Sinh viên năm cuối hoặc mới tốt nghiệp chuyên ngành CNTT, Khoa học máy tính hoặc tương đương",
+      "Có kiến thức nền tảng tốt về hệ điều hành Linux, mạng máy tính (TCP/IP, DNS) và kiến trúc máy chủ",
+      "Hiểu biết cơ bản về dịch vụ đám mây (AWS EC2, S3, VPC) và công nghệ Container (Docker)",
+      "Biết viết script cơ bản với Python hoặc Bash shell",
+      "Có tinh thần học hỏi cao, yêu thích lĩnh vực Cloud & DevOps"
+    ],
+    "benefits": [
+      "Trợ cấp thực tập hấp dẫn từ 6 - 10 triệu VNĐ/tháng kèm phụ cấp ăn trưa miễn phí tại VNG Campus",
+      "Được các Senior DevOps / Cloud Architect dày dạn kinh nghiệm trực tiếp kèm cặp (1-on-1 Mentorship)",
+      "Cơ hội chuyển tiếp lên nhân viên chính thức (Fresher/Junior) sau kỳ thực tập 3-6 tháng",
+      "Trải nghiệm môi trường làm việc chuẩn quốc tế với phòng gym, hồ bơi và khu giải trí"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "ITviec",
+      "originalUrl": "https://itviec.com/jobs/cloud-devops-intern-vng",
+      "crawledAt": "2026-11-03T05:23:44.130365+00:00"
+    },
+    "sourceUrl": "https://itviec.com/jobs/cloud-devops-intern-vng",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:23:44.130365+00:00",
+    "updatedAt": "2026-11-03T05:23:44.130365+00:00"
+  },
+  {
+    "PK": "JOB#job_1364EFB3CAD04102",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_7D38F54A7C344F4E",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:23:44.131371+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:23:44.131371+00:00",
+    "entityType": "JOB",
+    "jobId": "job_1364EFB3CAD04102",
+    "title": "Thực Tập Sinh AWS Cloud & Infrastructure (Cloud Engineer Intern)",
+    "companyId": "comp_7D38F54A7C344F4E",
+    "companyName": "FPT Software",
+    "level": "INTERN",
+    "workplaceType": "HYBRID",
+    "employmentType": "INTERNSHIP",
+    "location": {
+      "fullAddress": "F-Town 3, Khu Công nghệ cao, TP. Thủ Đức, TP. Hồ Chí Minh",
+      "province": "Hồ Chí Minh",
+      "district": "Thành phố Thủ Đức",
+      "ward": "Phường Tân Phú (Thành phố Thủ Đức)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 5,
+      "max": 8,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "5 - 8 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 0,
+      "yearsMax": null,
+      "experienceText": "Dành cho sinh viên năm 3, năm 4 hoặc mới tốt nghiệp"
+    },
+    "skills": [
+      "AWS",
+      "Bash",
+      "Cloud",
+      "Git",
+      "Linux",
+      "Terraform"
+    ],
+    "description": "Tham gia hỗ trợ triển khai cấu hình hạ tầng đám mây Amazon Web Services (AWS), thực hành viết mã nguồn hạ tầng Infrastructure as Code (Terraform) và hỗ trợ quản trị hệ thống Linux cho các dự án khách hàng quốc tế.",
+    "requirements": [
+      "Sinh viên các trường Đại học kỹ thuật chuyên ngành Công nghệ thông tin, Viễn thông",
+      "Có kiến thức căn bản về AWS (đã hoàn thành khóa học AWS Cloud Practitioner hoặc Solutions Architect Associate là điểm cộng)",
+      "Quen thuộc với lệnh dòng lệnh Linux và quản lý mã nguồn Git/GitHub",
+      "Tiếng Anh đọc hiểu tài liệu kỹ thuật tốt, giao tiếp cơ bản"
+    ],
+    "benefits": [
+      "Mức hỗ trợ thực tập từ 5 - 8 triệu VNĐ/tháng, xét đánh giá năng lực định kỳ",
+      "Được tài trợ 100% lệ phí thi các chứng chỉ quốc tế của AWS (AWS Certified Cloud Practitioner / SAA)",
+      "Được tham gia các dự án thực tế quy mô lớn của FPT Software với đối tác nước ngoài",
+      "Ký hợp đồng chính thức ngay sau khi kết thúc kỳ thực tập nếu đạt yêu cầu"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "TopCV",
+      "originalUrl": "https://topcv.vn/viec-lam/aws-cloud-intern-fpt",
+      "crawledAt": "2026-11-03T05:23:44.131371+00:00"
+    },
+    "sourceUrl": "https://topcv.vn/viec-lam/aws-cloud-intern-fpt",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:23:44.131371+00:00",
+    "updatedAt": "2026-11-03T05:23:44.131371+00:00"
+  },
+  {
+    "PK": "JOB#job_580F3651DE5D4C49",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_419A52BDED3945E5",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:23:44.132370+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:23:44.132370+00:00",
+    "entityType": "JOB",
+    "jobId": "job_580F3651DE5D4C49",
+    "title": "Thực Tập Sinh DevOps & Hạ Tầng Điện Toán Đám Mây (DevOps Intern)",
+    "companyId": "comp_419A52BDED3945E5",
+    "companyName": "Viettel Solutions (Tổng Công ty Giải pháp Doanh nghiệp Viettel)",
+    "level": "INTERN",
+    "workplaceType": "ON_SITE",
+    "employmentType": "INTERNSHIP",
+    "location": {
+      "fullAddress": "Số 1 Giang Văn Minh, Ba Đình, Hà Nội",
+      "province": "Hà Nội",
+      "district": "Ba Đình",
+      "ward": "Phường Kim Mã (Ba Đình)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 6,
+      "max": 9,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "6 - 9 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 0,
+      "yearsMax": null,
+      "experienceText": "Không yêu cầu kinh nghiệm"
+    },
+    "skills": [
+      "CI/CD",
+      "Cloud",
+      "DevOps",
+      "Docker",
+      "Git",
+      "Kubernetes",
+      "Linux"
+    ],
+    "description": "Nghiên cứu và hỗ trợ tích hợp quy trình DevOps/DevSecOps trên nền tảng Viettel Cloud, đóng gói container hóa với Docker/Kubernetes và viết pipeline tự động hóa CI/CD cho các ứng dụng chuyển đổi số.",
+    "requirements": [
+      "Sinh viên năm 3, 4 hoặc mới tốt nghiệp Đại học Bách Khoa, Quốc Gia, Bưu chính Viễn thông,...",
+      "Đam mê nghiên cứu công nghệ Cloud Native, Container, Kubernetes và DevOps",
+      "Nắm vững kiến thức hệ điều hành Linux (CentOS/Ubuntu), mạng máy tính và bảo mật cơ bản",
+      "Chủ động, có tinh thần trách nhiệm và khả năng làm việc nhóm tốt"
+    ],
+    "benefits": [
+      "Hỗ trợ thực tập từ 6 - 9 triệu VNĐ/tháng + trợ cấp ăn trưa tại cantin cơ quan",
+      "Được đào tạo bài bản từ lý thuyết đến thực hành trên hạ tầng Cloud Data Center quy mô lớn nhất Việt Nam",
+      "Cơ hội được tuyển dụng trực tiếp vào biên chế kỹ sư chính thức của Viettel",
+      "Môi trường kỷ luật, chuyên nghiệp và có chiều sâu công nghệ cao"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "VietnamWorks",
+      "originalUrl": "https://vietnamworks.com/devops-cloud-intern-viettel",
+      "crawledAt": "2026-11-03T05:23:44.132370+00:00"
+    },
+    "sourceUrl": "https://vietnamworks.com/devops-cloud-intern-viettel",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:23:44.132370+00:00",
+    "updatedAt": "2026-11-03T05:23:44.132370+00:00"
+  },
+  {
+    "PK": "JOB#job_E1EB483D07CE4ED6",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_39A8679A840248CA",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:23:44.134373+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:23:44.134373+00:00",
+    "entityType": "JOB",
+    "jobId": "job_E1EB483D07CE4ED6",
+    "title": "Thực Tập Sinh Kiến Trúc Đám Mây & Microsoft Azure (Cloud Architecture Intern)",
+    "companyId": "comp_39A8679A840248CA",
+    "companyName": "Techcombank (Ngân hàng TMCP Kỹ Thương Việt Nam)",
+    "level": "INTERN",
+    "workplaceType": "HYBRID",
+    "employmentType": "INTERNSHIP",
+    "location": {
+      "fullAddress": "Tòa nhà Techcombank, 6 Quang Trung, Hoàn Kiếm, Hà Nội",
+      "province": "Hà Nội",
+      "district": "Quận Hoàn Kiếm",
+      "ward": "Phường Cửa Nam (Quận Hoàn Kiếm)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 7,
+      "max": 10,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "7 - 10 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 0,
+      "yearsMax": null,
+      "experienceText": "Ưu tiên sinh viên có định hướng Cloud Architecture / DevOps"
+    },
+    "skills": [
+      "Architecture",
+      "Azure",
+      "Cloud",
+      "PowerShell",
+      "Python",
+      "Security",
+      "System Design"
+    ],
+    "description": "Hỗ trợ các Solution Architects của ngân hàng nghiên cứu, thiết kế và vẽ sơ đồ kiến trúc hệ thống đám mây Microsoft Azure, thử nghiệm triển khai các mô hình Proof of Concept (PoC) và kiểm tra tuân thủ kiến trúc ngân hàng số.",
+    "requirements": [
+      "Sinh viên năm cuối đại học các ngành CNTT, Phần mềm hoặc Hệ thống thông tin",
+      "Có tư duy hệ thống (System Design), nắm vững các mô hình mạng và kiến trúc phân tán cơ bản",
+      "Hiểu biết nền tảng về Microsoft Azure (Azure VM, VNet, Blob Storage, Entra ID)",
+      "Kỹ năng tổng hợp tài liệu, vẽ sơ đồ kiến trúc và giao tiếp tiếng Anh tốt"
+    ],
+    "benefits": [
+      "Phụ cấp thực tập dẫn đầu ngành ngân hàng từ 7 - 10 triệu VNĐ/tháng",
+      "Làm việc tại trung tâm công nghệ Agile hiện đại của Techcombank tại trung tâm Hà Nội",
+      "Cơ hội tham gia chương trình Techcombank Talent Graduate Program danh giá",
+      "Được dẫn dắt bởi các Principal Cloud Solutions Architect hàng đầu thị trường"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "LinkedIn",
+      "originalUrl": "https://linkedin.com/jobs/view/techcombank-cloud-architecture-intern",
+      "crawledAt": "2026-11-03T05:23:44.134373+00:00"
+    },
+    "sourceUrl": "https://linkedin.com/jobs/view/techcombank-cloud-architecture-intern",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:23:44.134373+00:00",
+    "updatedAt": "2026-11-03T05:23:44.134373+00:00"
+  },
+  {
+    "PK": "JOB#job_AF895C84469E4783",
+    "SK": "METADATA",
+    "GSI1PK": "COMPANY#comp_CA1BA627275B437A",
+    "GSI1SK": "JOB#OPEN#2026-11-03T05:23:44.134373+00:00",
+    "GSI2PK": "JOBS#STATUS#OPEN",
+    "GSI2SK": "CREATED#2026-11-03T05:23:44.134373+00:00",
+    "entityType": "JOB",
+    "jobId": "job_AF895C84469E4783",
+    "title": "Thực Tập Sinh DevOps & Cloud Automation (DevOps Engineer Intern)",
+    "companyId": "comp_CA1BA627275B437A",
+    "companyName": "KMS Technology Vietnam",
+    "level": "INTERN",
+    "workplaceType": "HYBRID",
+    "employmentType": "INTERNSHIP",
+    "location": {
+      "fullAddress": "Đường Bạch Đằng, Quận Hải Châu, TP. Đà Nẵng",
+      "province": "Đà Nẵng",
+      "district": "Hải Châu",
+      "ward": "Phường Thạch Thang (Hải Châu)",
+      "isPostJuly2025": true
+    },
+    "salary": {
+      "min": 5,
+      "max": 8,
+      "currency": "VND",
+      "unit": "MILLION_VND",
+      "salaryText": "5 - 8 triệu / tháng",
+      "isNegotiable": false
+    },
+    "experience": {
+      "yearsMin": 0,
+      "yearsMax": null,
+      "experienceText": "Không yêu cầu kinh nghiệm, có bài test đầu vào"
+    },
+    "skills": [
+      "AWS",
+      "CI/CD",
+      "Docker",
+      "Git",
+      "Linux",
+      "Node.js",
+      "Python",
+      "Terraform"
+    ],
+    "description": "Tham gia xây dựng và tự động hóa các luồng CI/CD với GitLab CI / GitHub Actions, thực hành quản trị hạ tầng điện toán đám mây AWS và hỗ trợ giám sát sức khỏe hệ thống ứng dụng SaaS phục vụ thị trường Mỹ.",
+    "requirements": [
+      "Sinh viên năm cuối các trường Đại học tại Đà Nẵng hoặc khu vực miền Trung ngành CNTT",
+      "Đã từng tự tay cấu hình Linux, viết Dockerfile và đóng gói ứng dụng web cơ bản",
+      "Hiểu biết cơ bản về quy trình CI/CD và các dịch vụ đám mây AWS cơ bản",
+      "Kỹ năng lập trình cơ bản với Python, Node.js hoặc Bash script"
+    ],
+    "benefits": [
+      "Trợ cấp thực tập từ 5 - 8 triệu VNĐ/tháng, xét tăng lương và thưởng theo tiến độ dự án",
+      "Chương trình đào tạo chuyên sâu KMS DevOps Bootcamp kéo dài 3 tháng",
+      "Được cung cấp Laptop phục vụ công việc và tham gia các hoạt động teambuilding, thể thao công ty",
+      "Cam kết cơ hội ký hợp đồng kỹ sư chính thức sau khi tốt nghiệp"
+    ],
+    "rubricWeights": {
+      "skills": 35,
+      "experience": 35,
+      "education": 15,
+      "culture": 15
+    },
+    "status": "OPEN",
+    "moderationStatus": "APPROVED",
+    "source": {
+      "platform": "ITviec",
+      "originalUrl": "https://itviec.com/jobs/devops-intern-kms-technology",
+      "crawledAt": "2026-11-03T05:23:44.134373+00:00"
+    },
+    "sourceUrl": "https://itviec.com/jobs/devops-intern-kms-technology",
+    "deadline": "2026-12-31T23:59:59.000Z",
+    "createdAt": "2026-11-03T05:23:44.134373+00:00",
+    "updatedAt": "2026-11-03T05:23:44.134373+00:00"
+  },
+  {
+    "PK": "USER#usr_rct_kms_01",
+    "SK": "PROFILE",
+    "GSI1PK": "ROLE#RECRUITER",
+    "GSI1SK": "CREATED#2026-10-20T08:00:00.000Z",
+    "entityType": "USER",
+    "userId": "usr_rct_kms_01",
+    "email": "recruiter.kms@kms-technology.com",
+    "fullName": "Lê Minh HR Lead",
+    "role": "RECRUITER",
+    "status": "ACTIVE",
+    "createdAt": "2026-10-20T08:00:00.000Z",
+    "updatedAt": "2026-10-20T08:00:00.000Z",
+    "companyId": "comp_CA1BA627275B437A",
+    "companyName": "KMS Technology Vietnam",
+    "GSI2PK": "COMPANY#comp_CA1BA627275B437A",
+    "GSI2SK": "MEMBER#usr_rct_kms_01"
+  },
+  {
+    "PK": "EMAIL#recruiter.kms@kms-technology.com",
+    "SK": "USER#usr_rct_kms_01",
+    "entityType": "EMAIL_LOOKUP",
+    "email": "recruiter.kms@kms-technology.com",
+    "userId": "usr_rct_kms_01",
+    "role": "RECRUITER",
+    "createdAt": "2026-10-20T08:00:00.000Z"
+  },
+  {
+    "PK": "USER#usr_cdd_an_01",
+    "SK": "PROFILE",
+    "GSI1PK": "ROLE#CANDIDATE",
+    "GSI1SK": "CREATED#2026-10-20T08:00:00.000Z",
+    "entityType": "USER",
+    "userId": "usr_cdd_an_01",
+    "email": "nguyen.van.an@cloudjob.vn",
+    "fullName": "Nguyễn Văn An",
+    "role": "CANDIDATE",
+    "status": "ACTIVE",
+    "createdAt": "2026-10-20T08:00:00.000Z",
+    "updatedAt": "2026-10-20T08:00:00.000Z"
+  },
+  {
+    "PK": "EMAIL#nguyen.van.an@cloudjob.vn",
+    "SK": "USER#usr_cdd_an_01",
+    "entityType": "EMAIL_LOOKUP",
+    "email": "nguyen.van.an@cloudjob.vn",
+    "userId": "usr_cdd_an_01",
+    "role": "CANDIDATE",
+    "createdAt": "2026-10-20T08:00:00.000Z"
+  },
+  {
+    "PK": "USER#usr_cdd_mai_02",
+    "SK": "PROFILE",
+    "GSI1PK": "ROLE#CANDIDATE",
+    "GSI1SK": "CREATED#2026-10-20T08:00:00.000Z",
+    "entityType": "USER",
+    "userId": "usr_cdd_mai_02",
+    "email": "tran.thi.mai@cloudjob.vn",
+    "fullName": "Trần Thị Mai",
+    "role": "CANDIDATE",
+    "status": "ACTIVE",
+    "createdAt": "2026-10-20T08:00:00.000Z",
+    "updatedAt": "2026-10-20T08:00:00.000Z"
+  },
+  {
+    "PK": "EMAIL#tran.thi.mai@cloudjob.vn",
+    "SK": "USER#usr_cdd_mai_02",
+    "entityType": "EMAIL_LOOKUP",
+    "email": "tran.thi.mai@cloudjob.vn",
+    "userId": "usr_cdd_mai_02",
+    "role": "CANDIDATE",
+    "createdAt": "2026-10-20T08:00:00.000Z"
+  },
+  {
+    "PK": "USER#usr_adm_super_01",
+    "SK": "PROFILE",
+    "GSI1PK": "ROLE#ADMIN",
+    "GSI1SK": "CREATED#2026-10-20T08:00:00.000Z",
+    "entityType": "USER",
+    "userId": "usr_adm_super_01",
+    "email": "admin@cloudjob.vn",
+    "fullName": "System Super Administrator",
+    "role": "ADMIN",
+    "status": "ACTIVE",
+    "createdAt": "2026-10-20T08:00:00.000Z",
+    "updatedAt": "2026-10-20T08:00:00.000Z"
+  },
+  {
+    "PK": "EMAIL#admin@cloudjob.vn",
+    "SK": "USER#usr_adm_super_01",
+    "entityType": "EMAIL_LOOKUP",
+    "email": "admin@cloudjob.vn",
+    "userId": "usr_adm_super_01",
+    "role": "ADMIN",
+    "createdAt": "2026-10-20T08:00:00.000Z"
+  },
+  {
+    "PK": "APP#app_01J9XAK4M6P8Q0R2T4V6W8Y0Z1",
+    "SK": "METADATA",
+    "GSI1PK": "JOB#job_ED0363FBAE304D04",
+    "GSI1SK": "SCORE#092#app_01J9XAK4M6P8Q0R2T4V6W8Y0Z1",
+    "GSI2PK": "USER#usr_cdd_an_01",
+    "GSI2SK": "APP#2026-11-02T10:15:30.000Z",
+    "entityType": "APPLICATION",
+    "applicationId": "app_01J9XAK4M6P8Q0R2T4V6W8Y0Z1",
+    "jobId": "job_ED0363FBAE304D04",
+    "jobTitle": "Senior DevOps Engineer (AWS & Azure Hybrid)",
+    "companyId": "comp_06F758280AAA49D3",
+    "candidateId": "usr_cdd_an_01",
+    "candidateName": "Nguyễn Văn An",
+    "candidateEmail": "nguyen.van.an@cloudjob.vn",
+    "status": "SUBMITTED",
+    "aiStatus": "COMPLETED",
+    "aiEvaluation": {
+      "totalScore": 92,
+      "matchLevel": "STRONG_MATCH",
+      "criteriaScores": {
+        "technicalSkills": {
+          "score": 33,
+          "maxScore": 35,
+          "analysis": "Thành thạo AWS, Terraform, Docker, Kubernetes và CI/CD"
+        },
+        "workExperience": {
+          "score": 32,
+          "maxScore": 35,
+          "analysis": "Hơn 5 năm kinh nghiệm quản trị hệ thống phân tán"
+        },
+        "educationCertifications": {
+          "score": 14,
+          "maxScore": 15,
+          "analysis": "Có chứng chỉ AWS Solutions Architect Associate"
+        },
+        "culturePresentation": {
+          "score": 13,
+          "maxScore": 15,
+          "analysis": "CV trình bày rõ ràng, cấu trúc logic, giải pháp chi tiết"
+        }
+      },
+      "keyStrengths": [
+        "Kinh nghiệm thực chiến triển khai Kubernetes EKS và GitOps",
+        "Làm chủ công nghệ Infrastructure as Code (Terraform) và Docker",
+        "Khả năng tự động hóa hệ thống bằng Python và Bash shell"
+      ],
+      "areasForImprovement": [
+        "Bổ sung thêm kinh nghiệm quản trị FinOps và tối ưu chi phí hạ tầng"
+      ],
+      "executiveSummary": "Ứng viên có năng lực kỹ thuật nổi bật, đáp ứng 92% tiêu chí của vị trí Senior DevOps.",
+      "evaluatedAt": "2026-11-02T10:15:30.000Z",
+      "modelUsed": "anthropic.claude-haiku-4-5-20251001-v1:0"
+    },
+    "cv": {
+      "fileName": "Nguyễn_Văn_An_CV.pdf",
+      "fileSize": 150000,
+      "fileType": "PDF"
+    },
+    "submittedAt": "2026-11-02T10:15:30.000Z",
+    "updatedAt": "2026-11-02T10:15:30.000Z",
+    "version": 1
+  },
+  {
+    "PK": "APP#app_01J9XAK4M6P8Q0R2T4V6W8Y0Z2",
+    "SK": "METADATA",
+    "GSI1PK": "JOB#job_E1FCD99254D7473E",
+    "GSI1SK": "SCORE#088#app_01J9XAK4M6P8Q0R2T4V6W8Y0Z2",
+    "GSI2PK": "USER#usr_cdd_mai_02",
+    "GSI2SK": "APP#2026-11-02T14:30:00.000Z",
+    "entityType": "APPLICATION",
+    "applicationId": "app_01J9XAK4M6P8Q0R2T4V6W8Y0Z2",
+    "jobId": "job_E1FCD99254D7473E",
+    "jobTitle": "Thực Tập Sinh Kỹ Sư Đám Mây & DevOps (Cloud & DevOps Engineer Intern)",
+    "companyId": "comp_0D580A8B95374CAB",
+    "candidateId": "usr_cdd_mai_02",
+    "candidateName": "Trần Thị Mai",
+    "candidateEmail": "tran.thi.mai@cloudjob.vn",
+    "status": "SUBMITTED",
+    "aiStatus": "COMPLETED",
+    "aiEvaluation": {
+      "totalScore": 88,
+      "matchLevel": "STRONG_MATCH",
+      "criteriaScores": {
+        "technicalSkills": {
+          "score": 30,
+          "maxScore": 35,
+          "analysis": "Nắm vững kiến thức nền tảng Linux, Git, Docker cơ bản"
+        },
+        "workExperience": {
+          "score": 29,
+          "maxScore": 35,
+          "analysis": "Đã hoàn thành các đồ án tốt nghiệp về hệ thống CI/CD"
+        },
+        "educationCertifications": {
+          "score": 15,
+          "maxScore": 15,
+          "analysis": "Sinh viên năm cuối Đại học Bách Khoa GPA 3.6/4.0"
+        },
+        "culturePresentation": {
+          "score": 14,
+          "maxScore": 15,
+          "analysis": "Thái độ cầu thị, ham học hỏi, tiếng Anh đọc hiểu tài liệu tốt"
+        }
+      },
+      "keyStrengths": [
+        "Nền tảng khoa học máy tính vững chắc, tư duy thuật toán tốt",
+        "Đã tự cấu hình CI/CD trên GitLab cá nhân và containerize ứng dụng Node.js"
+      ],
+      "areasForImprovement": [
+        "Cần tích lũy thêm kinh nghiệm thực chiến trên môi trường Production"
+      ],
+      "executiveSummary": "Ứng viên thực tập sinh rất tiềm năng, điểm đánh giá 88/100, đề xuất mời phỏng vấn.",
+      "evaluatedAt": "2026-11-02T14:30:00.000Z",
+      "modelUsed": "anthropic.claude-haiku-4-5-20251001-v1:0"
+    },
+    "cv": {
+      "fileName": "Trần_Thị_Mai_CV.pdf",
+      "fileSize": 150000,
+      "fileType": "PDF"
+    },
+    "submittedAt": "2026-11-02T14:30:00.000Z",
+    "updatedAt": "2026-11-02T14:30:00.000Z",
+    "version": 1
+  }
+]
