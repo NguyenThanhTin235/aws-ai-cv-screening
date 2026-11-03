@@ -67,6 +67,57 @@
   }
 }
 
+/* Hero Navigation Tabs */
+.jb-hero-tabs-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 14px;
+  background-color: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  padding: 4px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.jb-hero-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 7px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.jb-hero-tab:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.jb-hero-tab.active {
+  background-color: #ffffff;
+  color: #003e2f;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  font-weight: 700;
+}
+
+.jb-hero-tab-badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  background-color: #acf1d7;
+  color: #003e2f;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+}
+
 /* Floating Search Bar Card */
 .jb-search-card {
   background-color: var(--color-surface-container-lowest);

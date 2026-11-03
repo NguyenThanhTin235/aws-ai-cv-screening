@@ -12,8 +12,11 @@ import {
   SparklesIcon,
   VerifiedIcon,
   CheckIcon,
-  XIcon
+  XIcon,
+  UploadIcon,
+  FileTextIcon
 } from '../components/common/Icons';
+import { validateCvFile } from '../utils/validators';
 
 export const JobDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -25,6 +28,9 @@ export const JobDetail: React.FC = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
   const [applySuccess, setApplySuccess] = useState(false);
+  const [cvOption, setCvOption] = useState<'profile' | 'upload'>('profile');
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [cvError, setCvError] = useState<string | null>(null);
 
   // If job is not found
   if (!job) {
@@ -74,7 +80,36 @@ export const JobDetail: React.FC = () => {
     setIsApplyModalOpen(true);
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    if (!file) {
+      setUploadedFile(null);
+      setCvError('Vui lòng chọn file CV của bạn.');
+      return;
+    }
+    const err = validateCvFile(file);
+    if (err) {
+      setCvError(err);
+      setUploadedFile(null);
+    } else {
+      setCvError(null);
+      setUploadedFile(file);
+    }
+  };
+
   const handleConfirmSubmit = () => {
+    if (cvOption === 'upload') {
+      if (!uploadedFile) {
+        setCvError('Vui lòng tải lên file CV của bạn (.pdf, .doc, .docx - Tối đa 5MB).');
+        return;
+      }
+      const err = validateCvFile(uploadedFile);
+      if (err) {
+        setCvError(err);
+        return;
+      }
+    }
+
     setApplySuccess(true);
     setTimeout(() => {
       setIsApplyModalOpen(false);
@@ -444,20 +479,139 @@ export const JobDetail: React.FC = () => {
                 <div
                   style={{
                     backgroundColor: 'var(--color-surface-container-low)',
-                    padding: '14px',
+                    padding: '12px 14px',
                     borderRadius: 'var(--radius-sm)',
-                    marginBottom: '20px',
+                    marginBottom: '16px',
                     fontSize: '13px'
                   }}
                 >
                   <div>Ứng viên: <strong>{user?.fullName}</strong></div>
                   <div style={{ marginTop: '4px' }}>Email liên hệ: <strong>{user?.email}</strong></div>
-                  <div style={{ marginTop: '4px', color: 'var(--color-outline)' }}>
-                    File CV: <strong>{user?.fullName?.replace(/\s+/g, '_')}_CV.pdf</strong> (Quét tự động GuardDuty S3)
+                </div>
+
+                {/* CV Selection Radio Options */}
+                <div style={{ marginBottom: '16px' }}>
+                  <label style={{ display: 'block', fontSize: '13px', fontWeight: '700', color: '#1f2937', marginBottom: '8px' }}>
+                    Chọn hồ sơ CV ứng tuyển: <span style={{ color: '#dc2626' }}>*</span>
+                  </label>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <label
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        padding: '10px 12px',
+                        borderRadius: '6px',
+                        border: cvOption === 'profile' ? '1.5px solid #095744' : '1px solid #e5e7eb',
+                        backgroundColor: cvOption === 'profile' ? '#f0fdf4' : '#ffffff',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      <input
+                        type="radio"
+                        name="cvOption"
+                        checked={cvOption === 'profile'}
+                        onChange={() => {
+                          setCvOption('profile');
+                          setCvError(null);
+                        }}
+                        style={{ accentColor: '#095744' }}
+                      />
+                      <div>
+                        <div style={{ fontSize: '13px', fontWeight: '600', color: '#111827' }}>
+                          Sử dụng CV mặc định trong hồ sơ
+                        </div>
+                        <div style={{ fontSize: '12px', color: '#6b7280' }}>
+                          {user?.fullName?.replace(/\s+/g, '_')}_CV.pdf (Đã đồng bộ AWS S3)
+                        </div>
+                      </div>
+                    </label>
+
+                    <label
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        padding: '10px 12px',
+                        borderRadius: '6px',
+                        border: cvOption === 'upload' ? '1.5px solid #095744' : '1px solid #e5e7eb',
+                        backgroundColor: cvOption === 'upload' ? '#f0fdf4' : '#ffffff',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      <input
+                        type="radio"
+                        name="cvOption"
+                        checked={cvOption === 'upload'}
+                        onChange={() => setCvOption('upload')}
+                        style={{ accentColor: '#095744' }}
+                      />
+                      <div>
+                        <div style={{ fontSize: '13px', fontWeight: '600', color: '#111827' }}>
+                          Tải lên CV mới từ máy tính
+                        </div>
+                        <div style={{ fontSize: '12px', color: '#6b7280' }}>
+                          Chấp nhận PDF, DOCX, DOC (Tối đa 5MB)
+                        </div>
+                      </div>
+                    </label>
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
+                {/* Upload box if upload option selected */}
+                {cvOption === 'upload' && (
+                  <div style={{ marginBottom: '18px' }}>
+                    <div
+                      style={{
+                        border: cvError ? '1.5px dashed #dc2626' : uploadedFile ? '1.5px solid #095744' : '1.5px dashed #cbd5e1',
+                        borderRadius: '8px',
+                        padding: '16px',
+                        textAlign: 'center',
+                        backgroundColor: cvError ? '#fef2f2' : uploadedFile ? '#f0fdf4' : '#f8fafc',
+                        position: 'relative'
+                      }}
+                    >
+                      <input
+                        type="file"
+                        accept=".pdf,.doc,.docx"
+                        onChange={handleFileChange}
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
+                          opacity: 0,
+                          cursor: 'pointer',
+                          width: '100%',
+                          height: '100%'
+                        }}
+                      />
+                      <div style={{ pointerEvents: 'none' }}>
+                        {uploadedFile ? (
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: '#095744', fontWeight: '600', fontSize: '13px' }}>
+                            <FileTextIcon size={18} color="#095744" />
+                            <span>{uploadedFile.name} ({(uploadedFile.size / 1024 / 1024).toFixed(2)} MB)</span>
+                          </div>
+                        ) : (
+                          <>
+                            <UploadIcon size={22} color={cvError ? '#dc2626' : '#64748b'} style={{ margin: '0 auto 6px', display: 'block' }} />
+                            <div style={{ fontSize: '13px', fontWeight: '600', color: '#374151' }}>
+                              Nhấp để chọn file hoặc kéo thả file vào đây
+                            </div>
+                            <div style={{ fontSize: '11.5px', color: '#6b7280', marginTop: '2px' }}>
+                              Định dạng .pdf, .docx, .doc (Tối đa 5MB)
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                    {cvError && (
+                      <div style={{ fontSize: '11.5px', color: '#dc2626', marginTop: '5px', lineHeight: 1.3 }}>
+                        {cvError}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end', marginTop: '16px' }}>
                   <button
                     type="button"
                     onClick={() => setIsApplyModalOpen(false)}

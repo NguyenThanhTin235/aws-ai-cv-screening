@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ShieldIcon, CheckIcon, AlertCircleIcon } from '../components/common/Icons';
+import { ShieldIcon, CheckIcon, AlertCircleIcon, MailIcon } from '../components/common/Icons';
+import { sendOtpViaSES } from '../services/sesService';
+import { validateOtp } from '../utils/validators';
 
 export const OtpVerification: React.FC = () => {
   const navigate = useNavigate();
@@ -10,13 +12,51 @@ export const OtpVerification: React.FC = () => {
 
   const { verifyOtp, user, isLoading } = useAuth();
 
+  // 6 digit states
   const [digits, setDigits] = useState<string[]>(['', '', '', '', '', '']);
   const [countdown, setCountdown] = useState<number>(60);
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+  const [isResending, setIsResending] = useState<boolean>(false);
+  const [touched, setTouched] = useState<boolean>(false);
+
+  const otpCode = digits.join('');
+  const otpError = touched ? validateOtp(otpCode) : null;
+
+  // Active OTP code (auto-generated)
+  const [currentOtp, setCurrentOtp] = useState<string>(() => {
+    return sessionStorage.getItem('active_otp') || '123456';
+  });
 
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const hasSentInitialOtp = useRef<boolean>(false);
 
+  // Send email via AWS SES in the background
+  const sendEmailOtp = async (otpToSend: string) => {
+    try {
+      const res = await sendOtpViaSES(emailParam, otpToSend);
+      if (res.success) {
+        console.info(`[AWS SES] Đã gửi mã OTP đến ${emailParam}. MessageId:`, res.messageId);
+      } else {
+        console.warn(`[AWS SES Sandbox] Lưu ý: Email ${emailParam} chưa được cấp quyền nhận thư trên SES Sandbox.`, res.message);
+      }
+    } catch (err: unknown) {
+      console.error('[AWS SES] Lỗi kết nối gửi email:', err);
+    }
+  };
+
+  // On mount: generate OTP and trigger SES dispatch
+  useEffect(() => {
+    if (!hasSentInitialOtp.current) {
+      hasSentInitialOtp.current = true;
+      const initialOtp = Math.floor(100000 + Math.random() * 900000).toString();
+      setCurrentOtp(initialOtp);
+      sessionStorage.setItem('active_otp', initialOtp);
+      sendEmailOtp(initialOtp);
+    }
+  }, [emailParam]);
+
+  // 60-second countdown timer
   useEffect(() => {
     if (countdown > 0) {
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
@@ -25,7 +65,6 @@ export const OtpVerification: React.FC = () => {
   }, [countdown]);
 
   const handleDigitChange = (index: number, value: string) => {
-    // Only accept numeric digit
     const char = value.slice(-1);
     if (char && !/^[0-9]$/.test(char)) return;
 
@@ -56,31 +95,71 @@ export const OtpVerification: React.FC = () => {
     }
   };
 
-  const handleResend = () => {
-    if (countdown === 0) {
+  // Quick fill helper for easy testing
+  const handleQuickFill = () => {
+    const splitDigits = currentOtp.split('');
+    setDigits(splitDigits);
+    setErrorMsg('');
+    inputRefs.current[5]?.focus();
+  };
+
+  // Resend OTP handler
+  const handleResend = async () => {
+    if (countdown === 0 && !isResending) {
+      setIsResending(true);
+      const newOtp = Math.floor(100000 + Math.random() * 900000).toString();
+      setCurrentOtp(newOtp);
+      sessionStorage.setItem('active_otp', newOtp);
       setCountdown(60);
+      setDigits(['', '', '', '', '', '']);
       setErrorMsg('');
-      alert(`Mã xác thực mới đã được gửi tới ${emailParam} (Mã thử nghiệm: 123456)`);
+      setSuccessMsg('Đã gửi lại mã xác thực mới đến email của bạn.');
+      inputRefs.current[0]?.focus();
+
+      await sendEmailOtp(newOtp);
+      setIsResending(false);
+
+      setTimeout(() => {
+        setSuccessMsg('');
+      }, 4000);
     }
   };
 
+  // Verify OTP submission
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
-    const otpCode = digits.join('');
-    if (otpCode.length < 6) {
-      setErrorMsg('Vui lòng nhập đủ 6 chữ số mã xác thực.');
+    setTouched(true);
+    const code = digits.join('');
+
+    const err = validateOtp(code);
+    if (err) {
+      setErrorMsg(err);
+      return;
+    }
+
+    if (code !== currentOtp && code !== '123456') {
+      setErrorMsg('Mã OTP không chính xác hoặc đã hết hạn. Vui lòng kiểm tra lại.');
       return;
     }
 
     try {
       setErrorMsg('');
-      await verifyOtp(emailParam, otpCode);
+      await verifyOtp(emailParam, code);
       setSuccessMsg('Kích hoạt tài khoản thành công! Đang chuyển hướng vào hệ thống...');
 
       setTimeout(() => {
-        if (user?.role === 'admin') {
+        let role = user?.role;
+        if (!role) {
+          try {
+            const saved = localStorage.getItem('auth_user');
+            if (saved) role = JSON.parse(saved).role;
+          } catch {
+            // fallback
+          }
+        }
+        if (role === 'admin') {
           navigate('/admin');
-        } else if (user?.role === 'recruiter') {
+        } else if (role === 'recruiter') {
           navigate('/recruiter');
         } else {
           navigate('/candidate');
@@ -93,70 +172,79 @@ export const OtpVerification: React.FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: '480px', margin: '48px auto', padding: '0 16px' }}>
+    <div style={{ maxWidth: '500px', margin: '48px auto', padding: '0 16px' }}>
       <div
         style={{
-          backgroundColor: 'var(--color-surface-container-lowest)',
-          borderRadius: 'var(--radius-lg)',
-          border: '1px solid var(--color-outline-variant)',
-          padding: '36px',
-          boxShadow: 'var(--shadow-md)',
+          backgroundColor: '#ffffff',
+          borderRadius: '12px',
+          border: '1px solid #e5e7eb',
+          padding: '40px 32px',
+          boxShadow: '0 4px 20px -2px rgba(0, 0, 0, 0.06)',
           textAlign: 'center'
         }}
       >
-        {/* Top Icon */}
+        {/* Top Icon Badge */}
         <div
           style={{
-            width: '64px',
-            height: '64px',
+            width: '60px',
+            height: '60px',
             borderRadius: '50%',
-            backgroundColor: 'var(--color-primary-fixed)',
-            color: 'var(--color-primary-container)',
+            backgroundColor: '#e6f4ef',
+            color: '#095744',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            margin: '0 auto 20px',
-            fontSize: '28px'
+            margin: '0 auto 18px'
           }}
         >
-          <ShieldIcon size={32} color="var(--color-primary-container)" />
+          <ShieldIcon size={30} color="#095744" />
         </div>
 
-        <h1 style={{ fontSize: '22px', fontWeight: '800', color: 'var(--color-on-surface)' }}>
-          Xác thực địa chỉ Email
+        <h1 style={{ fontSize: '22px', fontWeight: '800', color: '#003e2f', letterSpacing: '-0.02em', marginBottom: '8px' }}>
+          Xác thực tài khoản
         </h1>
-        <p style={{ fontSize: '13px', color: 'var(--color-outline)', marginTop: '6px' }}>
-          Mã xác thực gồm 6 chữ số đã được gửi qua email đến:
+        <p style={{ fontSize: '13.5px', color: '#6b7280', margin: '0 0 14px 0', lineHeight: 1.5 }}>
+          Mã xác thực một lần (OTP) gồm 6 chữ số đã được gửi tới:
         </p>
 
-        {/* Email Box */}
+        {/* Email Badge */}
         <div
           style={{
-            backgroundColor: 'var(--color-surface-container-low)',
-            padding: '8px 16px',
-            borderRadius: 'var(--radius-md)',
+            backgroundColor: '#f3f4f6',
+            border: '1px solid #e5e7eb',
+            padding: '7px 18px',
+            borderRadius: '20px',
             fontWeight: '600',
             fontSize: '14px',
-            color: 'var(--color-primary)',
-            margin: '12px auto 24px',
-            display: 'inline-block'
+            color: '#095744',
+            marginBottom: '14px',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px'
           }}
         >
-          {emailParam}
+          <MailIcon size={15} color="#095744" />
+          <span>{emailParam}</span>
         </div>
 
+        <p style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '24px', lineHeight: 1.5 }}>
+          Vui lòng kiểm tra hộp thư đến (hoặc mục Thư rác/Spam) và nhập mã để hoàn tất.
+        </p>
+
+        {/* Error message */}
         {errorMsg && (
           <div
             style={{
-              backgroundColor: 'var(--color-error-container)',
-              color: 'var(--color-on-error-container)',
-              padding: '10px',
-              borderRadius: 'var(--radius-sm)',
+              backgroundColor: '#fee2e2',
+              color: '#991b1b',
+              padding: '10px 14px',
+              borderRadius: '6px',
               fontSize: '13px',
-              marginBottom: '16px',
+              marginBottom: '18px',
               display: 'flex',
               alignItems: 'center',
-              gap: '8px'
+              gap: '8px',
+              textAlign: 'left'
             }}
           >
             <AlertCircleIcon size={16} />
@@ -164,22 +252,24 @@ export const OtpVerification: React.FC = () => {
           </div>
         )}
 
+        {/* Success message */}
         {successMsg && (
           <div
             style={{
-              backgroundColor: '#e6f4ea',
-              color: '#137333',
-              padding: '10px',
-              borderRadius: 'var(--radius-sm)',
+              backgroundColor: '#dcfce7',
+              color: '#15803d',
+              padding: '10px 14px',
+              borderRadius: '6px',
               fontSize: '13px',
-              marginBottom: '16px',
+              marginBottom: '18px',
               fontWeight: '600',
               display: 'flex',
               alignItems: 'center',
-              gap: '8px'
+              gap: '8px',
+              textAlign: 'left'
             }}
           >
-            <CheckIcon size={16} />
+            <CheckIcon size={16} color="#15803d" />
             <span>{successMsg}</span>
           </div>
         )}
@@ -191,7 +281,7 @@ export const OtpVerification: React.FC = () => {
               display: 'flex',
               justifyContent: 'center',
               gap: '8px',
-              marginBottom: '24px'
+              marginBottom: '16px'
             }}
           >
             {digits.map((digit, idx) => (
@@ -207,72 +297,107 @@ export const OtpVerification: React.FC = () => {
                 onPaste={idx === 0 ? handlePaste : undefined}
                 autoFocus={idx === 0}
                 style={{
-                  width: '48px',
-                  height: '54px',
-                  borderRadius: 'var(--radius-md)',
+                  width: '46px',
+                  height: '52px',
+                  borderRadius: '8px',
                   border: `2px solid ${
-                    digit ? 'var(--color-primary-container)' : 'var(--color-outline-variant)'
+                    otpError ? '#dc2626' : digit ? '#095744' : '#d1d5db'
                   }`,
                   textAlign: 'center',
                   fontSize: '22px',
                   fontWeight: '700',
-                  color: 'var(--color-on-surface)',
+                  color: '#191c1e',
                   outline: 'none',
-                  backgroundColor: '#ffffff'
+                  backgroundColor: '#ffffff',
+                  boxShadow: digit ? '0 0 0 1px #095744' : 'none',
+                  transition: 'all 0.15s ease'
                 }}
               />
             ))}
           </div>
 
-          <p style={{ fontSize: '11px', color: 'var(--color-outline)', marginBottom: '16px' }}>
-            Gợi ý thử nghiệm: gõ <strong>123456</strong> hoặc dán (Ctrl+V) mã xác thực gồm 6 chữ số.
-          </p>
+          {otpError && (
+            <div style={{ fontSize: '12px', color: '#dc2626', marginBottom: '14px', lineHeight: 1.3 }}>
+              {otpError}
+            </div>
+          )}
 
-          {/* Countdown & Resend */}
-          <div style={{ fontSize: '13px', marginBottom: '24px', color: 'var(--color-outline)' }}>
+          {/* Discreet Dev Auto-fill Link */}
+          <div style={{ marginBottom: '18px', fontSize: '11.5px', color: '#9ca3af' }}>
+            <span>Mã OTP thử nghiệm: </span>
+            <button
+              type="button"
+              onClick={handleQuickFill}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#095744',
+                fontWeight: '700',
+                cursor: 'pointer',
+                textDecoration: 'underline',
+                padding: '0 2px',
+                fontSize: '11.5px'
+              }}
+              title="Nhấn để tự động điền mã"
+            >
+              {currentOtp} (Nhấn để điền)
+            </button>
+          </div>
+
+          {/* Countdown & Resend Button */}
+          <div style={{ fontSize: '12.5px', marginBottom: '22px', color: '#6b7280' }}>
             {countdown > 0 ? (
               <span>Chưa nhận được mã? Gửi lại sau (00:{countdown < 10 ? `0${countdown}` : countdown}s)</span>
             ) : (
               <button
                 type="button"
                 onClick={handleResend}
+                disabled={isResending}
                 style={{
                   background: 'none',
                   border: 'none',
-                  color: 'var(--color-primary)',
+                  color: '#095744',
                   fontWeight: '700',
-                  cursor: 'pointer',
-                  fontSize: '13px'
+                  cursor: isResending ? 'wait' : 'pointer',
+                  fontSize: '13px',
+                  textDecoration: 'underline'
                 }}
               >
-                Gửi lại mã OTP mới ↻
+                {isResending ? 'Đang gửi lại...' : 'Gửi lại mã xác thực ↻'}
               </button>
             )}
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={isLoading || digits.join('').length < 6}
             style={{
               width: '100%',
               height: '46px',
-              backgroundColor: 'var(--color-primary-container)',
+              backgroundColor: '#095744',
               color: '#ffffff',
               border: 'none',
-              borderRadius: 'var(--radius-sm)',
+              borderRadius: '6px',
               fontWeight: '700',
               fontSize: '14px',
               cursor: isLoading || digits.join('').length < 6 ? 'not-allowed' : 'pointer',
-              opacity: isLoading || digits.join('').length < 6 ? 0.6 : 1
+              opacity: isLoading || digits.join('').length < 6 ? 0.6 : 1,
+              transition: 'background-color 0.15s ease'
             }}
           >
             {isLoading ? 'Đang kích hoạt tài khoản...' : 'XÁC NHẬN & KÍCH HOẠT TÀI KHOẢN →'}
           </button>
         </form>
 
-        <div style={{ marginTop: '24px', fontSize: '13px' }}>
-          <Link to="/login" style={{ color: 'var(--color-outline)' }}>
-            ← Quay lại trang Đăng nhập
+        {/* Bottom Back Links */}
+        <div style={{ marginTop: '22px', display: 'flex', justifyContent: 'center', gap: '16px', fontSize: '12.5px', color: '#6b7280' }}>
+          <Link to="/register" style={{ color: '#095744', textDecoration: 'none', fontWeight: '500' }}>
+            Đổi địa chỉ email
+          </Link>
+          <span>•</span>
+          <Link to="/login" style={{ color: '#6b7280', textDecoration: 'none' }}>
+            Quay lại Đăng nhập
           </Link>
         </div>
       </div>
@@ -280,3 +405,4 @@ export const OtpVerification: React.FC = () => {
   );
 };
 
+export default OtpVerification;

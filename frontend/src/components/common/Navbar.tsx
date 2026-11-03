@@ -1,32 +1,63 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { api } from '../../services/api';
-import { HealthStatus, UserRole } from '../../types';
+import { UserRole } from '../../types';
 import {
   BrainIcon,
-  BookmarkIcon,
   BellIcon,
   UploadIcon,
   UserIcon,
-  ChevronDownIcon
+  ChevronDownIcon,
+  ChevronUpIcon,
+  HelpCircleIcon,
+  BriefcaseDotIcon,
+  CvBadgeIcon,
+  LogOutIcon
 } from './Icons';
 
-export const Navbar: React.FC = () => {
-  const { user, role, isAuthenticated, logout, switchRole } = useAuth();
+interface NavbarProps {
+  hideAuthButtons?: boolean;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ hideAuthButtons = false }) => {
+  const { user, role, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const [health, setHealth] = useState<HealthStatus>({ status: 'CHECKING' });
+  const isAuthPage =
+    location.pathname === '/login' ||
+    location.pathname === '/register' ||
+    location.pathname === '/verify-otp' ||
+    hideAuthButtons;
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isJobMenuOpen, setIsJobMenuOpen] = useState(true);
+  const [isCvMenuOpen, setIsCvMenuOpen] = useState(true);
+  const menuRef = useRef<HTMLDivElement>(null);
 
+  const numericId = React.useMemo(() => {
+    if (!user) return '10729635';
+    let hash = 0;
+    const str = user.email || user.id || 'candidate';
+    for (let i = 0; i < str.length; i++) {
+      hash = (hash << 5) - hash + str.charCodeAt(i);
+      hash |= 0;
+    }
+    return Math.abs((hash % 90000000) + 10000000).toString();
+  }, [user]);
+
+  // Close dropdown on route change
   useEffect(() => {
-    let mounted = true;
-    api.checkHealth().then((res) => {
-      if (mounted) setHealth(res);
-    });
-    return () => {
-      mounted = false;
+    setIsUserMenuOpen(false);
+  }, [location.pathname]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
     };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const handleLogout = () => {
@@ -131,6 +162,23 @@ export const Navbar: React.FC = () => {
             Việc làm
           </Link>
 
+          <Link
+            to="/tuyen-dung"
+            style={{
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              fontSize: '14px',
+              fontWeight: location.pathname === '/tuyen-dung' ? '700' : '500',
+              color: location.pathname === '/tuyen-dung' ? 'var(--color-primary-container)' : 'var(--color-on-surface-variant)',
+              borderBottom: location.pathname === '/tuyen-dung' ? '2px solid var(--color-primary-container)' : '2px solid transparent',
+              textDecoration: 'none',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            Tuyển dụng
+          </Link>
+
           <a
             href="#cam-nang"
             style={{
@@ -185,261 +233,414 @@ export const Navbar: React.FC = () => {
 
         {/* Right Action Icons & User Dropdown */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
-          {/* Bookmark Button */}
-          <button
-            type="button"
-            title="Việc làm đã lưu"
-            style={{
-              width: '36px',
-              height: '36px',
-              borderRadius: '8px',
-              border: 'none',
-              backgroundColor: 'transparent',
-              color: 'var(--color-on-surface-variant)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              transition: 'background-color 0.15s ease'
-            }}
-          >
-            <BookmarkIcon size={18} />
-          </button>
-
-          {/* Notifications Button */}
-          <button
-            type="button"
-            title="Thông báo hệ thống"
-            style={{
-              position: 'relative',
-              width: '36px',
-              height: '36px',
-              borderRadius: '8px',
-              border: 'none',
-              backgroundColor: 'transparent',
-              color: 'var(--color-on-surface-variant)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              transition: 'background-color 0.15s ease'
-            }}
-          >
-            <BellIcon size={18} />
-            <span
+          {isAuthPage ? (
+            /* Auth Pages (Login / Register): Hide [Đăng tin ngay], [Đăng ký], [Đăng nhập] - Show clean Support link */
+            <a
+              href="mailto:support@cloudjob.vn"
               style={{
-                position: 'absolute',
-                top: '8px',
-                right: '8px',
-                width: '7px',
-                height: '7px',
-                borderRadius: '50%',
-                backgroundColor: 'var(--color-error)'
-              }}
-            />
-          </button>
-
-          {/* Upload CV CTA Button */}
-          <Link
-            to="/candidate"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '7px 14px',
-              borderRadius: 'var(--radius-md)',
-              backgroundColor: 'var(--color-primary-container)',
-              color: 'var(--color-on-primary)',
-              fontSize: '13px',
-              fontWeight: '600',
-              textDecoration: 'none',
-              boxShadow: 'var(--shadow-sm)',
-              transition: 'background-color 0.2s ease'
-            }}
-          >
-            <UploadIcon size={16} color="#ffffff" />
-            <span>Tải CV lên (AI Check)</span>
-          </Link>
-
-          {/* Vertical divider */}
-          <div
-            style={{
-              height: '24px',
-              width: '1px',
-              backgroundColor: 'var(--color-surface-container-high)',
-              margin: '0 4px'
-            }}
-          />
-
-          {/* User Account / Role Switcher Menu */}
-          <div style={{ position: 'relative' }}>
-            <button
-              type="button"
-              onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-              style={{
-                display: 'flex',
+                display: 'inline-flex',
                 alignItems: 'center',
-                gap: '8px',
-                padding: '4px 8px',
+                gap: '6px',
+                fontSize: '13px',
+                fontWeight: '500',
+                color: 'var(--color-on-surface-variant)',
+                textDecoration: 'none',
+                padding: '6px 14px',
                 borderRadius: 'var(--radius-md)',
-                backgroundColor: 'transparent',
-                border: 'none',
-                cursor: 'pointer',
-                transition: 'background-color 0.15s ease'
+                backgroundColor: 'var(--color-surface-container-low)',
+                border: '1px solid var(--color-outline-variant)',
+                transition: 'all 0.15s ease'
               }}
+              title="Trung tâm hỗ trợ CloudJob"
             >
-              <div
+              <HelpCircleIcon size={16} color="var(--color-on-surface-variant)" />
+              <span>Hỗ trợ</span>
+            </a>
+          ) : isAuthenticated && user ? (
+            /* Logged-in state */
+            <>
+              {/* Notifications Button */}
+              <button
+                type="button"
+                title="Thông báo hệ thống"
                 style={{
-                  width: '32px',
-                  height: '32px',
-                  borderRadius: '50%',
-                  backgroundColor: 'var(--color-primary)',
-                  color: '#ffffff',
+                  position: 'relative',
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  backgroundColor: 'transparent',
+                  color: 'var(--color-on-surface-variant)',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'background-color 0.15s ease'
                 }}
               >
-                <UserIcon size={16} color="#ffffff" />
-              </div>
+                <BellIcon size={18} />
+                <span
+                  style={{
+                    position: 'absolute',
+                    top: '8px',
+                    right: '8px',
+                    width: '7px',
+                    height: '7px',
+                    borderRadius: '50%',
+                    backgroundColor: 'var(--color-error)'
+                  }}
+                />
+              </button>
 
-              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left', lineHeight: 1.2 }}>
-                <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-on-surface)' }}>
-                  {user ? user.fullName : 'Tuấn Hoàng'}
-                </span>
-                <span style={{ fontSize: '11px', color: 'var(--color-on-surface-variant)' }}>
-                  {role ? roleLabels[role] : 'Ứng viên'}
-                </span>
-              </div>
+              {/* Role-specific Action CTA Button */}
+              {role === 'recruiter' ? (
+                <Link
+                  to="/recruiter"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '7px 14px',
+                    borderRadius: 'var(--radius-md)',
+                    backgroundColor: 'var(--color-primary-container)',
+                    color: '#ffffff',
+                    fontSize: '13px',
+                    fontWeight: '600',
+                    textDecoration: 'none',
+                    boxShadow: 'var(--shadow-sm)',
+                    transition: 'background-color 0.2s ease'
+                  }}
+                >
+                  <UploadIcon size={15} color="#ffffff" />
+                  <span>Đăng tin tuyển dụng</span>
+                </Link>
+              ) : role === 'admin' ? (
+                <Link
+                  to="/admin"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '7px 14px',
+                    borderRadius: 'var(--radius-md)',
+                    backgroundColor: 'var(--color-primary-container)',
+                    color: '#ffffff',
+                    fontSize: '13px',
+                    fontWeight: '600',
+                    textDecoration: 'none',
+                    boxShadow: 'var(--shadow-sm)',
+                    transition: 'background-color 0.2s ease'
+                  }}
+                >
+                  <span>Bảng quản trị</span>
+                </Link>
+              ) : (
+                <Link
+                  to="/candidate"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '7px 14px',
+                    borderRadius: 'var(--radius-md)',
+                    backgroundColor: 'var(--color-primary-container)',
+                    color: '#ffffff',
+                    fontSize: '13px',
+                    fontWeight: '600',
+                    textDecoration: 'none',
+                    boxShadow: 'var(--shadow-sm)',
+                    transition: 'background-color 0.2s ease'
+                  }}
+                >
+                  <UploadIcon size={16} color="#ffffff" />
+                  <span>Tải CV lên (Kiểm tra AI)</span>
+                </Link>
+              )}
 
-              <ChevronDownIcon size={14} color="var(--color-on-surface-variant)" />
-            </button>
-
-            {/* User Dropdown Menu */}
-            {isUserMenuOpen && (
+              {/* Vertical divider */}
               <div
                 style={{
-                  position: 'absolute',
-                  right: 0,
-                  top: '44px',
-                  width: '260px',
-                  backgroundColor: 'var(--color-surface-container-lowest)',
-                  borderRadius: 'var(--radius-md)',
-                  boxShadow: 'var(--shadow-lg)',
-                  border: '1px solid var(--color-surface-container-high)',
-                  padding: '12px',
-                  zIndex: 100,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '10px'
+                  height: '24px',
+                  width: '1px',
+                  backgroundColor: 'var(--color-surface-container-high)',
+                  margin: '0 4px'
                 }}
-              >
-                <div style={{ paddingBottom: '8px', borderBottom: '1px solid var(--color-surface-container)' }}>
-                  <p style={{ fontSize: '13px', fontWeight: '700', color: 'var(--color-on-surface)', margin: 0 }}>
-                    {user ? user.fullName : 'Tuấn Hoàng'}
-                  </p>
-                  <p style={{ fontSize: '11px', color: 'var(--color-on-surface-variant)', margin: 0 }}>
-                    {user ? user.email : 'tuan.hoang@awscloud.vn'}
-                  </p>
-                </div>
+              />
 
-                {/* Role Switcher */}
-                <div>
-                  <span style={{ fontSize: '11px', fontWeight: '600', color: 'var(--color-on-surface-variant)', display: 'block', marginBottom: '6px' }}>
-                    Chuyển đổi vai trò trải nghiệm:
-                  </span>
-                  <div style={{ display: 'flex', gap: '4px', backgroundColor: 'var(--color-surface-container)', padding: '2px', borderRadius: 'var(--radius-sm)' }}>
-                    {(['candidate', 'recruiter', 'admin'] as const).map((r) => {
-                      const active = role === r;
-                      return (
-                        <button
-                          key={r}
-                          type="button"
-                          onClick={() => {
-                            switchRole(r);
-                            setIsUserMenuOpen(false);
-                            if (r === 'candidate') navigate('/candidate');
-                            else if (r === 'recruiter') navigate('/recruiter');
-                            else if (r === 'admin') navigate('/admin');
-                          }}
-                          style={{
-                            flex: 1,
-                            border: 'none',
-                            backgroundColor: active ? 'var(--color-primary-container)' : 'transparent',
-                            color: active ? '#ffffff' : 'var(--color-on-surface)',
-                            fontSize: '11px',
-                            fontWeight: active ? '700' : '500',
-                            padding: '4px',
-                            borderRadius: '4px',
-                            cursor: 'pointer'
-                          }}
-                        >
-                          {r === 'candidate' ? 'Ứng viên' : r === 'recruiter' ? 'HR' : 'Admin'}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* API Health Status */}
-                <div
+              {/* User Account / Role Switcher Menu */}
+              <div ref={menuRef} style={{ position: 'relative' }}>
+                <button
+                  type="button"
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '6px 8px',
-                    borderRadius: '4px',
-                    backgroundColor: health.status === 'UP' ? 'rgba(0, 108, 76, 0.08)' : 'rgba(186, 26, 26, 0.08)',
-                    fontSize: '11px'
+                    gap: '8px',
+                    padding: '4px 8px',
+                    borderRadius: 'var(--radius-md)',
+                    backgroundColor: isUserMenuOpen ? 'var(--color-surface-container)' : 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.15s ease'
                   }}
                 >
-                  <span style={{ color: 'var(--color-on-surface)' }}>Trạng thái API Backend:</span>
-                  <strong style={{ color: health.status === 'UP' ? 'var(--color-success)' : 'var(--color-error)' }}>
-                    {health.status} {health.latencyMs !== undefined ? `(${health.latencyMs}ms)` : ''}
-                  </strong>
-                </div>
-
-                {/* Logout / Login button */}
-                {isAuthenticated ? (
-                  <button
-                    type="button"
-                    onClick={handleLogout}
+                  <div
                     style={{
-                      width: '100%',
-                      padding: '8px',
-                      borderRadius: 'var(--radius-sm)',
-                      border: '1px solid var(--color-surface-container-high)',
-                      backgroundColor: 'transparent',
-                      color: 'var(--color-error)',
-                      fontSize: '12px',
-                      fontWeight: '600',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    Đăng xuất
-                  </button>
-                ) : (
-                  <Link
-                    to="/login"
-                    onClick={() => setIsUserMenuOpen(false)}
-                    style={{
-                      display: 'block',
-                      textAlign: 'center',
-                      padding: '8px',
-                      borderRadius: 'var(--radius-sm)',
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '50%',
                       backgroundColor: 'var(--color-primary-container)',
                       color: '#ffffff',
-                      fontSize: '12px',
-                      fontWeight: '600',
-                      textDecoration: 'none'
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '13px',
+                      fontWeight: '700'
                     }}
                   >
-                    Đăng nhập tài khoản
-                  </Link>
+                    {user.fullName ? user.fullName.charAt(0).toUpperCase() : <UserIcon size={16} color="#ffffff" />}
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left', lineHeight: 1.2 }}>
+                    <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-on-surface)' }}>
+                      {user.fullName}
+                    </span>
+                    <span style={{ fontSize: '11px', color: 'var(--color-on-surface-variant)' }}>
+                      {role ? roleLabels[role] : 'Ứng viên'}
+                    </span>
+                  </div>
+
+                  <ChevronDownIcon size={14} color="var(--color-on-surface-variant)" />
+                </button>
+
+                {/* User Dropdown Menu (Chuẩn theo mẫu) */}
+                {isUserMenuOpen && (
+                  <div className="user-dropdown-menu">
+                    {/* 1. Header Profile Card */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '16px 18px' }}>
+                      <div
+                        style={{
+                          width: '52px',
+                          height: '52px',
+                          borderRadius: '50%',
+                          backgroundColor: '#cbd5e1',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0,
+                          overflow: 'hidden'
+                        }}
+                      >
+                        <svg width="34" height="34" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true">
+                          <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
+                        </svg>
+                      </div>
+
+                      <div style={{ minWidth: 0, flex: 1 }}>
+                        <div style={{ fontSize: '16px', fontWeight: '700', color: '#1e293b', lineHeight: 1.25 }}>
+                          {user.fullName}
+                        </div>
+                        <div style={{ fontSize: '13px', fontWeight: '500', color: '#334155', marginTop: '3px' }}>
+                          Tài khoản đã xác thực
+                        </div>
+                        <div
+                          style={{
+                            fontSize: '11.5px',
+                            color: '#64748b',
+                            marginTop: '3px',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis'
+                          }}
+                          title={`ID ${numericId} | ${user.email}`}
+                        >
+                          ID {numericId} <span style={{ color: '#cbd5e1', margin: '0 4px' }}>|</span> {user.email}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style={{ height: '1px', backgroundColor: '#f1f5f9' }} />
+
+                    {/* 2. Quản lý tìm việc Section */}
+                    <div>
+                      <button
+                        type="button"
+                        onClick={() => setIsJobMenuOpen(!isJobMenuOpen)}
+                        className="user-section-header"
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                          <BriefcaseDotIcon size={20} />
+                          <span style={{ fontSize: '14.5px', fontWeight: '700', color: '#1e293b' }}>
+                            Quản lý tìm việc
+                          </span>
+                        </div>
+                        {isJobMenuOpen ? (
+                          <ChevronUpIcon size={18} color="#475569" />
+                        ) : (
+                          <ChevronDownIcon size={18} color="#475569" />
+                        )}
+                      </button>
+
+                      {isJobMenuOpen && (
+                        <div style={{ paddingBottom: '6px' }}>
+                          <Link to="/candidate" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
+                            Việc làm đã lưu
+                          </Link>
+                          <Link to="/candidate" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
+                            Việc làm đã ứng tuyển
+                          </Link>
+                          <Link to="/" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
+                            Việc làm phù hợp với bạn
+                          </Link>
+                          <Link to="/candidate" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
+                            Cài đặt gợi ý việc làm
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+
+                    <div style={{ height: '1px', backgroundColor: '#f1f5f9' }} />
+
+                    {/* 3. Quản lý CV & Cover letter Section */}
+                    <div>
+                      <button
+                        type="button"
+                        onClick={() => setIsCvMenuOpen(!isCvMenuOpen)}
+                        className="user-section-header"
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                          <CvBadgeIcon size={20} />
+                          <span style={{ fontSize: '14.5px', fontWeight: '700', color: '#1e293b' }}>
+                            Quản lý CV &amp; Cover letter
+                          </span>
+                        </div>
+                        {isCvMenuOpen ? (
+                          <ChevronUpIcon size={18} color="#475569" />
+                        ) : (
+                          <ChevronDownIcon size={18} color="#475569" />
+                        )}
+                      </button>
+
+                      {isCvMenuOpen && (
+                        <div style={{ paddingBottom: '6px' }}>
+                          <Link to="/candidate" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
+                            CV của tôi
+                          </Link>
+                          <Link to="/candidate" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
+                            Cover Letter của tôi
+                          </Link>
+                          <Link to="/candidate" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
+                            Nhà tuyển dụng muốn kết nối với bạn
+                          </Link>
+                          <Link to="/candidate" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
+                            Nhà tuyển dụng xem hồ sơ
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+
+                    <div style={{ height: '1px', backgroundColor: '#f1f5f9' }} />
+
+                    {/* 4. Bottom Toolbar: Logout Action */}
+                    <div style={{ padding: '12px 16px', backgroundColor: '#fafafa' }}>
+                      <button
+                        type="button"
+                        onClick={handleLogout}
+                        style={{
+                          width: '100%',
+                          padding: '9px 12px',
+                          borderRadius: '6px',
+                          border: '1px solid #fee2e2',
+                          backgroundColor: '#ffffff',
+                          color: '#dc2626',
+                          fontSize: '13px',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                          transition: 'all 0.15s ease'
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#fef2f2')}
+                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#ffffff')}
+                      >
+                        <LogOutIcon size={15} color="#dc2626" />
+                        <span>Đăng xuất</span>
+                      </button>
+                    </div>
+                  </div>
                 )}
               </div>
-            )}
-          </div>
+            </>
+          ) : (
+            /* Guest / Unauthenticated State */
+            <>
+              {/* Button Đăng tin ngay (được đưa lên đầu) */}
+              <Link
+                to="/tuyen-dung"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '7px 16px',
+                  borderRadius: 'var(--radius-md)',
+                  backgroundColor: 'var(--color-inverse-surface)',
+                  color: 'var(--color-inverse-on-surface)',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  textDecoration: 'none',
+                  boxShadow: 'var(--shadow-sm)',
+                  transition: 'opacity 0.15s ease'
+                }}
+              >
+                <UploadIcon size={15} color="var(--color-inverse-on-surface)" />
+                <span>Đăng tin ngay</span>
+              </Link>
+
+              {/* Button Đăng nhập */}
+              <Link
+                to="/login"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '7px 16px',
+                  borderRadius: 'var(--radius-md)',
+                  border: '1px solid var(--color-outline-variant)',
+                  backgroundColor: '#ffffff',
+                  color: 'var(--color-primary-container)',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  textDecoration: 'none',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                Đăng nhập
+              </Link>
+
+              {/* Button Đăng ký */}
+              <Link
+                to="/register"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '7px 18px',
+                  borderRadius: 'var(--radius-md)',
+                  backgroundColor: 'var(--color-primary-container)',
+                  color: '#ffffff',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  textDecoration: 'none',
+                  boxShadow: 'var(--shadow-sm)',
+                  transition: 'background-color 0.15s ease'
+                }}
+              >
+                Đăng ký
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>

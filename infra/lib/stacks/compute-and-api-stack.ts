@@ -102,6 +102,36 @@ export class ComputeAndApiStack extends cdk.Stack {
       }
     );
 
+    // POST /api/v1/auth/send-otp (Send OTP verification email via AWS SES)
+    const sendOtpFunction = new lambda.Function(this, 'SendOtpFunction', {
+      functionName: `${config.projectName}-${config.stage}-send-otp`,
+      runtime: lambda.Runtime.NODEJS_20_X,
+      handler: 'index.handler',
+      code: lambda.Code.fromAsset(
+        path.join(__dirname, '../../../backend/functions/api/auth/send-otp')
+      ),
+      timeout: cdk.Duration.seconds(15),
+      memorySize: 256,
+      environment: {
+        STAGE: config.stage,
+        PROJECT_NAME: config.projectName,
+        SES_SENDER_EMAIL: config.notificationSenderEmail || 'tinthanhn81@gmail.com'
+      }
+    });
+
+    sendOtpFunction.addToRolePolicy(
+      new cdk.aws_iam.PolicyStatement({
+        actions: ['ses:SendEmail', 'ses:SendRawEmail'],
+        resources: ['*']
+      })
+    );
+
+    const sendOtpResource = authResource.addResource('send-otp');
+    sendOtpResource.addMethod(
+      'POST',
+      new apigateway.LambdaIntegration(sendOtpFunction)
+    );
+
     // 5. AWS WAF Association (Regional WebACL protection for REST API)
     if (props.webAclArn) {
       this.webAclAssociation = new wafv2.CfnWebACLAssociation(this, 'ApiGatewayWebAclAssociation', {

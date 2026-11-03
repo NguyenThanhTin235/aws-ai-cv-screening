@@ -8,8 +8,15 @@ export const RecruiterDashboard: React.FC = () => {
   const { user } = useAuth();
 
   // Company options for recruiter view
-  const companies = Array.from(new Set(ALL_JOBS.map((j) => j.companyName))).slice(0, 8);
-  const [selectedCompany, setSelectedCompany] = useState<string>(companies[0] || 'Authentic Education Hub');
+  const companies = React.useMemo(() => {
+    const list = Array.from(new Set(ALL_JOBS.map((j) => j.companyName))).slice(0, 8);
+    if (user?.companyName && !list.includes(user.companyName)) {
+      list.unshift(user.companyName);
+    }
+    return list;
+  }, [user?.companyName]);
+
+  const [selectedCompany, setSelectedCompany] = useState<string>(() => user?.companyName || companies[0] || 'FinStream Digital Bank');
 
   // Filter jobs for selected company
   const companyJobs = ALL_JOBS.filter((j) => j.companyName === selectedCompany);

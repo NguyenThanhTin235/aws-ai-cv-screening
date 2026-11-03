@@ -1,176 +1,171 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ShieldIcon, BrainIcon } from './Icons';
+import '../../styles/footer.css';
 
 export const Footer: React.FC = () => {
   return (
-    <footer
-      style={{
-        backgroundColor: 'var(--color-surface-container-lowest)',
-        borderTop: '1px solid var(--color-surface-container-high)',
-        boxShadow: '0 -1px 6px rgba(0, 0, 0, 0.03)',
-        marginTop: 'auto',
-        fontSize: '13px',
-        color: 'var(--color-on-surface-variant)'
-      }}
-    >
-      <div
-        style={{
-          maxWidth: '1280px',
-          margin: '0 auto',
-          padding: '40px 24px 24px 24px'
-        }}
-      >
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-            gap: '32px',
-            paddingBottom: '32px',
-            borderBottom: '1px solid var(--color-surface-container)'
-          }}
-        >
-          {/* Brand & Mission */}
-          <div style={{ gridColumn: 'span 1' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+    <footer className="site-footer">
+      <div className="site-footer-inner">
+        <div className="site-footer-grid">
+          {/* Cột 1: Thương hiệu CloudJob & Sứ mệnh AI */}
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
               <div
                 style={{
-                  width: '28px',
-                  height: '28px',
-                  borderRadius: '6px',
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '8px',
                   backgroundColor: 'var(--color-primary-container)',
                   color: '#ffffff',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  boxShadow: 'var(--shadow-sm)'
                 }}
               >
-                <BrainIcon size={16} color="#ffffff" />
+                <BrainIcon size={18} color="#ffffff" />
               </div>
-              <span style={{ fontSize: '17px', fontWeight: '700', color: 'var(--color-primary)' }}>
+              <span style={{ fontSize: '18px', fontWeight: '700', color: 'var(--color-primary)', letterSpacing: '-0.02em' }}>
                 Cloud<span style={{ color: 'var(--color-primary-container)', fontWeight: '600' }}>Job</span>
               </span>
             </div>
 
-            <p style={{ fontSize: '13px', lineHeight: '1.55', color: 'var(--color-on-surface-variant)', marginBottom: '16px' }}>
-              Nền tảng sàng lọc và đánh giá hồ sơ tuyển dụng thông minh vận hành trên AWS Bedrock và Textract OCR, trao quyền định hướng nghề nghiệp minh bạch và bảo mật cho ứng viên.
+            <p style={{ fontSize: '13px', lineHeight: '1.6', color: 'var(--color-on-surface-variant)', marginBottom: '16px' }}>
+              Nền tảng tuyển dụng và sàng lọc hồ sơ nhân tài Cloud &amp; DevOps thông minh. Vận hành trên AWS Bedrock và Textract OCR, mang đến giải pháp đánh giá minh bạch, chuẩn xác và bảo mật.
             </p>
 
-            <div
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '6px 12px',
-                borderRadius: 'var(--radius-full)',
-                backgroundColor: 'var(--color-surface-container)',
-                color: 'var(--color-primary-container)',
-                fontSize: '12px',
-                fontWeight: '500'
-              }}
-            >
+            <div className="site-footer-pii-badge">
               <ShieldIcon size={14} color="var(--color-primary-container)" />
-              <span>Mã hóa bảo vệ PII theo Nghị định 13/2023/NĐ-CP &amp; chuẩn GDPR</span>
+              <span>Bảo vệ PII theo Nghị định 13/2023/NĐ-CP &amp; GDPR</span>
             </div>
+
+            <p style={{ fontSize: '11.5px', color: 'var(--color-outline)', margin: 0, lineHeight: 1.4 }}>
+              Hạ tầng 100% AWS Serverless &amp; Data Center Singapore (ap-southeast-1).
+            </p>
           </div>
 
-          {/* Candidates Column */}
+          {/* Cột 2: Dành cho Ứng viên */}
           <div>
-            <h4
-              style={{
-                fontSize: '14px',
-                fontWeight: '700',
-                color: 'var(--color-on-surface)',
-                marginBottom: '12px'
-              }}
-            >
-              Dành Cho Ứng Viên
-            </h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '13px' }}>
+            <h4 className="site-footer-col-title">Dành Cho Ứng Viên</h4>
+            <ul className="site-footer-nav-list">
               <li>
-                <a href="/" style={{ color: 'var(--color-on-surface-variant)', textDecoration: 'none' }}>
-                  Khám phá việc làm AI
-                </a>
+                <Link to="/" className="site-footer-link">
+                  Việc làm Cloud &amp; DevOps
+                </Link>
               </li>
               <li>
-                <a href="/candidate" style={{ color: 'var(--color-on-surface-variant)', textDecoration: 'none' }}>
-                  Phân tích độ tương thích
-                </a>
+                <Link to="/candidate" className="site-footer-link">
+                  Phân tích &amp; Chẩn đoán CV tức thì
+                </Link>
               </li>
               <li>
-                <a href="#cam-nang-cv-ai" style={{ color: 'var(--color-on-surface-variant)', textDecoration: 'none' }}>
+                <a href="#cam-nang-cv" className="site-footer-link">
                   Hướng dẫn chuẩn ATS Bedrock
                 </a>
               </li>
               <li>
-                <a href="/candidate" style={{ color: 'var(--color-on-surface-variant)', textDecoration: 'none' }}>
-                  Chẩn đoán CV tức thì
+                <a href="#khao-sat-luong" className="site-footer-link">
+                  Báo cáo mức lương Cloud 2026
+                </a>
+              </li>
+              <li>
+                <a href="#cam-nang-aws" className="site-footer-link">
+                  Cẩm nang phỏng vấn AWS Certified
+                </a>
+              </li>
+              <li>
+                <Link to="/candidate" className="site-footer-link">
+                  Quản lý hồ sơ ứng tuyển
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Cột 3: Dành cho Doanh nghiệp */}
+          <div>
+            <h4 className="site-footer-col-title">Dành Cho Doanh Nghiệp</h4>
+            <ul className="site-footer-nav-list">
+              <li>
+                <Link to="/tuyen-dung" className="site-footer-link">
+                  Đăng tin tuyển dụng Cloud
+                </Link>
+              </li>
+              <li>
+                <Link to="/register?role=recruiter" className="site-footer-link">
+                  Đăng ký tài khoản Nhà tuyển dụng
+                </Link>
+              </li>
+              <li>
+                <Link to="/tuyen-dung" className="site-footer-link">
+                  Sàng lọc hồ sơ tự động bằng AI Bedrock
+                </Link>
+              </li>
+              <li>
+                <a href="#danh-gia-ky-thuat" className="site-footer-link">
+                  Đánh giá kỹ năng thực chiến
+                </a>
+              </li>
+              <li>
+                <a href="#bao-cao-it" className="site-footer-link">
+                  Báo cáo xu hướng thị trường IT
+                </a>
+              </li>
+              <li>
+                <a href="#lien-he-dn" className="site-footer-link">
+                  Liên hệ tư vấn giải pháp tuyển dụng
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Compliance & Security */}
+          {/* Cột 4: Tuân Thủ & Liên Hệ */}
           <div>
-            <h4
-              style={{
-                fontSize: '14px',
-                fontWeight: '700',
-                color: 'var(--color-on-surface)',
-                marginBottom: '12px'
-              }}
-            >
-              Tuân Thủ &amp; Bảo Mật
-            </h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '13px' }}>
-              <li>
-                <a href="#chinh-sach-bao-mat-pii" style={{ color: 'var(--color-on-surface-variant)', textDecoration: 'none' }}>
-                  Chính sách bảo mật PII
+            <h4 className="site-footer-col-title">Tuân Thủ &amp; Liên Hệ</h4>
+            <ul className="site-footer-nav-list">
+              <li className="site-footer-info-item">
+                <strong style={{ color: 'var(--color-on-surface)' }}>Hotline:</strong> 1900 6868 (8:30 - 18:00)
+              </li>
+              <li className="site-footer-info-item">
+                <strong style={{ color: 'var(--color-on-surface)' }}>Email:</strong> support@cloudjob.vn
+              </li>
+              <li className="site-footer-info-item" style={{ marginBottom: '4px' }}>
+                <strong style={{ color: 'var(--color-on-surface)' }}>Văn phòng:</strong> Tòa nhà Cloud Center, Hà Nội &amp; TP. HCM
+              </li>
+              <li style={{ paddingTop: '4px', borderTop: '1px solid var(--color-surface-container)' }}>
+                <a href="#chinh-sach-bao-mat-pii" className="site-footer-link">
+                  Chính sách bảo mật dữ liệu PII
                 </a>
               </li>
               <li>
-                <a href="#tieu-chuan-ai" style={{ color: 'var(--color-on-surface-variant)', textDecoration: 'none' }}>
+                <a href="#tieu-chuan-ai" className="site-footer-link">
                   Nguyên tắc AI Đạo đức &amp; Minh bạch
                 </a>
               </li>
               <li>
-                <a href="#dieu-khoan-su-dung" style={{ color: 'var(--color-on-surface-variant)', textDecoration: 'none' }}>
-                  Điều khoản sử dụng
-                </a>
-              </li>
-              <li>
-                <a href="#trung-tam-ho-tro" style={{ color: 'var(--color-on-surface-variant)', textDecoration: 'none' }}>
-                  Trung tâm hỗ trợ
+                <a href="#dieu-khoan-su-dung" className="site-footer-link">
+                  Điều khoản sử dụng dịch vụ
                 </a>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom copyright */}
-        <div
-          style={{
-            paddingTop: '20px',
-            display: 'flex',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '12px',
-            fontSize: '12px',
-            color: 'var(--color-on-surface-variant)'
-          }}
-        >
-          <p>© 2026 CloudJob. Được phát triển trên nền tảng AWS Cloud-Native. Toàn bộ bản quyền được bảo lưu.</p>
+        {/* Footer Bottom Bar */}
+        <div className="site-footer-bottom">
+          <p style={{ margin: 0 }}>
+            © 2026 CloudJob. Nền tảng tuyển dụng Cloud-Native trên AWS. Toàn bộ bản quyền được bảo lưu.
+          </p>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span
-              style={{
-                width: '8px',
-                height: '8px',
-                borderRadius: '50%',
-                backgroundColor: 'var(--color-primary-container)'
-              }}
-            />
-            <span>Hệ thống máy chủ AWS AP-Southeast-1</span>
+          <div className="site-footer-status-group">
+            <div className="site-footer-status-pill">
+              <span className="site-footer-status-dot" />
+              <span>Hệ thống máy chủ AWS AP-Southeast-1</span>
+            </div>
+
+            <div className="site-footer-status-pill">
+              <span>Mã hóa AWS KMS &amp; TLS 1.3</span>
+            </div>
           </div>
         </div>
       </div>
