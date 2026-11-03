@@ -56,7 +56,7 @@ export const CandidateDashboard: React.FC = () => {
               textDecoration: 'none'
             }}
           >
-            🔍 Khám phá việc làm mới
+            Khám phá việc làm mới
           </Link>
         </div>
       </div>
@@ -72,9 +72,8 @@ export const CandidateDashboard: React.FC = () => {
             boxShadow: 'var(--shadow-sm)'
           }}
         >
-          <div style={{ fontSize: '24px', marginBottom: '12px' }}>📄</div>
           <h2 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '8px' }}>
-            Kho lưu trữ CV &amp; Nộp hồ sơ (Phase 2)
+            Kho lưu trữ CV và Nộp hồ sơ
           </h2>
           <p style={{ fontSize: '13px', color: 'var(--color-outline)', lineHeight: 1.5 }}>
             Tải lên tệp CV PDF (&lt;= 5MB) qua S3 Presigned URL, tự động quét mã độc bằng Amazon GuardDuty Malware Protection for S3.
@@ -90,9 +89,8 @@ export const CandidateDashboard: React.FC = () => {
             boxShadow: 'var(--shadow-sm)'
           }}
         >
-          <div style={{ fontSize: '24px', marginBottom: '12px' }}>📊</div>
           <h2 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '8px' }}>
-            Báo cáo AI Skill Gap (Phase 3)
+            Báo cáo AI Skill Gap
           </h2>
           <p style={{ fontSize: '13px', color: 'var(--color-outline)', lineHeight: 1.5 }}>
             Nhận điểm Rubric 100đ chi tiết và phân tích khoảng trống kỹ năng từ Amazon Bedrock Claude Haiku qua WebSocket Push thời gian thực.
@@ -108,9 +106,8 @@ export const CandidateDashboard: React.FC = () => {
             boxShadow: 'var(--shadow-sm)'
           }}
         >
-          <div style={{ fontSize: '24px', marginBottom: '12px' }}>🛡️</div>
           <h2 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '8px' }}>
-            Quyền riêng tư DSR (Phase 4)
+            Quyền riêng tư DSR
           </h2>
           <p style={{ fontSize: '13px', color: 'var(--color-outline)', lineHeight: 1.5 }}>
             Tuân thủ Nghị định 13/2023/NĐ-CP: Tự do tải về bản trích xuất JSON hoặc yêu cầu xóa ẩn danh (Anonymization) toàn bộ dữ liệu.

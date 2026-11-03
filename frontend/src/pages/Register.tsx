@@ -130,7 +130,7 @@ export const Register: React.FC = () => {
               transition: 'all 0.15s ease'
             }}
           >
-            👤 Ứng viên Tìm việc
+            Ứng viên Tìm việc
           </button>
           <button
             type="button"
@@ -148,7 +148,7 @@ export const Register: React.FC = () => {
               transition: 'all 0.15s ease'
             }}
           >
-            🏢 Doanh nghiệp Tuyển dụng
+            Doanh nghiệp Tuyển dụng
           </button>
         </div>
 

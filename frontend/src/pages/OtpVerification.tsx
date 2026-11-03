@@ -216,7 +216,7 @@ export const OtpVerification: React.FC = () => {
           </div>
 
           <p style={{ fontSize: '11px', color: 'var(--color-outline)', marginBottom: '16px' }}>
-            💡 Mẹo thử nghiệm nhanh: gõ <strong>123456</strong> hoặc dán (Ctrl+V) mã 6 số.
+            Gợi ý thử nghiệm: gõ <strong>123456</strong> hoặc dán (Ctrl+V) mã xác thực gồm 6 chữ số.
           </p>
 
           {/* Countdown & Resend */}

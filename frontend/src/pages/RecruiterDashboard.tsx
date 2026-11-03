@@ -56,7 +56,7 @@ export const RecruiterDashboard: React.FC = () => {
               textDecoration: 'none'
             }}
           >
-            📋 Xem danh sách tin tuyển dụng
+            Xem danh sách tin tuyển dụng
           </Link>
         </div>
       </div>
@@ -72,9 +72,8 @@ export const RecruiterDashboard: React.FC = () => {
             boxShadow: 'var(--shadow-sm)'
           }}
         >
-          <div style={{ fontSize: '24px', marginBottom: '12px' }}>📝</div>
           <h2 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '8px' }}>
-            Quản lý Tin Tuyển dụng (Phase 2)
+            Quản lý Tin Tuyển dụng
           </h2>
           <p style={{ fontSize: '13px', color: 'var(--color-outline)', lineHeight: 1.5 }}>
             Tạo mới JD, tùy chỉnh thanh trượt trọng số Rubric 100đ (Skills, Experience, Education, Presentation) và đóng/mở tin.
@@ -90,9 +89,8 @@ export const RecruiterDashboard: React.FC = () => {
             boxShadow: 'var(--shadow-sm)'
           }}
         >
-          <div style={{ fontSize: '24px', marginBottom: '12px' }}>🥇</div>
           <h2 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '8px' }}>
-            Smart Leaderboard &amp; Side-by-side Review (Phase 3)
+            Bảng Xếp Hạng Ứng Viên và So Sánh Hồ Sơ
           </h2>
           <p style={{ fontSize: '13px', color: 'var(--color-outline)', lineHeight: 1.5 }}>
             Bảng xếp hạng ứng viên theo điểm AI, giao diện so sánh 3 cột (CV gốc, đánh giá AI, ghi chú thủ công &amp; Audit Trail).
@@ -108,9 +106,8 @@ export const RecruiterDashboard: React.FC = () => {
             boxShadow: 'var(--shadow-sm)'
           }}
         >
-          <div style={{ fontSize: '24px', marginBottom: '12px' }}>🌟</div>
           <h2 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '8px' }}>
-            Kho Tài Năng &amp; AI Rediscovery (Phase 3)
+            Kho Tài Năng và Gợi Ý Ứng Viên Tiềm Năng
           </h2>
           <p style={{ fontSize: '13px', color: 'var(--color-outline)', lineHeight: 1.5 }}>
             Tái phát hiện các ứng viên tiềm năng từ các đợt ứng tuyển trước bằng thuật toán đối chiếu năng lực tự động.

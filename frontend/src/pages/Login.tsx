@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { UserRole } from '../types';
+import { EyeIcon, EyeOffIcon } from '../components/common/Icons';
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -285,7 +286,7 @@ export const Login: React.FC = () => {
                   cursor: 'pointer'
                 }}
               >
-                👤 Ứng viên
+                Ứng viên
               </button>
               <button
                 type="button"
@@ -299,7 +300,7 @@ export const Login: React.FC = () => {
                   cursor: 'pointer'
                 }}
               >
-                🏢 Tuyển dụng
+                Nhà tuyển dụng
               </button>
               <button
                 type="button"
@@ -313,7 +314,7 @@ export const Login: React.FC = () => {
                   cursor: 'pointer'
                 }}
               >
-                🛡️ Admin
+                Quản trị viên
               </button>
             </div>
           </div>
@@ -409,10 +410,13 @@ export const Login: React.FC = () => {
                     background: 'none',
                     border: 'none',
                     cursor: 'pointer',
-                    fontSize: '14px'
+                    display: 'flex',
+                    alignItems: 'center',
+                    color: 'var(--color-outline)'
                   }}
+                  aria-label={showPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
                 >
-                  {showPassword ? '🙈' : '👁️'}
+                  {showPassword ? <EyeOffIcon size={16} /> : <EyeIcon size={16} />}
                 </button>
               </div>
             </div>

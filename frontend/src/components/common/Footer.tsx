@@ -45,7 +45,7 @@ export const Footer: React.FC = () => {
               border: '1px solid var(--color-outline-variant)'
             }}
           >
-            🛡️ ISO/IEC 27001
+            ISO/IEC 27001
           </span>
           <span
             style={{
@@ -58,7 +58,7 @@ export const Footer: React.FC = () => {
               border: '1px solid var(--color-outline-variant)'
             }}
           >
-            ⚖️ GDPR Compliant
+            GDPR Compliant
           </span>
           <span
             style={{
@@ -71,7 +71,7 @@ export const Footer: React.FC = () => {
               border: '1px solid var(--color-outline-variant)'
             }}
           >
-            🇻🇳 Nghị định 13/2023/NĐ-CP
+            Nghị định 13/2023/NĐ-CP
           </span>
           <span
             style={{

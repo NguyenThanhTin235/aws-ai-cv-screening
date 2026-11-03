@@ -117,9 +117,8 @@ export const AdminDashboard: React.FC = () => {
             boxShadow: 'var(--shadow-sm)'
           }}
         >
-          <div style={{ fontSize: '24px', marginBottom: '12px' }}>🚨</div>
           <h2 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '8px' }}>
-            Dead-Letter Queue (DLQ) Monitor (Phase 4)
+            Giám Sát Hàng Đợi Sự Cố (DLQ)
           </h2>
           <p style={{ fontSize: '13px', color: 'var(--color-outline)', lineHeight: 1.5 }}>
             Theo dõi các tin nhắn lỗi xử lý trong SQS DLQ (`cv-screening-dlq`), phân tích nguyên nhân và thực hiện Redrive an toàn.
@@ -135,9 +134,8 @@ export const AdminDashboard: React.FC = () => {
             boxShadow: 'var(--shadow-sm)'
           }}
         >
-          <div style={{ fontSize: '24px', marginBottom: '12px' }}>⚖️</div>
           <h2 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '8px' }}>
-            Phê duyệt Yêu cầu DSR Anonymization (Phase 4)
+            Phê Duyệt Yêu Cầu Quyền Riêng Tư (DSR)
           </h2>
           <p style={{ fontSize: '13px', color: 'var(--color-outline)', lineHeight: 1.5 }}>
             Tiếp nhận và phê duyệt yêu cầu xóa dữ liệu cá nhân theo Nghị định 13/2023/NĐ-CP &amp; GDPR từ người dùng.
@@ -153,9 +151,8 @@ export const AdminDashboard: React.FC = () => {
             boxShadow: 'var(--shadow-sm)'
           }}
         >
-          <div style={{ fontSize: '24px', marginBottom: '12px' }}>📈</div>
           <h2 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '8px' }}>
-            CloudWatch &amp; WAF Metrics Dashboard
+            Chỉ Số Vận Hành CloudWatch và Bảo Mật WAF
           </h2>
           <p style={{ fontSize: '13px', color: 'var(--color-outline)', lineHeight: 1.5 }}>
             Giám sát thời gian thực số lượng request WAF bị chặn, tỷ lệ lỗi 5XX API Gateway và tổng chi phí AWS Budgets.

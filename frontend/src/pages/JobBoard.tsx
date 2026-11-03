@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Job } from '../types';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { SearchIcon, MapPinIcon } from '../components/common/Icons';
 
 const MOCK_JOBS: Job[] = [
   {
@@ -177,8 +178,8 @@ export const JobBoard: React.FC = () => {
               boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)'
             }}
           >
-            <div style={{ flex: '1 1 280px', display: 'flex', alignItems: 'center', padding: '0 12px' }}>
-              <span style={{ marginRight: '8px', fontSize: '18px' }}>🔍</span>
+            <div style={{ flex: '1 1 280px', display: 'flex', alignItems: 'center', padding: '0 12px', gap: '8px' }}>
+              <SearchIcon size={18} color="var(--color-outline)" />
               <input
                 type="text"
                 placeholder="Vị trí, kỹ năng: AWS, React, TypeScript..."
@@ -492,8 +493,9 @@ export const JobBoard: React.FC = () => {
                   </div>
 
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ fontSize: '12px', color: 'var(--color-outline)' }}>
-                      📍 {job.location}
+                    <span style={{ fontSize: '12px', color: 'var(--color-outline)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                      <MapPinIcon size={14} color="var(--color-outline)" />
+                      {job.location}
                     </span>
                     <button
                       onClick={() => handleApply(job)}
