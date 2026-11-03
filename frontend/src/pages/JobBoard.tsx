@@ -318,17 +318,27 @@ const VIETNAM_PROVINCES: ProvinceData[] = [
   }
 ];
 
+const HOT_KEYWORDS = [
+  'AWS',
+  'DevOps',
+  'Cloud Architect',
+  'Kubernetes',
+  'Terraform',
+  'CI/CD',
+  'Intern'
+];
+
 export const JobBoard: React.FC = () => {
   const { isAuthenticated, role } = useAuth();
   const navigate = useNavigate();
 
   // Search & Filter States
-  const [keyword, setKeyword] = useState('AWS Senior');
+  const [keyword, setKeyword] = useState('');
 
   // Rich Location Picker States
   const [isLocPickerOpen, setIsLocPickerOpen] = useState(false);
   const [locSearchMode, setLocSearchMode] = useState<'after_2025' | 'legacy'>('after_2025');
-  const [selectedLocations, setSelectedLocations] = useState<string[]>(['Hồ Chí Minh']);
+  const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
   const [focusedProvinceId, setFocusedProvinceId] = useState<string | null>('hcm');
   const [provinceQuery, setProvinceQuery] = useState('');
   const [districtQuery, setDistrictQuery] = useState('');
@@ -535,13 +545,19 @@ export const JobBoard: React.FC = () => {
 
   // Filter & sort logic
   const filteredJobs = JOBS_DATA.filter((job) => {
-    // Keyword match
+    // Tokenized Keyword match (splits multiple words and matches across title, company, skills, level, description)
     if (keyword.trim()) {
-      const kw = keyword.toLowerCase();
-      const inTitle = job.title.toLowerCase().includes(kw);
-      const inCompany = job.companyName.toLowerCase().includes(kw);
-      const inSkills = job.skills.some((s) => s.toLowerCase().includes(kw));
-      if (!inTitle && !inCompany && !inSkills) return false;
+      const tokens = keyword.trim().toLowerCase().split(/\s+/).filter(Boolean);
+      const searchableText = [
+        job.title,
+        job.companyName,
+        ...job.skills,
+        job.level,
+        job.description
+      ].join(' ').toLowerCase();
+
+      const matchesAllTokens = tokens.every((token) => searchableText.includes(token));
+      if (!matchesAllTokens) return false;
     }
 
     // Location match
@@ -653,6 +669,24 @@ export const JobBoard: React.FC = () => {
                   onChange={(e) => setKeyword(e.target.value)}
                   aria-label="Từ khóa tìm kiếm"
                 />
+                {keyword && (
+                  <button
+                    type="button"
+                    onClick={() => setKeyword('')}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      padding: '4px',
+                      cursor: 'pointer',
+                      color: 'var(--color-outline)',
+                      display: 'flex',
+                      alignItems: 'center'
+                    }}
+                    title="Xóa từ khóa"
+                  >
+                    <XIcon size={16} />
+                  </button>
+                )}
               </div>
 
               {/* Location Picker Component */}
@@ -913,22 +947,22 @@ export const JobBoard: React.FC = () => {
               <TrendingUpIcon size={16} color="#90d4bb" />
               Từ khóa hot:
             </span>
-            {[
-              'AWS Cloud Architect',
-              'DevOps Senior',
-              'Golang Backend',
-              'AI Engineer (Bedrock)',
-              'Fullstack Node/React'
-            ].map((kw) => (
-              <button
-                key={kw}
-                type="button"
-                className="jb-trending-pill"
-                onClick={() => setKeyword(kw)}
-              >
-                {kw}
-              </button>
-            ))}
+            {HOT_KEYWORDS.map((kw) => {
+              const isActive = keyword.trim().toLowerCase() === kw.toLowerCase();
+              return (
+                <button
+                  key={kw}
+                  type="button"
+                  className={`jb-trending-pill ${isActive ? 'active' : ''}`}
+                  onClick={() => {
+                    setKeyword((prev) => (prev.toLowerCase() === kw.toLowerCase() ? '' : kw));
+                  }}
+                  title={isActive ? `Bỏ lọc "${kw}"` : `Lọc theo "${kw}"`}
+                >
+                  {kw}
+                </button>
+              );
+            })}
           </div>
         </div>
       </section>
