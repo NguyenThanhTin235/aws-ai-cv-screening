@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/job-board.css';
@@ -27,6 +27,8 @@ import {
   FireIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
   DocumentScannerIcon,
   UploadIcon,
   XIcon
@@ -239,14 +241,167 @@ const JOBS_DATA: DetailedJob[] = [
   }
 ];
 
+interface ProvinceData {
+  id: string;
+  name: string;
+  districts: string[];
+}
+
+const VIETNAM_PROVINCES: ProvinceData[] = [
+  {
+    id: 'hcm',
+    name: 'Hồ Chí Minh',
+    districts: [
+      'Quận 1',
+      'Quận 3',
+      'Quận 7',
+      'Thành phố Thủ Đức',
+      'Bình Thạnh',
+      'Tân Bình',
+      'Phú Nhuận',
+      'Gò Vấp',
+      'Quận 10',
+      'Quận 12'
+    ]
+  },
+  {
+    id: 'hn',
+    name: 'Hà Nội',
+    districts: [
+      'Cầu Giấy',
+      'Ba Đình',
+      'Đống Đa',
+      'Hoàn Kiếm',
+      'Hai Bà Trưng',
+      'Nam Từ Liêm',
+      'Bắc Từ Liêm',
+      'Thanh Xuân',
+      'Hà Đông',
+      'Long Biên'
+    ]
+  },
+  {
+    id: 'dn',
+    name: 'Đà Nẵng',
+    districts: [
+      'Hải Châu',
+      'Thanh Khê',
+      'Sơn Trà',
+      'Ngũ Hành Sơn',
+      'Liên Chiểu',
+      'Cẩm Lệ'
+    ]
+  },
+  {
+    id: 'bn',
+    name: 'Bắc Ninh',
+    districts: [
+      'Thành phố Bắc Ninh',
+      'Từ Sơn',
+      'Yên Phong',
+      'Quế Võ',
+      'Tiên Du'
+    ]
+  },
+  {
+    id: 'dnai',
+    name: 'Đồng Nai',
+    districts: [
+      'Thành phố Biên Hòa',
+      'Long Thành',
+      'Nhơn Trạch',
+      'Trảng Bom'
+    ]
+  },
+  {
+    id: 'hy',
+    name: 'Hưng Yên',
+    districts: [
+      'Thành phố Hưng Yên',
+      'Văn Giang (Ecopark)',
+      'Văn Lâm',
+      'Mỹ Hào'
+    ]
+  },
+  {
+    id: 'hp',
+    name: 'Hải Phòng',
+    districts: [
+      'Hồng Bàng',
+      'Ngô Quyền',
+      'Lê Chân',
+      'Hải An'
+    ]
+  },
+  {
+    id: 'bd',
+    name: 'Bình Dương',
+    districts: [
+      'Thủ Dầu Một',
+      'Dĩ An',
+      'Thuận An',
+      'Bến Cát'
+    ]
+  },
+  {
+    id: 'ct',
+    name: 'Cần Thơ',
+    districts: [
+      'Ninh Kiều',
+      'Cái Răng',
+      'Bình Thủy'
+    ]
+  }
+];
+
 export const JobBoard: React.FC = () => {
   const { isAuthenticated, role } = useAuth();
   const navigate = useNavigate();
 
   // Search & Filter States
   const [keyword, setKeyword] = useState('AWS Senior');
-  const [locationFilter, setLocationFilter] = useState('all');
   const isAiMatchingActive = true;
+
+  // Rich Location Picker States
+  const [isLocPickerOpen, setIsLocPickerOpen] = useState(false);
+  const [locSearchMode, setLocSearchMode] = useState<'after_2025' | 'legacy'>('after_2025');
+  const [selectedLocations, setSelectedLocations] = useState<string[]>(['Hồ Chí Minh']);
+  const [focusedProvinceId, setFocusedProvinceId] = useState<string | null>('hcm');
+  const [provinceQuery, setProvinceQuery] = useState('');
+  const [districtQuery, setDistrictQuery] = useState('');
+  const locPickerRef = useRef<HTMLDivElement>(null);
+
+  // Close location picker when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        locPickerRef.current &&
+        !locPickerRef.current.contains(event.target as Node)
+      ) {
+        setIsLocPickerOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleToggleLocation = (locName: string) => {
+    if (selectedLocations.includes(locName)) {
+      setSelectedLocations(selectedLocations.filter((l) => l !== locName));
+    } else {
+      setSelectedLocations([...selectedLocations, locName]);
+    }
+  };
+
+  const handleClearAllLocations = () => {
+    setSelectedLocations([]);
+  };
+
+  const handleApplyLocations = () => {
+    setIsLocPickerOpen(false);
+  };
 
   // Work Mode filter states
   const [workModes, setWorkModes] = useState<Record<string, boolean>>({
@@ -310,7 +465,7 @@ export const JobBoard: React.FC = () => {
   // Reset filters
   const handleResetFilters = () => {
     setKeyword('');
-    setLocationFilter('all');
+    setSelectedLocations([]);
     setWorkModes({
       'Toàn thời gian': false,
       'Bán thời gian': false,
@@ -327,6 +482,19 @@ export const JobBoard: React.FC = () => {
     setRubricOnly(false);
   };
 
+  // Province and district filtering for location picker
+  const filteredProvinces = VIETNAM_PROVINCES.filter((p) =>
+    p.name.toLowerCase().includes(provinceQuery.toLowerCase().trim())
+  );
+
+  const activeProvinceObj = VIETNAM_PROVINCES.find((p) => p.id === focusedProvinceId);
+
+  const filteredDistricts = activeProvinceObj
+    ? activeProvinceObj.districts.filter((d) =>
+        d.toLowerCase().includes(districtQuery.toLowerCase().trim())
+      )
+    : [];
+
   // Count active work modes
   const activeWorkModesCount = Object.values(workModes).filter(Boolean).length;
 
@@ -342,10 +510,12 @@ export const JobBoard: React.FC = () => {
     }
 
     // Location match
-    if (locationFilter === 'hcm' && !job.location.includes('Hồ Chí Minh')) return false;
-    if (locationFilter === 'hn' && !job.location.includes('Hà Nội')) return false;
-    if (locationFilter === 'dn' && !job.location.includes('Đà Nẵng')) return false;
-    if (locationFilter === 'remote' && !job.location.toLowerCase().includes('remote')) return false;
+    if (selectedLocations.length > 0) {
+      const matchesLocation = selectedLocations.some((loc) =>
+        job.location.toLowerCase().includes(loc.toLowerCase())
+      );
+      if (!matchesLocation) return false;
+    }
 
     // Work Mode
     const selectedModes = Object.entries(workModes)
@@ -467,20 +637,198 @@ export const JobBoard: React.FC = () => {
                 />
               </div>
 
-              {/* Location Select */}
-              <div className="jb-input-field">
-                <MapPinIcon size={20} color="var(--color-primary-container)" />
-                <select
-                  value={locationFilter}
-                  onChange={(e) => setLocationFilter(e.target.value)}
-                  aria-label="Địa điểm làm việc"
+              {/* Location Picker Component */}
+              <div className="jb-loc-picker-wrapper" ref={locPickerRef}>
+                <div
+                  className={`jb-loc-trigger ${isLocPickerOpen ? 'open' : ''}`}
+                  onClick={() => setIsLocPickerOpen(!isLocPickerOpen)}
+                  role="button"
+                  tabIndex={0}
+                  aria-haspopup="dialog"
+                  aria-expanded={isLocPickerOpen}
                 >
-                  <option value="all">Tất cả địa điểm</option>
-                  <option value="hcm">TP. Hồ Chí Minh</option>
-                  <option value="hn">Hà Nội</option>
-                  <option value="dn">Đà Nẵng</option>
-                  <option value="remote">Làm từ xa (Remote 100%)</option>
-                </select>
+                  <div className="jb-loc-trigger-content">
+                    <MapPinIcon size={18} color="var(--color-primary-container)" />
+                    <span className={`jb-loc-trigger-text ${selectedLocations.length === 0 ? 'placeholder' : ''}`}>
+                      {selectedLocations.length === 0
+                        ? 'Tất cả địa điểm'
+                        : selectedLocations.length === 1
+                        ? selectedLocations[0]
+                        : `${selectedLocations[0]} (+${selectedLocations.length - 1})`}
+                    </span>
+                  </div>
+
+                  <div className="jb-loc-trigger-actions">
+                    {selectedLocations.length > 0 && (
+                      <span
+                        className="jb-loc-clear-icon"
+                        title="Xóa địa điểm đã chọn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedLocations([]);
+                        }}
+                      >
+                        <XIcon size={14} />
+                      </span>
+                    )}
+                    {isLocPickerOpen ? (
+                      <ChevronUpIcon size={16} color="var(--color-outline)" />
+                    ) : (
+                      <ChevronDownIcon size={16} color="var(--color-outline)" />
+                    )}
+                  </div>
+                </div>
+
+                {/* Popover Panel */}
+                {isLocPickerOpen && (
+                  <div className="jb-loc-popover" onClick={(e) => e.stopPropagation()}>
+                    {/* Header */}
+                    <div className="jb-loc-popover-header">
+                      <span className="jb-loc-popover-label">Tìm theo:</span>
+
+                      <button
+                        type="button"
+                        className={`jb-loc-radio-pill ${locSearchMode === 'legacy' ? 'active' : ''}`}
+                        onClick={() => setLocSearchMode('legacy')}
+                      >
+                        <span className="jb-loc-radio-dot">
+                          {locSearchMode === 'legacy' && <span className="jb-loc-radio-dot-inner" />}
+                        </span>
+                        <span>Tỉnh, Quận/huyện cũ</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        className={`jb-loc-radio-pill ${locSearchMode === 'after_2025' ? 'active' : ''}`}
+                        onClick={() => setLocSearchMode('after_2025')}
+                      >
+                        <span className="jb-loc-radio-dot">
+                          {locSearchMode === 'after_2025' && <span className="jb-loc-radio-dot-inner" />}
+                        </span>
+                        <span>Tỉnh, Phường/xã sau 1/7/2025</span>
+                        <span className="jb-loc-badge-new">Mới</span>
+                      </button>
+                    </div>
+
+                    {/* Split 2-Column Body */}
+                    <div className="jb-loc-split-body">
+                      {/* Left Pane: Provinces */}
+                      <div className="jb-loc-pane-left">
+                        <div className="jb-loc-search-box">
+                          <SearchIcon size={16} color="var(--color-outline)" />
+                          <input
+                            type="text"
+                            placeholder="Nhập Tỉnh/Thành phố"
+                            value={provinceQuery}
+                            onChange={(e) => setProvinceQuery(e.target.value)}
+                          />
+                        </div>
+
+                        <div className="jb-loc-scroll-list">
+                          {filteredProvinces.map((prov) => {
+                            const isChecked = selectedLocations.includes(prov.name);
+                            const isFocused = focusedProvinceId === prov.id;
+                            return (
+                              <div
+                                key={prov.id}
+                                className={`jb-loc-item-row ${isFocused ? 'focused' : ''}`}
+                                onClick={() => setFocusedProvinceId(prov.id)}
+                              >
+                                <label
+                                  className="jb-loc-item-left-content"
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  <input
+                                    type="checkbox"
+                                    checked={isChecked}
+                                    onChange={() => handleToggleLocation(prov.name)}
+                                  />
+                                  <span>{prov.name}</span>
+                                </label>
+                                <ChevronRightIcon size={14} color="var(--color-outline)" />
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Right Pane: Districts / Wards */}
+                      <div className="jb-loc-pane-right">
+                        <div className="jb-loc-search-box">
+                          <SearchIcon size={16} color="var(--color-outline)" />
+                          <input
+                            type="text"
+                            placeholder="Nhập Phường/Xã/Quận/Huyện"
+                            value={districtQuery}
+                            onChange={(e) => setDistrictQuery(e.target.value)}
+                          />
+                        </div>
+
+                        <div className="jb-loc-scroll-list">
+                          {activeProvinceObj ? (
+                            filteredDistricts.length > 0 ? (
+                              filteredDistricts.map((dist) => {
+                                const isChecked = selectedLocations.includes(dist);
+                                return (
+                                  <label
+                                    key={dist}
+                                    className="jb-loc-item-row"
+                                  >
+                                    <div className="jb-loc-item-left-content">
+                                      <input
+                                        type="checkbox"
+                                        checked={isChecked}
+                                        onChange={() => handleToggleLocation(dist)}
+                                      />
+                                      <span>{dist}</span>
+                                    </div>
+                                  </label>
+                                );
+                              })
+                            ) : (
+                              <div className="jb-loc-empty-state">
+                                <p style={{ fontSize: '13px', color: 'var(--color-outline)' }}>
+                                  Không tìm thấy khu vực phù hợp
+                                </p>
+                              </div>
+                            )
+                          ) : (
+                            <div className="jb-loc-empty-state">
+                              <svg width="84" height="84" viewBox="0 0 100 100" fill="none">
+                                <circle cx="50" cy="40" r="22" stroke="#bfc9c3" strokeWidth="2" strokeDasharray="3 3" />
+                                <circle cx="50" cy="40" r="14" stroke="#90d4bb" strokeWidth="2" />
+                                <path d="M50 32v8l6 3" stroke="#095744" strokeWidth="2" strokeLinecap="round" />
+                                <path d="M30 75c0-11 9-20 20-20s20 9 20 20" stroke="#bfc9c3" strokeWidth="2" />
+                              </svg>
+                              <p style={{ fontSize: '13px', color: 'var(--color-outline)', marginTop: '8px' }}>
+                                Vui lòng chọn Tỉnh/Thành phố
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Popover Footer */}
+                    <div className="jb-loc-popover-footer">
+                      <button
+                        type="button"
+                        className="jb-loc-btn-clear-all"
+                        onClick={handleClearAllLocations}
+                      >
+                        Bỏ chọn tất cả
+                      </button>
+
+                      <button
+                        type="button"
+                        className="jb-loc-btn-apply"
+                        onClick={handleApplyLocations}
+                      >
+                        Áp dụng
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Submit Search Button */}

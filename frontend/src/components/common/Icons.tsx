@@ -440,6 +440,24 @@ export const ChevronDownIcon: React.FC<IconProps> = ({ size = 18, color = 'curre
   </svg>
 );
 
+export const ChevronUpIcon: React.FC<IconProps> = ({ size = 18, color = 'currentColor', className, ...props }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-hidden="true"
+    {...props}
+  >
+    <path d="m18 15-6-6-6 6" />
+  </svg>
+);
+
 export const SlidersIcon: React.FC<IconProps> = ({ size = 18, color = 'currentColor', className, ...props }) => (
   <svg
     width={size}
