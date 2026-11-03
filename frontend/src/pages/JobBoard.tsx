@@ -10,21 +10,8 @@ import {
   TrendingUpIcon,
   SlidersIcon,
   CheckIcon,
-  VerifiedIcon,
-  BookmarkIcon,
+  HeartIcon,
   DollarSignIcon,
-  BriefcaseIcon,
-  ClockIcon,
-  StarIcon,
-  BoltIcon,
-  AwardIcon,
-  GiftIcon,
-  ShieldIcon,
-  CloudIcon,
-  BankIcon,
-  BrainIcon,
-  ShoppingCartIcon,
-  FireIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronDownIcon,
@@ -337,7 +324,6 @@ export const JobBoard: React.FC = () => {
 
   // Search & Filter States
   const [keyword, setKeyword] = useState('AWS Senior');
-  const isAiMatchingActive = true;
 
   // Rich Location Picker States
   const [isLocPickerOpen, setIsLocPickerOpen] = useState(false);
@@ -635,42 +621,6 @@ export const JobBoard: React.FC = () => {
       navigate('/candidate');
     } else {
       alert(`Tài khoản của bạn là ${role}. Vui lòng đăng nhập với tài khoản Ứng viên để nộp đơn!`);
-    }
-  };
-
-  // Render company logo icon
-  const renderLogoIcon = (type: DetailedJob['logoType']) => {
-    switch (type) {
-      case 'cloud':
-        return <CloudIcon size={28} color="#ffffff" />;
-      case 'bank':
-        return <BankIcon size={28} color="#ffffff" />;
-      case 'brain':
-        return <BrainIcon size={28} color="#ffffff" />;
-      case 'cart':
-        return <ShoppingCartIcon size={28} color="#ffffff" />;
-      case 'shield':
-        return <ShieldIcon size={28} color="#ffffff" />;
-      default:
-        return <CloudIcon size={28} color="#ffffff" />;
-    }
-  };
-
-  // Render perk icon
-  const renderPerkIcon = (type: DetailedJob['perkType']) => {
-    switch (type) {
-      case 'star':
-        return <StarIcon size={18} color="var(--color-primary-container)" />;
-      case 'bolt':
-        return <BoltIcon size={18} color="var(--color-primary-container)" />;
-      case 'award':
-        return <AwardIcon size={18} color="var(--color-primary-container)" />;
-      case 'gift':
-        return <GiftIcon size={18} color="var(--color-primary-container)" />;
-      case 'shield':
-        return <ShieldIcon size={18} color="var(--color-primary-container)" />;
-      default:
-        return <StarIcon size={18} color="var(--color-primary-container)" />;
     }
   };
 
@@ -1239,150 +1189,103 @@ export const JobBoard: React.FC = () => {
                 ) : (
                   paginatedJobs.map((job) => {
                     const isBookmarked = bookmarkedIds.includes(job.id);
+
+                    // Location short display: e.g. "Hồ Chí Minh (mới)", "Hà Nội", "Đà Nẵng"
+                    const provinceName = job.rawLocation?.province || job.location.split('•')[0].split(',').pop()?.trim() || 'Toàn quốc';
+                    const displayLocation = provinceName === 'Hồ Chí Minh' ? 'Hồ Chí Minh (mới)' : provinceName;
+
+                    // Experience short display: e.g. "3 năm", "5+ năm", "Intern"
+                    const expYears = job.experience.match(/\d+(\+)?/);
+                    const displayExp = expYears ? `${expYears[0]} năm` : (job.level === 'Intern' ? 'Thực tập' : job.experience);
+
+                    // Skills snippet: e.g. "AWS | Docker | Kubernetes | +3"
+                    const visibleSkills = job.skills.slice(0, 3);
+                    const remainingSkillsCount = Math.max(0, job.skills.length - 3);
+
+                    // Company acronym
+                    const companyInitials = job.companyName
+                      .split(' ')
+                      .filter((w) => w.length > 0 && w[0] === w[0].toUpperCase())
+                      .slice(0, 3)
+                      .map((w) => w[0])
+                      .join('');
+
                     return (
-                      <article key={job.id} className="jb-job-card">
-                        {job.isTopMatch && <div className="jb-card-accent-bar" />}
-
-                        {/* Top Row: Company Logo + Name + Title & AI Match Badge */}
-                        <div className="jb-card-top-row">
-                          <div className="jb-company-info-group">
-                            <div
-                              className="jb-company-logo"
-                              style={{ background: job.logoGradient }}
-                            >
-                              {renderLogoIcon(job.logoType)}
-                            </div>
-
-                            <div>
-                              <div className="jb-company-name-row">
-                                <span className="jb-company-name">{job.companyName}</span>
-                                {job.isVerified && (
-                                  <span
-                                    title="Doanh nghiệp đối tác được xác thực"
-                                    style={{ color: 'var(--color-primary-container)', display: 'inline-flex' }}
-                                  >
-                                    <VerifiedIcon size={16} />
-                                  </span>
-                                )}
-                                <span>• {job.companyScale}</span>
-                              </div>
-
-                              <h3
-                                className="jb-job-title"
-                                onClick={() => handleApply(job)}
-                              >
-                                {job.title}
-                              </h3>
-                            </div>
-                          </div>
-
-                          {/* Badge: Match % or New or Hot */}
-                          <div>
-                            {job.badgeType === 'match' && job.matchScore && (
-                              <div
-                                className="jb-match-badge"
-                                style={{ opacity: isAiMatchingActive ? 1 : 0.25 }}
-                              >
-                                <SparklesIcon size={15} color="var(--color-primary-container)" />
-                                <span>AI Match {job.matchScore}%</span>
-                              </div>
-                            )}
-
-                            {job.badgeType === 'new' && (
-                              <div className="jb-new-badge">
-                                <span>Mới đăng tuyển hôm nay</span>
-                              </div>
-                            )}
-
-                            {job.badgeType === 'hot' && (
-                              <div className="jb-hot-badge">
-                                <FireIcon size={15} color="var(--color-on-error-container)" />
-                                <span>Hot Job Tuyển Gấp</span>
-                              </div>
-                            )}
+                      <article
+                        key={job.id}
+                        className="jb-job-compact-card"
+                        onClick={() => navigate(`/jobs/${job.id}`)}
+                      >
+                        {/* Square Logo Box */}
+                        <div className="jb-compact-logo-box">
+                          <div
+                            className="jb-compact-logo-inner"
+                            style={{ background: job.logoGradient }}
+                          >
+                            {companyInitials || 'TECH'}
                           </div>
                         </div>
 
-                        {/* Quick Info Row */}
-                        <div className="jb-quick-info-row">
-                          <div className="jb-info-item jb-info-salary">
-                            <DollarSignIcon size={16} color="var(--color-primary-container)" />
-                            <span>{job.salaryText}</span>
+                        {/* Content Right */}
+                        <div className="jb-compact-content">
+                          {/* Row 1: Title & Salary */}
+                          <div className="jb-compact-top-row">
+                            <h3 className="jb-compact-title">
+                              {job.title}
+                            </h3>
+                            <div className="jb-compact-salary">
+                              <DollarSignIcon size={16} color="#059669" />
+                              <span>{job.salaryText}</span>
+                            </div>
                           </div>
 
-                          <div className="jb-info-item">
-                            <MapPinIcon size={16} color="var(--color-on-surface-variant)" />
-                            <span>{job.location}</span>
+                          {/* Row 2: Company Name */}
+                          <div className="jb-compact-company-name">
+                            {job.companyName}
                           </div>
 
-                          <div className="jb-info-item">
-                            <BriefcaseIcon size={16} color="var(--color-on-surface-variant)" />
-                            <span>{job.experience}</span>
-                          </div>
-
-                          <div className="jb-info-item">
-                            <ClockIcon size={16} color="var(--color-on-surface-variant)" />
-                            <span>{job.postedTime}</span>
-                          </div>
-                        </div>
-
-                        {/* Job Description */}
-                        <p className="jb-job-desc">{job.description}</p>
-
-                        {/* Skill Tags */}
-                        <div className="jb-tag-row">
-                          {job.skills.map((s) => (
-                            <span key={s} className="jb-tag-pill">
-                              {s}
+                          {/* Row 3: Tags / Pills */}
+                          <div className="jb-compact-pills-row">
+                            <span className="jb-compact-pill">
+                              {displayLocation}
                             </span>
-                          ))}
-                        </div>
-
-                        {/* Bottom Perks & Action Buttons */}
-                        <div className="jb-card-bottom-row">
-                          <div className="jb-perks-text">
-                            {renderPerkIcon(job.perkType)}
-                            <span>{job.perks}</span>
+                            <span className="jb-compact-pill">
+                              {displayExp}
+                            </span>
+                            <span className="jb-compact-pill" style={{ color: 'var(--color-primary-container)' }}>
+                              {job.workType}
+                            </span>
                           </div>
 
-                          <div className="jb-actions-group">
-                            <button
-                              type="button"
-                              className="jb-btn-bookmark"
-                              title={isBookmarked ? 'Bỏ lưu tin' : 'Lưu tin tuyển dụng'}
-                              onClick={() => handleToggleBookmark(job.id)}
-                            >
-                              <BookmarkIcon
-                                size={18}
-                                color={isBookmarked ? 'var(--color-primary-container)' : 'currentColor'}
-                              />
-                            </button>
+                          {/* Row 4: Bottom Meta */}
+                          <div className="jb-compact-bottom-row">
+                            <div className="jb-compact-skills-text">
+                              <span>{visibleSkills.join(' | ')}</span>
+                              {remainingSkillsCount > 0 && (
+                                <span style={{ color: '#059669', fontWeight: '600', marginLeft: '4px' }}>
+                                  | +{remainingSkillsCount}
+                                </span>
+                              )}
+                            </div>
 
-                            {job.rubricBreakdown ? (
+                            <div className="jb-compact-right-meta">
+                              <span className="jb-compact-time">{job.postedTime}</span>
                               <button
                                 type="button"
-                                className="jb-btn-rubric"
-                                onClick={() => setActiveRubricJob(job)}
+                                className={`jb-compact-heart-btn ${isBookmarked ? 'active' : ''}`}
+                                title={isBookmarked ? 'Bỏ lưu tin' : 'Lưu tin'}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleToggleBookmark(job.id);
+                                }}
                               >
-                                <span>Xem Rubric AI</span>
+                                <HeartIcon
+                                  size={16}
+                                  color="#059669"
+                                  fill={isBookmarked ? '#059669' : 'none'}
+                                />
                               </button>
-                            ) : (
-                              <button
-                                type="button"
-                                className="jb-btn-rubric"
-                                onClick={() => handleApply(job)}
-                              >
-                                <span>Xem chi tiết</span>
-                              </button>
-                            )}
-
-                            <button
-                              type="button"
-                              className="jb-btn-apply"
-                              onClick={() => handleApply(job)}
-                            >
-                              Ứng tuyển ngay
-                            </button>
+                            </div>
                           </div>
                         </div>
                       </article>

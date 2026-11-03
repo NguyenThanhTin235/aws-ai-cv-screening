@@ -7,6 +7,7 @@ import { Footer } from './components/common/Footer';
 import { ProtectedRoute } from './components/common/ProtectedRoute';
 
 import { JobBoard } from './pages/JobBoard';
+import { JobDetail } from './pages/JobDetail';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { OtpVerification } from './pages/OtpVerification';
@@ -24,6 +25,8 @@ export const App: React.FC = () => {
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<JobBoard />} />
+              <Route path="/jobs/:id" element={<JobDetail />} />
+              <Route path="/job/:id" element={<JobDetail />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/verify-otp" element={<OtpVerification />} />

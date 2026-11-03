@@ -1435,3 +1435,183 @@
 .jb-loc-btn-apply:hover {
   background-color: var(--color-primary);
 }
+
+/* ==========================================================================
+   COMPACT JOB CARD (SUMMARIZED SEARCH VIEW ACCORDING TO USER SPEC)
+   ========================================================================== */
+.jb-job-compact-card {
+  background-color: var(--color-surface-container-lowest);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-surface-container-high);
+  box-shadow: var(--shadow-sm);
+  padding: 18px 20px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  text-decoration: none;
+  margin-bottom: 12px;
+}
+
+.jb-job-compact-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  border-color: var(--color-primary-container);
+  transform: translateY(-1px);
+}
+
+.jb-compact-logo-box {
+  width: 80px;
+  height: 80px;
+  min-width: 80px;
+  border: 1px solid var(--color-surface-container-high);
+  border-radius: var(--radius-md);
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 6px;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.02);
+}
+
+.jb-compact-logo-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  text-align: center;
+  padding: 4px;
+}
+
+.jb-compact-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.jb-compact-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.jb-compact-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  line-height: 1.35;
+  transition: color 0.15s ease;
+}
+
+.jb-job-compact-card:hover .jb-compact-title {
+  color: var(--color-primary-container);
+}
+
+.jb-compact-salary {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #059669;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.jb-compact-company-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-outline);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.jb-compact-pills-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.jb-compact-pill {
+  background-color: var(--color-surface-container);
+  color: var(--color-on-surface);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: var(--radius-xs);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.jb-compact-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--color-surface-container-high);
+}
+
+.jb-compact-skills-text {
+  font-size: 12px;
+  color: var(--color-on-surface-variant);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 65%;
+}
+
+.jb-compact-right-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.jb-compact-time {
+  font-size: 12px;
+  color: var(--color-outline);
+}
+
+.jb-compact-heart-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid #10b981;
+  background-color: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.jb-compact-heart-btn:hover {
+  background-color: #ecfdf5;
+  border-color: #059669;
+  transform: scale(1.08);
+}
+
+.jb-compact-heart-btn.active {
+  background-color: #ecfdf5;
+  border-color: #059669;
+}
