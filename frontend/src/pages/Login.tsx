@@ -5,9 +5,6 @@ import { Navbar } from '../components/common/Navbar';
 import {
   BrainIcon,
   ShieldIcon,
-  CloudIcon,
-  FileTextIcon,
-  SparklesIcon,
   MailIcon,
   LockIcon,
   EyeIcon,
@@ -85,16 +82,7 @@ export const Login: React.FC = () => {
       {/* 2. MAIN SPLIT SCREEN */}
       <main className="login-main-container">
         {/* LEFT PANEL: Enterprise Green Authority Branding */}
-        <section
-          className="login-left-panel"
-          style={{
-            backgroundColor: '#063e30',
-            backgroundImage:
-              'radial-gradient(rgba(255, 255, 255, 0.08) 1.2px, transparent 1.2px), linear-gradient(180deg, #074738 0%, #002b20 100%)',
-            backgroundSize: '26px 26px, 100% 100%',
-            color: '#ffffff'
-          }}
-        >
+        <section className="login-left-panel">
           <div className="login-left-inner">
             <div>
               {/* Top row in left panel */}
@@ -110,106 +98,48 @@ export const Login: React.FC = () => {
                     <div className="login-left-brand-sub">HỆ THỐNG SÀNG LỌC CV BẰNG AI</div>
                   </div>
                 </div>
-
-                <div className="login-bedrock-pill">
-                  <SparklesIcon size={13} color="#acf1d7" />
-                  <span>Vận hành bởi AWS Bedrock</span>
-                </div>
-              </div>
-
-              {/* Pipeline Badge */}
-              <div className="login-pipeline-badge">
-                <span className="login-pipeline-dot" />
-                <span>QUY TRÌNH AI NHẬN THỨC 3.5</span>
               </div>
 
               {/* Headline */}
               <h1 className="login-left-headline">
-                Tuyển dụng thông minh, khách quan và không định kiến cùng Generative AI
+                Sàng lọc CV &amp; Đánh giá Năng lực Cloud
               </h1>
 
               {/* Sub-description */}
               <p className="login-left-desc">
-                Nền tảng phân tích CV tự động với AWS Bedrock Claude 3.5 &amp; Textract OCR, tối ưu hóa quy trình tuyển dụng và loại bỏ rào cản định kiến tuyển dụng theo chuẩn bảo mật điện toán đám mây.
+                Nền tảng tuyển dụng Cloud-Native trên AWS. Tự động hóa trích xuất dữ liệu CV, chấm điểm theo ma trận Rubric và hỗ trợ thẩm định hồ sơ minh bạch.
               </p>
 
-              {/* 3 Feature Cards */}
-              <div className="login-feature-cards">
-                <div className="login-feature-card">
-                  <div className="login-feature-icon-box">
-                    <FileTextIcon size={16} color="#acf1d7" />
-                  </div>
-                  <div>
-                    <div className="login-feature-title">AI Rubric 100đ Chuẩn Xác</div>
-                    <div className="login-feature-text">
-                      Đối chiếu tiêu chí ma trận đánh giá tự động dựa trên Claude 3.5 Sonnet và Amazon Titan.
-                    </div>
+              {/* Editorial Spec List */}
+              <div className="login-spec-list">
+                <div className="login-spec-item">
+                  <div className="login-spec-title">Ma trận AI Rubric 100 điểm</div>
+                  <div className="login-spec-desc">
+                    Đối chiếu tiêu chí công việc theo cấu trúc chuẩn hóa, hỗ trợ giám sát bởi con người (Human-in-the-loop).
                   </div>
                 </div>
 
-                <div className="login-feature-card">
-                  <div className="login-feature-icon-box">
-                    <ShieldIcon size={16} color="#acf1d7" />
-                  </div>
-                  <div>
-                    <div className="login-feature-title">Khử định kiến PII tự động</div>
-                    <div className="login-feature-text">
-                      Tuân thủ Nghị định 13/2023/NĐ-CP &amp; GDPR, ẩn danh thông tin cá nhân đa tầng trước phân tích.
-                    </div>
+                <div className="login-spec-item">
+                  <div className="login-spec-title">Khử định danh PII tự động</div>
+                  <div className="login-spec-desc">
+                    Tuân thủ Luật Bảo vệ dữ liệu cá nhân 91/2025/QH15 &amp; Nghị định 356/2025/NĐ-CP, che chắn thông tin nhân khẩu học trước phân tích.
                   </div>
                 </div>
 
-                <div className="login-feature-card">
-                  <div className="login-feature-icon-box">
-                    <CloudIcon size={16} color="#acf1d7" />
-                  </div>
-                  <div>
-                    <div className="login-feature-title">Bảo mật chuẩn AWS Serverless</div>
-                    <div className="login-feature-text">
-                      Kiến trúc Lambda, AWS KMS Envelope Encryption &amp; Amazon Cognito Identity Pool cô lập đa đối tượng.
-                    </div>
+                <div className="login-spec-item">
+                  <div className="login-spec-title">Hạ tầng AWS Serverless</div>
+                  <div className="login-spec-desc">
+                    Mã hóa KMS Envelope Encryption, định danh bảo mật qua Amazon Cognito RBAC và kiểm soát truy cập nghiêm ngặt.
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Testimonial & Compliance Row */}
-            <div>
-              <div className="login-testimonial-box">
-                <p className="login-testimonial-quote">
-                  “Hệ thống giúp chúng tôi rút ngắn 75% thời gian lọc hồ sơ và nâng cao độ chính xác khi tìm kiếm nhân tài công nghệ.”
-                </p>
-                <div className="login-testimonial-author">
-                  <img
-                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=80&h=80&fit=crop&crop=face"
-                    alt="Bà Hoàng Thu Mai"
-                    className="login-testimonial-avatar"
-                  />
-                  <div>
-                    <div style={{ fontSize: '12.5px', fontWeight: '700', color: '#ffffff' }}>
-                      Bà Hoàng Thu Mai
-                    </div>
-                    <div style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.7)' }}>
-                      Giám đốc Nhân sự Cấp cao • FinStream Digital Bank
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="login-compliance-badges">
-                <div className="login-compliance-pill">
-                  <ShieldIcon size={12} color="#acf1d7" />
-                  <span>ISO/IEC 27001</span>
-                </div>
-                <div className="login-compliance-pill">
-                  <ShieldIcon size={12} color="#acf1d7" />
-                  <span>Chuẩn GDPR</span>
-                </div>
-                <div className="login-compliance-pill">
-                  <ShieldIcon size={12} color="#acf1d7" />
-                  <span>Nghị định 13/2023/NĐ-CP</span>
-                </div>
-              </div>
+            {/* System Info Meta Row */}
+            <div className="login-system-meta">
+              <span>Hệ thống máy chủ AWS AP-Southeast-1</span>
+              <span>Mã hóa TLS 1.3 &amp; KMS</span>
+              <span>Tuân thủ Luật 91/2025/QH15</span>
             </div>
           </div>
         </section>
@@ -289,7 +219,7 @@ export const Login: React.FC = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     onBlur={() => handleBlur('email')}
-                    placeholder="tuan.hoang@example.com hoặc email của bạn..."
+                    placeholder="tuan.hoang@cloudjob.vn hoặc email của bạn..."
                     className="login-input-field"
                     style={{
                       border: emailError ? '1.5px solid #dc2626' : undefined
@@ -377,7 +307,7 @@ export const Login: React.FC = () => {
             <button
               type="button"
               onClick={() => {
-                setEmail('nguyen.van.an@example.com');
+                setEmail('nguyen.van.an@cloudjob.vn');
                 setPassword('Candidate@12345');
               }}
               className="login-google-btn"
@@ -406,7 +336,7 @@ export const Login: React.FC = () => {
             {/* Registration Box */}
             <div className="login-register-box">
               Chưa có tài khoản?{' '}
-              <Link to="/register?role=candidate" style={{ color: '#095744', fontWeight: '700', textDecoration: 'none' }}>
+              <Link to="/register?role=candidate">
                 Đăng ký tài khoản Ứng viên
               </Link>
             </div>
@@ -414,8 +344,8 @@ export const Login: React.FC = () => {
 
           {/* Bottom Security Note */}
           <div className="login-security-notice">
-            <ShieldIcon size={13} color="#6b7280" />
-            <span>Bảo vệ bởi AWS WAF &amp; Amazon Cognito. Tuân thủ Nghị định 13/2023/NĐ-CP.</span>
+            <ShieldIcon size={13} color="var(--accent, #1b6e66)" />
+            <span>Bảo vệ bởi AWS WAF &amp; Amazon Cognito. Tuân thủ Luật BVDLCN 91/2025/QH15 &amp; Nghị định 356/2025/NĐ-CP.</span>
           </div>
         </section>
       </main>
@@ -423,18 +353,15 @@ export const Login: React.FC = () => {
       {/* 3. BOTTOM THIN BAR */}
       <footer className="login-bottombar">
         <div>
-          © 2026 CloudJob. Nền tảng tuyển dụng Cloud-Native vận hành bởi AWS Bedrock &amp; Textract.
+          © 2026 CloudJob. Nền tảng tuyển dụng Cloud-Native trên AWS.
         </div>
         <div className="login-bottombar-links">
-          <a href="#security" className="login-bottombar-link">
-            Bảo mật &amp; Mã hóa
-          </a>
-          <a href="#compliance" className="login-bottombar-link">
-            Tiêu chuẩn tuân thủ (GDPR / NĐ13)
-          </a>
-          <a href="#audit" className="login-bottombar-link">
-            Nhật ký kiểm toán
-          </a>
+          <Link to="/chinh-sach-bao-mat" className="login-bottombar-link">
+            Chính sách bảo mật
+          </Link>
+          <Link to="/dieu-khoan" className="login-bottombar-link">
+            Điều khoản sử dụng
+          </Link>
         </div>
       </footer>
     </div>

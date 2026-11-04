@@ -419,7 +419,7 @@ export const ForgotPassword: React.FC = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       onBlur={() => handleBlur('email')}
-                      placeholder="tuan.hoang@example.com hoặc email của bạn..."
+                      placeholder="tuan.hoang@cloudjob.vn hoặc email của bạn..."
                       style={{
                         width: '100%',
                         height: '44px',

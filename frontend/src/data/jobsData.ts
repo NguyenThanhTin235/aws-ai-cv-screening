@@ -82,7 +82,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Mức thu nhập hấp dẫn từ 35 - 40 triệu VNĐ/tháng, thưởng hiệu quả kinh doanh hàng quý • Chế độ làm việc Hybrid linh hoạt (2 ngày remote / tuần), cấp MacBook Pro M3 • Gói bảo hiểm sức khỏe PTI cao cấp cho nhân viên",
     "perkType": "star",
-    "logoGradient": "linear-gradient(135deg, #095744 0%, #246955 100%)",
+    "logoGradient": "#0a483c",
     "logoType": "cloud",
     "isTopMatch": true,
     "rubricBreakdown": {
@@ -160,7 +160,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Thu nhập thỏa thuận từ 70 - 95 triệu VNĐ/tháng kèm theo thưởng dự án lớn • Môi trường làm việc chuẩn quốc tế, cơ hội dẫn dắt các dự án quy mô quốc gia • Bảo hiểm sức khỏe VIP Bảo Việt toàn diện cho gia đình",
     "perkType": "bolt",
-    "logoGradient": "linear-gradient(135deg, #0f766e 0%, #115e59 100%)",
+    "logoGradient": "#0f766e",
     "logoType": "cloud",
     "isTopMatch": true,
     "rubricBreakdown": {
@@ -238,7 +238,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Mức lương cạnh tranh từ 30 - 45 triệu VNĐ/tháng, đánh giá tăng lương định kỳ 6 tháng/lần • Thưởng tháng 13 + thưởng KPI hiệu suất dự án thanh toán (2-4 tháng lương) • Cơm trưa miễn phí tại công ty, phụ cấp gửi xe và teambuilding hàng năm",
     "perkType": "award",
-    "logoGradient": "linear-gradient(135deg, #1e3a8a 0%, #0369a1 100%)",
+    "logoGradient": "#1e3a8a",
     "logoType": "bank",
     "isTopMatch": true,
     "rubricBreakdown": {
@@ -315,7 +315,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Thu nhập 35 - 50 triệu VNĐ/tháng, 15 ngày phép năm • Môi trường văn hóa Bắc Âu cởi mở, không OT • Chế độ bảo hiểm sức khỏe quốc tế Liberty",
     "perkType": "gift",
-    "logoGradient": "linear-gradient(135deg, #15803d 0%, #166534 100%)",
+    "logoGradient": "#15803d",
     "logoType": "cloud",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -391,7 +391,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Lương từ 45 - 65 triệu VNĐ/tháng kèm gói thưởng Sign-on bonus hấp dẫn • Trang bị Laptop Dell XPS hoặc MacBook Pro M3 mới nhất • Bảo hiểm sức khỏe toàn diện PVI cho nhân viên và 01 người thân",
     "perkType": "shield",
-    "logoGradient": "linear-gradient(135deg, #095744 0%, #246955 100%)",
+    "logoGradient": "#0a483c",
     "logoType": "cloud",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -467,7 +467,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Mức thu nhập cạnh tranh hàng đầu thị trường từ 85 - 130 triệu VNĐ/tháng • Gói cổ phiếu thưởng ESOP giá trị cao theo thâm niên và đóng góp • Khu phức hợp VNG Campus đẳng cấp quốc tế với hồ bơi, phòng gym, cantin chuẩn 5 sao",
     "perkType": "star",
-    "logoGradient": "linear-gradient(135deg, #0f766e 0%, #115e59 100%)",
+    "logoGradient": "#0f766e",
     "logoType": "cloud",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -542,7 +542,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Thu nhập 40 - 60 triệu VNĐ/tháng, thưởng thành tích cuối năm 2-3 tháng lương • Chế độ ưu đãi khi mua xe VinFast và sử dụng dịch vụ trong hệ sinh thái Vingroup (Vinhomes, Vinmec, Vinpearl) • Bảo hiểm sức khỏe cao cấp Vinmec",
     "perkType": "bolt",
-    "logoGradient": "linear-gradient(135deg, #6d28d9 0%, #4338ca 100%)",
+    "logoGradient": "#2d3748",
     "logoType": "brain",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -617,7 +617,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Mức lương 35 - 55 triệu VNĐ/tháng, trợ cấp điện thoại và ăn trưa • Thưởng tháng 13 + thưởng hiệu quả kinh doanh của tập đoàn Hà Lan • Bảo hiểm sức khỏe quốc tế cao cấp",
     "perkType": "award",
-    "logoGradient": "linear-gradient(135deg, #c2410c 0%, #ea580c 100%)",
+    "logoGradient": "#c2410c",
     "logoType": "cart",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -695,7 +695,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Thu nhập 45 - 70 triệu VNĐ/tháng, xét tăng lương 2 lần/năm • Chế độ làm việc Hybrid linh hoạt, tài trợ vé du lịch hàng năm • Bảo hiểm sức khỏe PVI toàn diện",
     "perkType": "gift",
-    "logoGradient": "linear-gradient(135deg, #c2410c 0%, #ea580c 100%)",
+    "logoGradient": "#c2410c",
     "logoType": "cart",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -771,7 +771,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Thu nhập từ 60 - 90 triệu VNĐ/tháng, thưởng tháng 13 và thưởng hiệu suất toàn cầu • Chế độ làm việc kết hợp Hybrid (2-3 ngày WFH) • Bảo hiểm sức khỏe Liberty hạng Diamond cho nhân viên và vợ/chồng/con cái",
     "perkType": "shield",
-    "logoGradient": "linear-gradient(135deg, #0f766e 0%, #115e59 100%)",
+    "logoGradient": "#0f766e",
     "logoType": "cloud",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -848,7 +848,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Mức thu nhập hàng đầu ngành ngân hàng từ 75 - 110 triệu VNĐ/tháng + thưởng hiệu suất năm 3-5 tháng lương • Chính sách vay ưu đãi lãi suất đặc biệt cho cán bộ nhân viên mua nhà và ô tô • Gói bảo hiểm sức khỏe Techcombank Care toàn diện cho gia đình",
     "perkType": "star",
-    "logoGradient": "linear-gradient(135deg, #1e3a8a 0%, #0369a1 100%)",
+    "logoGradient": "#1e3a8a",
     "logoType": "bank",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -924,7 +924,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Thu nhập cạnh tranh 50 - 80 triệu VNĐ/tháng kèm theo thưởng dự án toàn cầu • Chế độ làm việc Hybrid linh hoạt, khuôn viên F-Town chuẩn quốc tế với sân golf, hồ bơi • Gói bảo hiểm sức khỏe cao cấp FPT Care",
     "perkType": "bolt",
-    "logoGradient": "linear-gradient(135deg, #15803d 0%, #166534 100%)",
+    "logoGradient": "#15803d",
     "logoType": "cloud",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -1007,7 +1007,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Lương từ 45 - 65 triệu VNĐ/tháng, xét tăng lương 2 lần/năm • Chính sách đãi ngộ hấp dẫn, thưởng cuối năm từ 2-4 tháng lương • Gói bảo hiểm sức khỏe cao cấp Bảo Việt cho nhân viên và người thân",
     "perkType": "award",
-    "logoGradient": "linear-gradient(135deg, #c2410c 0%, #ea580c 100%)",
+    "logoGradient": "#c2410c",
     "logoType": "cart",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -1085,7 +1085,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Mức thu nhập cạnh tranh hàng đầu thị trường từ 90 - 140 triệu VNĐ/tháng • Mô hình làm việc kết hợp Hybrid linh hoạt (lên văn phòng 2 ngày/tuần) • Cơ hội đi công tác và làm việc tại trụ sở chính của NAB tại Melbourne, Úc",
     "perkType": "gift",
-    "logoGradient": "linear-gradient(135deg, #0f766e 0%, #115e59 100%)",
+    "logoGradient": "#0f766e",
     "logoType": "cloud",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -1165,7 +1165,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Thu nhập từ 45 - 70 triệu VNĐ/tháng, thưởng tháng 13 và thưởng hiệu suất cuối năm rất cao • 14 ngày nghỉ phép/năm, phụ cấp ăn trưa và gửi xe • Gói bảo hiểm sức khỏe VIP toàn diện",
     "perkType": "shield",
-    "logoGradient": "linear-gradient(135deg, #1e3a8a 0%, #0369a1 100%)",
+    "logoGradient": "#1e3a8a",
     "logoType": "bank",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -1242,7 +1242,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Thu nhập thỏa thuận từ 70 - 100 triệu VNĐ/tháng + thưởng hiệu quả kinh doanh hàng năm • Chính sách làm việc Hybrid linh hoạt, hỗ trợ chi phí thiết bị làm việc tại nhà • Bảo hiểm sức khỏe quốc tế cao cấp cho nhân viên và gia đình",
     "perkType": "star",
-    "logoGradient": "linear-gradient(135deg, #15803d 0%, #166534 100%)",
+    "logoGradient": "#15803d",
     "logoType": "cloud",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -1321,7 +1321,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Mức lương cạnh tranh hàng đầu khu vực từ 60 - 95 triệu VNĐ/tháng kèm theo thưởng cuối năm cực kỳ hấp dẫn • Đồ ăn nhẹ, đồ uống và hoa quả miễn phí hàng ngày tại văn phòng Saigon Centre hiện đại • Gói bảo hiểm sức khỏe VIP toàn diện",
     "perkType": "bolt",
-    "logoGradient": "linear-gradient(135deg, #c2410c 0%, #ea580c 100%)",
+    "logoGradient": "#c2410c",
     "logoType": "cart",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -1398,7 +1398,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Thu nhập 65 - 90 triệu VNĐ/tháng, thu nhập bình quân cả năm lên đến 1.2 - 1.5 tỷ VNĐ/năm • Môi trường nghiên cứu và làm chủ công nghệ hạ tầng cốt lõi tầm cỡ quốc gia • Chế độ bảo hiểm sức khỏe cao cấp Viettel Care",
     "perkType": "award",
-    "logoGradient": "linear-gradient(135deg, #0f766e 0%, #115e59 100%)",
+    "logoGradient": "#0f766e",
     "logoType": "cloud",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -1477,7 +1477,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Thu nhập từ 30 - 45 triệu VNĐ/tháng, thưởng các ngày lễ Tết và hiệu quả công việc định kỳ • Môi trường làm việc ổn định, cơ hội thăng tiến rõ ràng trong tập đoàn viễn thông hàng đầu • Chế độ bảo hiểm theo quy định nhà nước và gói bảo hiểm sức khỏe nâng cao",
     "perkType": "gift",
-    "logoGradient": "linear-gradient(135deg, #047857 0%, #065f46 100%)",
+    "logoGradient": "#047857",
     "logoType": "cloud",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -1554,7 +1554,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Mức lương cạnh tranh 55 - 85 triệu VNĐ/tháng, gói thưởng cổ phiếu RSU của tập đoàn công nghệ Mỹ • Làm việc tại tòa nhà chuẩn xanh Deutsches Haus sang trọng tại trung tâm Quận 1 • Chế độ làm việc kết hợp linh hoạt, 20 ngày nghỉ phép hưởng lương mỗi năm",
     "perkType": "shield",
-    "logoGradient": "linear-gradient(135deg, #374151 0%, #111827 100%)",
+    "logoGradient": "#374151",
     "logoType": "shield",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -1632,7 +1632,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Mức lương cạnh tranh 45 - 70 triệu VNĐ/tháng kèm theo thưởng cuối năm từ 3-5 tháng lương • Chế độ vay ưu đãi dành riêng cho cán bộ nhân viên ngân hàng VPBank • Gói bảo hiểm sức khỏe VIP VPBank Care cho bản thân và người thân",
     "perkType": "star",
-    "logoGradient": "linear-gradient(135deg, #1e3a8a 0%, #0369a1 100%)",
+    "logoGradient": "#1e3a8a",
     "logoType": "bank",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -1714,7 +1714,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Lương từ 40 - 65 triệu VNĐ/tháng, xét tăng lương định kỳ hàng năm • Chế độ làm việc kết hợp linh hoạt Hybrid (2-3 ngày WFH) • Bảo hiểm sức khỏe cao cấp TikiCare và ưu đãi giảm giá khi mua hàng trên Tiki",
     "perkType": "bolt",
-    "logoGradient": "linear-gradient(135deg, #c2410c 0%, #ea580c 100%)",
+    "logoGradient": "#c2410c",
     "logoType": "cart",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -1792,7 +1792,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Mức thu nhập cạnh tranh 50 - 75 triệu VNĐ/tháng + thưởng hiệu suất sản phẩm toàn cầu • Giờ làm việc linh hoạt không chấm công, chính sách WFH mở rộng • Bảo hiểm sức khỏe quốc tế cao cấp",
     "perkType": "award",
-    "logoGradient": "linear-gradient(135deg, #6d28d9 0%, #4338ca 100%)",
+    "logoGradient": "#2d3748",
     "logoType": "brain",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -1868,7 +1868,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Thu nhập 60 - 90 triệu VNĐ/tháng + thưởng hiệu quả kinh doanh ngân hàng (4-6 tháng lương) • Chế độ đãi ngộ xuất sắc của tập đoàn Quân đội • Gói bảo hiểm sức khỏe MB Care cao cấp cho bản thân và gia đình",
     "perkType": "gift",
-    "logoGradient": "linear-gradient(135deg, #1e3a8a 0%, #0369a1 100%)",
+    "logoGradient": "#1e3a8a",
     "logoType": "bank",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -1944,7 +1944,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Mức thu nhập 80 - 120 triệu VNĐ/tháng, thưởng thành tích công nghệ đột phá • Chính sách ưu đãi mua nhà Vinhomes và xe điện VinFast đặc quyền • Bảo hiểm sức khỏe cao cấp Vinmec toàn diện",
     "perkType": "shield",
-    "logoGradient": "linear-gradient(135deg, #6d28d9 0%, #4338ca 100%)",
+    "logoGradient": "#2d3748",
     "logoType": "brain",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -2020,7 +2020,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Thu nhập thỏa thuận từ 65 - 95 triệu VNĐ/tháng + thưởng dự án xuất sắc • Khuôn viên TMA Innovation Park hiện đại với sân bóng đá, tennis, phòng gym • Gói bảo hiểm sức khỏe cao cấp TMA Care",
     "perkType": "star",
-    "logoGradient": "linear-gradient(135deg, #0f766e 0%, #115e59 100%)",
+    "logoGradient": "#0f766e",
     "logoType": "cloud",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -2098,7 +2098,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Thu nhập cạnh tranh từ 55 - 80 triệu VNĐ/tháng + gói cổ phiếu thưởng ESOP VNG • Làm việc tại khu phức hợp hiện đại VNG Campus chuẩn Silicon Valley • Gói bảo hiểm sức khỏe VIP toàn diện",
     "perkType": "bolt",
-    "logoGradient": "linear-gradient(135deg, #1e3a8a 0%, #0369a1 100%)",
+    "logoGradient": "#1e3a8a",
     "logoType": "bank",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -2174,7 +2174,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Mức lương hấp dẫn 50 - 80 triệu VNĐ/tháng kèm theo thưởng cổ phần công ty AI giá trị cao • Văn phòng làm việc tại tầng cao Bitexco với view toàn cảnh TP. Hồ Chí Minh • Bảo hiểm sức khỏe cao cấp toàn diện",
     "perkType": "award",
-    "logoGradient": "linear-gradient(135deg, #1e3a8a 0%, #0369a1 100%)",
+    "logoGradient": "#1e3a8a",
     "logoType": "bank",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -2249,7 +2249,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Thu nhập từ 38 - 55 triệu VNĐ/tháng + thưởng hiệu suất kinh doanh năm • 18 ngày nghỉ phép hưởng lương/năm, chế độ làm việc Hybrid linh hoạt • Bảo hiểm sức khỏe quốc tế cao cấp cho nhân viên và người thân",
     "perkType": "gift",
-    "logoGradient": "linear-gradient(135deg, #095744 0%, #246955 100%)",
+    "logoGradient": "#0a483c",
     "logoType": "cloud",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -2328,7 +2328,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Thu nhập hấp dẫn từ 50 - 80 triệu VNĐ/tháng + thưởng cuối năm cực kỳ cạnh tranh • Ăn sáng, đồ ăn nhẹ và đồ uống miễn phí hàng ngày tại tòa nhà Saigon Centre sang trọng • Gói bảo hiểm sức khỏe VIP toàn diện",
     "perkType": "shield",
-    "logoGradient": "linear-gradient(135deg, #1e3a8a 0%, #0369a1 100%)",
+    "logoGradient": "#1e3a8a",
     "logoType": "bank",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -2403,7 +2403,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Trợ cấp thực tập hấp dẫn từ 6 - 10 triệu VNĐ/tháng kèm phụ cấp ăn trưa miễn phí tại VNG Campus • Được các Senior DevOps / Cloud Architect dày dạn kinh nghiệm trực tiếp kèm cặp (1-on-1 Mentorship) • Cơ hội chuyển tiếp lên nhân viên chính thức (Fresher/Junior) sau kỳ thực tập 3-6 tháng",
     "perkType": "star",
-    "logoGradient": "linear-gradient(135deg, #047857 0%, #065f46 100%)",
+    "logoGradient": "#047857",
     "logoType": "cloud",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -2478,7 +2478,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Mức hỗ trợ thực tập từ 5 - 8 triệu VNĐ/tháng, xét đánh giá năng lực định kỳ • Được tài trợ 100% lệ phí thi các chứng chỉ quốc tế của AWS (AWS Certified Cloud Practitioner / SAA) • Được tham gia các dự án thực tế quy mô lớn của FPT Software với đối tác nước ngoài",
     "perkType": "bolt",
-    "logoGradient": "linear-gradient(135deg, #15803d 0%, #166534 100%)",
+    "logoGradient": "#15803d",
     "logoType": "cloud",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -2553,7 +2553,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Hỗ trợ thực tập từ 6 - 9 triệu VNĐ/tháng + trợ cấp ăn trưa tại cantin cơ quan • Được đào tạo bài bản từ lý thuyết đến thực hành trên hạ tầng Cloud Data Center quy mô lớn nhất Việt Nam • Cơ hội được tuyển dụng trực tiếp vào biên chế kỹ sư chính thức của Viettel",
     "perkType": "award",
-    "logoGradient": "linear-gradient(135deg, #095744 0%, #246955 100%)",
+    "logoGradient": "#0a483c",
     "logoType": "cloud",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -2628,7 +2628,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Phụ cấp thực tập dẫn đầu ngành ngân hàng từ 7 - 10 triệu VNĐ/tháng • Làm việc tại trung tâm công nghệ Agile hiện đại của Techcombank tại trung tâm Hà Nội • Cơ hội tham gia chương trình Techcombank Talent Graduate Program danh giá",
     "perkType": "gift",
-    "logoGradient": "linear-gradient(135deg, #1e3a8a 0%, #0369a1 100%)",
+    "logoGradient": "#1e3a8a",
     "logoType": "bank",
     "isTopMatch": false,
     "rubricBreakdown": {
@@ -2704,7 +2704,7 @@ export const ALL_JOBS: DetailedJob[] = [
     ],
     "perks": "Trợ cấp thực tập từ 5 - 8 triệu VNĐ/tháng, xét tăng lương và thưởng theo tiến độ dự án • Chương trình đào tạo chuyên sâu KMS DevOps Bootcamp kéo dài 3 tháng • Được cung cấp Laptop phục vụ công việc và tham gia các hoạt động teambuilding, thể thao công ty",
     "perkType": "shield",
-    "logoGradient": "linear-gradient(135deg, #047857 0%, #065f46 100%)",
+    "logoGradient": "#047857",
     "logoType": "cloud",
     "isTopMatch": false,
     "rubricBreakdown": {

@@ -1,7 +1,6 @@
 .site-footer {
   background-color: var(--color-surface-container-lowest);
-  border-top: 1px solid var(--color-surface-container-high);
-  box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.03);
+  border-top: 1px solid var(--border, #eaeaea);
   margin-top: auto;
   font-size: 13px;
   color: var(--color-on-surface-variant);
@@ -123,6 +122,5 @@
   height: 7px;
   border-radius: 50%;
   background-color: var(--color-success);
-  box-shadow: 0 0 0 2px rgba(0, 108, 76, 0.2);
 }
 

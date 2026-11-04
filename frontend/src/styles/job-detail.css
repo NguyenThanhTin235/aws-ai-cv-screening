@@ -72,7 +72,7 @@
 .jd-header-company {
   font-size: 15px;
   font-weight: 600;
-  color: var(--color-outline);
+  color: var(--color-on-surface);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -247,9 +247,9 @@
 
 /* AI Rubric Section */
 .jd-rubric-box {
-  background: linear-gradient(135deg, rgba(9, 87, 68, 0.04) 0%, rgba(9, 87, 68, 0.08) 100%);
-  border: 1px solid rgba(9, 87, 68, 0.2);
-  border-radius: var(--radius-md);
+  background-color: var(--surface, #f9f9f9);
+  border: 1px solid var(--border, #eaeaea);
+  border-radius: 8px;
   padding: 20px;
 }
 
@@ -312,4 +312,32 @@
 .jd-related-job-item:hover {
   background-color: var(--color-surface-container-low);
   border-color: var(--color-primary-container);
+}
+
+@media (max-width: 640px) {
+  .jd-container {
+    padding: 16px 12px 36px 12px;
+  }
+  .jd-header-card {
+    padding: 20px 16px;
+  }
+  .jd-header-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .jd-header-title {
+    font-size: 20px;
+  }
+  .jd-header-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .jd-btn-apply {
+    width: 100%;
+    justify-content: center;
+  }
+  .jd-section-card {
+    padding: 18px 14px;
+  }
 }

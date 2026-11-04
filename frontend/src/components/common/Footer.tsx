@@ -132,23 +132,29 @@ export const Footer: React.FC = () => {
               <li className="site-footer-info-item" style={{ marginBottom: '4px' }}>
                 <strong style={{ color: 'var(--color-on-surface)' }}>Văn phòng:</strong> Tòa nhà Cloud Center, Hà Nội &amp; TP. HCM
               </li>
-              <li style={{ paddingTop: '4px', borderTop: '1px solid var(--color-surface-container)' }}>
-                <a href="#chinh-sach-bao-mat-pii" className="site-footer-link">
-                  Chính sách bảo mật dữ liệu PII
-                </a>
+              <li style={{ paddingTop: '6px', borderTop: '1px solid var(--border, #eaeaea)' }}>
+                <Link to="/chinh-sach-bao-mat" className="site-footer-link">
+                  Chính sách bảo vệ dữ liệu cá nhân
+                </Link>
               </li>
               <li>
-                <a href="#tieu-chuan-ai" className="site-footer-link">
-                  Nguyên tắc AI Đạo đức &amp; Minh bạch
-                </a>
-              </li>
-              <li>
-                <a href="#dieu-khoan-su-dung" className="site-footer-link">
+                <Link to="/dieu-khoan" className="site-footer-link">
                   Điều khoản sử dụng dịch vụ
-                </a>
+                </Link>
+              </li>
+              <li>
+                <Link to="/chinh-sach-bao-mat" className="site-footer-link">
+                  Minh bạch Trí tuệ nhân tạo (AI)
+                </Link>
               </li>
             </ul>
           </div>
+        </div>
+
+        {/* Legal entity & compliance metadata */}
+        <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: '1px solid var(--border, #eaeaea)', fontSize: '12px', color: 'var(--muted, #636361)', lineHeight: 1.6 }}>
+          <div><strong>Công ty Cổ phần Nền tảng Nhân tài Số CloudJob</strong> • Giấy chứng nhận ĐKDN số: 0110998877 cấp bởi Sở KH&amp;ĐT Hà Nội</div>
+          <div>Trụ sở: Tòa nhà Cloud Center, Hà Nội &amp; TP. Hồ Chí Minh • Tuân thủ Luật BVDLCN 91/2025/QH15 &amp; Luật TMĐT 122/2025/QH15</div>
         </div>
 
         {/* Footer Bottom Bar */}

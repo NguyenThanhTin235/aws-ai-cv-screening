@@ -8,7 +8,7 @@ import { validateOtp } from '../utils/validators';
 export const OtpVerification: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const emailParam = searchParams.get('email') || 'nguyen.van.an@example.com';
+  const emailParam = searchParams.get('email') || 'nguyen.van.an@cloudjob.vn';
 
   const { verifyOtp, user, isLoading } = useAuth();
 

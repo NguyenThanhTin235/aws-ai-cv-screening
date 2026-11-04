@@ -611,6 +611,22 @@ export const JobDetail: React.FC = () => {
                   </div>
                 )}
 
+                {/* AI Transparency & Processing Notice */}
+                <div
+                  style={{
+                    margin: '14px 0 16px 0',
+                    padding: '10px 12px',
+                    backgroundColor: 'var(--surface, #f9f9f9)',
+                    border: '1px solid var(--border, #eaeaea)',
+                    borderRadius: '6px',
+                    fontSize: '11.5px',
+                    color: 'var(--muted, #636361)',
+                    lineHeight: 1.5
+                  }}
+                >
+                  <strong style={{ color: 'var(--text, #1f201d)' }}>Minh bạch AI &amp; Bảo vệ dữ liệu:</strong> Hồ sơ CV của bạn sẽ được hỗ trợ phân tích năng lực bằng AWS Bedrock &amp; Textract theo chuẩn Luật Bảo vệ dữ liệu cá nhân 91/2025/QH15. Kết quả đánh giá chỉ mang tính chất tham khảo cho nhà tuyển dụng và luôn có sự giám sát của con người (Human-in-the-loop).
+                </div>
+
                 <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end', marginTop: '16px' }}>
                   <button
                     type="button"

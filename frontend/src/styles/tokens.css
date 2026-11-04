@@ -1,49 +1,67 @@
 :root {
-  /* Surface & Background */
-  --color-surface: #f7f9fb;
-  --color-surface-dim: #d8dadc;
-  --color-surface-bright: #f7f9fb;
+  /* Core Design Tokens */
+  --ground: #ffffff;
+  --surface: #f9f9f9;
+  --surface-raised: #ffffff;
+  --border: #eaeaea;
+  --rule: #f3f3f3;
+  --control: #d9d9d6;
+  --text: #1f201d;
+  --muted: #636361;
+  --accent: #1b6e66;
+  --positive: #2e7d32;
+  --negative: #b42318;
+  --warning: #92400e;
+
+  /* Semantic Pills */
+  --pill-positive-bg: #dcfae5;
+  --pill-positive-ink: #04250e;
+  --pill-negative-bg: #fdecea;
+  --pill-negative-ink: #7a1d14;
+  --pill-warning-bg: #fffbeb;
+  --pill-warning-ink: #92400e;
+  --pill-neutral-bg: #f3f3f3;
+  --pill-neutral-ink: #3d3d3a;
+
+  /* Backward Compatible Semantic Mapping */
+  --color-surface: var(--surface);
+  --color-surface-dim: #eef0f2;
+  --color-surface-bright: #ffffff;
   --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #f2f4f6;
-  --color-surface-container: #eceef0;
-  --color-surface-container-high: #e6e8ea;
+  --color-surface-container-low: #f8faf9;
+  --color-surface-container: #f3f4f6;
+  --color-surface-container-high: #eaecee;
   --color-surface-container-highest: #e0e3e5;
-  --color-on-surface: #191c1e;
-  --color-on-surface-variant: #3f4945;
-  --color-inverse-surface: #2d3133;
-  --color-inverse-on-surface: #eff1f3;
+  --color-on-surface: var(--text);
+  --color-on-surface-variant: var(--muted);
+  --color-inverse-surface: #1f201d;
+  --color-inverse-on-surface: #f9f9f9;
 
-  /* Outlines & Borders */
-  --color-outline: #6f7974;
-  --color-outline-variant: #bfc9c3;
-  --color-surface-tint: #246955;
+  /* Outlines & Borders (1px subtle tone separation, no heavy lines) */
+  --color-outline: #595e62;
+  --color-outline-variant: var(--border);
+  --color-surface-tint: var(--accent);
 
-  /* Brand Primary (Crisp Deep Forest Emerald) */
-  --color-primary: #003e2f;
+  /* Brand Primary (Deep Forest Teal) */
+  --color-primary: #0a483c;
   --color-on-primary: #ffffff;
-  --color-primary-container: #095744;
-  --color-on-primary-container: #87cbb2;
-  --color-inverse-primary: #90d4bb;
+  --color-primary-container: var(--accent);
+  --color-on-primary-container: #e6f4f1;
+  --color-inverse-primary: #7ac9b7;
 
-  /* Secondary (Steel Blue / Slate) */
-  --color-secondary: #565e74;
+  /* Secondary (Refined Slate / Neutral) */
+  --color-secondary: #4a5568;
   --color-on-secondary: #ffffff;
-  --color-secondary-container: #dae2fd;
-  --color-on-secondary-container: #5c647a;
-
-  /* Tertiary / Accent (Royal Violet) */
-  --color-tertiary: #45009b;
-  --color-on-tertiary: #ffffff;
-  --color-tertiary-container: #6106d2;
-  --color-on-tertiary-container: #cbb0ff;
+  --color-secondary-container: #edf2f7;
+  --color-on-secondary-container: #2d3748;
 
   /* Status Colors */
-  --color-error: #ba1a1a;
+  --color-error: var(--negative);
   --color-on-error: #ffffff;
-  --color-error-container: #ffdad6;
-  --color-on-error-container: #93000a;
-  --color-success: #006c4c;
-  --color-warning: #e08200;
+  --color-error-container: #fee2e2;
+  --color-on-error-container: #7f1d1d;
+  --color-success: var(--positive);
+  --color-warning: var(--warning);
 
   /* Spacing */
   --space-xs: 4px;
@@ -53,19 +71,21 @@
   --space-xl: 32px;
   --space-2xl: 48px;
 
-  /* Radius */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
+  /* Radius (Editorial clean: 6-8px, no excessive pill shapes on cards) */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
   --radius-full: 9999px;
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  /* Only true floating overlays (menus, popovers, modals) may carry a shadow */
+  --overlay-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -2px rgba(0, 0, 0, 0.05);
 
   /* Typography */
-  --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 * {
@@ -82,6 +102,14 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Numerals in tables, metrics, and data displays use tabular numbers */
+table,
+.tabular-num,
+[data-num],
+time {
+  font-variant-numeric: tabular-nums;
+}
+
 a {
   color: var(--color-primary-container);
   text-decoration: none;
@@ -95,16 +123,16 @@ button {
   font-family: var(--font-family);
 }
 
-/* User Profile Dropdown Modal (Nhãn mẫu mới) */
+/* User Profile Dropdown Modal (Real Overlay) */
 .user-dropdown-menu {
   position: absolute;
   right: 0;
   top: 48px;
   width: 320px;
   background-color: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 14px 35px -4px rgba(0, 0, 0, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
-  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: var(--overlay-shadow);
+  border: 1px solid var(--border);
   z-index: 100;
   overflow: hidden;
   text-align: left;
@@ -117,12 +145,12 @@ button {
   color: #475569;
   text-decoration: none;
   font-weight: 400;
-  transition: all 0.15s ease;
+  transition: color 0.15s ease, background-color 0.15s ease;
 }
 
 .user-menu-item:hover {
-  background-color: #f8fafc;
-  color: #095744;
+  background-color: var(--surface);
+  color: var(--accent);
   text-decoration: none;
 }
 
@@ -140,7 +168,5 @@ button {
 }
 
 .user-section-header:hover {
-  background-color: #f8fafc;
+  background-color: var(--surface);
 }
-
-

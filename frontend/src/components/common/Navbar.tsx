@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import '../../styles/navbar.css';
 import { useAuth } from '../../context/AuthContext';
 import { UserRole } from '../../types';
 import {
@@ -12,7 +13,9 @@ import {
   HelpCircleIcon,
   BriefcaseDotIcon,
   CvBadgeIcon,
-  LogOutIcon
+  LogOutIcon,
+  MenuIcon,
+  XIcon
 } from './Icons';
 
 interface NavbarProps {
@@ -29,6 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({ hideAuthButtons = false }) => {
     location.pathname === '/verify-otp' ||
     hideAuthButtons;
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isJobMenuOpen, setIsJobMenuOpen] = useState(true);
   const [isCvMenuOpen, setIsCvMenuOpen] = useState(true);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -47,6 +51,7 @@ export const Navbar: React.FC<NavbarProps> = ({ hideAuthButtons = false }) => {
   // Close dropdown on route change
   useEffect(() => {
     setIsUserMenuOpen(false);
+    setIsMobileMenuOpen(false);
   }, [location.pathname]);
 
   // Close dropdown when clicking outside
@@ -73,78 +78,22 @@ export const Navbar: React.FC<NavbarProps> = ({ hideAuthButtons = false }) => {
   };
 
   return (
-    <header
-      style={{
-        backgroundColor: 'rgba(255, 255, 255, 0.96)',
-        backdropFilter: 'blur(8px)',
-        borderBottom: '1px solid var(--color-surface-container-high)',
-        position: 'sticky',
-        top: 0,
-        zIndex: 50,
-        boxShadow: '0 1px 8px rgba(0, 0, 0, 0.04)'
-      }}
-    >
-      <div
-        style={{
-          maxWidth: '1280px',
-          margin: '0 auto',
-          padding: '0 24px',
-          height: '64px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '16px'
-        }}
-      >
+    <header className="site-navbar">
+      <div className="site-navbar-container">
         {/* Brand Group */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexShrink: 0 }}>
-          <Link
-            to="/"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              textDecoration: 'none',
-              color: 'inherit'
-            }}
-          >
-            <div
-              style={{
-                width: '36px',
-                height: '36px',
-                borderRadius: '8px',
-                backgroundColor: 'var(--color-primary-container)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#ffffff',
-                boxShadow: 'var(--shadow-sm)'
-              }}
-            >
+          <Link to="/" className="navbar-brand-link">
+            <div className="navbar-brand-icon">
               <BrainIcon size={20} color="#ffffff" />
             </div>
-            <span
-              style={{
-                fontSize: '19px',
-                fontWeight: '700',
-                color: 'var(--color-primary)',
-                letterSpacing: '-0.02em'
-              }}
-            >
-              Cloud<span style={{ color: 'var(--color-primary-container)', fontWeight: '600' }}>Job</span>
+            <span className="navbar-brand-text">
+              Cloud<span className="navbar-brand-sub">Job</span>
             </span>
           </Link>
         </div>
 
-        {/* Center Navigation Links */}
-        <nav
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '28px',
-            height: '64px'
-          }}
-        >
+        {/* Center Navigation Links (Desktop) */}
+        <nav className="navbar-desktop-nav">
           <Link
             to="/"
             style={{
@@ -576,11 +525,11 @@ export const Navbar: React.FC<NavbarProps> = ({ hideAuthButtons = false }) => {
           ) : (
             /* Guest / Unauthenticated State */
             <>
-              {/* Button Đăng tin ngay (được đưa lên đầu) */}
+              {/* Button Đăng tin ngay (Desktop only) */}
               <Link
                 to="/tuyen-dung"
+                className="navbar-desktop-btn"
                 style={{
-                  display: 'inline-flex',
                   alignItems: 'center',
                   gap: '6px',
                   padding: '7px 16px',
@@ -605,7 +554,7 @@ export const Navbar: React.FC<NavbarProps> = ({ hideAuthButtons = false }) => {
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  padding: '7px 16px',
+                  padding: '7px 14px',
                   borderRadius: 'var(--radius-md)',
                   border: '1px solid var(--color-outline-variant)',
                   backgroundColor: '#ffffff',
@@ -619,11 +568,11 @@ export const Navbar: React.FC<NavbarProps> = ({ hideAuthButtons = false }) => {
                 Đăng nhập
               </Link>
 
-              {/* Button Đăng ký */}
+              {/* Button Đăng ký (Desktop only) */}
               <Link
                 to="/register"
+                className="navbar-desktop-btn"
                 style={{
-                  display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   padding: '7px 18px',
@@ -641,8 +590,109 @@ export const Navbar: React.FC<NavbarProps> = ({ hideAuthButtons = false }) => {
               </Link>
             </>
           )}
+
+          {/* Mobile hamburger menu toggle */}
+          {!isAuthPage && (
+            <button
+              type="button"
+              className="navbar-mobile-toggle"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle navigation menu"
+            >
+              {isMobileMenuOpen ? <XIcon size={18} /> : <MenuIcon size={18} />}
+            </button>
+          )}
         </div>
       </div>
+
+      {/* Mobile Navigation Drawer */}
+      {!isAuthPage && (
+        <div className={`navbar-mobile-drawer ${isMobileMenuOpen ? 'open' : ''}`}>
+          <div className="navbar-mobile-links">
+            <Link
+              to="/"
+              className={`navbar-mobile-link ${location.pathname === '/' ? 'active' : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Việc làm
+            </Link>
+            <Link
+              to="/tuyen-dung"
+              className={`navbar-mobile-link ${location.pathname === '/tuyen-dung' ? 'active' : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Tuyển dụng
+            </Link>
+            <a
+              href="#cam-nang"
+              className="navbar-mobile-link"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Cẩm nang
+            </a>
+            <a
+              href="#blog"
+              className="navbar-mobile-link"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Blog
+            </a>
+            <a
+              href="#lien-he"
+              className="navbar-mobile-link"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Liên hệ
+            </a>
+          </div>
+
+          {!isAuthenticated && (
+            <div className="navbar-mobile-actions">
+              <Link
+                to="/tuyen-dung"
+                className="navbar-mobile-link"
+                style={{
+                  backgroundColor: '#0b342b',
+                  color: '#ffffff',
+                  justifyContent: 'center',
+                  fontWeight: '600'
+                }}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <UploadIcon size={16} color="#ffffff" style={{ marginRight: '6px' }} />
+                Đăng tin tuyển dụng ngay
+              </Link>
+              <div className="navbar-mobile-actions-row">
+                <Link
+                  to="/login"
+                  className="navbar-mobile-link"
+                  style={{
+                    border: '1px solid var(--border)',
+                    justifyContent: 'center',
+                    fontWeight: '600'
+                  }}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Đăng nhập
+                </Link>
+                <Link
+                  to="/register"
+                  className="navbar-mobile-link"
+                  style={{
+                    backgroundColor: 'var(--color-primary-container)',
+                    color: '#ffffff',
+                    justifyContent: 'center',
+                    fontWeight: '600'
+                  }}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Đăng ký
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </header>
   );
 };

@@ -5,6 +5,7 @@ import { AuthProvider } from './context/AuthContext';
 import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
 import { ProtectedRoute } from './components/common/ProtectedRoute';
+import { ScrollToTop } from './components/common/ScrollToTop';
 
 import { JobBoard } from './pages/JobBoard';
 import { JobDetail } from './pages/JobDetail';
@@ -17,6 +18,8 @@ import { RecruiterLanding } from './pages/RecruiterLanding';
 import { CandidateDashboard } from './pages/CandidateDashboard';
 import { RecruiterDashboard } from './pages/RecruiterDashboard';
 import { AdminDashboard } from './pages/AdminDashboard';
+import { PrivacyPolicy } from './pages/PrivacyPolicy';
+import { TermsOfService } from './pages/TermsOfService';
 
 const LayoutWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
@@ -45,6 +48,7 @@ export const App: React.FC = () => {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <LayoutWrapper>
           <Routes>
             {/* Public Routes */}
@@ -61,6 +65,10 @@ export const App: React.FC = () => {
             <Route path="/tuyen-dung" element={<RecruiterLanding />} />
             <Route path="/recruiter-landing" element={<RecruiterLanding />} />
             <Route path="/verify-otp" element={<OtpVerification />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/chinh-sach-bao-mat" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/dieu-khoan" element={<TermsOfService />} />
 
             {/* Role-Protected Routes */}
             <Route

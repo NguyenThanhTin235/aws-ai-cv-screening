@@ -2,15 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/recruiter-landing.css';
 import {
-  BrainIcon,
-  ShieldIcon,
   CheckIcon,
   ArrowRightIcon,
   SparklesIcon,
-  BuildingIcon,
-  DocumentScannerIcon,
-  TrendingUpIcon,
-  LockIcon
+  BuildingIcon
 } from '../components/common/Icons';
 
 export const RecruiterLanding: React.FC = () => {
@@ -112,7 +107,6 @@ export const RecruiterLanding: React.FC = () => {
       <section className="rl-section">
         <div className="rl-container">
           <div className="rl-section-header">
-            <div className="rl-section-tag">GIẢI PHÁP ĐỘT PHÁ</div>
             <h2 className="rl-section-title">Tại sao Doanh nghiệp chọn CloudJob?</h2>
             <p className="rl-section-desc">
               Hệ thống kết hợp sức mạnh mô hình nền tảng Generative AI của AWS với cơ sở dữ liệu chuyên biệt về hạ tầng
@@ -123,9 +117,6 @@ export const RecruiterLanding: React.FC = () => {
           <div className="rl-features-grid">
             {/* Feature 1 */}
             <div className="rl-feature-card">
-              <div className="rl-feature-icon-wrapper">
-                <BrainIcon size={22} color="#095744" />
-              </div>
               <h3 className="rl-feature-title">AI Rubric 100đ Chuẩn Xác</h3>
               <p className="rl-feature-text">
                 Đối chiếu tiêu chí ma trận đánh giá tự động dựa trên Claude 3.5 Sonnet, xếp hạng ứng viên chuẩn xác từng
@@ -135,9 +126,6 @@ export const RecruiterLanding: React.FC = () => {
 
             {/* Feature 2 */}
             <div className="rl-feature-card">
-              <div className="rl-feature-icon-wrapper">
-                <DocumentScannerIcon size={22} color="#095744" />
-              </div>
               <h3 className="rl-feature-title">Trích Xuất OCR Đa Định Dạng</h3>
               <p className="rl-feature-text">
                 Tự động quét và đọc hiểu cấu trúc hồ sơ định dạng PDF, DOCX, ảnh chụp qua Amazon Textract OCR, không bỏ sót
@@ -147,9 +135,6 @@ export const RecruiterLanding: React.FC = () => {
 
             {/* Feature 3 */}
             <div className="rl-feature-card">
-              <div className="rl-feature-icon-wrapper">
-                <ShieldIcon size={22} color="#095744" />
-              </div>
               <h3 className="rl-feature-title">Khử Định Kiến &amp; Bảo Vệ PII</h3>
               <p className="rl-feature-text">
                 Tự động ẩn danh các thông tin nhân khẩu học (giới tính, độ tuổi, hình ảnh) trước khi chấm điểm, đảm bảo quy
@@ -159,33 +144,23 @@ export const RecruiterLanding: React.FC = () => {
 
             {/* Feature 4 */}
             <div className="rl-feature-card">
-              <div className="rl-feature-icon-wrapper">
-                <TrendingUpIcon size={22} color="#095744" />
-              </div>
               <h3 className="rl-feature-title">Tiếp Cận Nhân Tài Đúng Mục Tiêu</h3>
               <p className="rl-feature-text">
-                Mạng lưới hơn 10.000 hồ sơ kỹ sư Cloud, DevOps, Site Reliability Engineer (SRE) và Fullstack có chứng chỉ AWS
+                Hồ sơ kỹ sư Cloud, DevOps, Site Reliability Engineer (SRE) và Fullstack có chứng chỉ AWS
                 Certified đang chủ động tìm kiếm cơ hội.
               </p>
             </div>
 
             {/* Feature 5 */}
             <div className="rl-feature-card">
-              <div className="rl-feature-icon-wrapper">
-                <LockIcon size={22} color="#095744" />
-              </div>
               <h3 className="rl-feature-title">Bảo Mật Chuẩn Doanh Nghiệp</h3>
               <p className="rl-feature-text">
-                Mã hóa toàn bộ dữ liệu ứng viên bằng AWS KMS Envelope Encryption và tuân thủ chặt chẽ Nghị định 13/2023/NĐ-CP
-                về bảo vệ dữ liệu cá nhân tại Việt Nam.
+                Mã hóa toàn bộ dữ liệu ứng viên bằng AWS KMS Envelope Encryption và tuân thủ chặt chẽ Luật Bảo vệ dữ liệu cá nhân 91/2025/QH15 &amp; Nghị định 356/2025/NĐ-CP.
               </p>
             </div>
 
             {/* Feature 6 */}
             <div className="rl-feature-card">
-              <div className="rl-feature-icon-wrapper">
-                <BuildingIcon size={22} color="#095744" />
-              </div>
               <h3 className="rl-feature-title">Quản Lý Tuyển Dụng Tập Trung</h3>
               <p className="rl-feature-text">
                 Giao diện quản lý quy trình trực quan từ tiếp nhận hồ sơ, đánh giá AI, mời phỏng vấn đến gửi offer, tích hợp
@@ -200,7 +175,6 @@ export const RecruiterLanding: React.FC = () => {
       <section className="rl-workflow-section">
         <div className="rl-container">
           <div className="rl-section-header">
-            <div className="rl-section-tag">QUY TRÌNH TINH GỌN</div>
             <h2 className="rl-section-title">3 bước tuyển dụng tinh gọn cùng AI</h2>
             <p className="rl-section-desc">
               Bắt đầu quy trình sàng lọc hồ sơ tự động hóa và tuyển chọn ứng viên phù hợp nhất chỉ trong vài phút.

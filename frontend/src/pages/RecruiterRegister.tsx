@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import '../styles/auth-forms.css';
 import { useAuth } from '../context/AuthContext';
 import { Navbar } from '../components/common/Navbar';
 import {
-  BuildingIcon,
   ShieldIcon,
   AlertCircleIcon,
   EyeIcon,
@@ -47,6 +47,12 @@ export const RecruiterRegister: React.FC = () => {
   // Error feedback & Touched state
   const [errorMsg, setErrorMsg] = useState('');
   const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, []);
 
   const handleBlur = (field: string) => {
     setTouched((prev) => ({ ...prev, [field]: true }));
@@ -118,84 +124,56 @@ export const RecruiterRegister: React.FC = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f9fafb', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ minHeight: '100dvh', backgroundColor: 'var(--surface, #f9f9f9)', display: 'flex', flexDirection: 'column' }}>
       {/* Standardized Header */}
       <Navbar hideAuthButtons />
 
-      <main style={{ flex: 1, padding: '36px 16px 56px' }}>
-        <div
-          style={{
-            maxWidth: '720px',
-            margin: '0 auto',
-            backgroundColor: '#ffffff',
-            borderRadius: '14px',
-            border: '1px solid #e5e7eb',
-            padding: '36px 40px',
-            boxShadow: '0 8px 30px -4px rgba(0, 0, 0, 0.06)'
-          }}
-        >
-          {/* Top Header Badge & Title */}
+      <main style={{ flex: 1, padding: '16px 12px 48px' }}>
+        <div className="auth-form-wrapper wide" style={{ margin: '0 auto' }}>
+          <div className="auth-card">
+          {/* Top Header Title */}
           <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-            <span
-              style={{
-                fontSize: '11.5px',
-                fontWeight: '700',
-                backgroundColor: '#e6f4ef',
-                color: '#095744',
-                padding: '5px 14px',
-                borderRadius: '9999px',
-                letterSpacing: '0.04em',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px'
-              }}
-            >
-              <BuildingIcon size={13} color="#095744" />
-              <span>DÀNH CHO DOANH NGHIỆP &amp; NHÀ TUYỂN DỤNG</span>
-            </span>
-
             <h1
               style={{
-                fontSize: '25px',
-                fontWeight: '800',
-                marginTop: '12px',
-                color: '#003e2f',
-                letterSpacing: '-0.02em',
-                lineHeight: 1.2
+                fontSize: '24px',
+                fontWeight: '700',
+                color: 'var(--color-primary, #0a483c)',
+                letterSpacing: '-0.01em',
+                lineHeight: 1.25
               }}
             >
               Đăng ký tài khoản Nhà tuyển dụng
             </h1>
 
-            <p style={{ fontSize: '13.5px', color: '#6b7280', marginTop: '6px', maxWidth: '560px', margin: '6px auto 0', lineHeight: 1.5 }}>
-              Tạo tài khoản Doanh nghiệp để đăng tin tuyển dụng, tiếp cận <strong>10,000+ Kỹ sư Cloud</strong> và kích hoạt sàng lọc CV tự động bằng AWS Bedrock AI.
+            <p style={{ fontSize: '13.5px', color: 'var(--muted, #636361)', marginTop: '6px', maxWidth: '560px', margin: '6px auto 0', lineHeight: 1.5 }}>
+              Tạo tài khoản Doanh nghiệp để đăng tin tuyển dụng, tiếp cận nhân tài Cloud &amp; DevOps và sàng lọc hồ sơ chuẩn hóa.
             </p>
           </div>
 
-          {/* Value Proposition Pills */}
+          {/* Value Proposition Strip */}
           <div
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
               gap: '10px',
-              backgroundColor: '#f8fafc',
-              border: '1px solid #e2e8f0',
-              borderRadius: '8px',
+              backgroundColor: 'var(--surface, #f9f9f9)',
+              border: '1px solid var(--border, #eaeaea)',
+              borderRadius: '6px',
               padding: '12px 16px',
               marginBottom: '28px'
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12.5px', color: '#095744', fontWeight: '600' }}>
-              <CheckIcon size={15} color="#095744" />
-              <span>3 tin đăng miễn phí</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12.5px', color: 'var(--accent, #1b6e66)', fontWeight: '600' }}>
+              <CheckIcon size={15} color="var(--accent, #1b6e66)" />
+              <span>3 tin đăng tiêu chuẩn</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12.5px', color: '#095744', fontWeight: '600' }}>
-              <SparklesIcon size={14} color="#095744" />
-              <span>50 lượt sàng lọc AI Bedrock</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12.5px', color: 'var(--accent, #1b6e66)', fontWeight: '600' }}>
+              <SparklesIcon size={14} color="var(--accent, #1b6e66)" />
+              <span>Sàng lọc AI Rubric 100đ</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12.5px', color: '#095744', fontWeight: '600' }}>
-              <ShieldIcon size={14} color="#095744" />
-              <span>Tuân thủ Nghị định 13/2023</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12.5px', color: 'var(--accent, #1b6e66)', fontWeight: '600' }}>
+              <ShieldIcon size={14} color="var(--accent, #1b6e66)" />
+              <span>Tuân thủ Luật 91/2025/QH15</span>
             </div>
           </div>
 
@@ -226,7 +204,7 @@ export const RecruiterRegister: React.FC = () => {
                 1. Thông tin người đại diện tuyển dụng
               </h2>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
+              <div className="auth-grid-responsive">
                 <div>
                   <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', marginBottom: '6px', color: '#374151' }}>
                     Họ và tên người liên hệ <span style={{ color: '#dc2626' }}>*</span>
@@ -353,7 +331,7 @@ export const RecruiterRegister: React.FC = () => {
                 2. Thông tin Doanh nghiệp / Tổ chức
               </h2>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
+              <div className="auth-grid-responsive">
                 <div style={{ gridColumn: '1 / -1' }}>
                   <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', marginBottom: '6px', color: '#374151' }}>
                     Tên đầy đủ của Doanh nghiệp <span style={{ color: '#dc2626' }}>*</span>
@@ -476,7 +454,7 @@ export const RecruiterRegister: React.FC = () => {
                 3. Thiết lập mật khẩu đăng nhập
               </h2>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
+              <div className="auth-grid-responsive">
                 <div>
                   <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', marginBottom: '6px', color: '#374151' }}>
                     Mật khẩu quản trị <span style={{ color: '#dc2626' }}>*</span>
@@ -606,7 +584,7 @@ export const RecruiterRegister: React.FC = () => {
                 <span>
                   Tôi cam kết là đại diện tuyển dụng hợp pháp của doanh nghiệp, cam kết tuân thủ{' '}
                   <strong>Điều khoản dịch vụ</strong> và <strong>Chính sách bảo vệ dữ liệu cá nhân</strong>{' '}
-                  theo chuẩn <strong>Nghị định 13/2023/NĐ-CP</strong> và Luật Lao động Việt Nam. <span style={{ color: '#dc2626' }}>*</span>
+                  theo chuẩn <strong>Luật Bảo vệ dữ liệu cá nhân 91/2025/QH15 &amp; Nghị định 356/2025/NĐ-CP</strong> và Bộ luật Lao động Việt Nam. <span style={{ color: '#dc2626' }}>*</span>
                 </span>
               </label>
             </div>
@@ -654,7 +632,8 @@ export const RecruiterRegister: React.FC = () => {
             </Link>
           </div>
         </div>
-      </main>
+      </div>
+    </main>
 
       {/* Footer */}
       <footer style={{ padding: '16px 24px', textAlign: 'center', fontSize: '12px', color: '#9ca3af', borderTop: '1px solid #e5e7eb' }}>

@@ -48,4 +48,5 @@ ui/
 # AI Agent Skills & Config — KHÔNG push
 .agents/
 .agent/
+.taste-skill/
 

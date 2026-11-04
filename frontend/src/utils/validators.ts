@@ -77,7 +77,7 @@ export function validateEmail(email: string): string | null {
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!emailRegex.test(trimmed)) {
-    return 'Địa chỉ email không hợp lệ (Ví dụ: name@example.com).';
+    return 'Địa chỉ email không hợp lệ (Ví dụ: name@cloudjob.vn).';
   }
 
   return null;

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useSearchParams, Navigate } from 'react-router-dom';
+import '../styles/auth-forms.css';
 import { useAuth } from '../context/AuthContext';
 import { AlertCircleIcon, EyeIcon, EyeOffIcon } from '../components/common/Icons';
 import {
@@ -29,8 +30,14 @@ export const Register: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [consentTerms, setConsentTerms] = useState(false);
-  const [consentTalentPool, setConsentTalentPool] = useState(true);
+  const [consentTalentPool, setConsentTalentPool] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, []);
 
   // Touched state for realtime / inline validation
   const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -92,36 +99,15 @@ export const Register: React.FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: '580px', margin: '40px auto', padding: '0 16px' }}>
-      <div
-        style={{
-          backgroundColor: '#ffffff',
-          borderRadius: '12px',
-          border: '1px solid #e5e7eb',
-          padding: '36px',
-          boxShadow: '0 4px 20px -2px rgba(0, 0, 0, 0.06)'
-        }}
-      >
+    <div className="auth-form-wrapper">
+      <div className="auth-card">
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-          <span
-            style={{
-              fontSize: '11px',
-              fontWeight: '700',
-              backgroundColor: '#e6f4ef',
-              color: '#095744',
-              padding: '4px 12px',
-              borderRadius: '9999px',
-              letterSpacing: '0.04em'
-            }}
-          >
-            DÀNH CHO ỨNG VIÊN
-          </span>
-          <h1 style={{ fontSize: '24px', fontWeight: '800', marginTop: '10px', color: '#003e2f', letterSpacing: '-0.02em' }}>
+          <h1 style={{ fontSize: '24px', fontWeight: '700', color: 'var(--color-primary, #0a483c)', letterSpacing: '-0.01em' }}>
             Đăng ký tài khoản Ứng viên
           </h1>
-          <p style={{ fontSize: '13px', color: '#6b7280', marginTop: '4px' }}>
-            Tạo tài khoản để ứng tuyển và kích hoạt chẩn đoán CV bằng AI Bedrock
+          <p style={{ fontSize: '13px', color: 'var(--muted, #636361)', marginTop: '4px' }}>
+            Khởi tạo hồ sơ ứng tuyển và chẩn đoán năng lực Cloud
           </p>
         </div>
 
@@ -146,7 +132,7 @@ export const Register: React.FC = () => {
 
         <form onSubmit={handleSubmit}>
           {/* Full Name & Phone */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+          <div className="auth-grid-2col">
             <div>
               <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', marginBottom: '6px', color: '#374151' }}>
                 Họ và tên <span style={{ color: '#dc2626' }}>*</span>
@@ -350,11 +336,11 @@ export const Register: React.FC = () => {
                 required
                 checked={consentTerms}
                 onChange={(e) => setConsentTerms(e.target.checked)}
-                style={{ accentColor: '#095744', marginTop: '2px' }}
+                style={{ accentColor: 'var(--accent, #1b6e66)', marginTop: '2px' }}
               />
               <span>
                 Tôi đã đọc và đồng ý với <strong>Điều khoản dịch vụ</strong> và{' '}
-                <strong>Chính sách bảo vệ dữ liệu cá nhân</strong> (Tuân thủ Nghị định 13/2023/NĐ-CP). <span style={{ color: '#dc2626' }}>*</span>
+                <strong>Chính sách bảo vệ dữ liệu cá nhân</strong> (Tuân thủ Luật Bảo vệ dữ liệu cá nhân 91/2025/QH15 &amp; Nghị định 356/2025/NĐ-CP). <span style={{ color: '#dc2626' }}>*</span>
               </span>
             </label>
 
@@ -363,7 +349,7 @@ export const Register: React.FC = () => {
                 type="checkbox"
                 checked={consentTalentPool}
                 onChange={(e) => setConsentTalentPool(e.target.checked)}
-                style={{ accentColor: '#095744', marginTop: '2px' }}
+                style={{ accentColor: 'var(--accent, #1b6e66)', marginTop: '2px' }}
               />
               <span>
                 Cho phép lưu hồ sơ vào <strong>Kho tài năng (Talent Pool)</strong> để nhà tuyển dụng có thể chủ động kết nối cơ hội việc làm.

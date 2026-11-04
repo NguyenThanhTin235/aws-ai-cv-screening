@@ -21,26 +21,12 @@
 /* Hero Section */
 .jb-hero {
   position: relative;
-  background:
-    radial-gradient(circle at 18% 25%, rgba(144, 212, 187, 0.22) 0%, transparent 45%),
-    radial-gradient(circle at 82% 75%, rgba(135, 203, 178, 0.16) 0%, transparent 40%),
-    linear-gradient(135deg, #00271d 0%, #064032 38%, #095744 72%, #003e2f 100%);
+  background-color: #0b342b;
   padding: 56px 0 44px 0;
-  border-bottom: 1px solid rgba(0, 62, 47, 0.25);
+  border-bottom: 1px solid var(--border, #eaeaea);
   color: #ffffff;
   overflow: visible;
   z-index: 20;
-}
-
-.jb-hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 36px 36px;
-  pointer-events: none;
 }
 
 .jb-hero-headline-box {
@@ -122,8 +108,7 @@
 .jb-search-card {
   background-color: var(--color-surface-container-lowest);
   border-radius: var(--radius-lg);
-  box-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.24), 0 4px 12px -2px rgba(0, 0, 0, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--border, #eaeaea);
   padding: 16px;
   position: relative;
   z-index: 30;
@@ -1018,11 +1003,11 @@
 /* Bottom CTA Promo Banner */
 .jb-promo-banner {
   margin-top: 32px;
-  border-radius: var(--radius-lg);
-  background: linear-gradient(90deg, rgba(172, 241, 215, 0.45) 0%, var(--color-surface-container-low) 50%, var(--color-surface-container-lowest) 100%);
-  border: 1px solid var(--color-surface-container-high);
+  border-radius: 8px;
+  background-color: var(--surface, #f9f9f9);
+  border: 1px solid var(--border, #eaeaea);
   padding: 24px 28px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: none;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -1592,9 +1577,8 @@
 .jb-compact-company-name {
   font-size: 13px;
   font-weight: 600;
-  color: var(--color-outline);
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
+  color: var(--color-on-surface);
+  letter-spacing: 0.1px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1647,7 +1631,7 @@
 
 .jb-compact-time {
   font-size: 12px;
-  color: var(--color-outline);
+  color: var(--color-on-surface-variant);
 }
 
 .jb-compact-heart-btn {

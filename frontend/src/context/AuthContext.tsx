@@ -30,7 +30,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const DEMO_USERS: Record<UserRole, UserProfile> = {
   candidate: {
     id: 'usr_cdd_001',
-    email: 'nguyen.van.an@example.com',
+    email: 'nguyen.van.an@cloudjob.vn',
     fullName: 'Nguyễn Văn An',
     role: 'candidate',
     phone: '0912 345 678',
