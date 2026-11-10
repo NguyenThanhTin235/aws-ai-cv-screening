@@ -80,7 +80,11 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         return errorResponse('NOT_FOUND', `Không tìm thấy tin tuyển dụng với mã: ${jobId}`, 404);
       }
 
-      return successResponse(res.Item);
+      const itemData = res.Item as any;
+      return successResponse({
+        ...itemData,
+        id: itemData.jobId || (itemData.PK ? itemData.PK.replace('JOB#', '') : undefined)
+      });
     }
 
     // 2. GET /api/v1/companies/{id}/jobs
@@ -182,7 +186,10 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         items = items.filter((j) => j.provinceId === provinceId || j.location?.toLowerCase().includes(provinceId));
       }
 
-      const pagedItems = items.slice(0, limit);
+      const pagedItems = items.slice(0, limit).map((j: any) => ({
+        ...j,
+        id: j.jobId || (j.PK ? j.PK.replace('JOB#', '') : undefined)
+      }));
       const nextKey = queryResult.LastEvaluatedKey;
       const nextCursor = nextKey
         ? Buffer.from(JSON.stringify(nextKey)).toString('base64')
