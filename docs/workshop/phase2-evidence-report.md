@@ -65,7 +65,40 @@ Tất cả các hàm đã được đóng gói và cập nhật mã nguồn mớ
 
 ---
 
-## 4. Tóm tắt Kiểm thử & Tính tương thích
+## 4. API Gateway REST Endpoints & Phân Quyền (RBAC)
+
+Toàn bộ các tài nguyên RESTful API đã được công bố trên API Gateway `cv-portal-dev-api` với tiền tố chuẩn `/api/v1`:
+
+### Minh chứng 5: Cây route `/jobs` (Tuyển dụng)
+Bao gồm tạo JD, duyệt JD, lấy chi tiết, đổi trạng thái tuyển dụng và danh sách đơn theo job:
+
+![API Gateway Jobs Routes](images/aws-apigateway-jobs-routes.png)
+
+### Minh chứng 6: Cây route `/companies` (Hồ sơ Doanh nghiệp)
+Bao gồm tạo công ty, xem hồ sơ, xem danh sách việc làm của công ty, danh sách thành viên HR và route `/my`:
+
+![API Gateway Companies Routes](images/aws-apigateway-companies-routes.png)
+
+### Minh chứng 7: Cây route `/applications` (Ứng tuyển & Bảo mật CV)
+Bao gồm nộp đơn, lấy presigned upload URL (`/upload-url`), rút đơn (`/withdraw`), quản lý đơn của ứng viên (`/my`), và cấp link xem CV bảo mật kiểm toán (`/cv-access-url`):
+
+![API Gateway Applications Routes](images/aws-apigateway-applications-routes.png)
+
+---
+
+## 5. Bảo mật S3 Quarantine Bucket (File Storage Security)
+
+Xô lưu trữ CV cách ly (`cv-portal-dev-quarantine-145443242997`) được cấu hình nghiêm ngặt theo tiêu chuẩn bảo mật dữ liệu cấp doanh nghiệp:
+- **Block Public Access:** Bật tuyệt đối 100% (Block all public access: `On`). Mọi hành vi truy cập trực tiếp từ Internet bị từ chối; chỉ truy xuất qua S3 Presigned URL có ký số và kiểm toán quyền truy cập.
+- **Server-Side Encryption:** Mã hóa tĩnh bằng AWS KMS Customer Managed Key (CMK).
+- **Malware Protection Plan:** Tích hợp tự động với AWS GuardDuty Malware Protection (`9ad0ce3d5e032ffa6b86`).
+
+### Minh chứng 8: Cấu hình Block Public Access của S3 Quarantine Bucket
+![S3 Quarantine Block Public Access](images/aws-s3-quarantine-block-public-access.png)
+
+---
+
+## 6. Tóm tắt Kiểm thử & Tính tương thích
 
 - **Unit Tests Backend:** 17/17 tests PASS (`npm test --prefix backend`).
 - **Frontend Build:** Hoàn tất thành công (Vite + TypeScript, 0 errors, 0 warnings).
