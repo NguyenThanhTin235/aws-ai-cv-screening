@@ -1,4 +1,4 @@
-import { HealthStatus, UserProfile } from '../types';
+import { HealthStatus, UserProfile, ApiResponse } from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || '';
 
@@ -99,10 +99,142 @@ class ApiService {
    */
   public async getCurrentUser(): Promise<UserProfile | null> {
     try {
-      return await this.request<UserProfile>('/api/v1/auth/me');
+      const res = await this.request<ApiResponse<UserProfile>>('/api/v1/auth/me');
+      return res.data;
     } catch {
       return null;
     }
+  }
+
+  /**
+   * Jobs: GET /api/v1/jobs (Search, filter, paginate)
+   */
+  public async getJobs(params?: {
+    keyword?: string;
+    level?: string;
+    workplaceType?: string;
+    provinceId?: string;
+    limit?: number;
+    cursor?: string;
+  }): Promise<{ items: any[]; meta?: ApiResponse<any>['meta'] }> {
+    const searchParams = new URLSearchParams();
+    if (params?.keyword) searchParams.set('keyword', params.keyword);
+    if (params?.level && params.level !== 'ALL') searchParams.set('level', params.level);
+    if (params?.workplaceType && params.workplaceType !== 'ALL') searchParams.set('workplaceType', params.workplaceType);
+    if (params?.provinceId && params.provinceId !== 'all') searchParams.set('provinceId', params.provinceId);
+    if (params?.limit) searchParams.set('limit', String(params.limit));
+    if (params?.cursor) searchParams.set('cursor', params.cursor);
+
+    const query = searchParams.toString();
+    const endpoint = query ? `/api/v1/jobs?${query}` : '/api/v1/jobs';
+    const res = await this.request<ApiResponse<any[]>>(endpoint);
+    return { items: res.data || [], meta: res.meta };
+  }
+
+  /**
+   * Jobs: GET /api/v1/jobs/{id}
+   */
+  public async getJobById(id: string): Promise<any> {
+    const res = await this.request<ApiResponse<any>>(`/api/v1/jobs/${id}`);
+    return res.data;
+  }
+
+  /**
+   * Jobs: POST /api/v1/jobs (Create new Job with Rubric)
+   */
+  public async createJob(payload: any): Promise<any> {
+    const res = await this.request<ApiResponse<any>>('/api/v1/jobs', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+    return res.data;
+  }
+
+  /**
+   * Companies: GET /api/v1/companies/{id}/jobs
+   */
+  public async getCompanyJobs(companyId: string): Promise<any[]> {
+    const res = await this.request<ApiResponse<any[]>>(`/api/v1/companies/${companyId}/jobs`);
+    return res.data || [];
+  }
+
+  /**
+   * Step 2: POST /api/v1/applications/upload-url (Get Presigned S3 PUT URL)
+   */
+  public async requestUploadUrl(payload: {
+    jobId: string;
+    fileName: string;
+    fileType: string;
+    fileSize: number;
+  }): Promise<{ uploadUrl: string; s3Key: string; documentId: string; expiresInSeconds: number }> {
+    const res = await this.request<ApiResponse<any>>('/api/v1/applications/upload-url', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+    return res.data;
+  }
+
+  /**
+   * Step 3a: Upload file directly to S3 Quarantine via Presigned URL
+   */
+  public async uploadFileToS3(uploadUrl: string, file: File): Promise<boolean> {
+    const response = await fetch(uploadUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/pdf'
+      },
+      body: file
+    });
+
+    if (!response.ok) {
+      throw new Error(`Tải tệp lên S3 thất bại (HTTP ${response.status}: ${response.statusText})`);
+    }
+    return true;
+  }
+
+  /**
+   * Step 3b: POST /api/v1/applications (Submit application with DynamoDB TransactWriteItems)
+   */
+  public async submitApplication(payload: {
+    jobId: string;
+    documentId: string;
+    s3Key: string;
+    candidateName?: string;
+    candidateEmail?: string;
+    candidatePhone?: string;
+    consentAi: boolean;
+  }): Promise<any> {
+    const res = await this.request<ApiResponse<any>>('/api/v1/applications', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+    return res.data;
+  }
+
+  /**
+   * Applications: POST /api/v1/applications/{id}/withdraw
+   */
+  public async withdrawApplication(applicationId: string): Promise<any> {
+    const res = await this.request<ApiResponse<any>>(`/api/v1/applications/${applicationId}/withdraw`, {
+      method: 'POST'
+    });
+    return res.data;
+  }
+
+  /**
+   * Applications: GET /api/v1/applications/my
+   */
+  public async getMyApplications(): Promise<any[]> {
+    const res = await this.request<ApiResponse<any[]>>('/api/v1/applications/my');
+    return res.data || [];
+  }
+
+  /**
+   * Applications: GET /api/v1/jobs/{id}/applications
+   */
+  public async getJobApplications(jobId: string): Promise<any[]> {
+    const res = await this.request<ApiResponse<any[]>>(`/api/v1/jobs/${jobId}/applications`);
+    return res.data || [];
   }
 }
 

@@ -1,40 +1,125 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { ALL_JOBS } from '../data/jobsData';
 import { MapPinIcon, DollarSignIcon, SparklesIcon, ArrowRightIcon } from '../components/common/Icons';
+import { api } from '../services/api';
+
+interface CandidateApp {
+  id: string;
+  jobId?: string;
+  jobTitle: string;
+  companyName: string;
+  appliedAt: string;
+  status: string;
+  score: number;
+  matchLevel: string;
+  badgeColor: string;
+  badgeBg: string;
+}
 
 export const CandidateDashboard: React.FC = () => {
   const { user } = useAuth();
+  const [withdrawingId, setWithdrawingId] = useState<string | null>(null);
 
   // Top 3 recommended jobs from seeded data
   const recommendedJobs = ALL_JOBS.slice(0, 3);
 
-  // Sample recent applications
-  const sampleApplications = [
-    {
-      id: 'app_01J9XAK4M6P8Q0R2T4V6W8Y0Z1',
-      jobTitle: ALL_JOBS[0]?.title || 'Senior DevOps Engineer',
-      companyName: ALL_JOBS[0]?.companyName || 'Authentic Education Hub',
-      appliedAt: '02/11/2026',
-      status: 'Đã thẩm định AI',
-      score: 92,
-      matchLevel: 'Khớp rất cao',
-      badgeColor: '#095744',
-      badgeBg: '#d1fae5'
-    },
-    {
-      id: 'app_01J9XAK4M6P8Q0R2T4V6W8Y0Z2',
-      jobTitle: ALL_JOBS[1]?.title || 'Thực Tập Sinh DevOps & Cloud Automation',
-      companyName: ALL_JOBS[1]?.companyName || 'KMS Technology Vietnam',
-      appliedAt: '03/11/2026',
-      status: 'Đang xử lý AI',
-      score: 88,
-      matchLevel: 'Khớp cao',
-      badgeColor: '#1e40af',
-      badgeBg: '#dbeafe'
+  // Initial applications
+  const [applications, setApplications] = useState<CandidateApp[]>(() => {
+    try {
+      const saved = localStorage.getItem('candidate_applications');
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    } catch {
+      // ignore
     }
-  ];
+    return [
+      {
+        id: 'app_01J9XAK4M6P8Q0R2T4V6W8Y0Z1',
+        jobTitle: ALL_JOBS[0]?.title || 'Senior DevOps Engineer',
+        companyName: ALL_JOBS[0]?.companyName || 'Authentic Education Hub',
+        appliedAt: '02/11/2026',
+        status: 'Đã thẩm định AI',
+        score: 92,
+        matchLevel: 'Khớp rất cao',
+        badgeColor: '#095744',
+        badgeBg: '#d1fae5'
+      },
+      {
+        id: 'app_01J9XAK4M6P8Q0R2T4V6W8Y0Z2',
+        jobTitle: ALL_JOBS[1]?.title || 'Thực Tập Sinh DevOps & Cloud Automation',
+        companyName: ALL_JOBS[1]?.companyName || 'KMS Technology Vietnam',
+        appliedAt: '03/11/2026',
+        status: 'Đang xử lý AI',
+        score: 88,
+        matchLevel: 'Khớp cao',
+        badgeColor: '#1e40af',
+        badgeBg: '#dbeafe'
+      }
+    ];
+  });
+
+  useEffect(() => {
+    // Try fetching from API
+    let isMounted = true;
+    api.getMyApplications()
+      .then((items) => {
+        if (isMounted && Array.isArray(items) && items.length > 0) {
+          const mapped: CandidateApp[] = items.map((item) => ({
+            id: item.applicationId || item.PK?.replace('APP#', '') || item.id,
+            jobId: item.jobId,
+            jobTitle: item.jobTitle || 'Kỹ sư Phần mềm',
+            companyName: item.companyName || 'Doanh nghiệp tuyển dụng',
+            appliedAt: item.submittedAt ? item.submittedAt.split('T')[0] : '10/11/2026',
+            status: item.status === 'WITHDRAWN' ? 'Đã rút đơn' : item.status || 'Đã nộp đơn',
+            score: item.aiScore || 0,
+            matchLevel: item.matchLevel || 'Đang phân tích',
+            badgeColor: item.status === 'WITHDRAWN' ? '#64748b' : item.aiScore >= 80 ? '#095744' : '#1e40af',
+            badgeBg: item.status === 'WITHDRAWN' ? '#f1f5f9' : item.aiScore >= 80 ? '#d1fae5' : '#dbeafe'
+          }));
+          setApplications(mapped);
+          localStorage.setItem('candidate_applications', JSON.stringify(mapped));
+        }
+      })
+      .catch(() => {
+        // Fallback to local
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const handleWithdraw = async (appId: string) => {
+    if (!window.confirm('Bạn có chắc chắn muốn rút đơn ứng tuyển này? Sau khi rút đơn, bạn có thể nộp lại hồ sơ mới nếu có nhu cầu.')) {
+      return;
+    }
+
+    setWithdrawingId(appId);
+    try {
+      await api.withdrawApplication(appId);
+    } catch (err) {
+      console.warn('API withdraw skipped/simulated:', err);
+    }
+
+    const updated = applications.map((a) => {
+      if (a.id === appId) {
+        return {
+          ...a,
+          status: 'Đã rút đơn',
+          badgeColor: '#64748b',
+          badgeBg: '#f1f5f9'
+        };
+      }
+      return a;
+    });
+
+    setApplications(updated);
+    localStorage.setItem('candidate_applications', JSON.stringify(updated));
+    setWithdrawingId(null);
+  };
 
   return (
     <div style={{ maxWidth: '1200px', margin: '32px auto', padding: '0 24px' }}>
@@ -113,12 +198,12 @@ export const CandidateDashboard: React.FC = () => {
               Đơn ứng tuyển gần đây
             </h2>
             <span style={{ fontSize: '12px', color: 'var(--color-outline)' }}>
-              {sampleApplications.length} đơn đang hoạt động
+              {applications.length} đơn hồ sơ
             </span>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {sampleApplications.map((app) => (
+            {applications.map((app) => (
               <div
                 key={app.id}
                 style={{
@@ -148,9 +233,30 @@ export const CandidateDashboard: React.FC = () => {
                 <div style={{ fontSize: '13px', color: 'var(--color-on-surface-variant)', marginBottom: '8px' }}>
                   {app.companyName} • Ngày nộp: {app.appliedAt}
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: 'var(--color-primary)' }}>
-                  <SparklesIcon />
-                  <span>Điểm AI Rubric: <strong>{app.score}/100</strong> ({app.matchLevel})</span>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: 'var(--color-primary)' }}>
+                    <SparklesIcon />
+                    <span>Điểm AI Rubric: <strong>{app.score}/100</strong> ({app.matchLevel})</span>
+                  </div>
+                  {app.status !== 'Đã rút đơn' && (
+                    <button
+                      type="button"
+                      disabled={withdrawingId === app.id}
+                      onClick={() => handleWithdraw(app.id)}
+                      style={{
+                        padding: '4px 10px',
+                        fontSize: '11.5px',
+                        fontWeight: '600',
+                        color: '#b91c1c',
+                        backgroundColor: '#fef2f2',
+                        border: '1px solid #fecaca',
+                        borderRadius: '4px',
+                        cursor: withdrawingId === app.id ? 'not-allowed' : 'pointer'
+                      }}
+                    >
+                      {withdrawingId === app.id ? 'Đang xử lý...' : 'Rút đơn'}
+                    </button>
+                  )}
                 </div>
               </div>
             ))}

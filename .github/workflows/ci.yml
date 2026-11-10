@@ -84,6 +84,13 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      - name: Build Backend Functions for CDK Assets
+        run: |
+          cd ../backend
+          npm ci
+          npm run build
+          cd ../infra
+
       - name: Build TypeScript Stacks
         run: npm run build
 

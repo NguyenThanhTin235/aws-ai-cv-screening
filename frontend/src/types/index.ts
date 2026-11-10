@@ -44,3 +44,48 @@ export interface HealthStatus {
   latencyMs?: number;
 }
 
+export interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  meta?: {
+    pageLimit?: number;
+    nextCursor?: string | null;
+    hasMore?: boolean;
+    total?: number;
+  };
+  error?: {
+    code: string;
+    message: string;
+    details?: Array<{ field?: string; issue: string }>;
+    traceId?: string;
+  };
+}
+
+export interface UploadUrlResponse {
+  uploadUrl: string;
+  s3Key: string;
+  documentId: string;
+  expiresInSeconds: number;
+}
+
+export interface ApplicationItem {
+  applicationId: string;
+  jobId: string;
+  jobTitle: string;
+  companyId: string;
+  companyName: string;
+  candidateId: string;
+  candidateName: string;
+  candidateEmail: string;
+  candidatePhone?: string;
+  documentId: string;
+  s3Key: string;
+  status: 'SUBMITTED' | 'UNDER_REVIEW' | 'INVITED' | 'REJECTED' | 'WITHDRAWN';
+  aiStatus: 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'NEEDS_MANUAL_REVIEW';
+  aiScore: number;
+  matchLevel: string;
+  submittedAt: string;
+  updatedAt: string;
+}
+
+

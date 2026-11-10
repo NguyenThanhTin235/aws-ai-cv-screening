@@ -22,9 +22,8 @@ import {
 } from '../components/common/Icons';
 
 import { ALL_JOBS, DetailedJob } from '../data/jobsData';
+import { api } from '../services/api';
 export type { DetailedJob };
-
-const JOBS_DATA: DetailedJob[] = ALL_JOBS;
 
 interface ProvinceData {
   id: string;
@@ -332,6 +331,42 @@ export const JobBoard: React.FC = () => {
   const { isAuthenticated, role } = useAuth();
   const navigate = useNavigate();
 
+  // Dynamic Jobs from DynamoDB API with static fallback
+  const [jobsList, setJobsList] = useState<DetailedJob[]>(ALL_JOBS);
+
+  useEffect(() => {
+    let isMounted = true;
+    api.getJobs()
+      .then((res) => {
+        if (isMounted && Array.isArray(res.items) && res.items.length > 0) {
+          const mapped: DetailedJob[] = res.items.map((item, idx) => {
+            const matched = ALL_JOBS.find((j) => j.id === item.jobId || j.id === item.id) || ALL_JOBS[idx % ALL_JOBS.length];
+            return {
+              ...matched,
+              id: item.jobId || item.id || `job_${idx}`,
+              title: item.title || matched.title,
+              companyName: item.companyName || matched.companyName,
+              companyScale: item.companyScale || matched.companyScale,
+              location: item.location || matched.location,
+              description: item.description || matched.description,
+              skills: Array.isArray(item.skills) && item.skills.length > 0 ? item.skills : matched.skills,
+              level: item.level || matched.level,
+              salaryText: item.salary || matched.salaryText,
+              isVerified: true
+            };
+          });
+          setJobsList(mapped);
+        }
+      })
+      .catch(() => {
+        // Fallback to local ALL_JOBS
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   // Search & Filter States
   const [keyword, setKeyword] = useState('');
 
@@ -544,7 +579,7 @@ export const JobBoard: React.FC = () => {
   );
 
   // Filter & sort logic
-  const filteredJobs = JOBS_DATA.filter((job) => {
+  const filteredJobs = jobsList.filter((job) => {
     // Tokenized Keyword match (splits multiple words and matches across title, company, skills, level, description)
     if (keyword.trim()) {
       const tokens = keyword.trim().toLowerCase().split(/\s+/).filter(Boolean);

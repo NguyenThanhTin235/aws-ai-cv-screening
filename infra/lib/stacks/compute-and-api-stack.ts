@@ -23,6 +23,9 @@ export class ComputeAndApiStack extends cdk.Stack {
   public readonly restApi: apigateway.RestApi;
   public readonly authorizer: apigateway.CognitoUserPoolsAuthorizer;
   public readonly healthFunction: lambda.Function;
+  public readonly jobsFunction: lambda.Function;
+  public readonly companiesFunction: lambda.Function;
+  public readonly applicationsFunction: lambda.Function;
   public readonly webAclAssociation?: wafv2.CfnWebACLAssociation;
   public readonly distribution: cloudfront.Distribution;
 
@@ -131,6 +134,123 @@ export class ComputeAndApiStack extends cdk.Stack {
       'POST',
       new apigateway.LambdaIntegration(sendOtpFunction)
     );
+
+    const backendDistPath = path.join(__dirname, '../../../backend/dist');
+
+    // 4.1 Jobs Lambda Function
+    this.jobsFunction = new lambda.Function(this, 'JobsFunction', {
+      functionName: `${config.projectName}-${config.stage}-jobs`,
+      runtime: lambda.Runtime.NODEJS_20_X,
+      handler: 'functions/api/jobs/index.handler',
+      code: lambda.Code.fromAsset(backendDistPath),
+      timeout: cdk.Duration.seconds(15),
+      memorySize: 512,
+      environment: {
+        STAGE: config.stage,
+        PROJECT_NAME: config.projectName,
+        TABLE_NAME: mainTable.tableName
+      }
+    });
+    mainTable.grantReadWriteData(this.jobsFunction);
+
+    // 4.2 Companies Lambda Function
+    this.companiesFunction = new lambda.Function(this, 'CompaniesFunction', {
+      functionName: `${config.projectName}-${config.stage}-companies`,
+      runtime: lambda.Runtime.NODEJS_20_X,
+      handler: 'functions/api/companies/index.handler',
+      code: lambda.Code.fromAsset(backendDistPath),
+      timeout: cdk.Duration.seconds(15),
+      memorySize: 256,
+      environment: {
+        STAGE: config.stage,
+        PROJECT_NAME: config.projectName,
+        TABLE_NAME: mainTable.tableName
+      }
+    });
+    mainTable.grantReadWriteData(this.companiesFunction);
+
+    // 4.3 Applications Lambda Function (Step 1-2-3 Upload Quarantine & Submit)
+    this.applicationsFunction = new lambda.Function(this, 'ApplicationsFunction', {
+      functionName: `${config.projectName}-${config.stage}-applications`,
+      runtime: lambda.Runtime.NODEJS_20_X,
+      handler: 'functions/api/applications/index.handler',
+      code: lambda.Code.fromAsset(backendDistPath),
+      timeout: cdk.Duration.seconds(15),
+      memorySize: 512,
+      environment: {
+        STAGE: config.stage,
+        PROJECT_NAME: config.projectName,
+        TABLE_NAME: mainTable.tableName,
+        QUARANTINE_BUCKET: quarantineBucket.bucketName
+      }
+    });
+    mainTable.grantReadWriteData(this.applicationsFunction);
+    quarantineBucket.grantPut(this.applicationsFunction);
+
+    const cognitoAuthMethodOptions: apigateway.MethodOptions = {
+      authorizer: this.authorizer,
+      authorizationType: apigateway.AuthorizationType.COGNITO
+    };
+
+    // 4.4 Jobs Resources & Endpoints
+    const jobsResource = v1Resource.addResource('jobs');
+    // GET /api/v1/jobs (Public: search, filter, paginate)
+    jobsResource.addMethod('GET', new apigateway.LambdaIntegration(this.jobsFunction));
+    // POST /api/v1/jobs (Recruiter: create new JD with Rubric)
+    jobsResource.addMethod('POST', new apigateway.LambdaIntegration(this.jobsFunction), cognitoAuthMethodOptions);
+
+    const jobIdResource = jobsResource.addResource('{id}');
+    // GET /api/v1/jobs/{id} (Public: job detail)
+    jobIdResource.addMethod('GET', new apigateway.LambdaIntegration(this.jobsFunction));
+    // PUT /api/v1/jobs/{id} (Recruiter: update JD)
+    jobIdResource.addMethod('PUT', new apigateway.LambdaIntegration(this.jobsFunction), cognitoAuthMethodOptions);
+
+    // PATCH /api/v1/jobs/{id}/status (Recruiter: toggle OPEN/CLOSED)
+    const jobStatusResource = jobIdResource.addResource('status');
+    jobStatusResource.addMethod('PATCH', new apigateway.LambdaIntegration(this.jobsFunction), cognitoAuthMethodOptions);
+
+    // GET /api/v1/jobs/{id}/applications (Recruiter: view job applicants)
+    const jobApplicationsResource = jobIdResource.addResource('applications');
+    jobApplicationsResource.addMethod('GET', new apigateway.LambdaIntegration(this.applicationsFunction), cognitoAuthMethodOptions);
+
+    // 4.5 Companies Resources & Endpoints
+    const companiesResource = v1Resource.addResource('companies');
+    // POST /api/v1/companies (Recruiter/Admin: create company profile)
+    companiesResource.addMethod('POST', new apigateway.LambdaIntegration(this.companiesFunction), cognitoAuthMethodOptions);
+
+    // GET /api/v1/companies/my (Recruiter: get own company)
+    const companyMyResource = companiesResource.addResource('my');
+    companyMyResource.addMethod('GET', new apigateway.LambdaIntegration(this.companiesFunction), cognitoAuthMethodOptions);
+
+    const companyIdResource = companiesResource.addResource('{id}');
+    // GET /api/v1/companies/{id} (Public: company profile)
+    companyIdResource.addMethod('GET', new apigateway.LambdaIntegration(this.companiesFunction));
+
+    // GET /api/v1/companies/{id}/jobs (Public/Recruiter: list company jobs)
+    const companyJobsResource = companyIdResource.addResource('jobs');
+    companyJobsResource.addMethod('GET', new apigateway.LambdaIntegration(this.jobsFunction));
+
+    // GET /api/v1/companies/{id}/members (Recruiter: list HR team members)
+    const companyMembersResource = companyIdResource.addResource('members');
+    companyMembersResource.addMethod('GET', new apigateway.LambdaIntegration(this.companiesFunction), cognitoAuthMethodOptions);
+
+    // 4.6 Applications Resources & Endpoints
+    const applicationsResource = v1Resource.addResource('applications');
+    // POST /api/v1/applications (Candidate: submit application with TransactWriteItems)
+    applicationsResource.addMethod('POST', new apigateway.LambdaIntegration(this.applicationsFunction), cognitoAuthMethodOptions);
+
+    // POST /api/v1/applications/upload-url (Candidate: step 2 presigned URL PUT S3)
+    const uploadUrlResource = applicationsResource.addResource('upload-url');
+    uploadUrlResource.addMethod('POST', new apigateway.LambdaIntegration(this.applicationsFunction), cognitoAuthMethodOptions);
+
+    // GET /api/v1/applications/my (Candidate: view application history)
+    const myApplicationsResource = applicationsResource.addResource('my');
+    myApplicationsResource.addMethod('GET', new apigateway.LambdaIntegration(this.applicationsFunction), cognitoAuthMethodOptions);
+
+    // POST /api/v1/applications/{id}/withdraw (Candidate: withdraw application)
+    const appIdResource = applicationsResource.addResource('{id}');
+    const withdrawResource = appIdResource.addResource('withdraw');
+    withdrawResource.addMethod('POST', new apigateway.LambdaIntegration(this.applicationsFunction), cognitoAuthMethodOptions);
 
     // 5. AWS WAF Association (Regional WebACL protection for REST API)
     if (props.webAclArn) {
