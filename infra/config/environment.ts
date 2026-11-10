@@ -23,9 +23,7 @@ export function getEnvironmentConfig(): EnvironmentConfig {
     enableWaf: process.env.ENABLE_WAF === 'true' || isProd,
     removalPolicy: isProd ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
     corsAllowedOrigins: [
-      'http://localhost:5173',
-      'http://localhost:3000',
-      'https://*.amplifyapp.com'
+      '*'
     ],
     maxUploadSizeBytes: 5 * 1024 * 1024, // 5MB
     presignedUrlTtlSeconds: 300, // 5 minutes

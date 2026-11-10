@@ -45,14 +45,19 @@ export class ComputeAndApiStack extends cdk.Stack {
         metricsEnabled: true
       },
       defaultCorsPreflightOptions: {
-        allowOrigins: config.corsAllowedOrigins,
+        allowOrigins: apigateway.Cors.ALL_ORIGINS,
         allowMethods: apigateway.Cors.ALL_METHODS,
         allowHeaders: [
           'Content-Type',
           'Authorization',
           'X-Amz-Date',
           'X-Api-Key',
-          'X-Amz-Security-Token'
+          'X-Amz-Security-Token',
+          'X-Trace-Id',
+          'X-Mock-User-Email',
+          'X-Mock-User-Role',
+          'X-Mock-User-Id',
+          'X-Mock-Company-Id'
         ]
       }
     });
