@@ -115,7 +115,19 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       }
 
       const body = JSON.parse(event.body);
-      const { jobId, documentId, s3Key, candidateName, candidateEmail, candidatePhone, consentAi } = body;
+      const {
+        jobId,
+        documentId,
+        s3Key,
+        candidateName,
+        candidateEmail,
+        candidatePhone,
+        consentAi,
+        cvName,
+        status: initialStatus,
+        statusMessage,
+        statusDate
+      } = body;
 
       if (!jobId || !documentId || !s3Key) {
         return errorResponse('BAD_REQUEST', 'Thiếu thông tin bắt buộc: jobId, documentId, hoặc s3Key', 400);
@@ -144,6 +156,11 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       const job = jobRes.Item;
       const now = new Date().toISOString();
       const applicationId = `app_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+      const targetStatus = initialStatus || 'SUBMITTED';
+      const targetStatusMessage =
+        statusMessage || 'Hồ sơ đã được tiếp nhận và chuyển thành công tới Bộ phận Tuyển dụng';
+      const targetStatusDate = statusDate || now.split('T')[0];
+      const targetCvName = cvName || 'CV_Ung_Tuyen.pdf';
 
       // Execute TransactWriteItems to guarantee idempotency and anti-duplicate submission
       try {
@@ -173,7 +190,10 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
                     candidatePhone: candidatePhone || '',
                     documentId,
                     s3Key,
-                    status: 'SUBMITTED',
+                    cvName: targetCvName,
+                    status: targetStatus,
+                    statusMessage: targetStatusMessage,
+                    statusDate: targetStatusDate,
                     aiStatus: 'PENDING',
                     aiScore: 0,
                     matchLevel: 'PENDING',
@@ -232,7 +252,10 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
           jobId,
           jobTitle: job.title,
           companyName: job.companyName,
-          status: 'SUBMITTED',
+          status: targetStatus,
+          statusMessage: targetStatusMessage,
+          statusDate: targetStatusDate,
+          cvName: targetCvName,
           aiStatus: 'PENDING',
           submittedAt: now
         },
@@ -270,10 +293,12 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         new UpdateCommand({
           TableName: TABLE_NAME,
           Key: { PK: `APP#${applicationId}`, SK: 'METADATA' },
-          UpdateExpression: 'SET #st = :withdrawn, updatedAt = :now',
+          UpdateExpression: 'SET #st = :withdrawn, statusMessage = :msg, statusDate = :sdate, updatedAt = :now',
           ExpressionAttributeNames: { '#st': 'status' },
           ExpressionAttributeValues: {
             ':withdrawn': 'WITHDRAWN',
+            ':msg': 'Bạn đã chủ động rút đơn ứng tuyển cho vị trí này',
+            ':sdate': now.split('T')[0],
             ':now': now
           }
         })
@@ -412,11 +437,109 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         })
       );
 
+      // Auto-transition status in DynamoDB to VIEWED if currently SUBMITTED
+      if (app.status === 'SUBMITTED' || app.status === 'Tiếp nhận') {
+        try {
+          await docClient.send(
+            new UpdateCommand({
+              TableName: TABLE_NAME,
+              Key: { PK: `APP#${applicationId}`, SK: 'METADATA' },
+              UpdateExpression: 'SET #st = :viewed, statusMessage = :msg, statusDate = :sdate, updatedAt = :now',
+              ExpressionAttributeNames: { '#st': 'status' },
+              ExpressionAttributeValues: {
+                ':viewed': 'VIEWED',
+                ':msg': 'NTD đã xem CV. CloudJob đã nhắc NTD phản hồi CV của bạn',
+                ':sdate': now.split('T')[0],
+                ':now': now
+              }
+            })
+          );
+        } catch (updateErr) {
+          console.warn('[CV Access status update warning]:', updateErr);
+        }
+      }
+
       return successResponse({
         downloadUrl,
         fileName: `${app.candidateName || 'resume'}.pdf`,
         expiresInSeconds: 300,
         grantId
+      });
+    }
+
+    // 7. PATCH /api/v1/applications/{id}/status (Update Application Status in DynamoDB)
+    if (method === 'PATCH' && path.includes('/applications/') && path.endsWith('/status')) {
+      const user = requireAuth(event);
+      const rawAppId = pathParams.id || path.split('/applications/')[1]?.split('/')[0];
+      const applicationId = rawAppId.startsWith('app_') ? rawAppId : `app_${rawAppId}`;
+
+      if (!event.body) {
+        return errorResponse('BAD_REQUEST', 'Thiếu dữ liệu cập nhật trạng thái', 400);
+      }
+
+      const body = JSON.parse(event.body);
+      const { status: targetStatus, statusMessage, statusDate } = body;
+
+      if (!targetStatus) {
+        return errorResponse('BAD_REQUEST', 'Trường status là bắt buộc', 400);
+      }
+
+      const appRes = await docClient.send(
+        new GetCommand({
+          TableName: TABLE_NAME,
+          Key: { PK: `APP#${applicationId}`, SK: 'METADATA' }
+        })
+      );
+
+      if (!appRes.Item) {
+        return errorResponse('NOT_FOUND', `Không tìm thấy đơn ứng tuyển: ${applicationId}`, 404);
+      }
+
+      const app = appRes.Item;
+      if (user.role === 'candidate' && targetStatus !== 'WITHDRAWN' && targetStatus !== 'Đã rút đơn') {
+        return errorResponse('FORBIDDEN', 'Ứng viên chỉ có quyền thực hiện thao tác rút đơn ứng tuyển.', 403);
+      }
+      if (user.role === 'recruiter') {
+        assertCompanyAccess(user, app.companyId);
+      }
+
+      const now = new Date().toISOString();
+      const sdate = statusDate || now.split('T')[0];
+
+      await docClient.send(
+        new UpdateCommand({
+          TableName: TABLE_NAME,
+          Key: { PK: `APP#${applicationId}`, SK: 'METADATA' },
+          UpdateExpression: 'SET #st = :status, statusMessage = :msg, statusDate = :sdate, updatedAt = :now',
+          ExpressionAttributeNames: { '#st': 'status' },
+          ExpressionAttributeValues: {
+            ':status': targetStatus,
+            ':msg': statusMessage || `Trạng thái hồ sơ đã cập nhật: ${targetStatus}`,
+            ':sdate': sdate,
+            ':now': now
+          }
+        })
+      );
+
+      // Release active app lock if withdrawing
+      if (targetStatus === 'WITHDRAWN' || targetStatus === 'Đã rút đơn') {
+        await docClient.send(
+          new DeleteCommand({
+            TableName: TABLE_NAME,
+            Key: {
+              PK: `USER#${app.candidateId}`,
+              SK: `ACTIVE_APP#${app.jobId}`
+            }
+          })
+        );
+      }
+
+      return successResponse({
+        applicationId,
+        status: targetStatus,
+        statusMessage: statusMessage || `Trạng thái hồ sơ đã cập nhật: ${targetStatus}`,
+        statusDate: sdate,
+        updatedAt: now
       });
     }
 

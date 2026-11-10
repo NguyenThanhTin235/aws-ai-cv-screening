@@ -275,6 +275,10 @@ export class ComputeAndApiStack extends cdk.Stack {
     const withdrawResource = appIdResource.addResource('withdraw');
     withdrawResource.addMethod('POST', new apigateway.LambdaIntegration(this.applicationsFunction), cognitoAuthMethodOptions);
 
+    // PATCH /api/v1/applications/{id}/status (Recruiter/Admin/Candidate: update application status in DynamoDB)
+    const appStatusResource = appIdResource.addResource('status');
+    appStatusResource.addMethod('PATCH', new apigateway.LambdaIntegration(this.applicationsFunction), cognitoAuthMethodOptions);
+
     // POST /api/v1/applications/{id}/cv-access-url & GET .../cv-url (Recruiter: presigned GET URL + audit log AP29)
     const cvAccessUrlResource = appIdResource.addResource('cv-access-url');
     cvAccessUrlResource.addMethod('POST', new apigateway.LambdaIntegration(this.applicationsFunction), cognitoAuthMethodOptions);

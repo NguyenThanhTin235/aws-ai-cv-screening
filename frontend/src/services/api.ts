@@ -203,6 +203,10 @@ class ApiService {
     candidateEmail?: string;
     candidatePhone?: string;
     consentAi: boolean;
+    cvName?: string;
+    status?: string;
+    statusMessage?: string;
+    statusDate?: string;
   }): Promise<any> {
     const res = await this.request<ApiResponse<any>>('/api/v1/applications', {
       method: 'POST',
@@ -217,6 +221,20 @@ class ApiService {
   public async withdrawApplication(applicationId: string): Promise<any> {
     const res = await this.request<ApiResponse<any>>(`/api/v1/applications/${applicationId}/withdraw`, {
       method: 'POST'
+    });
+    return res.data;
+  }
+
+  /**
+   * Applications: PATCH /api/v1/applications/{id}/status (Update status in DynamoDB)
+   */
+  public async updateApplicationStatus(
+    applicationId: string,
+    payload: { status: string; statusMessage?: string; statusDate?: string }
+  ): Promise<any> {
+    const res = await this.request<ApiResponse<any>>(`/api/v1/applications/${applicationId}/status`, {
+      method: 'PATCH',
+      body: JSON.stringify(payload)
     });
     return res.data;
   }

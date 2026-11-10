@@ -253,20 +253,26 @@ export const JobDetail: React.FC = () => {
         }
       }
 
-      await api.submitApplication({
+      const createdApp = await api.submitApplication({
         jobId: job.id,
         documentId: docId,
         s3Key,
         candidateName: user?.fullName,
         candidateEmail: user?.email,
         candidatePhone: user?.phone,
-        consentAi: true
+        consentAi: true,
+        cvName: uploadedFile?.name || 'CV_Ung_Tuyen.pdf',
+        status: 'Tiếp nhận',
+        statusMessage: 'Hồ sơ đã được tiếp nhận và chuyển thành công tới Bộ phận Tuyển dụng',
+        statusDate: formattedDate
       });
 
-      // Save local copy to localStorage for client caching
+      const appId = createdApp?.applicationId || `app_${Date.now()}`;
+
+      // Save local copy to localStorage for client caching synced with DynamoDB
       const localApps = JSON.parse(localStorage.getItem('candidate_applications') || '[]');
       localApps.unshift({
-        id: `app_${Date.now()}`,
+        id: appId,
         jobId: job.id,
         jobTitle: job.title,
         companyName: job.companyName,
@@ -277,8 +283,8 @@ export const JobDetail: React.FC = () => {
         cvName: uploadedFile?.name || 'CV_Ung_Tuyen.pdf',
         score: 0,
         matchLevel: 'Tiếp nhận',
-        badgeColor: '#2563eb',
-        badgeBg: '#eff6ff'
+        badgeColor: '#0284c7',
+        badgeBg: '#e0f2fe'
       });
       localStorage.setItem('candidate_applications', JSON.stringify(localApps));
 
