@@ -8,7 +8,6 @@ import {
   DollarSignIcon,
   BriefcaseIcon,
   ClockIcon,
-  HeartIcon,
   SparklesIcon,
   VerifiedIcon,
   CheckIcon,
@@ -26,7 +25,35 @@ export const JobDetail: React.FC = () => {
 
   const job = id ? getJobById(id) : undefined;
 
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(() => {
+    try {
+      const stored = localStorage.getItem('saved_job_ids');
+      if (stored && id) {
+        const list: string[] = JSON.parse(stored);
+        if (Array.isArray(list)) return list.includes(id);
+      }
+    } catch {}
+    return false;
+  });
+
+  const handleToggleBookmark = () => {
+    if (!id) return;
+    try {
+      const stored = localStorage.getItem('saved_job_ids');
+      const list: string[] = stored ? JSON.parse(stored) : [];
+      let updated: string[];
+      if (list.includes(id)) {
+        updated = list.filter((item) => item !== id);
+        setIsBookmarked(false);
+      } else {
+        updated = [...list, id];
+        setIsBookmarked(true);
+      }
+      localStorage.setItem('saved_job_ids', JSON.stringify(updated));
+    } catch {
+      setIsBookmarked(!isBookmarked);
+    }
+  };
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
   const [applySuccess, setApplySuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -244,12 +271,14 @@ export const JobDetail: React.FC = () => {
         jobTitle: job.title,
         companyName: job.companyName,
         appliedAt: formattedDate,
-        status: 'Đã nộp đơn',
-        aiStatus: 'Đang xử lý AI',
+        status: 'Tiếp nhận',
+        statusMessage: 'Hồ sơ đã được tiếp nhận và chuyển thành công tới Bộ phận Tuyển dụng',
+        statusDate: formattedDate,
+        cvName: uploadedFile?.name || 'CV_Ung_Tuyen.pdf',
         score: 0,
-        matchLevel: 'Đang chờ thẩm định',
-        badgeColor: '#1e40af',
-        badgeBg: '#dbeafe'
+        matchLevel: 'Tiếp nhận',
+        badgeColor: '#2563eb',
+        badgeBg: '#eff6ff'
       });
       localStorage.setItem('candidate_applications', JSON.stringify(localApps));
 
@@ -284,12 +313,14 @@ export const JobDetail: React.FC = () => {
           jobTitle: job.title,
           companyName: job.companyName,
           appliedAt: formattedDate,
-          status: 'Đã nộp đơn',
-          aiStatus: 'Đang xử lý AI',
+          status: 'Tiếp nhận',
+          statusMessage: 'Hồ sơ đã được tiếp nhận và chuyển thành công tới Bộ phận Tuyển dụng',
+          statusDate: formattedDate,
+          cvName: uploadedFile?.name || 'CV_Ung_Tuyen.pdf',
           score: 88,
-          matchLevel: 'Khớp cao',
-          badgeColor: '#1e40af',
-          badgeBg: '#dbeafe'
+          matchLevel: 'Tiếp nhận',
+          badgeColor: '#2563eb',
+          badgeBg: '#eff6ff'
         });
         localStorage.setItem('candidate_applications', JSON.stringify(localApps));
 
@@ -422,14 +453,9 @@ export const JobDetail: React.FC = () => {
           )}
           <button
             type="button"
-            className="jd-btn-bookmark"
-            onClick={() => setIsBookmarked(!isBookmarked)}
+            className={`jd-btn-bookmark ${isBookmarked ? 'active' : ''}`}
+            onClick={handleToggleBookmark}
           >
-            <HeartIcon
-              size={16}
-              color={isBookmarked ? '#059669' : 'currentColor'}
-              fill={isBookmarked ? '#059669' : 'none'}
-            />
             <span>{isBookmarked ? 'Đã lưu việc làm' : 'Lưu tin'}</span>
           </button>
         </div>
@@ -513,8 +539,8 @@ export const JobDetail: React.FC = () => {
             </div>
           </section>
 
-          {/* Section 6: AI Rubric Transparency */}
-          {job.rubricBreakdown && (
+          {/* Section 6: AI Rubric Transparency (Ẩn đối với ứng viên, chỉ hiển thị cho Nhà tuyển dụng & Quản trị viên) */}
+          {job.rubricBreakdown && (role === 'recruiter' || role === 'admin') && (
             <section className="jd-section-card">
               <div className="jd-rubric-box">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>

@@ -597,8 +597,14 @@ export const JobBoard: React.FC = () => {
   const JOBS_PER_PAGE = 8;
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  // Bookmarked Jobs
-  const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
+  // Bookmarked Jobs (synced with localStorage saved_job_ids)
+  const [bookmarkedIds, setBookmarkedIds] = useState<string[]>(() => {
+    try {
+      const stored = localStorage.getItem('saved_job_ids');
+      if (stored) return JSON.parse(stored);
+    } catch {}
+    return [];
+  });
 
   // Rubric Modal State (for viewing AI score details on job cards)
   const [activeRubricJob, setActiveRubricJob] = useState<DetailedJob | null>(null);
@@ -617,13 +623,13 @@ export const JobBoard: React.FC = () => {
     }
   };
 
-  // Toggle bookmark
+  // Toggle bookmark (persisted to localStorage)
   const handleToggleBookmark = (id: string) => {
-    if (bookmarkedIds.includes(id)) {
-      setBookmarkedIds(bookmarkedIds.filter((item) => item !== id));
-    } else {
-      setBookmarkedIds([...bookmarkedIds, id]);
-    }
+    setBookmarkedIds((prev) => {
+      const updated = prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id];
+      localStorage.setItem('saved_job_ids', JSON.stringify(updated));
+      return updated;
+    });
   };
 
   // Reset filters
@@ -1459,6 +1465,42 @@ export const JobBoard: React.FC = () => {
                   })
                 )}
               </div>
+
+              {/* NÚT XEM THÊM VIỆC LÀM */}
+              {safeCurrentPage < totalPages && (
+                <div style={{ textAlign: 'center', marginTop: '20px', marginBottom: '8px' }}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setCurrentPage((p) => Math.min(totalPages, p + 1));
+                      document.querySelector('.jb-workspace')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '11px 32px',
+                      borderRadius: '9999px',
+                      border: '1.5px solid #059669',
+                      backgroundColor: '#ffffff',
+                      color: '#059669',
+                      fontSize: '14px',
+                      fontWeight: '700',
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease',
+                      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#ecfdf5';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = '#ffffff';
+                    }}
+                  >
+                    Xem thêm việc làm
+                  </button>
+                </div>
+              )}
 
               {/* PAGINATION BAR */}
               {totalJobs > 0 && (

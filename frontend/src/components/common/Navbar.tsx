@@ -432,16 +432,16 @@ export const Navbar: React.FC<NavbarProps> = ({ hideAuthButtons = false }) => {
 
                       {isJobMenuOpen && (
                         <div style={{ paddingBottom: '6px' }}>
-                          <Link to="/candidate" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
+                          <Link to="/candidate?tab=saved-jobs" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
                             Việc làm đã lưu
                           </Link>
-                          <Link to="/candidate" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
+                          <Link to="/candidate?tab=applied-jobs" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
                             Việc làm đã ứng tuyển
                           </Link>
-                          <Link to="/" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
+                          <Link to="/candidate?tab=matching-jobs" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
                             Việc làm phù hợp với bạn
                           </Link>
-                          <Link to="/candidate" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
+                          <Link to="/candidate?tab=job-preferences" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
                             Cài đặt gợi ý việc làm
                           </Link>
                         </div>
@@ -450,7 +450,7 @@ export const Navbar: React.FC<NavbarProps> = ({ hideAuthButtons = false }) => {
 
                     <div style={{ height: '1px', backgroundColor: '#f1f5f9' }} />
 
-                    {/* 3. Quản lý CV & Cover letter Section */}
+                    {/* 3. Quản lý CV Section */}
                     <div>
                       <button
                         type="button"
@@ -460,7 +460,7 @@ export const Navbar: React.FC<NavbarProps> = ({ hideAuthButtons = false }) => {
                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                           <CvBadgeIcon size={20} />
                           <span style={{ fontSize: '14.5px', fontWeight: '700', color: '#1e293b' }}>
-                            Quản lý CV &amp; Cover letter
+                            Quản lý CV
                           </span>
                         </div>
                         {isCvMenuOpen ? (
@@ -472,16 +472,13 @@ export const Navbar: React.FC<NavbarProps> = ({ hideAuthButtons = false }) => {
 
                       {isCvMenuOpen && (
                         <div style={{ paddingBottom: '6px' }}>
-                          <Link to="/candidate" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
+                          <Link to="/candidate?tab=my-cv" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
                             CV của tôi
                           </Link>
-                          <Link to="/candidate" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
-                            Cover Letter của tôi
-                          </Link>
-                          <Link to="/candidate" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
+                          <Link to="/candidate?tab=applied-jobs" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
                             Nhà tuyển dụng muốn kết nối với bạn
                           </Link>
-                          <Link to="/candidate" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
+                          <Link to="/candidate?tab=applied-jobs" onClick={() => setIsUserMenuOpen(false)} className="user-menu-item">
                             Nhà tuyển dụng xem hồ sơ
                           </Link>
                         </div>
