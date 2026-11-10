@@ -26,6 +26,7 @@ export class ComputeAndApiStack extends cdk.Stack {
   public readonly jobsFunction: lambda.Function;
   public readonly companiesFunction: lambda.Function;
   public readonly applicationsFunction: lambda.Function;
+  public readonly usersFunction: lambda.Function;
   public readonly webAclAssociation?: wafv2.CfnWebACLAssociation;
   public readonly distribution: cloudfront.Distribution;
 
@@ -186,6 +187,23 @@ export class ComputeAndApiStack extends cdk.Stack {
     });
     mainTable.grantReadWriteData(this.applicationsFunction);
     quarantineBucket.grantPut(this.applicationsFunction);
+    quarantineBucket.grantRead(this.applicationsFunction);
+
+    // 4.4 Users & Profiles Lambda Function
+    this.usersFunction = new lambda.Function(this, 'UsersFunction', {
+      functionName: `${config.projectName}-${config.stage}-users`,
+      runtime: lambda.Runtime.NODEJS_20_X,
+      handler: 'functions/api/users/index.handler',
+      code: lambda.Code.fromAsset(backendDistPath),
+      timeout: cdk.Duration.seconds(15),
+      memorySize: 256,
+      environment: {
+        STAGE: config.stage,
+        PROJECT_NAME: config.projectName,
+        TABLE_NAME: mainTable.tableName
+      }
+    });
+    mainTable.grantReadWriteData(this.usersFunction);
 
     const cognitoAuthMethodOptions: apigateway.MethodOptions = {
       authorizer: this.authorizer,
@@ -251,6 +269,34 @@ export class ComputeAndApiStack extends cdk.Stack {
     const appIdResource = applicationsResource.addResource('{id}');
     const withdrawResource = appIdResource.addResource('withdraw');
     withdrawResource.addMethod('POST', new apigateway.LambdaIntegration(this.applicationsFunction), cognitoAuthMethodOptions);
+
+    // POST /api/v1/applications/{id}/cv-access-url & GET .../cv-url (Recruiter: presigned GET URL + audit log AP29)
+    const cvAccessUrlResource = appIdResource.addResource('cv-access-url');
+    cvAccessUrlResource.addMethod('POST', new apigateway.LambdaIntegration(this.applicationsFunction), cognitoAuthMethodOptions);
+
+    const cvUrlResource = appIdResource.addResource('cv-url');
+    cvUrlResource.addMethod('GET', new apigateway.LambdaIntegration(this.applicationsFunction), cognitoAuthMethodOptions);
+
+    // 4.7 Users & Profiles Resources & Endpoints
+    const usersResource = v1Resource.addResource('users');
+    const usersMeResource = usersResource.addResource('me');
+    // GET /api/v1/users/me & PUT /api/v1/users/me
+    usersMeResource.addMethod('GET', new apigateway.LambdaIntegration(this.usersFunction), cognitoAuthMethodOptions);
+    usersMeResource.addMethod('PUT', new apigateway.LambdaIntegration(this.usersFunction), cognitoAuthMethodOptions);
+
+    // Candidate CV Vault: /api/v1/users/me/cvs
+    const usersMeCvsResource = usersMeResource.addResource('cvs');
+    usersMeCvsResource.addMethod('GET', new apigateway.LambdaIntegration(this.usersFunction), cognitoAuthMethodOptions);
+    usersMeCvsResource.addMethod('POST', new apigateway.LambdaIntegration(this.usersFunction), cognitoAuthMethodOptions);
+
+    const usersMeCvIdResource = usersMeCvsResource.addResource('{cvId}');
+    usersMeCvIdResource.addMethod('DELETE', new apigateway.LambdaIntegration(this.usersFunction), cognitoAuthMethodOptions);
+
+    // Candidate Profile alias: /api/v1/candidate/profile
+    const candidateResource = v1Resource.addResource('candidate');
+    const candidateProfileResource = candidateResource.addResource('profile');
+    candidateProfileResource.addMethod('GET', new apigateway.LambdaIntegration(this.usersFunction), cognitoAuthMethodOptions);
+    candidateProfileResource.addMethod('PUT', new apigateway.LambdaIntegration(this.usersFunction), cognitoAuthMethodOptions);
 
     // 5. AWS WAF Association (Regional WebACL protection for REST API)
     if (props.webAclArn) {

@@ -70,3 +70,20 @@ test('POST /api/v1/applications rejects submissions without user AI consent', as
   assert.strictEqual(body.error.code, 'BAD_REQUEST');
   assert.ok(body.error.message.includes('đồng thuận'));
 });
+
+test('POST /api/v1/applications/{id}/cv-access-url rejects candidate role (requires recruiter)', async () => {
+  const event = {
+    httpMethod: 'POST',
+    path: '/api/v1/applications/app_001/cv-access-url',
+    pathParameters: { id: 'app_001' },
+    headers: {
+      'x-mock-user-id': 'cdd_123',
+      'x-mock-role': 'candidate'
+    }
+  };
+
+  const response = await handler(event);
+  assert.strictEqual(response.statusCode, 403);
+  const body = JSON.parse(response.body);
+  assert.strictEqual(body.error.code, 'FORBIDDEN');
+});

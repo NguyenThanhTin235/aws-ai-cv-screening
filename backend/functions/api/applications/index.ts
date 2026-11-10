@@ -1,8 +1,9 @@
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import {
   GetCommand,
+  PutCommand,
   QueryCommand,
   TransactWriteCommand,
   UpdateCommand,
@@ -353,6 +354,70 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       );
 
       return successResponse(res.Items || []);
+    }
+
+    // 6. POST /api/v1/applications/{id}/cv-access-url or GET /api/v1/applications/{id}/cv-url (Presigned GET URL + Audit Log AP29)
+    if (
+      (method === 'POST' && path.includes('/applications/') && path.endsWith('/cv-access-url')) ||
+      (method === 'GET' && path.includes('/applications/') && path.endsWith('/cv-url'))
+    ) {
+      const user = requireAuth(event);
+      assertRole(user, ['recruiter', 'admin']);
+
+      const rawAppId = pathParams.id || path.split('/applications/')[1]?.split('/')[0];
+      const applicationId = rawAppId.startsWith('app_') ? rawAppId : `app_${rawAppId}`;
+
+      const appRes = await docClient.send(
+        new GetCommand({
+          TableName: TABLE_NAME,
+          Key: { PK: `APP#${applicationId}`, SK: 'METADATA' }
+        })
+      );
+
+      if (!appRes.Item) {
+        return errorResponse('NOT_FOUND', `Không tìm thấy đơn ứng tuyển: ${applicationId}`, 404);
+      }
+
+      const app = appRes.Item;
+      assertCompanyAccess(user, app.companyId);
+
+      const grantId = `grant_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+      const now = new Date().toISOString();
+
+      const getCommand = new GetObjectCommand({
+        Bucket: QUARANTINE_BUCKET,
+        Key: app.s3Key,
+        ResponseContentDisposition: `inline; filename="${encodeURIComponent(app.candidateName || 'resume')}.pdf"`
+      });
+
+      const downloadUrl = await getSignedUrl(s3Client, getCommand, { expiresIn: 300 });
+
+      // Write immutable audit log record to DynamoDB (NFR-SEC-05)
+      await docClient.send(
+        new PutCommand({
+          TableName: TABLE_NAME,
+          Item: {
+            PK: `APP#${applicationId}`,
+            SK: `ACCESS_LOG#${now}#${user.userId}`,
+            entityType: 'CV_ACCESS_LOG',
+            applicationId,
+            recruiterId: user.userId,
+            recruiterEmail: user.email,
+            companyId: app.companyId,
+            action: 'PRESIGNED_GET_ISSUED',
+            grantId,
+            timestamp: now,
+            expire_at: Math.floor(Date.now() / 1000) + (180 * 86400) // TTL 180 days
+          }
+        })
+      );
+
+      return successResponse({
+        downloadUrl,
+        fileName: `${app.candidateName || 'resume'}.pdf`,
+        expiresInSeconds: 300,
+        grantId
+      });
     }
 
     return errorResponse('BAD_REQUEST', `Không hỗ trợ phương thức ${method} trên ${path}`, 400);

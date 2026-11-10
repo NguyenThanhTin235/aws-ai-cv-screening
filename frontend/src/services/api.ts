@@ -236,6 +236,64 @@ class ApiService {
     const res = await this.request<ApiResponse<any[]>>(`/api/v1/jobs/${jobId}/applications`);
     return res.data || [];
   }
+
+  /**
+   * Applications: POST /api/v1/applications/{id}/cv-access-url (Recruiter view CV)
+   */
+  public async getCvAccessUrl(applicationId: string): Promise<{ downloadUrl: string; fileName: string; expiresInSeconds: number; grantId: string }> {
+    const res = await this.request<ApiResponse<any>>(`/api/v1/applications/${applicationId}/cv-access-url`, {
+      method: 'POST'
+    });
+    return res.data;
+  }
+
+  /**
+   * Profile: GET /api/v1/candidate/profile
+   */
+  public async getCandidateProfile(): Promise<any> {
+    const res = await this.request<ApiResponse<any>>('/api/v1/candidate/profile');
+    return res.data;
+  }
+
+  /**
+   * Profile: PUT /api/v1/candidate/profile
+   */
+  public async updateCandidateProfile(profile: any): Promise<any> {
+    const res = await this.request<ApiResponse<any>>('/api/v1/candidate/profile', {
+      method: 'PUT',
+      body: JSON.stringify(profile)
+    });
+    return res.data;
+  }
+
+  /**
+   * CV Vault: GET /api/v1/users/me/cvs
+   */
+  public async getMyCvs(): Promise<any[]> {
+    const res = await this.request<ApiResponse<any[]>>('/api/v1/users/me/cvs');
+    return res.data || [];
+  }
+
+  /**
+   * CV Vault: POST /api/v1/users/me/cvs
+   */
+  public async saveCvToVault(payload: { fileName: string; fileSize: number; s3Key: string; isDefault?: boolean }): Promise<any> {
+    const res = await this.request<ApiResponse<any>>('/api/v1/users/me/cvs', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+    return res.data;
+  }
+
+  /**
+   * CV Vault: DELETE /api/v1/users/me/cvs/{cvId}
+   */
+  public async deleteCvFromVault(cvId: string): Promise<any> {
+    const res = await this.request<ApiResponse<any>>(`/api/v1/users/me/cvs/${cvId}`, {
+      method: 'DELETE'
+    });
+    return res.data;
+  }
 }
 
 export const api = new ApiService();
