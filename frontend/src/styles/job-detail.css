@@ -154,6 +154,23 @@
   transform: translateY(-1px);
 }
 
+.jd-btn-apply:disabled,
+.jd-btn-applied {
+  background-color: #64748b !important;
+  color: #ffffff !important;
+  cursor: not-allowed !important;
+  border: 1px solid #475569 !important;
+  transform: none !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+}
+
+.jd-btn-apply:disabled:hover,
+.jd-btn-applied:hover {
+  background-color: #64748b !important;
+  transform: none !important;
+}
+
 .jd-btn-bookmark {
   background-color: var(--color-surface-container);
   color: var(--color-on-surface);

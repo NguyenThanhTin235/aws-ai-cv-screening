@@ -9,7 +9,6 @@ import {
   ArrowRightIcon,
   TrendingUpIcon,
   SlidersIcon,
-  CheckIcon,
   HeartIcon,
   DollarSignIcon,
   ChevronLeftIcon,
@@ -376,7 +375,7 @@ export const JobBoard: React.FC = () => {
 
   useEffect(() => {
     let isMounted = true;
-    api.getJobs()
+    api.getJobs({ limit: 50 })
       .then((res) => {
         if (isMounted && Array.isArray(res.items) && res.items.length > 0) {
           const mapped: DetailedJob[] = res.items.map((item, idx) => {
@@ -411,6 +410,58 @@ export const JobBoard: React.FC = () => {
       isMounted = false;
     };
   }, []);
+
+  // Set of applied job IDs for card highlighting
+  const [appliedJobIds, setAppliedJobIds] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem('candidate_applications');
+      if (saved) {
+        const apps = JSON.parse(saved);
+        if (Array.isArray(apps)) {
+          return apps
+            .filter((a: any) => a.status !== 'Đã rút đơn' && a.status !== 'WITHDRAWN')
+            .map((a: any) => a.jobId || a.jobTitle);
+        }
+      }
+    } catch {
+      // ignore
+    }
+    return [];
+  });
+
+  useEffect(() => {
+    const checkApplied = () => {
+      try {
+        const saved = localStorage.getItem('candidate_applications');
+        if (saved) {
+          const apps = JSON.parse(saved);
+          if (Array.isArray(apps)) {
+            const ids = apps
+              .filter((a: any) => a.status !== 'Đã rút đơn' && a.status !== 'WITHDRAWN')
+              .map((a: any) => a.jobId || a.jobTitle);
+            setAppliedJobIds(ids);
+          }
+        }
+      } catch {
+        // ignore
+      }
+    };
+
+    checkApplied();
+
+    if (isAuthenticated && role === 'candidate') {
+      api.getMyApplications()
+        .then((items) => {
+          if (Array.isArray(items)) {
+            const activeIds = items
+              .filter((item: any) => item.status !== 'WITHDRAWN' && item.status !== 'Đã rút đơn')
+              .map((item: any) => item.jobId || item.jobTitle);
+            setAppliedJobIds(activeIds);
+          }
+        })
+        .catch(() => {});
+    }
+  }, [isAuthenticated, role]);
 
   // Search & Filter States
   const [keyword, setKeyword] = useState('');
@@ -675,12 +726,12 @@ export const JobBoard: React.FC = () => {
       return false;
     }
 
-    // Skill pills
+    // Skill pills (Bắt buộc có ĐỦ tất cả các kỹ năng đã chọn - Điều kiện AND)
     if (selectedSkills.length > 0) {
-      const hasSkill = selectedSkills.some((s) =>
+      const hasAllSkills = selectedSkills.every((s) =>
         job.skills.some((js) => js.toLowerCase().includes(s.toLowerCase()))
       );
-      if (!hasSkill) return false;
+      if (!hasAllSkills) return false;
     }
 
     // Salary range match (in Triệu VND)
@@ -1224,7 +1275,6 @@ export const JobBoard: React.FC = () => {
                         onClick={() => handleToggleSkill(skill)}
                       >
                         <span>{skill}</span>
-                        {isSelected && <CheckIcon size={12} color="#ffffff" />}
                       </button>
                     );
                   })}
@@ -1324,10 +1374,12 @@ export const JobBoard: React.FC = () => {
                       .map((w) => w[0])
                       .join('');
 
+                    const isApplied = appliedJobIds.includes(job.id) || (job.title && appliedJobIds.includes(job.title));
+
                     return (
                       <article
                         key={job.id}
-                        className="jb-job-compact-card"
+                        className={`jb-job-compact-card ${isApplied ? 'jb-job-applied' : ''}`}
                         onClick={() => navigate(`/jobs/${job.id}`)}
                       >
                         {/* Square Logo Box */}

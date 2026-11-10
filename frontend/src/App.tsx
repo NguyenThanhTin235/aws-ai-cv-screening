@@ -20,11 +20,13 @@ import { RecruiterDashboard } from './pages/RecruiterDashboard';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
 import { TermsOfService } from './pages/TermsOfService';
+import { AuthCallback } from './pages/AuthCallback';
 
 const LayoutWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
   const isAuthPage =
     location.pathname === '/login' ||
+    location.pathname === '/auth/callback' ||
     location.pathname === '/forgot-password' ||
     location.pathname === '/quen-mat-khau' ||
     location.pathname === '/register-recruiter' ||
@@ -56,6 +58,7 @@ export const App: React.FC = () => {
             <Route path="/jobs/:id" element={<JobDetail />} />
             <Route path="/job/:id" element={<JobDetail />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/auth/callback" element={<AuthCallback />} />
             <Route path="/register" element={<Register />} />
             <Route path="/register-recruiter" element={<RecruiterRegister />} />
             <Route path="/dang-ky-tuyen-dung" element={<RecruiterRegister />} />

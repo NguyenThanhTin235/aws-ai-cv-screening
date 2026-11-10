@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getJobById, ALL_JOBS } from '../data/jobsData';
 import { useAuth } from '../context/AuthContext';
@@ -34,6 +34,70 @@ export const JobDetail: React.FC = () => {
   const [cvOption, setCvOption] = useState<'profile' | 'upload'>('upload');
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [cvError, setCvError] = useState<string | null>(null);
+
+  // Check if current user has already applied for this job
+  const [isApplied, setIsApplied] = useState<boolean>(() => {
+    try {
+      const saved = localStorage.getItem('candidate_applications');
+      if (saved && job) {
+        const apps = JSON.parse(saved);
+        if (Array.isArray(apps)) {
+          return apps.some(
+            (a: any) =>
+              (a.jobId === job.id || a.jobTitle === job.title) &&
+              a.status !== 'Đã rút đơn' &&
+              a.status !== 'WITHDRAWN'
+          );
+        }
+      }
+    } catch {
+      // ignore
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const checkStatus = () => {
+      try {
+        const saved = localStorage.getItem('candidate_applications');
+        if (saved && job) {
+          const apps = JSON.parse(saved);
+          if (Array.isArray(apps)) {
+            const applied = apps.some(
+              (a: any) =>
+                (a.jobId === job.id || a.jobTitle === job.title) &&
+                a.status !== 'Đã rút đơn' &&
+                a.status !== 'WITHDRAWN'
+            );
+            setIsApplied(applied);
+          }
+        }
+      } catch {
+        // ignore
+      }
+    };
+
+    checkStatus();
+
+    // Also check live API if candidate is logged in
+    if (isAuthenticated && role === 'candidate') {
+      api.getMyApplications()
+        .then((items) => {
+          if (Array.isArray(items) && job) {
+            const applied = items.some(
+              (item: any) =>
+                (item.jobId === job.id || item.jobTitle === job.title) &&
+                item.status !== 'WITHDRAWN' &&
+                item.status !== 'Đã rút đơn'
+            );
+            if (applied) {
+              setIsApplied(true);
+            }
+          }
+        })
+        .catch(() => {});
+    }
+  }, [job, isAuthenticated, role]);
 
   // If job is not found
   if (!job) {
@@ -122,6 +186,19 @@ export const JobDetail: React.FC = () => {
       }
     }
 
+    // Anti-duplicate check before submission (Client & Offline Guard)
+    const existingApps = JSON.parse(localStorage.getItem('candidate_applications') || '[]');
+    const isAlreadyApplied = existingApps.some(
+      (a: any) =>
+        (a.jobId === job.id || a.jobTitle === job.title) &&
+        a.status !== 'Đã rút đơn' &&
+        a.status !== 'WITHDRAWN'
+    );
+    if (isAlreadyApplied) {
+      setCvError('Bạn đã có hồ sơ đang xử lý cho vị trí này. Vui lòng rút đơn hiện tại trên Candidate Portal nếu muốn nộp lại hồ sơ mới.');
+      return;
+    }
+
     setIsSubmitting(true);
     setCvError(null);
 
@@ -176,18 +253,31 @@ export const JobDetail: React.FC = () => {
       });
       localStorage.setItem('candidate_applications', JSON.stringify(localApps));
 
+      setIsApplied(true);
       setApplySuccess(true);
       setTimeout(() => {
         setIsApplyModalOpen(false);
         setApplySuccess(false);
-        navigate('/candidate');
       }, 1500);
     } catch (err: any) {
       if (err.message && (err.message.includes('CONFLICT') || err.message.includes('đang xử lý') || err.message.includes('409'))) {
+        setIsApplied(true);
         setCvError('Bạn đã có hồ sơ đang xử lý cho vị trí này. Vui lòng rút đơn hiện tại trên Candidate Portal nếu muốn nộp lại hồ sơ mới.');
       } else {
-        // Fallback save locally for preview
+        // Fallback save locally for preview with duplicate check
         const localApps = JSON.parse(localStorage.getItem('candidate_applications') || '[]');
+        const duplicateInLocal = localApps.some(
+          (a: any) =>
+            (a.jobId === job.id || a.jobTitle === job.title) &&
+            a.status !== 'Đã rút đơn' &&
+            a.status !== 'WITHDRAWN'
+        );
+        if (duplicateInLocal) {
+          setIsApplied(true);
+          setCvError('Bạn đã có hồ sơ đang xử lý cho vị trí này. Vui lòng rút đơn hiện tại trên Candidate Portal nếu muốn nộp lại hồ sơ mới.');
+          return;
+        }
+
         localApps.unshift({
           id: `app_${Date.now()}`,
           jobId: job.id,
@@ -203,11 +293,11 @@ export const JobDetail: React.FC = () => {
         });
         localStorage.setItem('candidate_applications', JSON.stringify(localApps));
 
+        setIsApplied(true);
         setApplySuccess(true);
         setTimeout(() => {
           setIsApplyModalOpen(false);
           setApplySuccess(false);
-          navigate('/candidate');
         }, 1500);
       }
     } finally {
@@ -316,9 +406,20 @@ export const JobDetail: React.FC = () => {
 
         {/* Header Actions */}
         <div className="jd-header-actions">
-          <button type="button" className="jd-btn-apply" onClick={handleApplyClick}>
-            Ứng tuyển ngay
-          </button>
+          {isApplied ? (
+            <button
+              type="button"
+              className="jd-btn-apply jd-btn-applied"
+              disabled
+              title="Bạn đã nộp hồ sơ ứng tuyển cho vị trí này"
+            >
+              Đã ứng tuyển
+            </button>
+          ) : (
+            <button type="button" className="jd-btn-apply" onClick={handleApplyClick}>
+              Ứng tuyển ngay
+            </button>
+          )}
           <button
             type="button"
             className="jd-btn-bookmark"

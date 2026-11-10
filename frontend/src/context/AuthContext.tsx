@@ -23,6 +23,7 @@ interface AuthContextType {
   resetPassword: (email: string, newPass: string) => Promise<boolean>;
   logout: () => void;
   switchRole: (role: UserRole) => void;
+  loginWithFederatedTokens: (tokens: { idToken: string; accessToken: string }, profile: Partial<UserProfile>) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -363,6 +364,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem('auth_user', JSON.stringify(demo));
   };
 
+  const loginWithFederatedTokens = (
+    tokens: { idToken: string; accessToken: string },
+    profileData: Partial<UserProfile>
+  ) => {
+    const detectedRole: UserRole = profileData.role || 'candidate';
+    const profile: UserProfile = {
+      id: profileData.id || `usr_google_${Date.now()}`,
+      email: profileData.email || 'user@gmail.com',
+      fullName: profileData.fullName || profileData.email?.split('@')[0] || 'Google User',
+      role: detectedRole,
+      avatarUrl: profileData.avatarUrl,
+      createdAt: profileData.createdAt || new Date().toISOString()
+    };
+
+    setUser(profile);
+    setToken(tokens.idToken);
+    api.setToken(tokens.idToken);
+
+    localStorage.setItem('auth_token', tokens.idToken);
+    localStorage.setItem('auth_user', JSON.stringify(profile));
+    saveUserToRegistry(profile);
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -376,7 +400,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         verifyOtp,
         resetPassword,
         logout,
-        switchRole
+        switchRole,
+        loginWithFederatedTokens
       }}
     >
       {children}

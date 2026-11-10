@@ -1505,6 +1505,33 @@
   transform: translateY(-1px);
 }
 
+.jb-job-compact-card.jb-job-applied {
+  background-color: #f0fdf4 !important;
+  border-color: #86efac !important;
+  border-left: 4px solid #059669 !important;
+}
+
+.jb-job-compact-card.jb-job-applied:hover {
+  background-color: #dcfce7 !important;
+  border-color: #059669 !important;
+}
+
+.jb-job-compact-card.jb-job-applied .jb-compact-pill {
+  background-color: #dcfce7 !important;
+  color: #166534 !important;
+  border: 1px solid #bbf7d0 !important;
+}
+
+.jb-job-compact-card.jb-job-applied .jb-compact-logo-box {
+  background-color: transparent !important;
+  border-color: #a7f3d0 !important;
+}
+
+.jb-job-compact-card.jb-job-applied .jb-compact-heart-btn {
+  background-color: #dcfce7 !important;
+  border: 1px solid #bbf7d0 !important;
+}
+
 .jb-compact-logo-box {
   width: 80px;
   height: 80px;

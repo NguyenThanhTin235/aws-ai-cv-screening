@@ -25,12 +25,27 @@ export const CandidateDashboard: React.FC = () => {
   // Top 3 recommended jobs from seeded data
   const recommendedJobs = ALL_JOBS.slice(0, 3);
 
-  // Initial applications
+  // Initial applications (with automatic deduplication of active applications)
   const [applications, setApplications] = useState<CandidateApp[]>(() => {
     try {
       const saved = localStorage.getItem('candidate_applications');
       if (saved) {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          const seen = new Set<string>();
+          const deduped: CandidateApp[] = [];
+          for (const app of parsed) {
+            const key = app.jobId || app.jobTitle;
+            const isActive = app.status !== 'Đã rút đơn' && app.status !== 'WITHDRAWN';
+            if (isActive && seen.has(key)) {
+              continue; // Bỏ qua đơn nộp trùng lặp cho cùng một công việc
+            }
+            if (isActive) seen.add(key);
+            deduped.push(app);
+          }
+          localStorage.setItem('candidate_applications', JSON.stringify(deduped));
+          return deduped;
+        }
       }
     } catch {
       // ignore

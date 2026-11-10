@@ -16,3 +16,9 @@
 4. **Trình bày & Bắt tay vào làm**:
    - Tóm tắt ngắn gọn ý tưởng / nguồn tham khảo đã chọn cho người dùng trước khi tiến hành code.
 
+## 2. Quy chuẩn Giao diện & Trình bày Văn bản (UI & Typography)
+
+> **"KHÔNG ĐƯỢC CHÈN THÊM CÁC ICON VÀO TEXT"**
+- Tuyệt đối không tự ý chèn các biểu tượng, icon (dấu tích, emoji, badge icons...) vào trong hoặc cạnh nhãn text của button, link hay tiêu đề trừ khi người dùng yêu cầu rõ ràng.
+- Giữ text nguyên bản, rõ ràng, gãy gọn và chuyên nghiệp.
+

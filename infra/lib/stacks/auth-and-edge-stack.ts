@@ -67,6 +67,28 @@ export class AuthAndEdgeStack extends cdk.Stack {
       precedence: 3
     });
 
+    // 2.5 User Pool Domain for Hosted UI & Social IdP redirects
+    this.userPool.addDomain('CognitoDomain', {
+      cognitoDomain: {
+        domainPrefix: `cv-portal-dev-auth-145443242997`
+      }
+    });
+
+    // 2.6 Google Identity Provider (Social Sign-In)
+    let googleProvider: cognito.UserPoolIdentityProviderGoogle | undefined;
+    if (config.googleClientId && config.googleClientSecret) {
+      googleProvider = new cognito.UserPoolIdentityProviderGoogle(this, 'GoogleProvider', {
+        userPool: this.userPool,
+        clientId: config.googleClientId,
+        clientSecretValue: cdk.SecretValue.unsafePlainText(config.googleClientSecret),
+        scopes: ['profile', 'email', 'openid'],
+        attributeMapping: {
+          email: cognito.ProviderAttribute.GOOGLE_EMAIL,
+          fullname: cognito.ProviderAttribute.GOOGLE_NAME
+        }
+      });
+    }
+
     // 3. User Pool App Client (SPA React Client)
     this.userPoolClient = new cognito.UserPoolClient(this, 'WebClient', {
       userPool: this.userPool,
@@ -78,8 +100,39 @@ export class AuthAndEdgeStack extends cdk.Stack {
       accessTokenValidity: cdk.Duration.minutes(60),
       idTokenValidity: cdk.Duration.minutes(60),
       refreshTokenValidity: cdk.Duration.days(30),
-      preventUserExistenceErrors: true
+      preventUserExistenceErrors: true,
+      supportedIdentityProviders: googleProvider
+        ? [
+            cognito.UserPoolClientIdentityProvider.COGNITO,
+            cognito.UserPoolClientIdentityProvider.GOOGLE
+          ]
+        : [cognito.UserPoolClientIdentityProvider.COGNITO],
+      oAuth: {
+        flows: {
+          authorizationCodeGrant: true,
+          implicitCodeGrant: false
+        },
+        scopes: [
+          cognito.OAuthScope.EMAIL,
+          cognito.OAuthScope.OPENID,
+          cognito.OAuthScope.PROFILE
+        ],
+        callbackUrls: [
+          'http://localhost:5173/auth/callback',
+          'https://cloudjob.site/auth/callback',
+          'https://main.d20bcjcz3jcxrj.amplifyapp.com/auth/callback'
+        ],
+        logoutUrls: [
+          'http://localhost:5173/login',
+          'https://cloudjob.site/login',
+          'https://main.d20bcjcz3jcxrj.amplifyapp.com/login'
+        ]
+      }
     });
+
+    if (googleProvider) {
+      this.userPoolClient.node.addDependency(googleProvider);
+    }
 
     // 4. AWS WAF WebACL (Regional for API Gateway, toggled by config.enableWaf)
     if (config.enableWaf) {
@@ -174,6 +227,11 @@ export class AuthAndEdgeStack extends cdk.Stack {
       value: this.userPoolClient.userPoolClientId,
       description: 'Cognito User Pool Client ID',
       exportName: `${config.projectName}-${config.stage}-UserPoolClientId`
+    });
+
+    new cdk.CfnOutput(this, 'CognitoDomainOutput', {
+      value: `cv-portal-dev-auth-145443242997.auth.${config.region}.amazoncognito.com`,
+      description: 'Cognito Domain for OAuth2 / Hosted UI'
     });
 
     if (this.webAclArn) {

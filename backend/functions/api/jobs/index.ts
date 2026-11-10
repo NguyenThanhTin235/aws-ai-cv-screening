@@ -117,7 +117,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       const level = queryParams.level;
       const workplaceType = queryParams.workplaceType;
       const provinceId = queryParams.provinceId;
-      const limit = Math.min(Math.max(parseInt(queryParams.limit || '20', 10), 1), 50);
+      const limit = Math.min(Math.max(parseInt(queryParams.limit || '50', 10), 1), 100);
       const cursor = queryParams.cursor;
 
       let exclusiveStartKey: Record<string, unknown> | undefined;

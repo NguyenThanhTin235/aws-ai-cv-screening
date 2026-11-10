@@ -10,3 +10,9 @@
 3. **So sánh & Đánh giá ý tưởng**: So sánh các phương án tiếp cận (ưu/nhược điểm, best practices, độ tương thích với stack của dự án).
 4. **Báo cáo & Triển khai**: Tóm tắt phương án đã chọn và giải thích lý do trước khi bắt tay vào triển khai code.
 
+## 2. Quy chuẩn Giao diện & Trình bày Văn bản (UI & Typography)
+
+> **"KHÔNG ĐƯỢC CHÈN THÊM CÁC ICON VÀO TEXT"**
+- Tuyệt đối không tự ý chèn các biểu tượng, icon (dấu tích, emoji, badge icons...) vào trong hoặc cạnh nhãn text của button, link hay tiêu đề trừ khi người dùng yêu cầu rõ ràng.
+- Giữ text nguyên bản, rõ ràng, gãy gọn và chuyên nghiệp.
+
