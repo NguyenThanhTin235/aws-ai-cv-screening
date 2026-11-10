@@ -351,6 +351,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     api.setToken(null);
     localStorage.removeItem('auth_token');
     localStorage.removeItem('auth_user');
+    localStorage.removeItem('candidate_applications');
+    localStorage.removeItem('saved_job_ids');
     // Notice: cloudjob_registered_users is kept so user profile is preserved on next login!
   };
 

@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ALL_JOBS, DetailedJob } from '../data/jobsData';
 import { api } from '../services/api';
+import { CompanyAvatar } from '../components/common/CompanyAvatar';
 import '../styles/candidate-dashboard.css';
 
 type ActiveTab =
@@ -610,7 +611,7 @@ export const CandidateDashboard: React.FC = () => {
                       onClick={() => setActiveTab('applied-jobs')}
                     >
                       <span>Việc làm đã ứng tuyển</span>
-                      <span className="cd-nav-count-badge">{applications.length}</span>
+                      <span className="cd-nav-count-badge">{activeApplicationsCount}</span>
                     </button>
                   </li>
                   <li>
@@ -767,52 +768,10 @@ export const CandidateDashboard: React.FC = () => {
                       const statusSubDate =
                         app.statusDate || app.appliedAt.split(' ')[0] || '29-08-2026';
 
-                      // Derive brand logo or text
-                      const companyNameClean = app.companyName
-                        .replace('CÔNG TY TNHH', '')
-                        .replace('CÔNG TY CỔ PHẦN', '')
-                        .trim();
-                      const isOQR = companyNameClean.toLowerCase().includes('oqr');
-                      const isJoyhub = companyNameClean.toLowerCase().includes('joyhub');
-
                       return (
                         <article key={app.id} className="cd-applied-card">
                           {/* Company Logo Box */}
-                          <div className="cd-applied-logo-box">
-                            {isOQR ? (
-                              <span
-                                style={{
-                                  color: '#1d4ed8',
-                                  fontWeight: 900,
-                                  fontSize: '20px',
-                                  letterSpacing: '-0.5px'
-                                }}
-                              >
-                                OQR
-                              </span>
-                            ) : isJoyhub ? (
-                              <span
-                                style={{
-                                  color: '#ea580c',
-                                  fontWeight: 900,
-                                  fontSize: '18px',
-                                  fontStyle: 'italic'
-                                }}
-                              >
-                                joyhub
-                              </span>
-                            ) : (
-                              <span
-                                style={{
-                                  color: '#095744',
-                                  fontWeight: 800,
-                                  fontSize: '18px'
-                                }}
-                              >
-                                {companyNameClean.slice(0, 3).toUpperCase()}
-                              </span>
-                            )}
-                          </div>
+                          <CompanyAvatar name={app.companyName} size={76} />
 
                           {/* Card Content Body */}
                           <div className="cd-applied-content">
@@ -945,16 +904,19 @@ export const CandidateDashboard: React.FC = () => {
 
                       return (
                         <article key={job.id} className="cd-saved-card">
-                          <div className="cd-saved-info">
-                            <Link to={`/jobs/${job.id}`} className="cd-saved-title">
-                              {job.title}
-                            </Link>
-                            <div className="cd-saved-meta">
-                              <span>{job.companyName}</span>
-                              <span>•</span>
-                              <span>{typeof job.location === 'string' ? job.location : 'Hà Nội'}</span>
-                              <span>•</span>
-                              <span className="cd-saved-salary">{salaryDisplay}</span>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flex: 1, minWidth: '260px' }}>
+                            <CompanyAvatar name={job.companyName} size={46} />
+                            <div className="cd-saved-info">
+                              <Link to={`/jobs/${job.id}`} className="cd-saved-title">
+                                {job.title}
+                              </Link>
+                              <div className="cd-saved-meta">
+                                <span>{job.companyName}</span>
+                                <span>•</span>
+                                <span>{typeof job.location === 'string' ? job.location : 'Hà Nội'}</span>
+                                <span>•</span>
+                                <span className="cd-saved-salary">{salaryDisplay}</span>
+                              </div>
                             </div>
                           </div>
 
@@ -1056,23 +1018,26 @@ export const CandidateDashboard: React.FC = () => {
 
                       return (
                         <article key={job.id} className="cd-saved-card">
-                          <div className="cd-saved-info">
-                            <Link to={`/jobs/${job.id}`} className="cd-saved-title">
-                              {job.title}
-                            </Link>
-                            <div className="cd-saved-meta">
-                              <span>{job.companyName}</span>
-                              <span>•</span>
-                              <span>{typeof job.location === 'string' ? job.location : 'Hà Nội'}</span>
-                              <span>•</span>
-                              <span className="cd-saved-salary">{salaryDisplay}</span>
-                            </div>
-                            <div className="cd-skills-tags-row" style={{ marginTop: '8px', marginBottom: 0 }}>
-                              {job.skills.slice(0, 4).map((skillName, sIdx) => (
-                                <span key={sIdx} className="cd-skill-tag">
-                                  {skillName}
-                                </span>
-                              ))}
+                          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '14px', flex: 1, minWidth: '260px' }}>
+                            <CompanyAvatar name={job.companyName} size={46} />
+                            <div className="cd-saved-info">
+                              <Link to={`/jobs/${job.id}`} className="cd-saved-title">
+                                {job.title}
+                              </Link>
+                              <div className="cd-saved-meta">
+                                <span>{job.companyName}</span>
+                                <span>•</span>
+                                <span>{typeof job.location === 'string' ? job.location : 'Hà Nội'}</span>
+                                <span>•</span>
+                                <span className="cd-saved-salary">{salaryDisplay}</span>
+                              </div>
+                              <div className="cd-skills-tags-row" style={{ marginTop: '8px', marginBottom: 0 }}>
+                                {job.skills.slice(0, 4).map((skillName, sIdx) => (
+                                  <span key={sIdx} className="cd-skill-tag">
+                                    {skillName}
+                                  </span>
+                                ))}
+                              </div>
                             </div>
                           </div>
 
@@ -1169,18 +1134,21 @@ export const CandidateDashboard: React.FC = () => {
                   return (
                     <article key={job.id} className="cd-match-card">
                       <div className="cd-match-top">
-                        <div>
-                          <Link to={`/jobs/${job.id}`} className="cd-saved-title">
-                            {job.title}
-                          </Link>
-                          <div className="cd-saved-meta" style={{ marginTop: '4px' }}>
-                            <span>{job.companyName}</span>
-                            <span>•</span>
-                            <span>{job.location}</span>
-                            <span>•</span>
-                            <span className="cd-saved-salary">
-                              {job.salaryMin} - {job.salaryMax} triệu / tháng
-                            </span>
+                        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '14px' }}>
+                          <CompanyAvatar name={job.companyName} size={46} />
+                          <div>
+                            <Link to={`/jobs/${job.id}`} className="cd-saved-title">
+                              {job.title}
+                            </Link>
+                            <div className="cd-saved-meta" style={{ marginTop: '4px' }}>
+                              <span>{job.companyName}</span>
+                              <span>•</span>
+                              <span>{job.location}</span>
+                              <span>•</span>
+                              <span className="cd-saved-salary">
+                                {job.salaryMin} - {job.salaryMax} triệu / tháng
+                              </span>
+                            </div>
                           </div>
                         </div>
                         <span className="cd-match-score-pill">Đề xuất phù hợp</span>

@@ -22,6 +22,7 @@ import {
 
 import { ALL_JOBS, DetailedJob } from '../data/jobsData';
 import { api } from '../services/api';
+import { CompanyAvatar } from '../components/common/CompanyAvatar';
 export type { DetailedJob };
 
 interface ProvinceData {
@@ -411,8 +412,9 @@ export const JobBoard: React.FC = () => {
     };
   }, []);
 
-  // Set of applied job IDs for card highlighting
+  // Set of applied job IDs / titles for card highlighting
   const [appliedJobIds, setAppliedJobIds] = useState<string[]>(() => {
+    if (!isAuthenticated || role !== 'candidate') return [];
     try {
       const saved = localStorage.getItem('candidate_applications');
       if (saved) {
@@ -420,7 +422,7 @@ export const JobBoard: React.FC = () => {
         if (Array.isArray(apps)) {
           return apps
             .filter((a: any) => a.status !== 'Đã rút đơn' && a.status !== 'WITHDRAWN')
-            .map((a: any) => a.jobId || a.jobTitle);
+            .flatMap((a: any) => [a.jobId, a.jobTitle, a.id].filter(Boolean));
         }
       }
     } catch {
@@ -430,6 +432,12 @@ export const JobBoard: React.FC = () => {
   });
 
   useEffect(() => {
+    if (!isAuthenticated || role !== 'candidate') {
+      setAppliedJobIds([]);
+      setBookmarkedIds([]);
+      return;
+    }
+
     const checkApplied = () => {
       try {
         const saved = localStorage.getItem('candidate_applications');
@@ -438,7 +446,7 @@ export const JobBoard: React.FC = () => {
           if (Array.isArray(apps)) {
             const ids = apps
               .filter((a: any) => a.status !== 'Đã rút đơn' && a.status !== 'WITHDRAWN')
-              .map((a: any) => a.jobId || a.jobTitle);
+              .flatMap((a: any) => [a.jobId, a.jobTitle, a.id].filter(Boolean));
             setAppliedJobIds(ids);
           }
         }
@@ -448,19 +456,22 @@ export const JobBoard: React.FC = () => {
     };
 
     checkApplied();
+    window.addEventListener('focus', checkApplied);
 
-    if (isAuthenticated && role === 'candidate') {
-      api.getMyApplications()
-        .then((items) => {
-          if (Array.isArray(items)) {
-            const activeIds = items
-              .filter((item: any) => item.status !== 'WITHDRAWN' && item.status !== 'Đã rút đơn')
-              .map((item: any) => item.jobId || item.jobTitle);
-            setAppliedJobIds(activeIds);
-          }
-        })
-        .catch(() => {});
-    }
+    api.getMyApplications()
+      .then((items) => {
+        if (Array.isArray(items)) {
+          const activeIds = items
+            .filter((item: any) => item.status !== 'WITHDRAWN' && item.status !== 'Đã rút đơn')
+            .flatMap((item: any) => [item.jobId, item.jobTitle, item.applicationId, item.id].filter(Boolean));
+          setAppliedJobIds((prev) => Array.from(new Set([...prev, ...activeIds])));
+        }
+      })
+      .catch(() => {});
+
+    return () => {
+      window.removeEventListener('focus', checkApplied);
+    };
   }, [isAuthenticated, role]);
 
   // Search & Filter States
@@ -599,12 +610,26 @@ export const JobBoard: React.FC = () => {
 
   // Bookmarked Jobs (synced with localStorage saved_job_ids)
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>(() => {
+    if (!isAuthenticated || role !== 'candidate') return [];
     try {
       const stored = localStorage.getItem('saved_job_ids');
       if (stored) return JSON.parse(stored);
     } catch {}
     return [];
   });
+
+  useEffect(() => {
+    if (!isAuthenticated || role !== 'candidate') {
+      setBookmarkedIds([]);
+    } else {
+      try {
+        const stored = localStorage.getItem('saved_job_ids');
+        if (stored) {
+          setBookmarkedIds(JSON.parse(stored));
+        }
+      } catch {}
+    }
+  }, [isAuthenticated, role]);
 
   // Rubric Modal State (for viewing AI score details on job cards)
   const [activeRubricJob, setActiveRubricJob] = useState<DetailedJob | null>(null);
@@ -625,6 +650,10 @@ export const JobBoard: React.FC = () => {
 
   // Toggle bookmark (persisted to localStorage)
   const handleToggleBookmark = (id: string) => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
     setBookmarkedIds((prev) => {
       const updated = prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id];
       localStorage.setItem('saved_job_ids', JSON.stringify(updated));
@@ -1358,7 +1387,7 @@ export const JobBoard: React.FC = () => {
                   </div>
                 ) : (
                   paginatedJobs.map((job) => {
-                    const isBookmarked = bookmarkedIds.includes(job.id);
+                    const isBookmarked = isAuthenticated && role === 'candidate' && bookmarkedIds.includes(job.id);
 
                     // Location short display: e.g. "Hồ Chí Minh (mới)", "Hà Nội", "Đà Nẵng"
                     const provinceName = job.rawLocation?.province || (typeof job.location === 'string' ? job.location.split('•')[0].split(',').pop()?.trim() : '') || 'Toàn quốc';
@@ -1372,15 +1401,9 @@ export const JobBoard: React.FC = () => {
                     const visibleSkills = job.skills.slice(0, 3);
                     const remainingSkillsCount = Math.max(0, job.skills.length - 3);
 
-                    // Company acronym
-                    const companyInitials = job.companyName
-                      .split(' ')
-                      .filter((w) => w.length > 0 && w[0] === w[0].toUpperCase())
-                      .slice(0, 3)
-                      .map((w) => w[0])
-                      .join('');
-
-                    const isApplied = appliedJobIds.includes(job.id) || (job.title && appliedJobIds.includes(job.title));
+                    const isApplied = isAuthenticated && role === 'candidate' && appliedJobIds.some(
+                      (id) => id === job.id || (job.title && id.toLowerCase() === job.title.toLowerCase())
+                    );
 
                     return (
                       <article
@@ -1388,23 +1411,23 @@ export const JobBoard: React.FC = () => {
                         className={`jb-job-compact-card ${isApplied ? 'jb-job-applied' : ''}`}
                         onClick={() => navigate(`/jobs/${job.id}`)}
                       >
-                        {/* Square Logo Box */}
-                        <div className="jb-compact-logo-box">
-                          <div
-                            className="jb-compact-logo-inner"
-                            style={{ background: job.logoGradient }}
-                          >
-                            {companyInitials || 'TECH'}
-                          </div>
-                        </div>
+                        {/* Company Avatar Box */}
+                        <CompanyAvatar name={job.companyName} size={48} />
 
                         {/* Content Right */}
                         <div className="jb-compact-content">
                           {/* Row 1: Title & Salary */}
                           <div className="jb-compact-top-row">
-                            <h3 className="jb-compact-title">
-                              {job.title}
-                            </h3>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                              <h3 className="jb-compact-title">
+                                {job.title}
+                              </h3>
+                              {isApplied && (
+                                <span className="jb-applied-status-badge">
+                                  Đã ứng tuyển
+                                </span>
+                              )}
+                            </div>
                             <div className="jb-compact-salary">
                               <DollarSignIcon size={16} color="#059669" />
                               <span>{job.salaryText}</span>

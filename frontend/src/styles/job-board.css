@@ -1511,6 +1511,21 @@
   border-left: 4px solid #059669 !important;
 }
 
+.jb-applied-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 11.5px;
+  font-weight: 700;
+  background-color: #059669;
+  color: #ffffff;
+  letter-spacing: -0.2px;
+  box-shadow: 0 1px 2px rgba(5, 150, 105, 0.2);
+  flex-shrink: 0;
+}
+
 .jb-job-compact-card.jb-job-applied:hover {
   background-color: #dcfce7 !important;
   border-color: #059669 !important;

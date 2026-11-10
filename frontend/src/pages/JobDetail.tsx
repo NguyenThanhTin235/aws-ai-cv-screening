@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getJobById, ALL_JOBS } from '../data/jobsData';
 import { useAuth } from '../context/AuthContext';
+import { CompanyAvatar } from '../components/common/CompanyAvatar';
 import '../styles/job-detail.css';
 import {
   MapPinIcon,
@@ -26,6 +27,7 @@ export const JobDetail: React.FC = () => {
   const job = id ? getJobById(id) : undefined;
 
   const [isBookmarked, setIsBookmarked] = useState<boolean>(() => {
+    if (!isAuthenticated || role !== 'candidate') return false;
     try {
       const stored = localStorage.getItem('saved_job_ids');
       if (stored && id) {
@@ -37,6 +39,10 @@ export const JobDetail: React.FC = () => {
   });
 
   const handleToggleBookmark = () => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
     if (!id) return;
     try {
       const stored = localStorage.getItem('saved_job_ids');
@@ -64,6 +70,7 @@ export const JobDetail: React.FC = () => {
 
   // Check if current user has already applied for this job
   const [isApplied, setIsApplied] = useState<boolean>(() => {
+    if (!isAuthenticated || role !== 'candidate') return false;
     try {
       const saved = localStorage.getItem('candidate_applications');
       if (saved && job) {
@@ -84,6 +91,12 @@ export const JobDetail: React.FC = () => {
   });
 
   useEffect(() => {
+    if (!isAuthenticated || role !== 'candidate') {
+      setIsApplied(false);
+      setIsBookmarked(false);
+      return;
+    }
+
     const checkStatus = () => {
       try {
         const saved = localStorage.getItem('candidate_applications');
@@ -107,23 +120,21 @@ export const JobDetail: React.FC = () => {
     checkStatus();
 
     // Also check live API if candidate is logged in
-    if (isAuthenticated && role === 'candidate') {
-      api.getMyApplications()
-        .then((items) => {
-          if (Array.isArray(items) && job) {
-            const applied = items.some(
-              (item: any) =>
-                (item.jobId === job.id || item.jobTitle === job.title) &&
-                item.status !== 'WITHDRAWN' &&
-                item.status !== 'Đã rút đơn'
-            );
-            if (applied) {
-              setIsApplied(true);
-            }
+    api.getMyApplications()
+      .then((items) => {
+        if (Array.isArray(items) && job) {
+          const applied = items.some(
+            (item: any) =>
+              (item.jobId === job.id || item.jobTitle === job.title) &&
+              item.status !== 'WITHDRAWN' &&
+              item.status !== 'Đã rút đơn'
+          );
+          if (applied) {
+            setIsApplied(true);
           }
-        })
-        .catch(() => {});
-    }
+        }
+      })
+      .catch(() => {});
   }, [job, isAuthenticated, role]);
 
   // If job is not found
@@ -342,16 +353,6 @@ export const JobDetail: React.FC = () => {
     }
   };
 
-  // Helper for company initials logo
-  const getInitials = (name: string) => {
-    return name
-      .split(' ')
-      .filter((w) => w.length > 0 && w[0] === w[0].toUpperCase())
-      .slice(0, 3)
-      .map((w) => w[0])
-      .join('');
-  };
-
   return (
     <div className="jd-container">
       {/* Back Link */}
@@ -362,25 +363,7 @@ export const JobDetail: React.FC = () => {
       {/* Main Header Banner */}
       <header className="jd-header-card">
         <div className="jd-header-top">
-          <div className="jd-header-logo-box">
-            <div
-              style={{
-                width: '100%',
-                height: '100%',
-                borderRadius: 'var(--radius-sm)',
-                background: job.logoGradient,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#ffffff',
-                fontWeight: '800',
-                fontSize: '18px',
-                textAlign: 'center'
-              }}
-            >
-              {getInitials(job.companyName) || 'TECH'}
-            </div>
-          </div>
+          <CompanyAvatar name={job.companyName} size={76} shape="rounded" />
 
           <div className="jd-header-info">
             <h1 className="jd-header-title">{job.title}</h1>
@@ -443,7 +426,7 @@ export const JobDetail: React.FC = () => {
 
         {/* Header Actions */}
         <div className="jd-header-actions">
-          {isApplied ? (
+          {isAuthenticated && role === 'candidate' && isApplied ? (
             <button
               type="button"
               className="jd-btn-apply jd-btn-applied"
@@ -459,10 +442,10 @@ export const JobDetail: React.FC = () => {
           )}
           <button
             type="button"
-            className={`jd-btn-bookmark ${isBookmarked ? 'active' : ''}`}
+            className={`jd-btn-bookmark ${isAuthenticated && role === 'candidate' && isBookmarked ? 'active' : ''}`}
             onClick={handleToggleBookmark}
           >
-            <span>{isBookmarked ? 'Đã lưu việc làm' : 'Lưu tin'}</span>
+            <span>{isAuthenticated && role === 'candidate' && isBookmarked ? 'Đã lưu việc làm' : 'Lưu tin'}</span>
           </button>
         </div>
       </header>
