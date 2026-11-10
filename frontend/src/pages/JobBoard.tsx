@@ -327,6 +327,46 @@ const HOT_KEYWORDS = [
   'Intern'
 ];
 
+const formatLocation = (loc: any, fallback: string): string => {
+  if (typeof loc === 'string') return loc;
+  if (loc && typeof loc === 'object') {
+    if (loc.district && loc.province && loc.ward) {
+      return `${loc.district}, ${loc.province} • ${loc.ward}`;
+    }
+    return loc.fullAddress || loc.province || fallback;
+  }
+  return fallback;
+};
+
+const formatSalaryText = (sal: any, fallback: string): string => {
+  if (typeof sal === 'string') return sal;
+  if (sal && typeof sal === 'object') {
+    return sal.salaryText || (sal.min && sal.max ? `${sal.min} - ${sal.max} triệu / tháng` : fallback);
+  }
+  return fallback;
+};
+
+const mapLevel = (lvl: any, fallback: DetailedJob['level']): DetailedJob['level'] => {
+  if (!lvl) return fallback;
+  const upper = String(lvl).toUpperCase();
+  if (upper === 'INTERN') return 'Intern';
+  if (upper === 'JUNIOR' || upper === 'FRESHER') return 'Fresher / Junior';
+  if (upper === 'MIDDLE') return 'Middle';
+  if (upper === 'SENIOR') return 'Senior Specialist';
+  if (upper === 'LEAD' || upper === 'PRINCIPAL') return 'Lead / Principal Architect';
+  return fallback;
+};
+
+const mapWorkType = (wt: any, fallback: DetailedJob['workType']): DetailedJob['workType'] => {
+  if (!wt) return fallback;
+  const upper = String(wt).toUpperCase();
+  if (upper === 'FULL_TIME') return 'Toàn thời gian';
+  if (upper === 'PART_TIME') return 'Bán thời gian';
+  if (upper === 'REMOTE') return 'Làm từ xa / Remote';
+  if (upper === 'HYBRID') return 'Hybrid linh hoạt';
+  return fallback;
+};
+
 export const JobBoard: React.FC = () => {
   const { isAuthenticated, role } = useAuth();
   const navigate = useNavigate();
@@ -343,15 +383,20 @@ export const JobBoard: React.FC = () => {
             const matched = ALL_JOBS.find((j) => j.id === item.jobId || j.id === item.id) || ALL_JOBS[idx % ALL_JOBS.length];
             return {
               ...matched,
-              id: item.jobId || item.id || `job_${idx}`,
+              id: item.jobId || item.id || matched.id || `job_${idx}`,
               title: item.title || matched.title,
               companyName: item.companyName || matched.companyName,
               companyScale: item.companyScale || matched.companyScale,
-              location: item.location || matched.location,
+              location: formatLocation(item.location, matched.location),
+              rawLocation: typeof item.location === 'object' ? item.location : matched.rawLocation,
               description: item.description || matched.description,
               skills: Array.isArray(item.skills) && item.skills.length > 0 ? item.skills : matched.skills,
-              level: item.level || matched.level,
-              salaryText: item.salary || matched.salaryText,
+              level: mapLevel(item.level, matched.level),
+              workType: mapWorkType(item.workplaceType || item.workType, matched.workType),
+              salaryText: formatSalaryText(item.salary, matched.salaryText),
+              salaryMin: typeof item.salary === 'object' && item.salary?.min !== undefined ? Number(item.salary.min) : matched.salaryMin,
+              salaryMax: typeof item.salary === 'object' && item.salary?.max !== undefined ? Number(item.salary.max) : matched.salaryMax,
+              experience: typeof item.experience === 'object' ? (item.experience.experienceText || matched.experience) : (item.experience || matched.experience),
               isVerified: true
             };
           });
@@ -598,7 +643,7 @@ export const JobBoard: React.FC = () => {
     // Location match
     if (selectedLocations.length > 0) {
       const matchesLocation = selectedLocations.some((loc) => {
-        const jobLoc = job.location.toLowerCase();
+        const jobLoc = (typeof job.location === 'string' ? job.location : '').toLowerCase();
         const cleanLoc = loc.replace(/\s*\(.*?\)\s*/g, '').trim().toLowerCase();
         const match = loc.match(/\((.*?)\)/);
         const parentDistrict = match ? match[1].toLowerCase() : null;
@@ -1260,7 +1305,7 @@ export const JobBoard: React.FC = () => {
                     const isBookmarked = bookmarkedIds.includes(job.id);
 
                     // Location short display: e.g. "Hồ Chí Minh (mới)", "Hà Nội", "Đà Nẵng"
-                    const provinceName = job.rawLocation?.province || job.location.split('•')[0].split(',').pop()?.trim() || 'Toàn quốc';
+                    const provinceName = job.rawLocation?.province || (typeof job.location === 'string' ? job.location.split('•')[0].split(',').pop()?.trim() : '') || 'Toàn quốc';
                     const displayLocation = provinceName === 'Hồ Chí Minh' ? 'Hồ Chí Minh (mới)' : provinceName;
 
                     // Experience short display: e.g. "3 năm", "5+ năm", "Intern"
